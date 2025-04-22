@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>راديو قرآن</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #111, #333);
+      color: #fff;
+      text-align: center;
+      padding: 30px 10px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 1.1em;
+      margin-bottom: 30px;
+      color: #ccc;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .card {
+      background: #222;
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 0 10px #000;
+    }
+    .card img {
+      width: 100%;
+      max-height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .card h2 {
+      font-size: 1em;
+      margin: 10px 0;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.9em;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .progress-bar {
+      margin-top: 10px;
+      height: 4px;
+      width: 100%;
+      background: #555;
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    .progress-bar::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 30%;
+      background: #4caf50;
+      animation: move 2s linear infinite;
+    }
+    @keyframes move {
+      from { left: -30%; }
+      to { left: 100%; }
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    a {
+      color: #4caf50;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>راديو قرآن</h1>
+  <div class="subtitle">صفحة <a href="https://www.facebook.com/lakel7amd" target="_blank">اللهم لك الحمد</a></div>
+
+  <div class="grid">
+    <div class="card">
+      <img src="https://7nen.do.am/_ph/6/1/660752318.jpg" alt="إذاعة القاهرة" />
+      <h2>إذاعة القاهرة</h2>
+      <button onclick="playRadio('https://stream.radiojar.com/8s5u5tpdtwzuv')">تشغيل</button>
+      <button onclick="stopRadio()">إيقاف</button>
+      <div class="progress-bar"></div>
+    </div>
+    <div class="card">
+      <img src="https://7nen.do.am/_ph/6/1/730393383.jpg" alt="إذاعة السعودية" />
+      <h2>إذاعة السعودية</h2>
+      <button onclick="playRadio('https://backup.qurango.net/radio/abdulrahman_alsudaes/أثير%20راديو.mp3')">تشغيل</button>
+      <button onclick="stopRadio()">إيقاف</button>
+      <div class="progress-bar"></div>
+    </div>
+    <div class="card">
+      <img src="https://7nen.do.am/_ph/6/1/288946560.jpg" alt="إذاعة الرقية" />
+      <h2>إذاعة الرقية</h2>
+      <button onclick="playRadio('https://qurango.net/radio/roqiah')">تشغيل</button>
+      <button onclick="stopRadio()">إيقاف</button>
+      <div class="progress-bar"></div>
+    </div>
+  </div>
+
+  <div class="grid" id="stations"></div>
+
+  <footer>راديو قرآن - صفحة اللهم لك الحمد</footer>
+  <audio id="radioPlayer" controls style="display:none;"></audio>
+
+  <script>
+    const stations = [
+      { name: "الشيخ أحمد العجمي", img: "https://7nen.do.am/_ph/6/1/979378293.jpg", url: "https://qurango.net/radio/ahmad_alajmy.mp3" },
+      { name: "الشيخ مشاري راشد", img: "https://7nen.do.am/_ph/6/1/526518923.jpg", url: "https://qurango.net/radio/mishary_alafasi.mp3" },
+      { name: "الشيخ محمد جبريل", img: "https://7nen.do.am/_ph/6/1/844452129.jpg", url: "https://backup.qurango.net/radio/mohammed_jibreel" },
+      { name: "الشيخ المنشاوي", img: "https://7nen.do.am/_ph/6/1/986606135.jpg", url: "https://backup.qurango.net/radio/mohammed_siddiq_alminshawi/أثير%20راديو.mp3" },
+      { name: "الشيخ عبدالباسط", img: "https://7nen.do.am/_ph/6/1/788498118.jpg", url: "https://qurango.net/radio/abdulbasit_abdulsamad.mp3" },
+      { name: "الشيخ الحصري", img: "https://7nen.do.am/_ph/6/1/650079361.jpg", url: "https://backup.qurango.net/radio/mahmoud_khalil_alhussary" },
+      { name: "الشيخ إدريس أبكر", img: "https://7nen.do.am/_ph/6/1/695351424.jpg", url: "https://backup.qurango.net/radio/idrees_abkr" },
+      { name: "الشيخ محمود علي البنا", img: "https://7nen.do.am/_ph/6/1/592190149.jpg", url: "https://backup.qurango.net/radio/mahmoud_ali__albanna" },
+      { name: "الشيخ سعد الغامدي", img: "https://7nen.do.am/_ph/6/1/613525566.jpg", url: "https://backup.qurango.net/radio/saad_alghamdi" },
+      { name: "الشيخ مصطفى إسماعيل", img: "https://7nen.do.am/_ph/6/1/49597189.jpg", url: "https://backup.qurango.net/radio/mustafa_ismail" },
+      { name: "الشيخ مصطفى اللاهوني", img: "https://7nen.do.am/_ph/6/1/586864154.jpg", url: "https://backup.qurango.net/radio/mustafa_allahoni" },
+      { name: "الشيخ عبدالرحمن الشحات", img: "https://7nen.do.am/_ph/6/1/397155617.jpg", url: "https://backup.qurango.net/radio/a_alshahhat" }
+    ];
+
+    const container = document.getElementById('stations');
+    const player = document.getElementById('radioPlayer');
+
+    stations.forEach(station => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${station.img}" alt="${station.name}" />
+        <h2>${station.name}</h2>
+        <button onclick="playRadio('${station.url}')">تشغيل</button>
+        <button onclick="stopRadio()">إيقاف</button>
+        <div class="progress-bar"></div>
+      `;
+      container.appendChild(card);
+    });
+
+    function playRadio(url) {
+      player.pause();
+      player.src = url;
+      player.play();
+    }
+
+    function stopRadio() {
+      player.pause();
+      player.src = "";
+    }
+  </script>
+</body>
+</html>
