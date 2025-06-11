@@ -1,48 +1,27 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>راديو قرآن كريم</title>
+  <title>راديو قرآن</title>
   <style>
-    :root {
-      --primary-color: #4CAF50;
-      --dark-bg: linear-gradient(to bottom right, #111, #333);
-      --card-bg: #222;
-      --text-color: #fff;
-      --secondary-text: #ccc;
-    }
-    
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background: var(--dark-bg);
-      color: var(--text-color);
+      background: linear-gradient(to bottom right, #111, #333);
+      color: #fff;
       text-align: center;
-      padding: 20px 10px;
-      min-height: 100vh;
+      padding: 30px 10px;
     }
-    
     h1 {
       margin-bottom: 10px;
-      color: var(--primary-color);
     }
-    
     .subtitle {
       font-size: 1.1em;
       margin-bottom: 30px;
-      color: var(--secondary-text);
+      color: #ccc;
     }
-    
-    .now-playing {
-      background: rgba(0,0,0,0.7);
-      padding: 10px;
-      border-radius: 10px;
-      margin: 0 auto 20px;
-      max-width: 500px;
-      display: none;
-    }
-    
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -50,76 +29,37 @@
       max-width: 1000px;
       margin: auto;
     }
-    
     .card {
-      background: var(--card-bg);
+      background: #222;
       border-radius: 15px;
       padding: 15px;
       box-shadow: 0 0 10px #000;
-      transition: transform 0.3s ease;
-      opacity: 0;
-      transform: translateY(20px);
     }
-    
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    
     .card img {
       width: 100%;
       max-height: 160px;
       object-fit: cover;
       border-radius: 10px;
-      aspect-ratio: 1/1;
     }
-    
     .card h2 {
       font-size: 1em;
       margin: 10px 0;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-    
-    .button-group {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-    
     button {
-      background-color: var(--primary-color);
+      background-color: #4CAF50;
       color: white;
       border: none;
       padding: 8px 14px;
       border-radius: 10px;
       font-size: 0.9em;
       cursor: pointer;
-      transition: all 0.3s ease;
-      flex: 1;
-      max-width: 100px;
+      margin: 5px;
     }
-    
     button:hover {
       background-color: #45a049;
-      transform: scale(1.05);
     }
-    
-    button.secondary {
-      background-color: #f44336;
-    }
-    
-    button.secondary:hover {
-      background-color: #d32f2f;
-    }
-    
-    .progress-container {
-      margin-top: 10px;
-      display: none;
-    }
-    
     .progress-bar {
+      margin-top: 10px;
       height: 4px;
       width: 100%;
       background: #555;
@@ -127,91 +67,60 @@
       overflow: hidden;
       border-radius: 2px;
     }
-    
     .progress-bar::before {
       content: "";
       position: absolute;
       height: 100%;
       width: 30%;
-      background: var(--primary-color);
+      background: #4caf50;
       animation: move 2s linear infinite;
     }
-    
     @keyframes move {
       from { left: -30%; }
       to { left: 100%; }
     }
-    
     footer {
       margin-top: 40px;
       font-size: 0.9em;
-      color: var(--secondary-text);
-      padding: 20px 0;
+      color: #aaa;
     }
-    
     a {
-      color: var(--primary-color);
+      color: #4caf50;
       text-decoration: none;
-      transition: all 0.3s ease;
-    }
-    
-    a:hover {
-      text-decoration: underline;
-    }
-    
-    @media (max-width: 600px) {
-      .grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      
-      .card h2 {
-        font-size: 0.9em;
-        height: 50px;
-      }
-      
-      .now-playing {
-        width: 90%;
-      }
     }
   </style>
 </head>
 <body>
-  <h1>راديو قرآن كريم</h1>
-  <div class="subtitle">صفحة <a href="https://www.facebook.com/lakel7amd" target="_blank" rel="noopener">اللهم لك الحمد</a></div>
-  
-  <div class="now-playing" id="nowPlaying">
-    <div id="currentStation">جارٍ التشغيل: <span id="stationName"></span></div>
-    <div class="button-group">
-      <button onclick="toggleMute()" id="muteBtn">كتم</button>
-      <button onclick="stopRadio()" class="secondary">إيقاف</button>
-    </div>
-    <div class="progress-container" id="progressContainer">
-      <div class="progress-bar"></div>
-    </div>
-  </div>
+  <h1>راديو قرآن</h1>
+  <div class="subtitle">صفحة <a href="https://www.facebook.com/lakel7amd" target="_blank">اللهم لك الحمد</a></div>
 
   <div class="grid">
     <div class="card">
-      <img src="https://7nen.do.am/_ph/6/1/660752318.jpg" alt="إذاعة القاهرة" loading="lazy" />
+      <img src="https://7nen.do.am/_ph/6/1/660752318.jpg" alt="إذاعة القاهرة" />
       <h2>إذاعة القاهرة</h2>
-      <button onclick="playRadio('https://stream.radiojar.com/8s5u5tpdtwzuv', 'إذاعة القاهرة')">تشغيل</button>
+      <button onclick="playRadio('https://stream.radiojar.com/8s5u5tpdtwzuv')">تشغيل</button>
+      <button onclick="stopRadio()">إيقاف</button>
+      <div class="progress-bar"></div>
     </div>
     <div class="card">
-      <img src="https://7nen.do.am/_ph/6/1/730393383.jpg" alt="إذاعة السعودية" loading="lazy" />
+      <img src="https://7nen.do.am/_ph/6/1/730393383.jpg" alt="إذاعة السعودية" />
       <h2>إذاعة السعودية</h2>
-      <button onclick="playRadio('https://backup.qurango.net/radio/abdulrahman_alsudaes/أثير%20راديو.mp3', 'إذاعة السعودية')">تشغيل</button>
+      <button onclick="playRadio('https://backup.qurango.net/radio/abdulrahman_alsudaes/أثير%20راديو.mp3')">تشغيل</button>
+      <button onclick="stopRadio()">إيقاف</button>
+      <div class="progress-bar"></div>
     </div>
     <div class="card">
-      <img src="https://7nen.do.am/_ph/6/1/288946560.jpg" alt="إذاعة الرقية" loading="lazy" />
+      <img src="https://7nen.do.am/_ph/6/1/288946560.jpg" alt="إذاعة الرقية" />
       <h2>إذاعة الرقية</h2>
-      <button onclick="playRadio('https://qurango.net/radio/roqiah', 'إذاعة الرقية')">تشغيل</button>
+      <button onclick="playRadio('https://qurango.net/radio/roqiah')">تشغيل</button>
+      <button onclick="stopRadio()">إيقاف</button>
+      <div class="progress-bar"></div>
     </div>
   </div>
 
   <div class="grid" id="stations"></div>
 
-  <footer>راديو قرآن كريم - صفحة اللهم لك الحمد © <span id="year"></span></footer>
-  
+  <footer>راديو قرآن - صفحة اللهم لك الحمد</footer>
   <audio id="radioPlayer" controls style="display:none;"></audio>
 
   <script>
@@ -232,84 +141,30 @@
 
     const container = document.getElementById('stations');
     const player = document.getElementById('radioPlayer');
-    const nowPlayingDiv = document.getElementById('nowPlaying');
-    const stationNameSpan = document.getElementById('stationName');
-    const muteBtn = document.getElementById('muteBtn');
-    const progressContainer = document.getElementById('progressContainer');
-    let isMuted = false;
 
-    // إضافة السنة الحالية في الفوتر
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // إنشاء بطاقات المحطات الديناميكية
-    stations.forEach((station, index) => {
+    stations.forEach(station => {
       const card = document.createElement('div');
       card.className = 'card';
-      card.style.transition = `all 0.5s ease ${index * 0.1}s`;
       card.innerHTML = `
-        <img src="${station.img}" alt="${station.name}" loading="lazy" />
+        <img src="${station.img}" alt="${station.name}" />
         <h2>${station.name}</h2>
-        <button onclick="playRadio('${station.url}', '${station.name}')">تشغيل</button>
+        <button onclick="playRadio('${station.url}')">تشغيل</button>
+        <button onclick="stopRadio()">إيقاف</button>
+        <div class="progress-bar"></div>
       `;
       container.appendChild(card);
     });
 
-    function playRadio(url, name) {
+    function playRadio(url) {
       player.pause();
       player.src = url;
-      player.play()
-        .then(() => {
-          stationNameSpan.textContent = name;
-          nowPlayingDiv.style.display = 'block';
-          progressContainer.style.display = 'block';
-          animateCards();
-        })
-        .catch(error => {
-          alert('حدث خطأ في تشغيل المحطة. يرجى المحاولة مرة أخرى.');
-          console.error('Error playing radio:', error);
-        });
+      player.play();
     }
 
     function stopRadio() {
       player.pause();
       player.src = "";
-      nowPlayingDiv.style.display = 'none';
-      progressContainer.style.display = 'none';
     }
-
-    function toggleMute() {
-      isMuted = !isMuted;
-      player.muted = isMuted;
-      muteBtn.textContent = isMuted ? "إلغاء الكتم" : "كتم";
-      muteBtn.style.backgroundColor = isMuted ? "#ff9800" : "";
-    }
-
-    // تأثير الظهور عند التمرير
-    function animateCards() {
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(card => {
-        const cardPosition = card.getBoundingClientRect().top;
-        const screenPosition = window.innerHeight / 1.3;
-        
-        if(cardPosition < screenPosition) {
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }
-      });
-    }
-
-    // تهيئة الصفحة عند التحميل
-    window.addEventListener('load', () => {
-      animateCards();
-      
-      // تحفيز الحدث بعد فترة قصيرة لضمان التحميل
-      setTimeout(() => {
-        window.dispatchEvent(new Event('scroll'));
-      }, 100);
-    });
-
-    // إعادة التحريك عند التمرير
-    window.addEventListener('scroll', animateCards);
   </script>
 </body>
 </html>
