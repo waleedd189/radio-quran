@@ -551,11 +551,19 @@
     <input type="text" class="search-input" placeholder="ابحث عن محطة..." id="searchInput" onkeyup="searchStations()">
   </div>
 
-  <div class="grid">
+  
+  <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1000px; margin: auto;">
     <div class="card">
       <img src="https://7nen.do.am/_ph/6/1/660752318.jpg" alt="إذاعة القاهرة" />
       <h2>إذاعة القاهرة</h2>
       <button onclick="playRadio('https://stream.radiojar.com/8s5u5tpdtwzuv', 'إذاعة القاهرة', this)">تشغيل</button>
+      <button class="stop-btn" onclick="stopRadio()">إيقاف</button>
+      <div class="progress-bar"></div>
+    </div>
+    <div class="card">
+      <img src="https://7nen.do.am/_ph/6/842159606.jpg" alt="إذاعة نابلس" />
+      <h2>إذاعة نابلس</h2>
+      <button onclick="playRadio('https://quran-radio.org:8443/;?type=http&amp;nocache=13', 'إذاعة نابلس', this)">تشغيل</button>
       <button class="stop-btn" onclick="stopRadio()">إيقاف</button>
       <div class="progress-bar"></div>
     </div>
@@ -574,8 +582,7 @@
       <div class="progress-bar"></div>
     </div>
   </div>
-
-  <div class="grid" id="stations"></div>
+<div class="grid" id="stations"></div>
 
   <footer>راديو قرآن - صفحة اللهم لك الحمد</footer>
   <audio id="radioPlayer" controls style="display:none;"></audio>
