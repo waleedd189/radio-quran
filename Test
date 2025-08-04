@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>راديو قرآن v3 - صفحة اللهم لك الحمد</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #111, #333);
+      color: #fff;
+      text-align: center;
+      padding: 30px 10px;
+    }
+    
+    html[lang="en"] body {
+      font-family: 'Roboto', 'Arial', sans-serif;
+    }
+
+    h1 {
+      font-family: 'Amiri', serif;
+      font-size: 3em;
+      font-weight: 700;
+      margin-bottom: 5px; /* Adjusted margin */
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, #4CAF50, #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex; /* Use flexbox for alignment */
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap; /* Allow wrapping on small screens */
+    }
+    
+    html[lang="en"] h1 {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    h1::before {
+      content: "﴿";
+      color: #4CAF50;
+      margin-left: 10px;
+    }
+    
+    h1::after {
+      content: "﴾";
+      color: #4CAF50;
+      margin-right: 10px;
+    }
+
+    h1 a {
+        color: inherit; /* Inherit color from h1 gradient */
+        text-decoration: none;
+        margin: 0 5px; /* Space around the link */
+        background: linear-gradient(45deg, #4CAF50, #81C784);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transition: transform 0.3s ease;
+    }
+
+    h1 a:hover {
+        transform: scale(1.05);
+        filter: brightness(1.2);
+    }
+
+    .subtitle { 
+      font-size: 1.1em;
+      margin-bottom: 10px; /* Adjusted margin */
+      color: #ccc;
+    }
+    
+    /* New style for animated charity text */
+    .animated-charity-text {
+      font-size: 1em; /* Slightly larger for emphasis */
+      margin-top: 15px; /* More space above it */
+      margin-bottom: 30px; 
+      color: #aaffaa; /* Slightly green for the charity text */
+      text-shadow: 0 0 5px rgba(170, 255, 170, 0.7); /* Glow effect */
+      animation: pulseGlow 2s infinite alternate; /* Animation */
+      padding: 5px 10px;
+      border-radius: 8px;
+      background: rgba(76, 175, 80, 0.05); /* Subtle background */
+      border: 1px solid rgba(76, 175, 80, 0.2);
+      display: inline-block; /* To apply padding and border */
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        opacity: 0.8;
+        transform: scale(1);
+        text-shadow: 0 0 5px rgba(170, 255, 170, 0.7);
+        box-shadow: 0 0 10px rgba(170, 255, 170, 0.3);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1.02);
+        text-shadow: 0 0 10px rgba(170, 255, 170, 1);
+        box-shadow: 0 0 20px rgba(170, 255, 170, 0.6);
+      }
+    }
+    
+    .prayer-times-panel {
+      background: rgba(34, 34, 34, 0.9);
+      border-radius: 10px;
+      padding: 12px;
+      margin: 15px auto;
+      max-width: 600px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    .prayer-times-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.3em;
+      color: #4CAF50;
+      margin-bottom: 12px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    html[lang="en"] .prayer-times-title {
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    .prayer-times-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    
+    .prayer-time-item {
+      background: rgba(76, 175, 80, 0.1);
+      border-radius: 8px;
+      padding: 8px 6px;
+      border: 1px solid rgba(76, 175, 80, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .prayer-time-item:hover {
+      background: rgba(76, 175, 80, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    .prayer-time-item.next-prayer {
+      background: rgba(76, 175, 80, 0.3);
+      border-color: #4CAF50;
+      box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+    }
+    
+    .prayer-name {
+      font-size: 0.75em;
+      color: #ccc;
+      margin-bottom: 3px;
+    }
+    
+    .prayer-time {
+      font-size: 0.9em;
+      font-weight: 600;
+      color: #4CAF50;
+    }
+    
+    .next-prayer-info {
+      background: rgba(76, 175, 80, 0.1);
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+    
+    .next-prayer-text {
+      font-size: 0.85em;
+      color: #ccc;
+      margin-bottom: 3px;
+    }
+    
+    .next-prayer-countdown {
+      font-size: 1em;
+      font-weight: 600;
+      color: #4CAF50;
+    }
+    
+    .location-info {
+      font-size: 0.75em;
+      color: #aaa;
+      margin-top: 8px;
+    }
+    
+    .controls-panel {
+      background: rgba(34, 34, 34, 0.8);
+      border-radius: 10px;
+      padding: 12px;
+      margin: 15px auto;
+      max-width: 500px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+    
+    .now-playing {
+      font-size: 1em;
+      color: #4CAF50;
+      margin-bottom: 10px;
+      min-height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .playing-indicator {
+      display: none;
+      width: 16px;
+      height: 16px;
+      background: #4CAF50;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    .volume-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    
+    .volume-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 50%;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .volume-btn:hover {
+      background: #45a049;
+      transform: scale(1.1);
+    }
+    
+    .volume-display {
+      font-size: 0.95em;
+      color: #4CAF50;
+      min-width: 50px;
+    }
+    
+    .search-container {
+      margin: 20px 0;
+    }
+    
+    .search-input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(76, 175, 80, 0.3);
+      border-radius: 25px;
+      padding: 12px 20px;
+      color: white;
+      font-size: 1em;
+      width: 300px;
+      max-width: 90%;
+      transition: all 0.3s ease;
+    }
+
+    html[lang="ar"] .search-input {
+      text-align: right; /* RTL */
+    }
+
+    html[lang="en"] .search-input {
+      text-align: left; /* LTR */
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: #4CAF50;
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .playlist-controls {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    
+    .playlist-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 0.85em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .playlist-btn:hover {
+      background: #45a049;
+      transform: translateY(-2px);
+    }
+    
+    .playlist-btn:disabled {
+      background: #666;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    /* Main grid for other stations */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    /* Featured grid for the first 5 stations */
+    .featured-grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+      max-width: 1200px; 
+      margin-bottom: 30px;
+    }
+
+    /* Ensure 5 columns if enough space */
+    @media (min-width: 1000px) {
+        .featured-grid {
+            grid-template-columns: repeat(5, 1fr);
+        }
+    }
+    
+    .card {
+      background: #222;
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 0 10px #000;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      position: relative; 
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+      border-color: rgba(76, 175, 80, 0.5);
+    }
+    
+    .card.active {
+      border-color: #4CAF50;
+      background: rgba(76, 175, 80, 0.1);
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.4);
+    }
+    
+    .card.hidden {
+      display: none;
+    }
+    
+    .card img {
+      width: 100%;
+      max-height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+    
+    .card:hover img {
+      transform: scale(1.05);
+    }
+    
+    .card h2 {
+      font-size: 1em;
+      margin: 10px 0;
+    }
+    
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.9em;
+      cursor: pointer;
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #45a049;
+      transform: translateY(-2px);
+    }
+    
+    .stop-btn {
+      background-color: #f44336 !important;
+    }
+    
+    .stop-btn:hover {
+      background-color: #da190b !important;
+    }
+    
+    .progress-bar {
+      margin-top: 10px;
+      height: 4px;
+      width: 100%;
+      background: #555;
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    
+    .progress-bar::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 30%;
+      background: #4caf50;
+      animation: move 2s linear infinite;
+    }
+    
+    .card.active .progress-bar::before {
+      animation: move 1s linear infinite;
+      background: linear-gradient(90deg, #4caf50, #81c784, #4caf50);
+    }
+    
+    @keyframes move {
+      from { left: -30%; }
+      to { left: 100%; }
+    }
+    
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    
+    .footer-text {
+        font-family: 'Cairo', sans-serif;
+        font-size: 0.9em;
+        color: #888;
+        margin-top: 20px;
+    }
+
+    html[lang="en"] .footer-text {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .time-display {
+      font-size: 0.8em;
+      color: #ccc;
+      margin-top: 8px;
+    }
+    
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: none;
+      text-decoration: none;
+    }
+    
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+    }
+    
+    .whatsapp-float svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+    
+    .whatsapp-tooltip {
+      position: absolute;
+      right: 70px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85em;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .whatsapp-tooltip::after {
+      content: '';
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 6px solid transparent;
+      border-left-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .whatsapp-float:hover .whatsapp-tooltip {
+      opacity: 1;
+      visibility: visib
