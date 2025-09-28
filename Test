@@ -1,15 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>راديو قرآن v3 - صفحة اللهم لك الحمد</title>
+  <title>راديو قرآن v4.1 - إصلاح مواقيت الصلاة</title>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* ... نفس كود الـ CSS السابق بالكامل ... */
     body {
       margin: 0;
       font-family: 'Cairo', 'Arial', sans-serif;
-      background: linear-gradient(to bottom right, #111, #333);
+      background: linear-gradient(to bottom right, #111, #333 );
       color: #fff;
       text-align: center;
       padding: 30px 10px;
@@ -23,16 +25,16 @@
       font-family: 'Amiri', serif;
       font-size: 3em;
       font-weight: 700;
-      margin-bottom: 5px; /* Adjusted margin */
+      margin-bottom: 5px;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
       background: linear-gradient(45deg, #4CAF50, #81C784);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      display: flex; /* Use flexbox for alignment */
+      display: flex;
       justify-content: center;
       align-items: center;
-      flex-wrap: wrap; /* Allow wrapping on small screens */
+      flex-wrap: wrap;
     }
     
     html[lang="en"] h1 {
@@ -52,9 +54,9 @@
     }
 
     h1 a {
-        color: inherit; /* Inherit color from h1 gradient */
+        color: inherit;
         text-decoration: none;
-        margin: 0 5px; /* Space around the link */
+        margin: 0 5px;
         background: linear-gradient(45deg, #4CAF50, #81C784);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -69,23 +71,22 @@
 
     .subtitle { 
       font-size: 1.1em;
-      margin-bottom: 10px; /* Adjusted margin */
+      margin-bottom: 10px;
       color: #ccc;
     }
     
-    /* New style for animated charity text */
     .animated-charity-text {
-      font-size: 1em; /* Slightly larger for emphasis */
-      margin-top: 15px; /* More space above it */
+      font-size: 1em;
+      margin-top: 15px;
       margin-bottom: 30px; 
-      color: #aaffaa; /* Slightly green for the charity text */
-      text-shadow: 0 0 5px rgba(170, 255, 170, 0.7); /* Glow effect */
-      animation: pulseGlow 2s infinite alternate; /* Animation */
+      color: #aaffaa;
+      text-shadow: 0 0 5px rgba(170, 255, 170, 0.7);
+      animation: pulseGlow 2s infinite alternate;
       padding: 5px 10px;
       border-radius: 8px;
-      background: rgba(76, 175, 80, 0.05); /* Subtle background */
+      background: rgba(76, 175, 80, 0.05);
       border: 1px solid rgba(76, 175, 80, 0.2);
-      display: inline-block; /* To apply padding and border */
+      display: inline-block;
     }
 
     @keyframes pulseGlow {
@@ -278,11 +279,11 @@
     }
 
     html[lang="ar"] .search-input {
-      text-align: right; /* RTL */
+      text-align: right;
     }
 
     html[lang="en"] .search-input {
-      text-align: left; /* LTR */
+      text-align: left;
     }
     
     .search-input:focus {
@@ -324,7 +325,6 @@
       transform: none;
     }
     
-    /* Main grid for other stations */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -333,14 +333,12 @@
       margin: auto;
     }
 
-    /* Featured grid for the first 5 stations */
     .featured-grid {
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
       max-width: 1200px; 
       margin-bottom: 30px;
     }
 
-    /* Ensure 5 columns if enough space */
     @media (min-width: 1000px) {
         .featured-grid {
             grid-template-columns: repeat(5, 1fr);
@@ -526,4 +524,1135 @@
     
     .whatsapp-float:hover .whatsapp-tooltip {
       opacity: 1;
-      visibility: visib
+      visibility: visible;
+    }
+
+    .azkar-dropdown-container, .quran-dropdown-container {
+      position: relative;
+      display: block;
+      width: calc(100% - 10px);
+      margin: 10px auto;
+    }
+
+    .azkar-select, .quran-select {
+        width: 100%; 
+        padding: 8px;
+        border-radius: 8px;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #4CAF50;
+        cursor: pointer;
+        font-size: 0.9em;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%3E%3Cpath%20fill%3D%22%234CAF50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E' );
+        background-repeat: no-repeat;
+        background-size: 12px;
+    }
+
+    html[lang="ar"] .azkar-select, html[lang="ar"] .quran-select {
+        background-position: left 8px center;
+        text-align: right;
+        padding-left: 30px;
+    }
+
+    html[lang="en"] .azkar-select, html[lang="en"] .quran-select {
+        background-position: right 8px center;
+        text-align: left;
+        padding-right: 30px;
+    }
+
+    .azkar-select option, .quran-select option {
+        background-color: #333;
+        color: #fff;
+    }
+
+    .play-sura-btn {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 10px;
+        font-size: 0.9em;
+        cursor: pointer;
+        margin: 5px;
+        transition: all 0.3s ease;
+        width: calc(100% - 10px);
+        display: block;
+        box-sizing: border-box;
+    }
+
+    .play-sura-btn:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+    }
+    
+    .language-toggle {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.9em;
+        z-index: 1000;
+        transition: background-color 0.3s ease;
+    }
+
+    .language-toggle:hover {
+        background-color: #45a049;
+    }
+
+    .loader {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #fff;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+      display: none;
+    }
+
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .prayer-times-grid { grid-template-columns: repeat(3, 1fr); }
+      h1 { font-size: 2.5em; }
+      .prayer-times-title { font-size: 1.2em; }
+      .prayer-time-item { padding: 6px 4px; }
+      .prayer-name { font-size: 0.7em; }
+      .prayer-time { font-size: 0.8em; }
+      .whatsapp-float { width: 50px; height: 50px; bottom: 15px; right: 15px; }
+      .whatsapp-float svg { width: 26px; height: 26px; }
+      .whatsapp-tooltip { right: 60px; font-size: 0.8em; }
+      .featured-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+      .language-toggle { top: 10px; left: 10px; padding: 6px 10px; font-size: 0.8em; }
+      h1 a { display: block; margin: 5px 0; }
+    }
+  </style>
+</head>
+<body>
+  <button class="language-toggle" id="languageToggle" onclick="toggleLanguage()"></button>
+
+  <h1>
+    <span id="quranRadioTitle"></span>
+    <a href="https://www.facebook.com/lakel7amd" target="_blank" id="facebookPageLink"></a>
+  </h1>
+  <div class="subtitle" id="subtitleText"></div>
+  <div class="animated-charity-text" id="charityText"></div>
+
+  <div class="prayer-times-panel">
+    <div class="prayer-times-title" id="prayerTimesTitle">مواقيت الصلاة</div>
+    <!-- START: الكود الذي تم إصلاحه -->
+    <div class="prayer-times-grid" id="prayerTimesGrid">
+      <div class="prayer-time-item">
+        <div class="prayer-name" data-translation-key="fajr">الفجر</div>
+        <div class="prayer-time" id="fajrTime">--:--</div>
+      </div>
+      <div class="prayer-time-item">
+        <div class="prayer-name" data-translation-key="sunrise">الشروق</div>
+        <div class="prayer-time" id="sunriseTime">--:--</div>
+      </div>
+      <div class="prayer-time-item">
+        <div class="prayer-name" data-translation-key="dhuhr">الظهر</div>
+        <div class="prayer-time" id="dhuhrTime">--:--</div>
+      </div>
+      <div class="prayer-time-item">
+        <div class="prayer-name" data-translation-key="asr">العصر</div>
+        <div class="prayer-time" id="asrTime">--:--</div>
+      </div>
+      <div class="prayer-time-item">
+        <div class="prayer-name" data-translation-key="maghrib">المغرب</div>
+        <div class="prayer-time" id="maghribTime">--:--</div>
+      </div>
+      <div class="prayer-time-item">
+        <div class="prayer-name" data-translation-key="isha">العشاء</div>
+        <div class="prayer-time" id="ishaTime">--:--</div>
+      </div>
+    </div>
+    <!-- END: الكود الذي تم إصلاحه -->
+    <div class="next-prayer-info">
+      <div class="next-prayer-text" id="nextPrayerText"></div>
+      <div class="next-prayer-countdown" id="nextPrayerCountdown">--:--:--</div>
+    </div>
+    <div class="location-info" id="locationInfo"></div>
+  </div>
+
+  <div class="controls-panel">
+    <div class="now-playing" id="nowPlaying">
+      <div class="playing-indicator" id="playingIndicator"></div>
+      <div class="loader" id="bufferingLoader"></div>
+      <span id="stationName"></span>
+    </div>
+    
+    <div class="volume-controls">
+      <button class="volume-btn" onclick="decreaseVolume( )" id="decreaseVolumeBtn"></button>
+      <div class="volume-display" id="volumeDisplay">50%</div>
+      <button class="volume-btn" onclick="increaseVolume()" id="increaseVolumeBtn"></button>
+    </div>
+    
+    <div class="playlist-controls">
+      <button class="playlist-btn" onclick="previousStation()" id="prevBtn" disabled></button>
+      <button class="playlist-btn" onclick="nextStation()" id="nextBtn" disabled></button>
+    </div>
+    
+    <div class="time-display" id="timeDisplay"></div>
+  </div>
+
+  <div class="search-container">
+    <input type="text" class="search-input" id="searchInput" onkeyup="searchStations()">
+  </div>
+
+  <div class="grid featured-grid" id="featured-stations"></div>
+  <div class="grid" id="stations"></div>
+
+  <footer>
+    <div class="footer-text" id="footerText"></div>
+  </footer>
+  <audio id="radioPlayer" controls style="display:none;" preload="auto"></audio>
+
+  <button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn">
+    <div class="whatsapp-tooltip" id="whatsappTooltip"></div>
+    <svg viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
+    </svg>
+  </button>
+
+  <script>
+    // Translations object
+    const translations = {
+      ar: {
+        quranRadio: "راديو قرآن",
+        facebookLinkText: "اللهم لك الحمد",
+        subtitle: "صفحة",
+        charityText: "صدقة جارية لجميع أموات المسلمين",
+        languageToggle: "English",
+        prayerTimesTitle: "مواقيت الصلاة",
+        fajr: "الفجر",
+        sunrise: "الشروق",
+        dhuhr: "الظهر",
+        asr: "العصر",
+        maghrib: "المغرب",
+        isha: "العشاء",
+        nextPrayerText: "الصلاة القادمة:",
+        locationInfoLoading: "جاري تحديد الموقع...",
+        locationInfoError: "خطأ في جلب مواقيت الصلاة. يرجى التحقق من اتصال الإنترنت أو إعادة تحميل الصفحة.",
+        locationInfoTimezone: "المنطقة الزمنية:",
+        initialStationText: "اختر محطة للتشغيل",
+        decreaseVolumeBtn: "-",
+        increaseVolumeBtn: "+",
+        prevBtn: "السابق",
+        nextBtn: "التالي",
+        searchPlaceholder: "ابحث عن محطة...",
+        timePlaying: "وقت التشغيل:",
+        azkarSelectDefault: "اختر أذكار...",
+        quranSelectDefault: "اختر سورة...",
+        playButton: "تشغيل",
+        stopButton: "إيقاف",
+        playSuraButton: "تشغيل السورة",
+        whatsappTooltip: "الإبلاغ عن رابط معطل",
+        playbackError: "خطأ في تشغيل المحطة:",
+        noPrayerData: "لا توجد بيانات للصلاة القادمة",
+        whatsappMessage: "يوجد رابط معطل في راديو القرآن، يرجى التحقق",
+        footerDesignedBy: "راديو قرآن - صفحة اللهم لك الحمد"
+      },
+      en: {
+        quranRadio: "Quran Radio",
+        facebookLinkText: "Allahuma Lak Alhamd (All Praise is Due to Allah)",
+        subtitle: "Page of",
+        charityText: "Continuous charity for all deceased Muslims",
+        languageToggle: "العربية",
+        prayerTimesTitle: "Prayer Times",
+        fajr: "Fajr",
+        sunrise: "Sunrise",
+        dhuhr: "Dhuhr",
+        asr: "Asr",
+        maghrib: "Maghrib",
+        isha: "Isha",
+        nextPrayerText: "Next Prayer:",
+        locationInfoLoading: "Determining location...",
+        locationInfoError: "Failed to fetch prayer times. Please check internet connection or reload page.",
+        locationInfoTimezone: "Timezone:",
+        initialStationText: "Select a station to play",
+        decreaseVolumeBtn: "-",
+        increaseVolumeBtn: "+",
+        prevBtn: "Previous",
+        nextBtn: "Next",
+        searchPlaceholder: "Search for a station...",
+        timePlaying: "Playing time:",
+        azkarSelectDefault: "Select Azkar...",
+        quranSelectDefault: "Select Sura...",
+        playButton: "Play",
+        stopButton: "Stop",
+        playSuraButton: "Play Sura",
+        whatsappTooltip: "Report a broken link",
+        playbackError: "Error playing station:",
+        noPrayerData: "No prayer data available",
+        whatsappMessage: "There is a broken link in Quran Radio, please check",
+        footerDesignedBy: "Radio Quran - Allahumma lakal-hamd page"
+      }
+    };
+
+    let currentLanguage = 'ar'; // Default language
+
+    // Quran Suras data for Mishary Rashid (extracted from your file)
+    const misharyQuranSuras = [
+        { num: '001', name: { ar: 'الفاتحة', en: 'Al-Fatiha' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/001.mp3' },
+        { num: '002', name: { ar: 'البقرة', en: 'Al-Baqarah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/002.mp3' },
+        { num: '003', name: { ar: 'آل عمران', en: 'Al-Imran' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/003.mp3' },
+        { num: '004', name: { ar: 'النساء', en: 'An-Nisa' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/004.mp3' },
+        { num: '005', name: { ar: 'المائدة', en: 'Al-Maidah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/005.mp3' },
+        { num: '006', name: { ar: 'الأنعام', en: 'Al-Anam' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/006.mp3' },
+        { num: '007', name: { ar: 'الأعراف', en: 'Al-Araf' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/007.mp3' },
+        { num: '008', name: { ar: 'الأنفال', en: 'Al-Anfal' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/008.mp3' },
+        { num: '009', name: { ar: 'التوبة', en: 'At-Tawbah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/009.mp3' },
+        { num: '010', name: { ar: 'يونس', en: 'Yunus' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/010.mp3' },
+        { num: '011', name: { ar: 'هود', en: 'Hud' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/011.mp3' },
+        { num: '012', name: { ar: 'يوسف', en: 'Yusuf' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/012.mp3' },
+        { num: '013', name: { ar: 'الرعد', en: 'Ar-Rad' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/013.mp3' },
+        { num: '014', name: { ar: 'إبراهيم', en: 'Ibrahim' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/014.mp3' },
+        { num: '015', name: { ar: 'الحجر', en: 'Al-Hijr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/015.mp3' },
+        { num: '016', name: { ar: 'النحل', en: 'An-Nahl' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/016.mp3' },
+        { num: '017', name: { ar: 'الإسراء', en: 'Al-Isra' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/017.mp3' },
+        { num: '018', name: { ar: 'الكهف', en: 'Al-Kahf' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/018.mp3' },
+        { num: '019', name: { ar: 'مريم', en: 'Maryam' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/019.mp3' },
+        { num: '020', name: { ar: 'طه', en: 'Taha' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/020.mp3' },
+        { num: '021', name: { ar: 'الأنبياء', en: 'Al-Anbiya' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/021.mp3' },
+        { num: '022', name: { ar: 'الحج', en: 'Al-Hajj' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/022.mp3' },
+        { num: '023', name: { ar: 'المؤمنون', en: 'Al-Muminun' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/023.mp3' },
+        { num: '024', name: { ar: 'النور', en: 'An-Nur' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/024.mp3' },
+        { num: '025', name: { ar: 'الفرقان', en: 'Al-Furqan' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/025.mp3' },
+        { num: '026', name: { ar: 'الشعراء', en: 'Ash-Shuara' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/026.mp3' },
+        { num: '027', name: { ar: 'النمل', en: 'An-Naml' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/027.mp3' },
+        { num: '028', name: { ar: 'القصص', en: 'Al-Qasas' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/028.mp3' },
+        { num: '029', name: { ar: 'العنكبوت', en: 'Al-Ankabut' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/029.mp3' },
+        { num: '030', name: { ar: 'الروم', en: 'Ar-Rum' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/030.mp3' },
+        { num: '031', name: { ar: 'لقمان', en: 'Luqman' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/031.mp3' },
+        { num: '032', name: { ar: 'السجدة', en: 'As-Sajda' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/032.mp3' },
+        { num: '033', name: { ar: 'الأحزاب', en: 'Al-Ahzab' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/033.mp3' },
+        { num: '034', name: { ar: 'سبأ', en: 'Saba' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/034.mp3' },
+        { num: '035', name: { ar: 'فاطر', en: 'Fatir' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/035.mp3' },
+        { num: '036', name: { ar: 'يس', en: 'Ya-Sin' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/036.mp3' },
+        { num: '037', name: { ar: 'الصافات', en: 'As-Saffat' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/037.mp3' },
+        { num: '038', name: { ar: 'ص', en: 'Sad' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/038.mp3' },
+        { num: '039', name: { ar: 'الزمر', en: 'Az-Zumar' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/039.mp3' },
+        { num: '040', name: { ar: 'غافر', en: 'Ghafir' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/040.mp3' },
+        { num: '041', name: { ar: 'فصلت', en: 'Fussilat' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/041.mp3' },
+        { num: '042', name: { ar: 'الشورى', en: 'Ash-Shura' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/042.mp3' },
+        { num: '043', name: { ar: 'الزخرف', en: 'Az-Zukhruf' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/043.mp3' },
+        { num: '044', name: { ar: 'الدخان', en: 'Ad-Dukhan' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/044.mp3' },
+        { num: '045', name: { ar: 'الجاثية', en: 'Al-Jathiyah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/045.mp3' },
+        { num: '046', name: { ar: 'الأحقاف', en: 'Al-Ahqaf' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/046.mp3' },
+        { num: '047', name: { ar: 'محمد', en: 'Muhammad' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/047.mp3' },
+        { num: '048', name: { ar: 'الفتح', en: 'Al-Fath' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/048.mp3' },
+        { num: '049', name: { ar: 'الحجرات', en: 'Al-Hujurat' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/049.mp3' },
+        { num: '050', name: { ar: 'ق', en: 'Qaf' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/050.mp3' },
+        { num: '051', name: { ar: 'الذاريات', en: 'Adh-Dhariyat' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/051.mp3' },
+        { num: '052', name: { ar: 'الطور', en: 'At-Tur' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/052.mp3' },
+        { num: '053', name: { ar: 'النجم', en: 'An-Najm' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/053.mp3' },
+        { num: '054', name: { ar: 'القمر', en: 'Al-Qamar' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/054.mp3' },
+        { num: '055', name: { ar: 'الرحمن', en: 'Ar-Rahman' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/055.mp3' },
+        { num: '056', name: { ar: 'الواقعة', en: 'Al-Waqi\'ah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/056.mp3' },
+        { num: '057', name: { ar: 'الحديد', en: 'Al-Hadid' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/057.mp3' },
+        { num: '058', name: { ar: 'المجادلة', en: 'Al-Mujadila' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/058.mp3' },
+        { num: '059', name: { ar: 'الحشر', en: 'Al-Hashr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/059.mp3' },
+        { num: '060', name: { ar: 'الممتحنة', en: 'Al-Mumtahanah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/060.mp3' },
+        { num: '061', name: { ar: 'الصف', en: 'As-Saff' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/061.mp3' },
+        { num: '062', name: { ar: 'الجمعة', en: 'Al-Jumu\'ah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/062.mp3' },
+        { num: '063', name: { ar: 'المنافقون', en: 'Al-Munafiqun' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/063.mp3' },
+        { num: '064', name: { ar: 'التغابن', en: 'At-Taghabun' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/064.mp3' },
+        { num: '065', name: { ar: 'الطلاق', en: 'At-Talaq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/065.mp3' },
+        { num: '066', name: { ar: 'التحريم', en: 'At-Tahrim' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/066.mp3' },
+        { num: '067', name: { ar: 'الملك', en: 'Al-Mulk' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/067.mp3' },
+        { num: '068', name: { ar: 'القلم', en: 'Al-Qalam' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/068.mp3' },
+        { num: '069', name: { ar: 'الحاقة', en: 'Al-Haqqah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/069.mp3' },
+        { num: '070', name: { ar: 'المعارج', en: 'Al-Maarij' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/070.mp3' },
+        { num: '071', name: { ar: 'نوح', en: 'Nuh' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/071.mp3' },
+        { num: '072', name: { ar: 'الجن', en: 'Al-Jinn' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/072.mp3' },
+        { num: '073', name: { ar: 'المزمل', en: 'Al-Muzzammil' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/073.mp3' },
+        { num: '074', name: { ar: 'المدثر', en: 'Al-Muddaththir' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/074.mp3' },
+        { num: '075', name: { ar: 'القيامة', en: 'Al-Qiyamah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/075.mp3' },
+        { num: '076', name: { ar: 'الإنسان', en: 'Al-Insan' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/076.mp3' },
+        { num: '077', name: { ar: 'المرسلات', en: 'Al-Mursalat' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/077.mp3' },
+        { num: '078', name: { ar: 'النبأ', en: 'An-Naba' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/078.mp3' },
+        { num: '079', name: { ar: 'النازعات', en: 'An-Nazi\'at' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/079.mp3' },
+        { num: '080', name: { ar: 'عبس', en: 'Abasa' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/080.mp3' },
+        { num: '081', name: { ar: 'التكوير', en: 'At-Takwir' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/081.mp3' },
+        { num: '082', name: { ar: 'الانفطار', en: 'Al-Infitar' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/082.mp3' },
+        { num: '083', name: { ar: 'المطففين', en: 'Al-Mutaffifin' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/083.mp3' },
+        { num: '084', name: { ar: 'الانشقاق', en: 'Al-Inshiqaq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/084.mp3' },
+        { num: '085', name: { ar: 'البروج', en: 'Al-Buruj' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/085.mp3' },
+        { num: '086', name: { ar: 'الطارق', en: 'At-Tariq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/086.mp3' },
+        { num: '087', name: { ar: 'الأعلى', en: 'Al-A’la' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/087.mp3' },
+        { num: '088', name: { ar: 'الغاشية', en: 'Al-Ghashiyah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/088.mp3' },
+        { num: '089', name: { ar: 'الفجر', en: 'Al-Fajr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/089.mp3' },
+        { num: '090', name: { ar: 'البلد', en: 'Al-Balad' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/090.mp3' },
+        { num: '091', name: { ar: 'الشمس', en: 'Ash-Shams' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/091.mp3' },
+        { num: '092', name: { ar: 'الليل', en: 'Al-Layl' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/092.mp3' },
+        { num: '093', name: { ar: 'الضحى', en: 'Ad-Duha' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/093.mp3' },
+        { num: '094', name: { ar: 'الشرح', en: 'Ash-Sharh' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/094.mp3' },
+        { num: '095', name: { ar: 'التين', en: 'At-Tin' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/095.mp3' },
+        { num: '096', name: { ar: 'العلق', en: 'Al-Alaq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/096.mp3' },
+        { num: '097', name: { ar: 'القدر', en: 'Al-Qadr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/097.mp3' },
+        { num: '098', name: { ar: 'البينة', en: 'Al-Bayyinah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/098.mp3' },
+        { num: '099', name: { ar: 'الزلزلة', en: 'Az-Zalzalah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/099.mp3' },
+        { num: '100', name: { ar: 'العاديات', en: 'Al-Adiyat' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/100.mp3' },
+        { num: '101', name: { ar: 'القارعة', en: 'Al-Qari\'ah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/101.mp3' },
+        { num: '102', name: { ar: 'التكاثر', en: 'At-Takathur' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/102.mp3' },
+        { num: '103', name: { ar: 'العصر', en: 'Al-Asr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/103.mp3' },
+        { num: '104', name: { ar: 'الهمزة', en: 'Al-Humazah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/104.mp3' },
+        { num: '105', name: { ar: 'الفيل', en: 'Al-Fil' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/105.mp3' },
+        { num: '106', name: { ar: 'قريش', en: 'Quraish' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/106.mp3' },
+        { num: '107', name: { ar: 'الماعون', en: 'Al-Ma\'un' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/107.mp3' },
+        { num: '108', name: { ar: 'الكوثر', en: 'Al-Kawthar' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/108.mp3' },
+        { num: '109', name: { ar: 'الكافرون', en: 'Al-Kafirun' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/109.mp3' },
+        { num: '110', name: { ar: 'النصر', en: 'An-Nasr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/110.mp3' },
+        { num: '111', name: { ar: 'المسد', en: 'Al-Masad' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/111.mp3' },
+        { num: '112', name: { ar: 'الإخلاص', en: 'Al-Ikhlas' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/112.mp3' },
+        { num: '113', name: { ar: 'الفلق', en: 'Al-Falaq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/113.mp3' },
+        { num: '114', name: { ar: 'الناس', en: 'An-Nas' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/114.mp3' }
+    ];
+
+    // Original stations (not featured in the first row)
+    const originalJsStations = [
+      { name: {ar: "الشيخ أحمد العجمي", en: "Sheikh Ahmed Al-Ajmi"}, img: "https://7nen.do.am/_ph/6/1/979378293.jpg", url: "https://qurango.net/radio/ahmad_alajmy.mp3" },
+      // Sheikh Mishary Rashid station with Sura list
+      { 
+        name: {ar: "الشيخ مشاري راشد", en: "Sheikh Mishary Rashid"}, 
+        img: "https://7nen.do.am/_ph/6/1/526518923.jpg", 
+        url: "https://qurango.net/radio/mishary_alafasi.mp3", // Live stream/single recording
+        type: "quran_sura_list", // New type to distinguish this card
+        suras: misharyQuranSuras // Add the sura list here
+      },
+      { name: {ar: "الشيخ محمد جبريل", en: "Sheikh Muhammad Jibreel"}, img: "https://7nen.do.am/_ph/6/1/844452129.jpg", url: "https://backup.qurango.net/radio/mohammed_jibreel" },
+      { name: {ar: "الشيخ المنشاوي", en: "Sheikh Al-Minshawi"}, img: "https://7nen.do.am/_ph/6/1/986606135.jpg", url: "https://backup.qurango.net/radio/mohammed_siddiq_alminshawi/أثير%20راديو.mp3" },
+      { name: {ar: "الشيخ عبدالباسط", en: "Sheikh Abdul Basit"}, img: "https://7nen.do.am/_ph/6/1/788498118.jpg", url: "https://qurango.net/radio/abdulbasit_abdulsamad.mp3" },
+      { name: {ar: "الشيخ الحصري", en: "Sheikh Al-Husary"}, img: "https://7nen.do.am/_ph/6/1/650079361.jpg", url: "https://backup.qurango.net/radio/mahmoud_khalil_alhussary" },
+      { name: {ar: "الشيخ إدريس أبكر", en: "Sheikh Idrees Abkar"}, img: "https://7nen.do.am/_ph/6/1/695351424.jpg", url: "https://backup.qurango.net/radio/idrees_abkr" },
+      { name: {ar: "الشيخ محمود علي البنا", en: "Sheikh Mahmoud Ali Al-Banna"}, img: "https://7nen.do.am/_ph/6/1/592190149.jpg", url: "https://backup.qurango.net/radio/mahmoud_ali__albanna" },
+      { name: {ar: "الشيخ سعد الغامدي", en: "Sheikh Saad Al-Ghamdi"}, img: "https://7nen.do.am/_ph/6/1/613525566.jpg", url: "https://backup.qurango.net/radio/saad_alghamdi" },
+      { name: {ar: "الشيخ مصطفى إسماعيل", en: "Sheikh Mustafa Ismail"}, img: "https://7nen.do.am/_ph/6/1/49597189.jpg", url: "https://backup.qurango.net/radio/mustafa_ismail" },
+      { name: {ar: "الشيخ مصطفى اللاهوني", en: "Sheikh Mustafa Al-Lahouni"}, img: "https://7nen.do.am/_ph/6/1/586864154.jpg", url: "https://backup.qurango.net/radio/mustafa_allahoni" },
+      { name: {ar: "الشيخ عبدالرحمن الشحات", en: "Sheikh Abdul Rahman Al-Shahhat"}, img: "https://7nen.do.am/_ph/6/1/397155617.jpg", url: "https://backup.qurango.net/radio/a_alshahhat" }
+    ];
+
+    // Azkar recordings data
+    const azkarRecordings = [
+      { name: {ar: "أذكار الصباح و المساء للقارئ إدريس أبكر", en: "Morning & Evening Azkar - Idrees Abkar"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/Athkar%20Idrees%20Abkar.mp3" },
+      { name: {ar: "أذكار المساء للمنشد فيصل لبان", en: "Evening Azkar - Faisal Labban"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/Athkar%20Almasaa%20-%20Faisal%20Labban.mp3" },
+      { name: {ar: "أذكار الصباح للمنشد فيصل لبان", en: "Morning Azkar - Faisal Labban"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/Athkar%20Alsabah%20-%20Faisal%20Labban.mp3" },
+      { name: {ar: "أذكار الصباح و المساء للشيخ هاني الرفاعي", en: "Morning & Evening Azkar - Hani Al-Rifai"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/Athkar%20Hani%20Alrefaei.mp3" },
+      { name: {ar: "أذكار الصباح للشيخ عبدالعزيز بن إبراهيم", en: "Morning Azkar - Abdulaziz bin Ibrahim"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/AthkarAlsabah-AbdulazizBinIbrahim.mp3" },
+      { name: {ar: "أذكار المساء للشيخ عبدالعزيز بن إبراهيم", en: "Evening Azkar - Abdulaziz bin Ibrahim"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/AthkarAlmasaa-AbdulazizBinIbrahim.mp3" }
+    ];
+
+    // Featured stations in the first row
+    const featuredStationsData = [
+      { name: {ar: "إذاعة الأذكار", en: "Azkar Radio"}, img: "https://7nen.do.am/_ph/6/676236720.jpg", type: "azkar", recordings: azkarRecordings },
+      { name: {ar: "إذاعة القاهرة", en: "Cairo Radio"}, img: "https://7nen.do.am/_ph/6/1/660752318.jpg", url: "https://stream.radiojar.com/8s5u5tpdtwzuv" },
+      { name: {ar: "إذاعة نابلس", en: "Nablus Radio"}, img: "https://7nen.do.am/_ph/6/842159606.jpg", url: "https://quran-radio.org:8443/;?type=http&nocache=13" },
+      { name: {ar: "إذاعة السعودية", en: "Saudi Radio"}, img: "https://7nen.do.am/_ph/6/1/730393383.jpg", url: "https://backup.qurango.net/radio/abdulrahman_alsudaes/أثير%20راديو.mp3" },
+      { name: {ar: "إذاعة الرقية", en: "Ruqyah Radio"}, img: "https://7nen.do.am/_ph/6/1/288946560.jpg", url: "https://qurango.net/radio/roqiah" }
+    ];
+
+    let allStations = [...featuredStationsData, ...originalJsStations]; // Combined list for search/playlist
+    
+    const featuredStationsContainer = document.getElementById('featured-stations');
+    const regularStationsContainer = document.getElementById('stations');
+    const player = document.getElementById('radioPlayer');
+    const nowPlayingSpan = document.getElementById('stationName'); // Renamed from nowPlaying to avoid conflict
+    const playingIndicator = document.getElementById('playingIndicator');
+    const volumeDisplay = document.getElementById('volumeDisplay');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const htmlElement = document.documentElement; // Get the html element
+
+    let currentStationIndex = -1; // Index in the `allStations` array
+    let playStartTime = null;
+    let timeInterval = null;
+    let prayerTimes = {};
+    let nextPrayerInterval = null;
+
+    // Function to set the language and update content
+    function setLanguage(lang) {
+      currentLanguage = lang;
+      htmlElement.setAttribute('lang', lang);
+      htmlElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+      // Update static texts
+      document.getElementById('quranRadioTitle').textContent = translations[lang].quranRadio;
+      document.getElementById('facebookPageLink').textContent = translations[lang].facebookLinkText;
+      document.getElementById('subtitleText').textContent = translations[lang].subtitle;
+      document.getElementById('charityText').textContent = translations[lang].charityText;
+      document.getElementById('languageToggle').textContent = translations[lang].languageToggle;
+      document.getElementById('prayerTimesTitle').textContent = translations[lang].prayerTimesTitle;
+      document.getElementById('decreaseVolumeBtn').textContent = translations[lang].decreaseVolumeBtn;
+      document.getElementById('increaseVolumeBtn').textContent = translations[lang].increaseVolumeBtn;
+      document.getElementById('prevBtn').textContent = translations[lang].prevBtn;
+      document.getElementById('nextBtn').textContent = translations[lang].nextBtn;
+      document.getElementById('searchInput').setAttribute('placeholder', translations[lang].searchPlaceholder);
+      document.getElementById('whatsappTooltip').textContent = translations[lang].whatsappTooltip;
+      document.getElementById('footerText').textContent = translations[lang].footerDesignedBy; // Set footer text
+      
+      // Update prayer names
+      document.querySelectorAll('.prayer-name').forEach(el => {
+        const key = el.getAttribute('data-translation-key');
+        if (key && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+
+      // Re-initialize station cards to apply language-specific names and dropdowns
+      initializeStations();
+      
+      // Update dynamic texts
+      updateNowPlayingText();
+      updatePrayerTimesDisplay(); // Re-render prayer times with new language
+      startNextPrayerCountdown(); // Restart countdown for language update
+      updateLocationInfo(prayerTimes.meta ? prayerTimes.meta.timezone : ''); // Update location info
+      updateTimeDisplay(); // Update playing time display
+    }
+
+    // Toggle language
+    function toggleLanguage() {
+      setLanguage(currentLanguage === 'ar' ? 'en' : 'ar');
+    }
+
+    function initializeStations() {
+      // Clear existing content in both containers
+      featuredStationsContainer.innerHTML = '';
+      regularStationsContainer.innerHTML = '';
+
+      // Render featured stations
+      featuredStationsData.forEach((station) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        if (station.type === 'azkar') {
+          // Special handling for Azkar dropdown
+          card.innerHTML = `
+            <img src="${station.img}" alt="${station.name[currentLanguage]}" />
+            <h2>${station.name[currentLanguage]}</h2>
+            <div class="azkar-dropdown-container">
+              <select class="azkar-select" onchange="playAzkar(this)">
+                <option value="">${translations[currentLanguage].azkarSelectDefault}</option>
+                ${station.recordings.map(rec => `<option value="${rec.url}">${rec.name[currentLanguage]}</option>`).join('')}
+              </select>
+            </div>
+            <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
+            <div class="progress-bar"></div>
+          `;
+        } else {
+          // Regular radio station card
+          card.innerHTML = `
+            <img src="${station.img}" alt="${station.name[currentLanguage]}" />
+            <h2>${station.name[currentLanguage]}</h2>
+            <button onclick="playRadio('${station.url}', '${station.name[currentLanguage]}', this)">${translations[currentLanguage].playButton}</button>
+            <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
+            <div class="progress-bar"></div>
+          `;
+        }
+        featuredStationsContainer.appendChild(card);
+      });
+
+      // Render the rest of the stations
+      originalJsStations.forEach((station) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${station.img}" alt="${station.name[currentLanguage]}" />
+          <h2>${station.name[currentLanguage]}</h2>
+          <button onclick="playRadio('${station.url}', '${station.name[currentLanguage]}', this)">${translations[currentLanguage].playButton}</button>
+          <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
+          ${station.type === 'quran_sura_list' ? `
+            <div class="quran-dropdown-container">
+              <select class="quran-select" id="misharyQuranSelect" onchange="enablePlaySuraButton(this)">
+                <option value="">${translations[currentLanguage].quranSelectDefault}</option>
+                ${station.suras.map(sura => `<option value="${sura.url}">${sura.name[currentLanguage]}</option>`).join('')}
+              </select>
+              <button class="play-sura-btn" id="playSuraBtn" onclick="playQuranSura(this.previousElementSibling)" disabled>${translations[currentLanguage].playSuraButton}</button>
+            </div>
+          ` : ''}
+          <div class="progress-bar"></div>
+        `;
+        regularStationsContainer.appendChild(card);
+      });
+    }
+
+    // Function to enable play sura button when a sura is selected
+    function enablePlaySuraButton(selectElement) {
+        const playSuraBtn = selectElement.nextElementSibling; // Get the button next to the select
+        if (selectElement.value) {
+            playSuraBtn.disabled = false;
+        } else {
+            playSuraBtn.disabled = true;
+        }
+    }
+
+    // Function to play Azkar from dropdown
+    function playAzkar(selectElement) { 
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const url = selectedOption.value;
+        const mainStationName = selectElement.closest('.card').querySelector('h2').textContent; // Get main Azkar card name
+        const recordingName = selectedOption.textContent;
+
+        if (url) {
+            playRadio(url, `${mainStationName} - ${recordingName}`, selectElement); // Pass selectElement for activation
+        } else {
+            stopRadio();
+        }
+    }
+
+    // Function to play a Quran Sura from dropdown
+    function playQuranSura(selectElement) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const url = selectedOption.value;
+        const mainStationName = selectElement.closest('.card').querySelector('h2').textContent; // Get main Mishary card name
+        const suraName = selectedOption.textContent;
+
+        if (url) {
+            playRadio(url, `${mainStationName} - ${suraName}`, selectElement);
+            // Reset the dropdown to default after playing
+            selectElement.value = ""; 
+            enablePlaySuraButton(selectElement); // Disable button after resetting
+        } else {
+            stopRadio();
+        }
+    }
+
+    // تشغيل المحطة
+    function playRadio(url, stationName, elementToActivate) { 
+      player.pause();
+      player.src = url;
+      player.volume = 0.5; // Reset volume to default
+      
+      document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+      
+      const currentCard = elementToActivate.closest('.card');
+      currentCard.classList.add('active');
+      
+      nowPlayingSpan.textContent = stationName;
+      playingIndicator.style.display = 'block';
+      
+      let foundIndex = -1;
+      
+      foundIndex = allStations.findIndex(station => {
+          if (station.type === 'azkar') {
+              return station.recordings.some(rec => rec.url === url);
+          } else if (station.type === 'quran_sura_list') {
+              return station.url === url || station.suras.some(sura => sura.url === url);
+          } else {
+              return station.url === url;
+          }
+      });
+      
+      currentStationIndex = foundIndex; 
+      updatePlaylistButtons();
+      
+      player.play().then(() => {
+        playStartTime = Date.now();
+        startTimeCounter();
+      }).catch(error => {
+        console.error('Playback error:', error);
+        nowPlayingSpan.textContent = `${translations[currentLanguage].playbackError} ${stationName}`;
+        playingIndicator.style.display = 'none';
+        currentCard.classList.remove('active');
+      });
+    }
+
+    // إيقاف التشغيل
+    function stopRadio() {
+      player.pause();
+      player.src = "";
+      nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
+      playingIndicator.style.display = 'none';
+      
+      document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+      
+      currentStationIndex = -1;
+      updatePlaylistButtons();
+      stopTimeCounter();
+    }
+
+    // التحكم في الصوت
+    function increaseVolume() {
+      if (player.volume < 1) {
+        player.volume = Math.min(1, player.volume + 0.1);
+        updateVolumeDisplay();
+      }
+    }
+
+    function decreaseVolume() {
+      if (player.volume > 0) {
+        player.volume = Math.max(0, player.volume - 0.1);
+        updateVolumeDisplay();
+      }
+    }
+
+    function updateVolumeDisplay() {
+      volumeDisplay.textContent = Math.round(player.volume * 100) + '%';
+    }
+
+    // البحث عن المحطات
+    function searchStations() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const allCards = document.querySelectorAll('.card'); 
+      
+      allCards.forEach(card => {
+        const stationNameEl = card.querySelector('h2');
+        const stationName = stationNameEl ? stationNameEl.textContent.toLowerCase() : '';
+        
+        // Also search within Azkar and Quran sura names
+        let foundInSublist = false;
+        if (card.querySelector('.azkar-select')) {
+            Array.from(card.querySelectorAll('.azkar-select option')).forEach(option => {
+                if (option.textContent.toLowerCase().includes(searchTerm)) {
+                    foundInSublist = true;
+                }
+            });
+        }
+        if (card.querySelector('.quran-select')) {
+            Array.from(card.querySelectorAll('.quran-select option')).forEach(option => {
+                if (option.textContent.toLowerCase().includes(searchTerm)) {
+                    foundInSublist = true;
+                }
+            });
+        }
+
+        if (stationName.includes(searchTerm) || foundInSublist) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // التنقل في قائمة التشغيل
+    function previousStation() {
+        if (currentStationIndex > 0) {
+            let targetIndex = currentStationIndex - 1;
+            while (targetIndex >= 0 && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'quran_sura_list')) {
+                // If the current station is Mishary with Sura list, allow previous/next for the main station itself, not its suras.
+                // The main purpose of previous/next is to switch between *main* stations.
+                // So, if we land on Mishary's main station, we'll stop there.
+                if (allStations[targetIndex].type === 'quran_sura_list' && allStations[targetIndex].url === player.src) {
+                    break; 
+                }
+                targetIndex--;
+            }
+            if (targetIndex >= 0) {
+                const prevStation = allStations[targetIndex];
+                const cards = document.querySelectorAll('.card');
+                const targetCard = Array.from(cards).find(card => 
+                  card.querySelector('h2').textContent === prevStation.name[currentLanguage]
+                );
+                if (targetCard) {
+                  const playButton = targetCard.querySelector('button:not(.stop-btn)');
+                  if(playButton) playButton.click();
+                }
+            }
+        }
+        updatePlaylistButtons();
+    }
+
+    function nextStation() {
+        if (currentStationIndex < allStations.length - 1) {
+            let targetIndex = currentStationIndex + 1;
+            while (targetIndex < allStations.length && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'quran_sura_list')) {
+                // Similar to previousStation, stop at the main Mishary station if it's the next one.
+                if (allStations[targetIndex].type === 'quran_sura_list' && allStations[targetIndex].url === player.src) {
+                    break;
+                }
+                targetIndex++;
+            }
+            if (targetIndex < allStations.length) {
+                const nextStation = allStations[targetIndex];
+                const cards = document.querySelectorAll('.card');
+                const targetCard = Array.from(cards).find(card => 
+                  card.querySelector('h2').textContent === nextStation.name[currentLanguage]
+                );
+                if (targetCard) {
+                  const playButton = targetCard.querySelector('button:not(.stop-btn)');
+                  if(playButton) playButton.click();
+                }
+            }
+        }
+        updatePlaylistButtons();
+    }
+
+    function updatePlaylistButtons() {
+        if (currentStationIndex === -1) {
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            return;
+        }
+
+        const currentStation = allStations[currentStationIndex];
+        
+        // Disable prev/next if currently playing an Azkar recording or a specific Quran Sura
+        let isSubItemPlaying = false;
+        if (currentStation.type === 'azkar' && currentStation.recordings.some(rec => rec.url === player.src)) {
+            isSubItemPlaying = true;
+        } else if (currentStation.type === 'quran_sura_list' && currentStation.suras.some(sura => sura.url === player.src)) {
+            isSubItemPlaying = true;
+        }
+
+        if (isSubItemPlaying) {
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            return;
+        }
+
+        // Check if there's a valid previous non-sublist station
+        let hasPrevious = false;
+        for (let i = currentStationIndex - 1; i >= 0; i--) {
+            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'quran_sura_list') {
+                hasPrevious = true;
+                break;
+            } else if (allStations[i].type === 'quran_sura_list' && allStations[i].url === player.src) {
+                // If Mishary's main stream is playing, and it's the one we're on, we can go back from here.
+                hasPrevious = true;
+                break;
+            } else if (allStations[i].type === 'azkar' && allStations[i].url === player.src) { // Should not happen for Azkar type (no direct URL)
+                 // This block is mostly for safety, Azkar type doesn't have a direct URL to play
+            }
+        }
+
+        // Check if there's a valid next non-sublist station
+        let hasNext = false;
+        for (let i = currentStationIndex + 1; i < allStations.length; i++) {
+            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'quran_sura_list') {
+                hasNext = true;
+                break;
+            } else if (allStations[i].type === 'quran_sura_list' && allStations[i].url === player.src) {
+                hasNext = true;
+                break;
+            }
+        }
+
+        prevBtn.disabled = !hasPrevious;
+        nextBtn.disabled = !hasNext;
+    }
+
+
+    // عداد الوقت
+    function startTimeCounter() {
+      clearInterval(timeInterval); 
+      timeInterval = setInterval(() => {
+        if (playStartTime) {
+          updateTimeDisplay();
+        }
+      }, 1000);
+    }
+
+    function updateTimeDisplay() {
+        if (playStartTime) {
+            const elapsed = Math.floor((Date.now() - playStartTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            timeDisplay.textContent = `${translations[currentLanguage].timePlaying} ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+    }
+
+    function stopTimeCounter() {
+      if (timeInterval) {
+        clearInterval(timeInterval);
+        timeInterval = null;
+      }
+      timeDisplay.textContent = '';
+      playStartTime = null;
+    }
+
+    function updateNowPlayingText() {
+        if (player.src) {
+            let currentPlayingName = translations[currentLanguage].initialStationText;
+            const currentPlayingUrl = player.src;
+
+            const foundStation = allStations.find(station => {
+                if (station.type === 'azkar') {
+                    const matchingRecording = station.recordings.find(rec => rec.url === currentPlayingUrl);
+                    if (matchingRecording) {
+                        currentPlayingName = `${station.name[currentLanguage]} - ${matchingRecording.name[currentLanguage]}`;
+                        return true;
+                    }
+                } else if (station.type === 'quran_sura_list') {
+                    if (station.url === currentPlayingUrl) {
+                        currentPlayingName = station.name[currentLanguage]; // Playing the main stream
+                        return true;
+                    }
+                    const matchingSura = station.suras.find(sura => sura.url === currentPlayingUrl);
+                    if (matchingSura) {
+                        currentPlayingName = `${station.name[currentLanguage]} - ${matchingSura.name[currentLanguage]}`;
+                        return true;
+                    }
+                } else if (station.url === currentPlayingUrl) {
+                    currentPlayingName = station.name[currentLanguage];
+                    return true;
+                }
+                return false;
+            });
+            nowPlayingSpan.textContent = currentPlayingName;
+            playingIndicator.style.display = 'block';
+        } else {
+            nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
+            playingIndicator.style.display = 'none';
+        }
+    }
+
+    // وظائف مواقيت الصلاة
+    async function getUserLocation() {
+      return new Promise((resolve, reject) => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            position => {
+              resolve({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+              });
+            },
+            error => {
+              console.error('Location error:', error);
+              resolve({
+                latitude: 30.0444, // Default to Cairo
+                longitude: 31.2357
+              });
+            }
+          );
+        } else {
+          resolve({
+            latitude: 30.0444, // Default to Cairo
+            longitude: 31.2357
+          });
+        }
+      });
+    }
+
+    async function fetchPrayerTimes() {
+      try {
+        document.getElementById('locationInfo').textContent = translations[currentLanguage].locationInfoLoading;
+        const location = await getUserLocation();
+        const timestamp = Math.floor(Date.now() / 1000); 
+        
+        const response = await fetch(
+          `https://api.aladhan.com/v1/timings/${timestamp}?latitude=${location.latitude}&longitude=${location.longitude}&method=5&adjustment=0`
+        );
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch prayer times');
+        }
+        
+        const data = await response.json();
+        prayerTimes = data.data; // Store full data including meta
+        
+        updatePrayerTimesDisplay();
+        updateLocationInfo(prayerTimes.meta.timezone);
+        startNextPrayerCountdown();
+        
+      } catch (error) {
+        console.error('Error fetching prayer times:', error);
+        document.getElementById('locationInfo').textContent = translations[currentLanguage].locationInfoError;
+        document.getElementById('fajrTime').textContent = '--:--';
+        document.getElementById('sunriseTime').textContent = '--:--';
+        document.getElementById('dhuhrTime').textContent = '--:--';
+        document.getElementById('asrTime').textContent = '--:--';
+        document.getElementById('maghribTime').textContent = '--:--';
+        document.getElementById('ishaTime').textContent = '--:--';
+        if (nextPrayerInterval) {
+          clearInterval(nextPrayerInterval);
+          nextPrayerInterval = null;
+        }
+        document.getElementById('nextPrayerText').textContent = translations[currentLanguage].nextPrayerText;
+        document.getElementById('nextPrayerCountdown').textContent = '--:--:--';
+        prayerTimes = {}; 
+      }
+    }
+
+    function updatePrayerTimesDisplay() {
+        if (!prayerTimes || !prayerTimes.timings) {
+            console.warn("Prayer times data is not available for display.");
+            return;
+        }
+      document.getElementById('fajrTime').textContent = formatTime(prayerTimes.timings.Fajr);
+      document.getElementById('sunriseTime').textContent = formatTime(prayerTimes.timings.Sunrise);
+      document.getElementById('dhuhrTime').textContent = formatTime(prayerTimes.timings.Dhuhr);
+      document.getElementById('asrTime').textContent = formatTime(prayerTimes.timings.Asr);
+      document.getElementById('maghribTime').textContent = formatTime(prayerTimes.timings.Maghrib);
+      document.getElementById('ishaTime').textContent = formatTime(prayerTimes.timings.Isha);
+    }
+
+    function formatTime(timeString) {
+      const [hours, minutes] = timeString.split(':');
+      const date = new Date();
+      date.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      
+      const locale = currentLanguage === 'ar' ? 'ar-EG' : 'en-US';
+      const localTime = date.toLocaleTimeString(locale, {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      });
+      
+      return localTime;
+    }
+
+    function updateLocationInfo(timezone) {
+      document.getElementById('locationInfo').textContent = `${translations[currentLanguage].locationInfoTimezone} ${timezone}`;
+    }
+
+    function getNextPrayer() {
+        if (!prayerTimes || !prayerTimes.timings) {
+            console.warn("Prayer times data is not available to determine next prayer.");
+            return null;
+        }
+
+      const now = new Date();
+      const currentTimeInMinutes = now.getHours() * 60 + now.getMinutes();
+      
+      const prayers = [
+        { name: translations[currentLanguage].fajr, time: prayerTimes.timings.Fajr, elementId: 'fajrTime' },
+        { name: translations[currentLanguage].sunrise, time: prayerTimes.timings.Sunrise, elementId: 'sunriseTime' },
+        { name: translations[currentLanguage].dhuhr, time: prayerTimes.timings.Dhuhr, elementId: 'dhuhrTime' },
+        { name: translations[currentLanguage].asr, time: prayerTimes.timings.Asr, elementId: 'asrTime' },
+        { name: translations[currentLanguage].maghrib, time: prayerTimes.timings.Maghrib, elementId: 'maghribTime' },
+        { name: translations[currentLanguage].isha, time: prayerTimes.timings.Isha, elementId: 'ishaTime' }
+      ];
+      
+      for (let prayer of prayers) {
+        const [hours, minutes] = prayer.time.split(':');
+        const prayerTimeInMinutes = parseInt(hours) * 60 + parseInt(minutes);
+        
+        if (prayerTimeInMinutes > currentTimeInMinutes) {
+          return { ...prayer, timeInMinutes: prayerTimeInMinutes };
+        }
+      }
+      
+      // If no prayer found for today, the next prayer is Fajr of the next day
+      const [fajrHours, fajrMinutes] = prayers[0].time.split(':');
+      return { 
+        ...prayers[0], 
+        timeInMinutes: parseInt(fajrHours) * 60 + parseInt(fajrMinutes) + 24 * 60 
+      };
+    }
+
+    function startNextPrayerCountdown() {
+        if (!prayerTimes || !prayerTimes.timings) {
+            console.warn("Prayer times data is not available for countdown.");
+            document.getElementById('nextPrayerText').textContent = translations[currentLanguage].noPrayerData;
+            document.getElementById('nextPrayerCountdown').textContent = '--:--:--';
+            return;
+        }
+
+        if (nextPrayerInterval) {
+            clearInterval(nextPrayerInterval);
+        }
+
+      nextPrayerInterval = setInterval(() => {
+        const nextPrayer = getNextPrayer();
+        if (!nextPrayer) {
+            document.getElementById('nextPrayerText').textContent = translations[currentLanguage].noPrayerData;
+            document.getElementById('nextPrayerCountdown').textContent = '--:--:--';
+            return;
+        }
+
+        const now = new Date();
+        const currentTimeInMinutes = now.getHours() * 60 + now.getMinutes();
+        const currentSeconds = now.getSeconds();
+        
+        let timeDiffMinutes = nextPrayer.timeInMinutes - currentTimeInMinutes;
+        
+        if (timeDiffMinutes <= 0) {
+          timeDiffMinutes += 24 * 60; 
+        }
+
+        const totalSecondsRemaining = (timeDiffMinutes * 60) - currentSeconds;
+        
+        const hours = Math.floor(totalSecondsRemaining / 3600);
+        const minutes = Math.floor((totalSecondsRemaining % 3600) / 60);
+        const seconds = totalSecondsRemaining % 60;
+
+        document.getElementById('nextPrayerText').textContent = `${translations[currentLanguage].nextPrayerText} ${nextPrayer.name}`;
+        document.getElementById('nextPrayerCountdown').textContent = 
+          `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        document.querySelectorAll('.prayer-time-item').forEach(item => {
+          item.classList.remove('next-prayer');
+        });
+        
+        const nextPrayerElement = document.getElementById(nextPrayer.elementId);
+        if (nextPrayerElement) {
+            nextPrayerElement.closest('.prayer-time-item').classList.add('next-prayer');
+        }
+
+        if (totalSecondsRemaining <= 0) {
+            fetchPrayerTimes();
+        }
+
+      }, 1000);
+    }
+
+    // وظيفة الإبلاغ عن رابط معطل عبر الواتساب
+    function reportBrokenLink() {
+      const phoneNumber = '+201092116092';
+      const message = translations[currentLanguage].whatsappMessage;
+      const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
+      
+      window.open(whatsappUrl, '_blank');
+      
+      return false;
+    }
+
+    // اختصارات لوحة المفاتيح
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (player.src && !player.paused) {
+          stopRadio();
+        } else if (currentStationIndex >= 0) {
+          const currentStation = allStations[currentStationIndex];
+          // Prevent spacebar from playing Azkar/Quran suras directly from their dropdown
+          if (currentStation.type === 'azkar' || currentStation.type === 'quran_sura_list') {
+              console.log("Cannot play sub-items with spacebar. Please use specific play buttons or dropdowns.");
+              return;
+          }
+          const cards = document.querySelectorAll('.card');
+          const targetCard = Array.from(cards).find(card => 
+            card.querySelector('h2').textContent === currentStation.name[currentLanguage]
+          );
+          if (targetCard) {
+            const playButton = targetCard.querySelector('button:not(.stop-btn)');
+            if(playButton) playButton.click();
+          }
+        }
+      } else if (e.code === 'ArrowLeft') {
+        previousStation();
+      } else if (e.code === 'ArrowRight') {
+        nextStation();
+      } else if (e.code === 'ArrowUp') {
+        e.preventDefault();
+        increaseVolume();
+      } else if (e.code === 'ArrowDown') {
+        e.preventDefault();
+        decreaseVolume();
+      }
+    });
+
+    // تهيئة التطبيق
+    document.addEventListener('DOMContentLoaded', () => {
+        setLanguage('ar'); // Set initial language to Arabic
+        initializeStations();
+        updateVolumeDisplay();
+        updatePlaylistButtons();
+        fetchPrayerTimes();
+    });
+  </script>
+</body>
+</html>
