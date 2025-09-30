@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -821,6 +820,114 @@
 
     let currentLanguage = 'ar'; // Default language
 
+    // خواطر الشيخ الشعراوي في تفسير القرآن الكريم
+    const sharawyTafsirRecordings = [
+        { name: "مقدمة 1", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro1.mp3" },
+        { name: "مقدمة 2", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro2.mp3" },
+        { name: "مقدمة 3", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro3.mp3" },
+        { name: "مقدمة 4", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro4.mp3" },
+        { name: "سورة الفاتحة 001", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_001.mp3" },
+        { name: "سورة الفاتحة 002", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_002.mp3" },
+        { name: "سورة الفاتحة 003", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_003.mp3" },
+        { name: "سورة الفاتحة 004", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_004.mp3" },
+        { name: "سورة البقرة (001-001)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah001_001.mp3" },
+        { name: "سورة البقرة (001-002)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah001_002.mp3" },
+        { name: "سورة البقرة (003-005)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah003_005.mp3" },
+        { name: "سورة البقرة (006-016)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah006_016.mp3" },
+        { name: "سورة البقرة (017-019)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah017_019.mp3" },
+        { name: "سورة البقرة (019-020)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah019_020.mp3" },
+        { name: "سورة البقرة (020-021)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah020_021.mp3" },
+        { name: "سورة البقرة (022-023)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah022_023.mp3" },
+        { name: "سورة البقرة (024-025)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah024_025.mp3" },
+        { name: "سورة البقرة (026-027)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah026_027.mp3" },
+        { name: "سورة البقرة (027-028)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah027_028.mp3" },
+        { name: "سورة البقرة (028-029)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah028_029.mp3" },
+        { name: "سورة البقرة (029-030)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah029_030.mp3" },
+        { name: "سورة البقرة (029-030) تتمة", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah029_030_.mp3" },
+        { name: "سورة البقرة (030-031)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah030_031.mp3" },
+        { name: "سورة البقرة (030-034)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah030_034.mp3" },
+        { name: "سورة البقرة (035-036)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah035_036.mp3" },
+        { name: "سورة البقرة (037-039)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah037_039.mp3" },
+        { name: "سورة البقرة (040-040)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah040_040.mp3" },
+        { name: "سورة البقرة (041-042)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah041_042.mp3" },
+        { name: "سورة البقرة (043-047)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah043_047.mp3" },
+        { name: "سورة البقرة (048-049)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah048_049.mp3" },
+        { name: "سورة البقرة (049-051)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah049_051.mp3" },
+        { name: "سورة البقرة (051-054)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah051_054.mp3" },
+        { name: "سورة البقرة (054-058)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah054_058.mp3" },
+        { name: "سورة البقرة (060-060)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah060_060.mp3" },
+        { name: "سورة البقرة (060-061)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah060_061.mp3" },
+        { name: "سورة البقرة (062-063)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah062_063.mp3" },
+        { name: "سورة البقرة (063-067)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah063_067.mp3" },
+        { name: "سورة البقرة (067-073)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah067_073.mp3" },
+        { name: "سورة البقرة (074-078)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah074_078.mp3" },
+        { name: "سورة البقرة (078-079)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah078_079.mp3" },
+        { name: "سورة البقرة (079-083)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah079_083.mp3" },
+        { name: "سورة البقرة (083-085)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah083_085.mp3" },
+        { name: "سورة البقرة (085-086)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah085_086.mp3" },
+        { name: "سورة البقرة (087-087)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah087_087.mp3" },
+        { name: "سورة البقرة (087-092)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah087_092.mp3" },
+        { name: "سورة البقرة (092-097)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah092_097.mp3" },
+        { name: "سورة البقرة (097-102)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah097_102.mp3" },
+        { name: "سورة البقرة (102-102)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah102_102.mp3" },
+        { name: "سورة البقرة (102-105)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah102_105.mp3" },
+        { name: "سورة البقرة (105-107)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah105_107.mp3" },
+        { name: "سورة البقرة (107-109)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah107_109.mp3" },
+        { name: "سورة البقرة (109-115)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah109_115.mp3" },
+        { name: "سورة البقرة (115-117)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah115_117.mp3" },
+        { name: "سورة البقرة (118-123)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah118_123.mp3" },
+        { name: "سورة البقرة (124-125)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah124_125.mp3" },
+        { name: "سورة البقرة (125-126)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah125_126.mp3" },
+        { name: "سورة البقرة (126-133)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah126_133.mp3" },
+        { name: "سورة البقرة (133-135)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah133_135.mp3" },
+        { name: "سورة البقرة (135-139)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah135_139.mp3" },
+        { name: "سورة البقرة (140-143)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah140_143.mp3" },
+        { name: "سورة البقرة (143-146)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah143_146.mp3" },
+        { name: "سورة البقرة (146-153)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah146_153.mp3" },
+        { name: "سورة البقرة (152-155)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah152_155.mp3" },
+        { name: "سورة البقرة (155-160)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah155_160.mp3" },
+        { name: "سورة البقرة (159-164)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah159_164.mp3" },
+        { name: "سورة البقرة (164-169)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah164_169.mp3" },
+        { name: "سورة البقرة (170-171)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah170_171.mp3" },
+        { name: "سورة البقرة (171-174)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah171_174.mp3" },
+        { name: "سورة البقرة (174-177)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah174_177.mp3" },
+        { name: "سورة البقرة (177-179)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah177_179.mp3" },
+        { name: "سورة البقرة (180-185)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah180_185.mp3" },
+        { name: "سورة البقرة (186-187)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah186_187.mp3" },
+        { name: "سورة البقرة (187-189)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah187_189.mp3" },
+        { name: "سورة البقرة (189-191)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah189_191.mp3" },
+        { name: "سورة البقرة (191-195)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah191_195.mp3" },
+        { name: "سورة البقرة (195-197)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah195_197.mp3" },
+        { name: "سورة البقرة (197-199)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah197_199.mp3" },
+        { name: "سورة البقرة (200-205)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah200_205.mp3" },
+        { name: "سورة البقرة (204-208)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah204_208.mp3" },
+        { name: "سورة البقرة (208-211)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah208_211.mp3" },
+        { name: "سورة البقرة (212-214)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah212_214.mp3" },
+        { name: "سورة البقرة (214-217)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah214_217.mp3" },
+        { name: "سورة البقرة (217-220)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah217_220.mp3" },
+        { name: "سورة البقرة (221-226)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah221_226.mp3" },
+        { name: "سورة البقرة (226-229)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah226_229.mp3" },
+        { name: "سورة البقرة (229-234)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah229_234.mp3" },
+        { name: "سورة البقرة (234-236)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah234_236.mp3" },
+        { name: "سورة البقرة (237-243)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah237_243.mp3" },
+        { name: "سورة البقرة (243-247)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah243_247.mp3" },
+        { name: "سورة البقرة (248-251)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah248_251.mp3" },
+        { name: "سورة البقرة (251-253)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah251_253.mp3" },
+        { name: "سورة البقرة (253-255)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah253_255.mp3" },
+        { name: "سورة البقرة (255-255)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah255_255.mp3" },
+        { name: "سورة البقرة (255-257)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah255_257.mp3" },
+        { name: "سورة البقرة (258-259)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah258_259.mp3" },
+        { name: "سورة البقرة (259-262)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah259_262.mp3" },
+        { name: "سورة البقرة (262-271)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah262_271.mp3" },
+        { name: "سورة البقرة (272-274)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah272_274.mp3" },
+        { name: "سورة البقرة (274-275)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah274_275.mp3" },
+        { name: "سورة البقرة (276-279)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah276_279.mp3" },
+        { name: "سورة البقرة (279-282)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah279_282.mp3" },
+        { name: "سورة البقرة (283-284)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah283_284.mp3" },
+        { name: "سورة البقرة (284-286)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah284_286.mp3" },
+        { name: "سورة البقرة (286-286)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah286_286.mp3" }
+    ];
+
     // Quran Suras data for Mishary Rashid (extracted from your file)
     const misharyQuranSuras = [
         { num: '001', name: { ar: 'الفاتحة', en: 'Al-Fatiha' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/001.mp3' },
@@ -1105,7 +1212,13 @@
       { name: {ar: "إذاعة القاهرة", en: "Cairo Radio"}, img: "https://7nen.do.am/_ph/6/1/660752318.jpg", url: "https://stream.radiojar.com/8s5u5tpdtwzuv" },
       { name: {ar: "إذاعة نابلس", en: "Nablus Radio"}, img: "https://7nen.do.am/_ph/6/842159606.jpg", url: "https://quran-radio.org:8443/;?type=http&nocache=13" },
       { name: {ar: "إذاعة السعودية", en: "Saudi Radio"}, img: "https://7nen.do.am/_ph/6/1/730393383.jpg", url: "https://backup.qurango.net/radio/abdulrahman_alsudaes/أثير%20راديو.mp3" },
-      { name: {ar: "إذاعة الرقية", en: "Ruqyah Radio"}, img: "https://7nen.do.am/_ph/6/1/288946560.jpg", url: "https://qurango.net/radio/roqiah" }
+      { name: {ar: "إذاعة الرقية", en: "Ruqyah Radio"}, img: "https://7nen.do.am/_ph/6/1/288946560.jpg", url: "https://qurango.net/radio/roqiah" },
+      { 
+        name: {ar: "خواطر الشيخ الشعراوي في تفسير القرآن الكريم", en: "Sheikh Al-Sharawi's Reflections on Quranic Interpretation"}, 
+        img: "https://archive.org/download/20250929_20250929_2020/%D8%A7%D9%84%D8%B4%D8%B9%D8%B1%D8%A7%D9%88%D9%89.jpg", 
+        type: "sharawy_tafsir", 
+        recordings: sharawyTafsirRecordings 
+      }
     ];
 
     let allStations = [...featuredStationsData, ...originalJsStations]; // Combined list for search/playlist
@@ -1192,6 +1305,20 @@
               <select class="azkar-select" onchange="playAzkar(this)">
                 <option value="">${translations[currentLanguage].azkarSelectDefault}</option>
                 ${station.recordings.map(rec => `<option value="${rec.url}">${rec.name[currentLanguage]}</option>`).join('')}
+              </select>
+            </div>
+            <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
+            <div class="progress-bar"></div>
+          `;
+        } else if (station.type === 'sharawy_tafsir') {
+          // Special handling for Sharawy Tafsir dropdown
+          card.innerHTML = `
+            <img src="${station.img}" alt="${station.name[currentLanguage]}" />
+            <h2>${station.name[currentLanguage]}</h2>
+            <div class="azkar-dropdown-container">
+              <select class="azkar-select" onchange="playSharawyTafsir(this)">
+                <option value="">${translations[currentLanguage].azkarSelectDefault}</option>
+                ${station.recordings.map(rec => `<option value="${rec.url}">${rec.name}</option>`).join('')}
               </select>
             </div>
             <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
@@ -1297,6 +1424,22 @@
         }
     }
 
+    // Function to play Sharawy Tafsir from dropdown
+    function playSharawyTafsir(selectElement) { 
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const url = selectedOption.value;
+        const mainStationName = selectElement.closest('.card').querySelector('h2').textContent; // Get main station name
+        const recordingName = selectedOption.textContent;
+
+        if (url) {
+            playRadio(url, `${mainStationName} - ${recordingName}`, selectElement);
+            // Keep the selected option visible in the dropdown
+            selectElement.value = url;
+        } else {
+            stopRadio();
+        }
+    }
+
     // Function to play a Quran Sura from dropdown
     function playQuranSura(selectElement) {
         const selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -1355,6 +1498,8 @@
               return station.url === url || station.suras.some(sura => sura.url === url);
           } else if (station.type === 'mushaf_mualim') {
               return station.url === url || station.suras.some(sura => sura.url === url);
+          } else if (station.type === 'sharawy_tafsir') {
+              return station.recordings.some(rec => rec.url === url);
           } else {
               return station.url === url;
           }
@@ -1483,7 +1628,7 @@
     function previousStation() {
         if (currentStationIndex > 0) {
             let targetIndex = currentStationIndex - 1;
-            while (targetIndex >= 0 && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim')) {
+            while (targetIndex >= 0 && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim' || allStations[targetIndex].type === 'sharawy_tafsir')) {
                 if ((allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim') && allStations[targetIndex].url === player.src) {
                     break; 
                 }
@@ -1507,7 +1652,7 @@
     function nextStation() {
         if (currentStationIndex < allStations.length - 1) {
             let targetIndex = currentStationIndex + 1;
-            while (targetIndex < allStations.length && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim')) {
+            while (targetIndex < allStations.length && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim' || allStations[targetIndex].type === 'sharawy_tafsir')) {
                 if ((allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim') && allStations[targetIndex].url === player.src) {
                     break;
                 }
@@ -1545,6 +1690,8 @@
                   ((currentStation.suras && currentStation.suras.some(sura => sura.url === player.src)) || 
                    (currentStation.url === player.src))) {
             isSubItemPlaying = true;
+        } else if (currentStation.type === 'sharawy_tafsir' && currentStation.recordings.some(rec => rec.url === player.src)) {
+            isSubItemPlaying = true;
         }
 
         if (isSubItemPlaying) {
@@ -1556,7 +1703,7 @@
         // Check if there's a valid previous non-sublist station
         let hasPrevious = false;
         for (let i = currentStationIndex - 1; i >= 0; i--) {
-            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim') {
+            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim' && allStations[i].type !== 'sharawy_tafsir') {
                 hasPrevious = true;
                 break;
             } else if ((allStations[i].type === 'quran_sura_list' || allStations[i].type === 'mushaf_mualim') && allStations[i].url === player.src) {
@@ -1568,7 +1715,7 @@
         // Check if there's a valid next non-sublist station
         let hasNext = false;
         for (let i = currentStationIndex + 1; i < allStations.length; i++) {
-            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim') {
+            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim' && allStations[i].type !== 'sharawy_tafsir') {
                 hasNext = true;
                 break;
             } else if ((allStations[i].type === 'quran_sura_list' || allStations[i].type === 'mushaf_mualim') && allStations[i].url === player.src) {
@@ -1629,6 +1776,12 @@
                     const matchingSura = station.suras.find(sura => sura.url === currentPlayingUrl);
                     if (matchingSura) {
                         currentPlayingName = `${station.name[currentLanguage]} - ${matchingSura.name[currentLanguage]}`;
+                        return true;
+                    }
+                } else if (station.type === 'sharawy_tafsir') {
+                    const matchingRecording = station.recordings.find(rec => rec.url === currentPlayingUrl);
+                    if (matchingRecording) {
+                        currentPlayingName = `${station.name[currentLanguage]} - ${matchingRecording.name}`;
                         return true;
                     }
                 } else if (station.url === currentPlayingUrl) {
@@ -1855,7 +2008,7 @@
           stopRadio();
         } else if (currentStationIndex >= 0) {
           const currentStation = allStations[currentStationIndex];
-          if (currentStation.type === 'azkar' || currentStation.type === 'quran_sura_list' || currentStation.type === 'mushaf_mualim') {
+          if (currentStation.type === 'azkar' || currentStation.type === 'quran_sura_list' || currentStation.type === 'mushaf_mualim' || currentStation.type === 'sharawy_tafsir') {
               console.log("Cannot play sub-items with spacebar. Please use specific play buttons or dropdowns.");
               return;
           }
