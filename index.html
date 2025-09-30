@@ -1,15 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>راديو قرآن v3 - صفحة اللهم لك الحمد</title>
+  <title>راديو قرآن v4.2 - المصحف المعلم</title>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* نفس كود الـ CSS السابق بالكامل */
     body {
       margin: 0;
       font-family: 'Cairo', 'Arial', sans-serif;
-      background: linear-gradient(to bottom right, #111, #333);
+      background: linear-gradient(to bottom right, #111, #333 );
       color: #fff;
       text-align: center;
       padding: 30px 10px;
@@ -23,16 +25,16 @@
       font-family: 'Amiri', serif;
       font-size: 3em;
       font-weight: 700;
-      margin-bottom: 5px; /* Adjusted margin */
+      margin-bottom: 5px;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
       background: linear-gradient(45deg, #4CAF50, #81C784);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      display: flex; /* Use flexbox for alignment */
+      display: flex;
       justify-content: center;
       align-items: center;
-      flex-wrap: wrap; /* Allow wrapping on small screens */
+      flex-wrap: wrap;
     }
     
     html[lang="en"] h1 {
@@ -52,9 +54,9 @@
     }
 
     h1 a {
-        color: inherit; /* Inherit color from h1 gradient */
+        color: inherit;
         text-decoration: none;
-        margin: 0 5px; /* Space around the link */
+        margin: 0 5px;
         background: linear-gradient(45deg, #4CAF50, #81C784);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -69,23 +71,22 @@
 
     .subtitle { 
       font-size: 1.1em;
-      margin-bottom: 10px; /* Adjusted margin */
+      margin-bottom: 10px;
       color: #ccc;
     }
     
-    /* New style for animated charity text */
     .animated-charity-text {
-      font-size: 1em; /* Slightly larger for emphasis */
-      margin-top: 15px; /* More space above it */
+      font-size: 1em;
+      margin-top: 15px;
       margin-bottom: 30px; 
-      color: #aaffaa; /* Slightly green for the charity text */
-      text-shadow: 0 0 5px rgba(170, 255, 170, 0.7); /* Glow effect */
-      animation: pulseGlow 2s infinite alternate; /* Animation */
+      color: #aaffaa;
+      text-shadow: 0 0 5px rgba(170, 255, 170, 0.7);
+      animation: pulseGlow 2s infinite alternate;
       padding: 5px 10px;
       border-radius: 8px;
-      background: rgba(76, 175, 80, 0.05); /* Subtle background */
+      background: rgba(76, 175, 80, 0.05);
       border: 1px solid rgba(76, 175, 80, 0.2);
-      display: inline-block; /* To apply padding and border */
+      display: inline-block;
     }
 
     @keyframes pulseGlow {
@@ -226,39 +227,63 @@
       100% { opacity: 1; transform: scale(1); }
     }
     
-    .volume-controls {
+    .loader {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #fff;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+      display: none;
+    }
+
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .sleep-timer-container {
+      margin: 10px 0;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      margin: 10px 0;
     }
     
-    .volume-btn {
-      background: #4CAF50;
+    .sleep-timer-select {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(76, 175, 80, 0.3);
+      border-radius: 8px;
+      padding: 6px 10px;
+      color: white;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+    
+    .sleep-timer-btn {
+      background: #FF9800;
       color: white;
       border: none;
-      padding: 8px 12px;
-      border-radius: 50%;
-      font-size: 1em;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.9em;
       cursor: pointer;
       transition: all 0.3s ease;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
     
-    .volume-btn:hover {
-      background: #45a049;
-      transform: scale(1.1);
+    .sleep-timer-btn:hover {
+      background: #F57C00;
+      transform: translateY(-2px);
     }
     
-    .volume-display {
-      font-size: 0.95em;
-      color: #4CAF50;
-      min-width: 50px;
+    .sleep-timer-btn.active {
+      background: #f44336;
+    }
+    
+    .sleep-timer-btn.active:hover {
+      background: #d32f2f;
     }
     
     .search-container {
@@ -278,11 +303,11 @@
     }
 
     html[lang="ar"] .search-input {
-      text-align: right; /* RTL */
+      text-align: right;
     }
 
     html[lang="en"] .search-input {
-      text-align: left; /* LTR */
+      text-align: left;
     }
     
     .search-input:focus {
@@ -324,7 +349,6 @@
       transform: none;
     }
     
-    /* Main grid for other stations */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -333,14 +357,12 @@
       margin: auto;
     }
 
-    /* Featured grid for the first 5 stations */
     .featured-grid {
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
       max-width: 1200px; 
       margin-bottom: 30px;
     }
 
-    /* Ensure 5 columns if enough space */
     @media (min-width: 1000px) {
         .featured-grid {
             grid-template-columns: repeat(5, 1fr);
@@ -529,15 +551,14 @@
       visibility: visible;
     }
 
-    /* Style for Azkar dropdown and Quran dropdown */
-    .azkar-dropdown-container, .quran-dropdown-container {
+    .azkar-dropdown-container, .quran-dropdown-container, .mushaf-dropdown-container {
       position: relative;
-      display: block; /* Changed to block for full width inside card */
-      width: calc(100% - 10px); /* Adjust for padding/border */
-      margin: 10px auto; /* Center it */
+      display: block;
+      width: calc(100% - 10px);
+      margin: 10px auto;
     }
 
-    .azkar-select, .quran-select {
+    .azkar-select, .quran-select, .mushaf-select {
         width: 100%; 
         padding: 8px;
         border-radius: 8px;
@@ -546,33 +567,32 @@
         border: 1px solid #4CAF50;
         cursor: pointer;
         font-size: 0.9em;
-        -webkit-appearance: none; /* Remove default dropdown arrow */
+        -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%3E%3Cpath%20fill%3D%22%234CAF50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E');
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%3E%3Cpath%20fill%3D%22%234CAF50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E' );
         background-repeat: no-repeat;
         background-size: 12px;
     }
 
-    html[lang="ar"] .azkar-select, html[lang="ar"] .quran-select {
-        background-position: left 8px center; /* Position arrow to the left for RTL */
-        text-align: right; /* Adjust text alignment for RTL */
-        padding-left: 30px; /* Space for the custom arrow */
+    html[lang="ar"] .azkar-select, html[lang="ar"] .quran-select, html[lang="ar"] .mushaf-select {
+        background-position: left 8px center;
+        text-align: right;
+        padding-left: 30px;
     }
 
-    html[lang="en"] .azkar-select, html[lang="en"] .quran-select {
-        background-position: right 8px center; /* Position arrow to the right for LTR */
-        text-align: left; /* Adjust text alignment for LTR */
-        padding-right: 30px; /* Space for the custom arrow */
+    html[lang="en"] .azkar-select, html[lang="en"] .quran-select, html[lang="en"] .mushaf-select {
+        background-position: right 8px center;
+        text-align: left;
+        padding-right: 30px;
     }
 
-    .azkar-select option, .quran-select option {
+    .azkar-select option, .quran-select option, .mushaf-select option {
         background-color: #333;
         color: #fff;
     }
 
-    /* Styles for the "Play Sura" button */
-    .play-sura-btn {
+    .play-sura-btn, .play-mushaf-btn {
         background-color: #4CAF50;
         color: white;
         border: none;
@@ -582,12 +602,12 @@
         cursor: pointer;
         margin: 5px;
         transition: all 0.3s ease;
-        width: calc(100% - 10px); /* Adjust to fit inside card, same as select */
-        display: block; /* Make it a block element */
-        box-sizing: border-box; /* Include padding and border in the width */
+        width: calc(100% - 10px);
+        display: block;
+        box-sizing: border-box;
     }
 
-    .play-sura-btn:hover {
+    .play-sura-btn:hover, .play-mushaf-btn:hover {
         background-color: #45a049;
         transform: translateY(-2px);
     }
@@ -612,62 +632,18 @@
     }
 
     @media (max-width: 768px) {
-      .prayer-times-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      
-      h1 {
-        font-size: 2.5em;
-      }
-      
-      .prayer-times-title {
-        font-size: 1.2em;
-      }
-      
-      .prayer-time-item {
-        padding: 6px 4px;
-      }
-      
-      .prayer-name {
-        font-size: 0.7em;
-      }
-      
-      .prayer-time {
-        font-size: 0.8em;
-      }
-      
-      .whatsapp-float {
-        width: 50px;
-        height: 50px;
-        bottom: 15px;
-        right: 15px;
-      }
-      
-      .whatsapp-float svg {
-        width: 26px;
-        height: 26px;
-      }
-      
-      .whatsapp-tooltip {
-        right: 60px;
-        font-size: 0.8em;
-      }
-
-      .featured-grid {
-          grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      }
-
-      .language-toggle {
-          top: 10px;
-          left: 10px;
-          padding: 6px 10px;
-          font-size: 0.8em;
-      }
-      
-      h1 a {
-        display: block; /* Make the link a block to ensure wrapping on small screens */
-        margin: 5px 0; /* Adjust margin for block display */
-      }
+      .prayer-times-grid { grid-template-columns: repeat(3, 1fr); }
+      h1 { font-size: 2.5em; }
+      .prayer-times-title { font-size: 1.2em; }
+      .prayer-time-item { padding: 6px 4px; }
+      .prayer-name { font-size: 0.7em; }
+      .prayer-time { font-size: 0.8em; }
+      .whatsapp-float { width: 50px; height: 50px; bottom: 15px; right: 15px; }
+      .whatsapp-float svg { width: 26px; height: 26px; }
+      .whatsapp-tooltip { right: 60px; font-size: 0.8em; }
+      .featured-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+      .language-toggle { top: 10px; left: 10px; padding: 6px 10px; font-size: 0.8em; }
+      h1 a { display: block; margin: 5px 0; }
     }
   </style>
 </head>
@@ -676,13 +652,14 @@
 
   <h1>
     <span id="quranRadioTitle"></span>
+    <span id="subtitleText"></span>
     <a href="https://www.facebook.com/lakel7amd" target="_blank" id="facebookPageLink"></a>
   </h1>
-  <div class="subtitle" id="subtitleText"></div>
   <div class="animated-charity-text" id="charityText"></div>
 
   <div class="prayer-times-panel">
     <div class="prayer-times-title" id="prayerTimesTitle">مواقيت الصلاة</div>
+    <!-- START: الكود الذي تم إصلاحه -->
     <div class="prayer-times-grid" id="prayerTimesGrid">
       <div class="prayer-time-item">
         <div class="prayer-name" data-translation-key="fajr">الفجر</div>
@@ -709,6 +686,7 @@
         <div class="prayer-time" id="ishaTime">--:--</div>
       </div>
     </div>
+    <!-- END: الكود الذي تم إصلاحه -->
     <div class="next-prayer-info">
       <div class="next-prayer-text" id="nextPrayerText"></div>
       <div class="next-prayer-countdown" id="nextPrayerCountdown">--:--:--</div>
@@ -719,37 +697,44 @@
   <div class="controls-panel">
     <div class="now-playing" id="nowPlaying">
       <div class="playing-indicator" id="playingIndicator"></div>
+      <div class="loader" id="bufferingLoader"></div>
       <span id="stationName"></span>
     </div>
     
-    <div class="volume-controls">
-      <button class="volume-btn" onclick="decreaseVolume()" id="decreaseVolumeBtn"></button>
-      <div class="volume-display" id="volumeDisplay">50%</div>
-      <button class="volume-btn" onclick="increaseVolume()" id="increaseVolumeBtn"></button>
+    <div class="playlist-controls">
+      <button class="playlist-btn" onclick="previousStation()" id="prevBtn" disabled>السابق</button>
+      <button class="playlist-btn" onclick="nextStation()" id="nextBtn" disabled>التالي</button>
     </div>
     
-    <div class="playlist-controls">
-      <button class="playlist-btn" onclick="previousStation()" id="prevBtn" disabled></button>
-      <button class="playlist-btn" onclick="nextStation()" id="nextBtn" disabled></button>
+    <!-- مؤقت النوم -->
+    <div class="sleep-timer-container">
+      <select class="sleep-timer-select" id="sleepTimerSelect">
+        <option value="0">إيقاف المؤقت</option>
+        <option value="15">15 دقيقة</option>
+        <option value="30">30 دقيقة</option>
+        <option value="45">45 دقيقة</option>
+        <option value="60">60 دقيقة</option>
+      </select>
+      <button class="sleep-timer-btn" id="sleepTimerBtn" onclick="toggleSleepTimer()">تفعيل المؤقت</button>
     </div>
     
     <div class="time-display" id="timeDisplay"></div>
   </div>
 
   <div class="search-container">
-    <input type="text" class="search-input" id="searchInput" onkeyup="searchStations()">
+    <input type="text" class="search-input" id="searchInput" onkeyup="searchStations()" placeholder="ابحث عن محطة...">
   </div>
 
   <div class="grid featured-grid" id="featured-stations"></div>
   <div class="grid" id="stations"></div>
 
   <footer>
-    <div class="footer-text" id="footerText"></div>
+    <div class="footer-text" id="footerText">راديو قرآن - صفحة اللهم لك الحمد</div>
   </footer>
-  <audio id="radioPlayer" controls style="display:none;"></audio>
+  <audio id="radioPlayer" controls style="display:none;" preload="auto"></audio>
 
   <button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn">
-    <div class="whatsapp-tooltip" id="whatsappTooltip"></div>
+    <div class="whatsapp-tooltip" id="whatsappTooltip">الإبلاغ عن رابط معطل</div>
     <svg viewBox="0 0 24 24">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
     </svg>
@@ -760,8 +745,8 @@
     const translations = {
       ar: {
         quranRadio: "راديو قرآن",
-        facebookLinkText: "اللهم لك الحمد",
         subtitle: "صفحة",
+        facebookLinkText: "اللهم لك الحمد",
         charityText: "صدقة جارية لجميع أموات المسلمين",
         languageToggle: "English",
         prayerTimesTitle: "مواقيت الصلاة",
@@ -776,27 +761,29 @@
         locationInfoError: "خطأ في جلب مواقيت الصلاة. يرجى التحقق من اتصال الإنترنت أو إعادة تحميل الصفحة.",
         locationInfoTimezone: "المنطقة الزمنية:",
         initialStationText: "اختر محطة للتشغيل",
-        decreaseVolumeBtn: "-",
-        increaseVolumeBtn: "+",
         prevBtn: "السابق",
         nextBtn: "التالي",
         searchPlaceholder: "ابحث عن محطة...",
         timePlaying: "وقت التشغيل:",
         azkarSelectDefault: "اختر أذكار...",
         quranSelectDefault: "اختر سورة...",
+        mushafSelectDefault: "اختر سورة من المصحف المعلم...",
         playButton: "تشغيل",
         stopButton: "إيقاف",
         playSuraButton: "تشغيل السورة",
+        playMushafButton: "تشغيل السورة",
         whatsappTooltip: "الإبلاغ عن رابط معطل",
         playbackError: "خطأ في تشغيل المحطة:",
         noPrayerData: "لا توجد بيانات للصلاة القادمة",
         whatsappMessage: "يوجد رابط معطل في راديو القرآن، يرجى التحقق",
-        footerDesignedBy: "راديو قرآن - صفحة اللهم لك الحمد"
+        footerDesignedBy: "راديو قرآن - صفحة اللهم لك الحمد",
+        sleepTimerText: "تفعيل المؤقت",
+        sleepTimerStopText: "إيقاف المؤقت"
       },
       en: {
         quranRadio: "Quran Radio",
-        facebookLinkText: "Allahuma Lak Alhamd (All Praise is Due to Allah)",
         subtitle: "Page of",
+        facebookLinkText: "Allahuma Lak Alhamd (All Praise is Due to Allah)",
         charityText: "Continuous charity for all deceased Muslims",
         languageToggle: "العربية",
         prayerTimesTitle: "Prayer Times",
@@ -811,22 +798,24 @@
         locationInfoError: "Failed to fetch prayer times. Please check internet connection or reload page.",
         locationInfoTimezone: "Timezone:",
         initialStationText: "Select a station to play",
-        decreaseVolumeBtn: "-",
-        increaseVolumeBtn: "+",
         prevBtn: "Previous",
         nextBtn: "Next",
         searchPlaceholder: "Search for a station...",
         timePlaying: "Playing time:",
         azkarSelectDefault: "Select Azkar...",
         quranSelectDefault: "Select Sura...",
+        mushafSelectDefault: "Select Sura from Mushaf Al-Mu'allim...",
         playButton: "Play",
         stopButton: "Stop",
         playSuraButton: "Play Sura",
+        playMushafButton: "Play Sura",
         whatsappTooltip: "Report a broken link",
         playbackError: "Error playing station:",
         noPrayerData: "No prayer data available",
         whatsappMessage: "There is a broken link in Quran Radio, please check",
-        footerDesignedBy: "Radio Quran - Allahumma lakal-hamd page"
+        footerDesignedBy: "Radio Quran - Allahumma lakal-hamd page",
+        sleepTimerText: "Start Timer",
+        sleepTimerStopText: "Stop Timer"
       }
     };
 
@@ -920,7 +909,7 @@
         { num: '084', name: { ar: 'الانشقاق', en: 'Al-Inshiqaq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/084.mp3' },
         { num: '085', name: { ar: 'البروج', en: 'Al-Buruj' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/085.mp3' },
         { num: '086', name: { ar: 'الطارق', en: 'At-Tariq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/086.mp3' },
-        { num: '087', name: { ar: 'الأعلى', en: 'Al-A’la' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/087.mp3' },
+        { num: '087', name: { ar: 'الأعلى', en: 'Al-A\'la' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/087.mp3' },
         { num: '088', name: { ar: 'الغاشية', en: 'Al-Ghashiyah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/088.mp3' },
         { num: '089', name: { ar: 'الفجر', en: 'Al-Fajr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/089.mp3' },
         { num: '090', name: { ar: 'البلد', en: 'Al-Balad' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/090.mp3' },
@@ -946,8 +935,129 @@
         { num: '110', name: { ar: 'النصر', en: 'An-Nasr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/110.mp3' },
         { num: '111', name: { ar: 'المسد', en: 'Al-Masad' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/111.mp3' },
         { num: '112', name: { ar: 'الإخلاص', en: 'Al-Ikhlas' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/112.mp3' },
-        { num: '113', name: { ar: 'الفلق', en: 'Al-Falaq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/113.mp3' },
+        { num: '113', name: { ar: 'الفلقت', en: 'Al-Falaq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/113.mp3' },
         { num: '114', name: { ar: 'الناس', en: 'An-Nas' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/114.mp3' }
+    ];
+
+    // المصحف المعلم - محمود خليل الحصري
+    const mushafAlmualimSuras = [
+        { num: '001', name: { ar: 'سورة الفاتحة', en: 'Al-Fatiha' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/001_M.Ettounssi.mp3' },
+        { num: '002', name: { ar: 'سورة البقرة أ', en: 'Al-Baqarah A' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/002_M.Ettounssi.mp3' },
+        { num: '003', name: { ar: 'سورة البقرة ب', en: 'Al-Baqarah B' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/003_M.Ettounssi.mp3' },
+        { num: '004', name: { ar: 'سورة آل عمران أ', en: 'Al-Imran A' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/004_M.Ettounssi.mp3' },
+        { num: '005', name: { ar: 'سورة آل عمران ب', en: 'Al-Imran B' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/005_M.Ettounssi.mp3' },
+        { num: '006', name: { ar: 'سورة النساء أ', en: 'An-Nisa A' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/006_M.Ettounssi.mp3' },
+        { num: '007', name: { ar: 'سورة النساء ب', en: 'An-Nisa B' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/007_M.Ettounssi.mp3' },
+        { num: '008', name: { ar: 'سورة المائدة', en: 'Al-Maidah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/008_M.Ettounssi.mp3' },
+        { num: '009', name: { ar: 'سورة الأنعام', en: 'Al-Anam' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/009_M.Ettounssi.mp3' },
+        { num: '010', name: { ar: 'سورة الأعراف', en: 'Al-Araf' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/010_M.Ettounssi.mp3' },
+        { num: '011', name: { ar: 'سورة الأنفال', en: 'Al-Anfal' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/011_M.Ettounssi.mp3' },
+        { num: '012', name: { ar: 'سورة التوبة', en: 'At-Tawbah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/012_M.Ettounssi.mp3' },
+        { num: '013', name: { ar: 'سورة يونس', en: 'Yunus' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/013_M.Ettounssi.mp3' },
+        { num: '014', name: { ar: 'سورة هود', en: 'Hud' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/014_M.Ettounssi.mp3' },
+        { num: '015', name: { ar: 'سورة يوسف', en: 'Yusuf' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/015_M.Ettounssi.mp3' },
+        { num: '016', name: { ar: 'سورة الرعد', en: 'Ar-Rad' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/016_M.Ettounssi.mp3' },
+        { num: '017', name: { ar: 'سورة ابراهيم', en: 'Ibrahim' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/017_M.Ettounssi.mp3' },
+        { num: '018', name: { ar: 'سورة الحجر', en: 'Al-Hijr' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/018_M.Ettounssi.mp3' },
+        { num: '019', name: { ar: 'سورة النحل', en: 'An-Nahl' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/019_M.Ettounssi.mp3' },
+        { num: '020', name: { ar: 'سورة الاسراء', en: 'Al-Isra' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/020_M.Ettounssi.mp3' },
+        { num: '021', name: { ar: 'سورة الكهف', en: 'Al-Kahf' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/021_M.Ettounssi.mp3' },
+        { num: '022', name: { ar: 'سورة مريم', en: 'Maryam' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/022_M.Ettounssi.mp3' },
+        { num: '023', name: { ar: 'سورة طه', en: 'Taha' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/023_M.Ettounssi.mp3' },
+        { num: '024', name: { ar: 'سورة الأنبياء', en: 'Al-Anbiya' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/024_M.Ettounssi.mp3' },
+        { num: '025', name: { ar: 'سورة الحج', en: 'Al-Hajj' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/025_M.Ettounssi.mp3' },
+        { num: '026', name: { ar: 'سورة المؤمنون', en: 'Al-Muminun' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/026_M.Ettounssi.mp3' },
+        { num: '027', name: { ar: 'سورة النور', en: 'An-Nur' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/027_M.Ettounssi.mp3' },
+        { num: '028', name: { ar: 'سورة الفرقان', en: 'Al-Furqan' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/028_M.Ettounssi.mp3' },
+        { num: '029', name: { ar: 'سورة الشعراء', en: 'Ash-Shuara' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/029_M.Ettounssi.mp3' },
+        { num: '030', name: { ar: 'سورة النمل', en: 'An-Naml' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/030_M.Ettounssi.mp3' },
+        { num: '031', name: { ar: 'سورة القصص', en: 'Al-Qasas' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/031_M.Ettounssi.mp3' },
+        { num: '032', name: { ar: 'سورة العنكبوت', en: 'Al-Ankabut' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/032_M.Ettounssi.mp3' },
+        { num: '033', name: { ar: 'سورة الروم', en: 'Ar-Rum' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/033_M.Ettounssi.mp3' },
+        { num: '034', name: { ar: 'سورة لقمان', en: 'Luqman' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/034_M.Ettounssi.mp3' },
+        { num: '035', name: { ar: 'سورة السجدة', en: 'As-Sajda' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/035_M.Ettounssi.mp3' },
+        { num: '036', name: { ar: 'سورة الأحزاب', en: 'Al-Ahzab' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/036_M.Ettounssi.mp3' },
+        { num: '037', name: { ar: 'سورة سبأ', en: 'Saba' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/037_M.Ettounssi.mp3' },
+        { num: '038', name: { ar: 'سورة فاطر', en: 'Fatir' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/038_M.Ettounssi.mp3' },
+        { num: '039', name: { ar: 'سورة يس', en: 'Ya-Sin' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/039_M.Ettounssi.mp3' },
+        { num: '040', name: { ar: 'سورة الصافات', en: 'As-Saffat' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/040_M.Ettounssi.mp3' },
+        { num: '041', name: { ar: 'سورة ص', en: 'Sad' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/041_M.Ettounssi.mp3' },
+        { num: '042', name: { ar: 'سورة الزمر', en: 'Az-Zumar' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/042_M.Ettounssi.mp3' },
+        { num: '043', name: { ar: 'سورة غافر', en: 'Ghafir' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/043_M.Ettounssi.mp3' },
+        { num: '044', name: { ar: 'سورة فصلت', en: 'Fussilat' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/044_M.Ettounssi.mp3' },
+        { num: '045', name: { ar: 'سورة الشورى', en: 'Ash-Shura' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/045_M.Ettounssi.mp3' },
+        { num: '046', name: { ar: 'سورة الزخرف', en: 'Az-Zukhruf' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/046_M.Ettounssi.mp3' },
+        { num: '047', name: { ar: 'سورة الدخان', en: 'Ad-Dukhan' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/047_M.Ettounssi.mp3' },
+        { num: '048', name: { ar: 'سورة الجاثية', en: 'Al-Jathiyah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/048_M.Ettounssi.mp3' },
+        { num: '049', name: { ar: 'سورة الأحقاف', en: 'Al-Ahqaf' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/049_M.Ettounssi.mp3' },
+        { num: '050', name: { ar: 'سورة محمد', en: 'Muhammad' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/050_M.Ettounssi.mp3' },
+        { num: '051', name: { ar: 'سورة الفتح', en: 'Al-Fath' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/051_M.Ettounssi.mp3' },
+        { num: '052', name: { ar: 'سورة الحجرات', en: 'Al-Hujurat' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/052_M.Ettounssi.mp3' },
+        { num: '053', name: { ar: 'سورة ق', en: 'Qaf' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/053_M.Ettounssi.mp3' },
+        { num: '054', name: { ar: 'سورة الذاريات', en: 'Adh-Dhariyat' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/054_M.Ettounssi.mp3' },
+        { num: '055', name: { ar: 'سورة الطور', en: 'At-Tur' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/055_M.Ettounssi.mp3' },
+        { num: '056', name: { ar: 'سورة النجم', en: 'An-Najm' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/056_M.Ettounssi.mp3' },
+        { num: '057', name: { ar: 'سورة القمر', en: 'Al-Qamar' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/057_M.Ettounssi.mp3' },
+        { num: '058', name: { ar: 'سورة الرحمن', en: 'Ar-Rahman' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/058_M.Ettounssi.mp3' },
+        { num: '059', name: { ar: 'سورة الواقعة', en: 'Al-Waqi\'ah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/059_M.Ettounssi.mp3' },
+        { num: '060', name: { ar: 'سورة الحديد', en: 'Al-Hadid' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/060_M.Ettounssi.mp3' },
+        { num: '061', name: { ar: 'سورة المجادلة', en: 'Al-Mujadila' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/061_M.Ettounssi.mp3' },
+        { num: '062', name: { ar: 'سورة الحشر', en: 'Al-Hashr' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/062_M.Ettounssi.mp3' },
+        { num: '063', name: { ar: 'سورة الممتحنة', en: 'Al-Mumtahanah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/063_M.Ettounssi.mp3' },
+        { num: '064', name: { ar: 'سورة الصف', en: 'As-Saff' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/064_M.Ettounssi.mp3' },
+        { num: '065', name: { ar: 'سورة الجمعة', en: 'Al-Jumu\'ah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/065_M.Ettounssi.mp3' },
+        { num: '066', name: { ar: 'سورة المنافقون', en: 'Al-Munafiqun' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/066_M.Ettounssi.mp3' },
+        { num: '067', name: { ar: 'سورة التغابن', en: 'At-Taghabun' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/067_M.Ettounssi.mp3' },
+        { num: '068', name: { ar: 'سورة الطلاق', en: 'At-Talaq' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/068_M.Ettounssi.mp3' },
+        { num: '069', name: { ar: 'سورة التحريم', en: 'At-Tahrim' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/069_M.Ettounssi.mp3' },
+        { num: '070', name: { ar: 'سورة الملك', en: 'Al-Mulk' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/070_M.Ettounssi.mp3' },
+        { num: '071', name: { ar: 'سورة القلم', en: 'Al-Qalam' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/071_M.Ettounssi.mp3' },
+        { num: '072', name: { ar: 'سورة الحاقة', en: 'Al-Haqqah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/072_M.Ettounssi.mp3' },
+        { num: '073', name: { ar: 'سورة المعارج', en: 'Al-Maarij' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/073_M.Ettounssi.mp3' },
+        { num: '074', name: { ar: 'سورة نوح', en: 'Nuh' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/074_M.Ettounssi.mp3' },
+        { num: '075', name: { ar: 'سورة الجن', en: 'Al-Jinn' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/075_M.Ettounssi.mp3' },
+        { num: '076', name: { ar: 'سورة المزمل', en: 'Al-Muzzammil' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/076_M.Ettounssi.mp3' },
+        { num: '077', name: { ar: 'سورة المدثر', en: 'Al-Muddaththir' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/077_M.Ettounssi.mp3' },
+        { num: '078', name: { ar: 'سورة القيامة', en: 'Al-Qiyamah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/078_M.Ettounssi.mp3' },
+        { num: '079', name: { ar: 'سورة الانسان', en: 'Al-Insan' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/079_M.Ettounssi.mp3' },
+        { num: '080', name: { ar: 'سورة المرسلات', en: 'Al-Mursalat' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/080_M.Ettounssi.mp3' },
+        { num: '081', name: { ar: 'سورة النبأ', en: 'An-Naba' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/081_M.Ettounssi.mp3' },
+        { num: '082', name: { ar: 'سورة النازعات', en: 'An-Nazi\'at' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/082_M.Ettounssi.mp3' },
+        { num: '083', name: { ar: 'سورة عبس', en: 'Abasa' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/083_M.Ettounssi.mp3' },
+        { num: '084', name: { ar: 'سورة التكوير', en: 'At-Takwir' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/084_M.Ettounssi.mp3' },
+        { num: '085', name: { ar: 'سورة الانفطار', en: 'Al-Infitar' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/085_M.Ettounssi.mp3' },
+        { num: '086', name: { ar: 'سورة المطففين', en: 'Al-Mutaffifin' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/086_M.Ettounssi.mp3' },
+        { num: '087', name: { ar: 'سورة الانشقاق', en: 'Al-Inshiqaq' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/087_M.Ettounssi.mp3' },
+        { num: '088', name: { ar: 'سورة البروج', en: 'Al-Buruj' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/088_M.Ettounssi.mp3' },
+        { num: '089', name: { ar: 'سورة الطارق', en: 'At-Tariq' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/089_M.Ettounssi.mp3' },
+        { num: '090', name: { ar: 'سورة الأعلى', en: 'Al-A\'la' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/090_M.Ettounssi.mp3' },
+        { num: '091', name: { ar: 'سورة الغاشية', en: 'Al-Ghashiyah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/091_M.Ettounssi.mp3' },
+        { num: '092', name: { ar: 'سورة الفجر', en: 'Al-Fajr' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/092_M.Ettounssi.mp3' },
+        { num: '093', name: { ar: 'سورة البلد', en: 'Al-Balad' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/093_M.Ettounssi.mp3' },
+        { num: '094', name: { ar: 'سورة الشمس', en: 'Ash-Shams' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/094_M.Ettounssi.mp3' },
+        { num: '095', name: { ar: 'سورة الليل', en: 'Al-Layl' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/095_M.Ettounssi.mp3' },
+        { num: '096', name: { ar: 'سورة الضحى', en: 'Ad-Duha' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/096_M.Ettounssi.mp3' },
+        { num: '097', name: { ar: 'سورة الشرح', en: 'Ash-Sharh' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/097_M.Ettounssi.mp3' },
+        { num: '098', name: { ar: 'سورة التين', en: 'At-Tin' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/098_M.Ettounssi.mp3' },
+        { num: '099', name: { ar: 'سورة العلق', en: 'Al-Alaq' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/099_M.Ettounssi.mp3' },
+        { num: '100', name: { ar: 'سورة القدر', en: 'Al-Qadr' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/100_M.Ettounssi.mp3' },
+        { num: '101', name: { ar: 'سورة البينة', en: 'Al-Bayyinah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/101_M.Ettounssi.mp3' },
+        { num: '102', name: { ar: 'سورة الزلزلة', en: 'Az-Zalzalah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/102_M.Ettounssi.mp3' },
+        { num: '103', name: { ar: 'سورة العاديات', en: 'Al-Adiyat' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/103_M.Ettounssi.mp3' },
+        { num: '104', name: { ar: 'سورة القارعة', en: 'Al-Qari\'ah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/104_M.Ettounssi.mp3' },
+        { num: '105', name: { ar: 'سورة التكاثر', en: 'At-Takathur' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/105_M.Ettounssi.mp3' },
+        { num: '106', name: { ar: 'سورة العصر', en: 'Al-Asr' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/106_M.Ettounssi.mp3' },
+        { num: '107', name: { ar: 'سورة الهمزة', en: 'Al-Humazah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/107_M.Ettounssi.mp3' },
+        { num: '108', name: { ar: 'سورة الفيل', en: 'Al-Fil' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/108_M.Ettounssi.mp3' },
+        { num: '109', name: { ar: 'سورة قريش', en: 'Quraish' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/109_M.Ettounssi.mp3' },
+        { num: '110', name: { ar: 'سورة الماعون', en: 'Al-Ma\'un' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/110_M.Ettounssi.mp3' },
+        { num: '111', name: { ar: 'سورة الكوثر', en: 'Al-Kawthar' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/111_M.Ettounssi.mp3' },
+        { num: '112', name: { ar: 'سورة الكافرون', en: 'Al-Kafirun' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/112_M.Ettounssi.mp3' },
+        { num: '113', name: { ar: 'سورة النصر', en: 'An-Nasr' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/113_M.Ettounssi.mp3' },
+        { num: '114', name: { ar: 'سورة المسد', en: 'Al-Masad' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/114_M.Ettounssi.mp3' },
+        { num: '115', name: { ar: 'سورة الاخلاص', en: 'Al-Ikhlas' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/115_M.Ettounssi.mp3' },
+        { num: '116', name: { ar: 'سورة الفلق', en: 'Al-Falaq' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/116_M.Ettounssi.mp3' },
+        { num: '117', name: { ar: 'سورة الناس', en: 'An-Nas' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/117_M.Ettounssi.mp3' }
     ];
 
     // Original stations (not featured in the first row)
@@ -962,9 +1072,15 @@
         suras: misharyQuranSuras // Add the sura list here
       },
       { name: {ar: "الشيخ محمد جبريل", en: "Sheikh Muhammad Jibreel"}, img: "https://7nen.do.am/_ph/6/1/844452129.jpg", url: "https://backup.qurango.net/radio/mohammed_jibreel" },
-      { name: {ar: "الشيخ المنشاوي", en: "Sheikh Al-Minshawi"}, img: "https://7nen.do.am/_ph/6/1/986606135.jpg", url: "https://backup.qurango.net/radio/mohammed_siddiq_alminshawi/أثير%20راديو.mp3" },
+      // Mahmoud Khalil Al-Husary station with Mushaf Al-Mu'allim list
+      { 
+        name: {ar: "الشيخ الحصري - المصحف المعلم", en: "Sheikh Al-Husary - Mushaf Al-Mu'allim"}, 
+        img: "https://7nen.do.am/_ph/6/1/650079361.jpg", 
+        url: "https://backup.qurango.net/radio/mahmoud_khalil_alhussary", // Live stream
+        type: "mushaf_mualim", // New type to distinguish this card
+        suras: mushafAlmualimSuras // Add the sura list here
+      },
       { name: {ar: "الشيخ عبدالباسط", en: "Sheikh Abdul Basit"}, img: "https://7nen.do.am/_ph/6/1/788498118.jpg", url: "https://qurango.net/radio/abdulbasit_abdulsamad.mp3" },
-      { name: {ar: "الشيخ الحصري", en: "Sheikh Al-Husary"}, img: "https://7nen.do.am/_ph/6/1/650079361.jpg", url: "https://backup.qurango.net/radio/mahmoud_khalil_alhussary" },
       { name: {ar: "الشيخ إدريس أبكر", en: "Sheikh Idrees Abkar"}, img: "https://7nen.do.am/_ph/6/1/695351424.jpg", url: "https://backup.qurango.net/radio/idrees_abkr" },
       { name: {ar: "الشيخ محمود علي البنا", en: "Sheikh Mahmoud Ali Al-Banna"}, img: "https://7nen.do.am/_ph/6/1/592190149.jpg", url: "https://backup.qurango.net/radio/mahmoud_ali__albanna" },
       { name: {ar: "الشيخ سعد الغامدي", en: "Sheikh Saad Al-Ghamdi"}, img: "https://7nen.do.am/_ph/6/1/613525566.jpg", url: "https://backup.qurango.net/radio/saad_alghamdi" },
@@ -999,7 +1115,7 @@
     const player = document.getElementById('radioPlayer');
     const nowPlayingSpan = document.getElementById('stationName'); // Renamed from nowPlaying to avoid conflict
     const playingIndicator = document.getElementById('playingIndicator');
-    const volumeDisplay = document.getElementById('volumeDisplay');
+    const bufferingLoader = document.getElementById('bufferingLoader');
     const timeDisplay = document.getElementById('timeDisplay');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
@@ -1010,6 +1126,7 @@
     let timeInterval = null;
     let prayerTimes = {};
     let nextPrayerInterval = null;
+    let sleepTimer = null;
 
     // Function to set the language and update content
     function setLanguage(lang) {
@@ -1019,18 +1136,19 @@
 
       // Update static texts
       document.getElementById('quranRadioTitle').textContent = translations[lang].quranRadio;
-      document.getElementById('facebookPageLink').textContent = translations[lang].facebookLinkText;
       document.getElementById('subtitleText').textContent = translations[lang].subtitle;
+      document.getElementById('facebookPageLink').textContent = translations[lang].facebookLinkText;
       document.getElementById('charityText').textContent = translations[lang].charityText;
       document.getElementById('languageToggle').textContent = translations[lang].languageToggle;
       document.getElementById('prayerTimesTitle').textContent = translations[lang].prayerTimesTitle;
-      document.getElementById('decreaseVolumeBtn').textContent = translations[lang].decreaseVolumeBtn;
-      document.getElementById('increaseVolumeBtn').textContent = translations[lang].increaseVolumeBtn;
       document.getElementById('prevBtn').textContent = translations[lang].prevBtn;
       document.getElementById('nextBtn').textContent = translations[lang].nextBtn;
       document.getElementById('searchInput').setAttribute('placeholder', translations[lang].searchPlaceholder);
       document.getElementById('whatsappTooltip').textContent = translations[lang].whatsappTooltip;
       document.getElementById('footerText').textContent = translations[lang].footerDesignedBy; // Set footer text
+      
+      // Update sleep timer text
+      document.getElementById('sleepTimerBtn').textContent = translations[lang].sleepTimerText;
       
       // Update prayer names
       document.querySelectorAll('.prayer-name').forEach(el => {
@@ -1096,12 +1214,30 @@
       originalJsStations.forEach((station) => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.innerHTML = `
-          <img src="${station.img}" alt="${station.name[currentLanguage]}" />
-          <h2>${station.name[currentLanguage]}</h2>
-          <button onclick="playRadio('${station.url}', '${station.name[currentLanguage]}', this)">${translations[currentLanguage].playButton}</button>
-          <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
-          ${station.type === 'quran_sura_list' ? `
+        
+        if (station.type === 'mushaf_mualim') {
+          // Special handling for Mushaf Al-Mu'allim dropdown
+          card.innerHTML = `
+            <img src="${station.img}" alt="${station.name[currentLanguage]}" />
+            <h2>${station.name[currentLanguage]}</h2>
+            <button onclick="playRadio('${station.url}', '${station.name[currentLanguage]}', this)">${translations[currentLanguage].playButton}</button>
+            <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
+            <div class="mushaf-dropdown-container">
+              <select class="mushaf-select" id="mushafSelect" onchange="enablePlayMushafButton(this)">
+                <option value="">${translations[currentLanguage].mushafSelectDefault}</option>
+                ${station.suras.map(sura => `<option value="${sura.url}">${sura.name[currentLanguage]}</option>`).join('')}
+              </select>
+              <button class="play-mushaf-btn" id="playMushafBtn" onclick="playMushafSura(this.previousElementSibling)" disabled>${translations[currentLanguage].playMushafButton}</button>
+            </div>
+            <div class="progress-bar"></div>
+          `;
+        } else if (station.type === 'quran_sura_list') {
+          // Special handling for Quran Sura dropdown
+          card.innerHTML = `
+            <img src="${station.img}" alt="${station.name[currentLanguage]}" />
+            <h2>${station.name[currentLanguage]}</h2>
+            <button onclick="playRadio('${station.url}', '${station.name[currentLanguage]}', this)">${translations[currentLanguage].playButton}</button>
+            <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
             <div class="quran-dropdown-container">
               <select class="quran-select" id="misharyQuranSelect" onchange="enablePlaySuraButton(this)">
                 <option value="">${translations[currentLanguage].quranSelectDefault}</option>
@@ -1109,9 +1245,18 @@
               </select>
               <button class="play-sura-btn" id="playSuraBtn" onclick="playQuranSura(this.previousElementSibling)" disabled>${translations[currentLanguage].playSuraButton}</button>
             </div>
-          ` : ''}
-          <div class="progress-bar"></div>
-        `;
+            <div class="progress-bar"></div>
+          `;
+        } else {
+          // Regular radio station card
+          card.innerHTML = `
+            <img src="${station.img}" alt="${station.name[currentLanguage]}" />
+            <h2>${station.name[currentLanguage]}</h2>
+            <button onclick="playRadio('${station.url}', '${station.name[currentLanguage]}', this)">${translations[currentLanguage].playButton}</button>
+            <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
+            <div class="progress-bar"></div>
+          `;
+        }
         regularStationsContainer.appendChild(card);
       });
     }
@@ -1126,6 +1271,16 @@
         }
     }
 
+    // Function to enable play mushaf button when a sura is selected
+    function enablePlayMushafButton(selectElement) {
+        const playMushafBtn = selectElement.nextElementSibling; // Get the button next to the select
+        if (selectElement.value) {
+            playMushafBtn.disabled = false;
+        } else {
+            playMushafBtn.disabled = true;
+        }
+    }
+
     // Function to play Azkar from dropdown
     function playAzkar(selectElement) { 
         const selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -1134,7 +1289,9 @@
         const recordingName = selectedOption.textContent;
 
         if (url) {
-            playRadio(url, `${mainStationName} - ${recordingName}`, selectElement); // Pass selectElement for activation
+            playRadio(url, `${mainStationName} - ${recordingName}`, selectElement);
+            // Keep the selected option visible in the dropdown
+            selectElement.value = url;
         } else {
             stopRadio();
         }
@@ -1149,19 +1306,38 @@
 
         if (url) {
             playRadio(url, `${mainStationName} - ${suraName}`, selectElement);
-            // Reset the dropdown to default after playing
-            selectElement.value = ""; 
-            enablePlaySuraButton(selectElement); // Disable button after resetting
+            // Keep the selected option visible in the dropdown
+            selectElement.value = url;
         } else {
             stopRadio();
         }
     }
 
-    // تشغيل المحطة
+    // Function to play a Mushaf Al-Mu'allim Sura from dropdown
+    function playMushafSura(selectElement) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const url = selectedOption.value;
+        const mainStationName = selectElement.closest('.card').querySelector('h2').textContent; // Get main Mushaf card name
+        const suraName = selectedOption.textContent;
+
+        if (url) {
+            playRadio(url, `${mainStationName} - ${suraName}`, selectElement);
+            // Keep the selected option visible in the dropdown
+            selectElement.value = url;
+        } else {
+            stopRadio();
+        }
+    }
+
+    // تشغيل المحطة مع تحسين البافر
     function playRadio(url, stationName, elementToActivate) { 
       player.pause();
       player.src = url;
       player.volume = 0.5; // Reset volume to default
+      
+      // Show buffering indicator
+      playingIndicator.style.display = 'none';
+      bufferingLoader.style.display = 'inline-block';
       
       document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
       
@@ -1169,7 +1345,6 @@
       currentCard.classList.add('active');
       
       nowPlayingSpan.textContent = stationName;
-      playingIndicator.style.display = 'block';
       
       let foundIndex = -1;
       
@@ -1177,6 +1352,8 @@
           if (station.type === 'azkar') {
               return station.recordings.some(rec => rec.url === url);
           } else if (station.type === 'quran_sura_list') {
+              return station.url === url || station.suras.some(sura => sura.url === url);
+          } else if (station.type === 'mushaf_mualim') {
               return station.url === url || station.suras.some(sura => sura.url === url);
           } else {
               return station.url === url;
@@ -1186,15 +1363,31 @@
       currentStationIndex = foundIndex; 
       updatePlaylistButtons();
       
+      // Add event listeners for buffering
+      player.addEventListener('waiting', onBufferingStart);
+      player.addEventListener('playing', onBufferingEnd);
+      player.addEventListener('canplay', onBufferingEnd);
+      
       player.play().then(() => {
         playStartTime = Date.now();
         startTimeCounter();
       }).catch(error => {
         console.error('Playback error:', error);
         nowPlayingSpan.textContent = `${translations[currentLanguage].playbackError} ${stationName}`;
-        playingIndicator.style.display = 'none';
+        bufferingLoader.style.display = 'none';
         currentCard.classList.remove('active');
       });
+    }
+
+    // Buffering event handlers
+    function onBufferingStart() {
+      playingIndicator.style.display = 'none';
+      bufferingLoader.style.display = 'inline-block';
+    }
+
+    function onBufferingEnd() {
+      bufferingLoader.style.display = 'none';
+      playingIndicator.style.display = 'block';
     }
 
     // إيقاف التشغيل
@@ -1203,6 +1396,7 @@
       player.src = "";
       nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
       playingIndicator.style.display = 'none';
+      bufferingLoader.style.display = 'none';
       
       document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
       
@@ -1211,23 +1405,37 @@
       stopTimeCounter();
     }
 
-    // التحكم في الصوت
-    function increaseVolume() {
-      if (player.volume < 1) {
-        player.volume = Math.min(1, player.volume + 0.1);
-        updateVolumeDisplay();
+    // مؤقت النوم
+    function toggleSleepTimer() {
+      const sleepTimerSelect = document.getElementById('sleepTimerSelect');
+      const sleepTimerBtn = document.getElementById('sleepTimerBtn');
+      const minutes = parseInt(sleepTimerSelect.value);
+      
+      if (minutes === 0) {
+        // Stop the timer
+        if (sleepTimer) {
+          clearTimeout(sleepTimer);
+          sleepTimer = null;
+          sleepTimerBtn.textContent = translations[currentLanguage].sleepTimerText;
+          sleepTimerBtn.classList.remove('active');
+        }
+      } else {
+        // Start the timer
+        if (sleepTimer) {
+          clearTimeout(sleepTimer);
+        }
+        
+        sleepTimerBtn.textContent = translations[currentLanguage].sleepTimerStopText;
+        sleepTimerBtn.classList.add('active');
+        
+        sleepTimer = setTimeout(() => {
+          stopRadio();
+          sleepTimerBtn.textContent = translations[currentLanguage].sleepTimerText;
+          sleepTimerBtn.classList.remove('active');
+          sleepTimer = null;
+          sleepTimerSelect.value = '0';
+        }, minutes * 60 * 1000);
       }
-    }
-
-    function decreaseVolume() {
-      if (player.volume > 0) {
-        player.volume = Math.max(0, player.volume - 0.1);
-        updateVolumeDisplay();
-      }
-    }
-
-    function updateVolumeDisplay() {
-      volumeDisplay.textContent = Math.round(player.volume * 100) + '%';
     }
 
     // البحث عن المحطات
@@ -1255,6 +1463,13 @@
                 }
             });
         }
+        if (card.querySelector('.mushaf-select')) {
+            Array.from(card.querySelectorAll('.mushaf-select option')).forEach(option => {
+                if (option.textContent.toLowerCase().includes(searchTerm)) {
+                    foundInSublist = true;
+                }
+            });
+        }
 
         if (stationName.includes(searchTerm) || foundInSublist) {
           card.classList.remove('hidden');
@@ -1268,11 +1483,8 @@
     function previousStation() {
         if (currentStationIndex > 0) {
             let targetIndex = currentStationIndex - 1;
-            while (targetIndex >= 0 && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'quran_sura_list')) {
-                // If the current station is Mishary with Sura list, allow previous/next for the main station itself, not its suras.
-                // The main purpose of previous/next is to switch between *main* stations.
-                // So, if we land on Mishary's main station, we'll stop there.
-                if (allStations[targetIndex].type === 'quran_sura_list' && allStations[targetIndex].url === player.src) {
+            while (targetIndex >= 0 && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim')) {
+                if ((allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim') && allStations[targetIndex].url === player.src) {
                     break; 
                 }
                 targetIndex--;
@@ -1295,9 +1507,8 @@
     function nextStation() {
         if (currentStationIndex < allStations.length - 1) {
             let targetIndex = currentStationIndex + 1;
-            while (targetIndex < allStations.length && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'quran_sura_list')) {
-                // Similar to previousStation, stop at the main Mishary station if it's the next one.
-                if (allStations[targetIndex].type === 'quran_sura_list' && allStations[targetIndex].url === player.src) {
+            while (targetIndex < allStations.length && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim')) {
+                if ((allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim') && allStations[targetIndex].url === player.src) {
                     break;
                 }
                 targetIndex++;
@@ -1330,7 +1541,9 @@
         let isSubItemPlaying = false;
         if (currentStation.type === 'azkar' && currentStation.recordings.some(rec => rec.url === player.src)) {
             isSubItemPlaying = true;
-        } else if (currentStation.type === 'quran_sura_list' && currentStation.suras.some(sura => sura.url === player.src)) {
+        } else if ((currentStation.type === 'quran_sura_list' || currentStation.type === 'mushaf_mualim') && 
+                  ((currentStation.suras && currentStation.suras.some(sura => sura.url === player.src)) || 
+                   (currentStation.url === player.src))) {
             isSubItemPlaying = true;
         }
 
@@ -1343,25 +1556,22 @@
         // Check if there's a valid previous non-sublist station
         let hasPrevious = false;
         for (let i = currentStationIndex - 1; i >= 0; i--) {
-            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'quran_sura_list') {
+            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim') {
                 hasPrevious = true;
                 break;
-            } else if (allStations[i].type === 'quran_sura_list' && allStations[i].url === player.src) {
-                // If Mishary's main stream is playing, and it's the one we're on, we can go back from here.
+            } else if ((allStations[i].type === 'quran_sura_list' || allStations[i].type === 'mushaf_mualim') && allStations[i].url === player.src) {
                 hasPrevious = true;
                 break;
-            } else if (allStations[i].type === 'azkar' && allStations[i].url === player.src) { // Should not happen for Azkar type (no direct URL)
-                 // This block is mostly for safety, Azkar type doesn't have a direct URL to play
             }
         }
 
         // Check if there's a valid next non-sublist station
         let hasNext = false;
         for (let i = currentStationIndex + 1; i < allStations.length; i++) {
-            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'quran_sura_list') {
+            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim') {
                 hasNext = true;
                 break;
-            } else if (allStations[i].type === 'quran_sura_list' && allStations[i].url === player.src) {
+            } else if ((allStations[i].type === 'quran_sura_list' || allStations[i].type === 'mushaf_mualim') && allStations[i].url === player.src) {
                 hasNext = true;
                 break;
             }
@@ -1370,7 +1580,6 @@
         prevBtn.disabled = !hasPrevious;
         nextBtn.disabled = !hasNext;
     }
-
 
     // عداد الوقت
     function startTimeCounter() {
@@ -1412,7 +1621,7 @@
                         currentPlayingName = `${station.name[currentLanguage]} - ${matchingRecording.name[currentLanguage]}`;
                         return true;
                     }
-                } else if (station.type === 'quran_sura_list') {
+                } else if (station.type === 'quran_sura_list' || station.type === 'mushaf_mualim') {
                     if (station.url === currentPlayingUrl) {
                         currentPlayingName = station.name[currentLanguage]; // Playing the main stream
                         return true;
@@ -1646,8 +1855,7 @@
           stopRadio();
         } else if (currentStationIndex >= 0) {
           const currentStation = allStations[currentStationIndex];
-          // Prevent spacebar from playing Azkar/Quran suras directly from their dropdown
-          if (currentStation.type === 'azkar' || currentStation.type === 'quran_sura_list') {
+          if (currentStation.type === 'azkar' || currentStation.type === 'quran_sura_list' || currentStation.type === 'mushaf_mualim') {
               console.log("Cannot play sub-items with spacebar. Please use specific play buttons or dropdowns.");
               return;
           }
@@ -1664,12 +1872,6 @@
         previousStation();
       } else if (e.code === 'ArrowRight') {
         nextStation();
-      } else if (e.code === 'ArrowUp') {
-        e.preventDefault();
-        increaseVolume();
-      } else if (e.code === 'ArrowDown') {
-        e.preventDefault();
-        decreaseVolume();
       }
     });
 
@@ -1677,7 +1879,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         setLanguage('ar'); // Set initial language to Arabic
         initializeStations();
-        updateVolumeDisplay();
         updatePlaylistButtons();
         fetchPrayerTimes();
     });
