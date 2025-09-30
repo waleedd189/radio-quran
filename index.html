@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>راديو قرآن v4.2 - المصحف المعلم</title>
+  <title>راديو قرآن v4.3 </title>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <style>
     /* نفس كود الـ CSS السابق بالكامل */
     body {
@@ -569,7 +570,7 @@
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%3E%3Cpath%20fill%3D%22%234CAF50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E' );
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234CAF50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E' );
         background-repeat: no-repeat;
         background-size: 12px;
     }
@@ -630,6 +631,63 @@
         background-color: #45a049;
     }
 
+    /* إضافة مؤشر حالة الشبكة */
+    .network-status {
+      position: fixed;
+      top: 70px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.8em;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .network-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4CAF50;
+      animation: networkPulse 2s infinite;
+    }
+
+    .network-indicator.slow {
+      background: #FF9800;
+    }
+
+    .network-indicator.offline {
+      background: #f44336;
+    }
+
+    @keyframes networkPulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    /* إضافة شريط التحميل المسبق */
+    .preload-progress {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(76, 175, 80, 0.3);
+      z-index: 1000;
+      display: none;
+    }
+
+    .preload-progress-bar {
+      height: 100%;
+      background: #4CAF50;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
     @media (max-width: 768px) {
       .prayer-times-grid { grid-template-columns: repeat(3, 1fr); }
       h1 { font-size: 2.5em; }
@@ -643,11 +701,18 @@
       .featured-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
       .language-toggle { top: 10px; left: 10px; padding: 6px 10px; font-size: 0.8em; }
       h1 a { display: block; margin: 5px 0; }
+      .network-status { top: 60px; left: 10px; font-size: 0.7em; }
     }
   </style>
 </head>
 <body>
   <button class="language-toggle" id="languageToggle" onclick="toggleLanguage()"></button>
+  
+  <!-- مؤشر حالة الشبكة -->
+  <div class="network-status" id="networkStatus">
+    <div class="network-indicator" id="networkIndicator"></div>
+    <span id="networkText">شبكة جيدة</span>
+  </div>
 
   <h1>
     <span id="quranRadioTitle"></span>
@@ -658,7 +723,6 @@
 
   <div class="prayer-times-panel">
     <div class="prayer-times-title" id="prayerTimesTitle">مواقيت الصلاة</div>
-    <!-- START: الكود الذي تم إصلاحه -->
     <div class="prayer-times-grid" id="prayerTimesGrid">
       <div class="prayer-time-item">
         <div class="prayer-name" data-translation-key="fajr">الفجر</div>
@@ -685,7 +749,6 @@
         <div class="prayer-time" id="ishaTime">--:--</div>
       </div>
     </div>
-    <!-- END: الكود الذي تم إصلاحه -->
     <div class="next-prayer-info">
       <div class="next-prayer-text" id="nextPrayerText"></div>
       <div class="next-prayer-countdown" id="nextPrayerCountdown">--:--:--</div>
@@ -732,6 +795,11 @@
   </footer>
   <audio id="radioPlayer" controls style="display:none;" preload="auto"></audio>
 
+  <!-- شريط التحميل المسبق -->
+  <div class="preload-progress" id="preloadProgress">
+    <div class="preload-progress-bar" id="preloadProgressBar"></div>
+  </div>
+
   <button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn">
     <div class="whatsapp-tooltip" id="whatsappTooltip">الإبلاغ عن رابط معطل</div>
     <svg viewBox="0 0 24 24">
@@ -777,7 +845,10 @@
         whatsappMessage: "يوجد رابط معطل في راديو القرآن، يرجى التحقق",
         footerDesignedBy: "راديو قرآن - صفحة اللهم لك الحمد",
         sleepTimerText: "تفعيل المؤقت",
-        sleepTimerStopText: "إيقاف المؤقت"
+        sleepTimerStopText: "إيقاف المؤقت",
+        networkGood: "شبكة جيدة",
+        networkSlow: "شبكة بطيئة",
+        networkOffline: "غير متصل"
       },
       en: {
         quranRadio: "Quran Radio",
@@ -814,7 +885,10 @@
         whatsappMessage: "There is a broken link in Quran Radio, please check",
         footerDesignedBy: "Radio Quran - Allahumma lakal-hamd page",
         sleepTimerText: "Start Timer",
-        sleepTimerStopText: "Stop Timer"
+        sleepTimerStopText: "Stop Timer",
+        networkGood: "Good Network",
+        networkSlow: "Slow Network",
+        networkOffline: "Offline"
       }
     };
 
@@ -1234,12 +1308,34 @@
     const nextBtn = document.getElementById('nextBtn');
     const htmlElement = document.documentElement; // Get the html element
 
+    // إضافة عناصر جديدة لمنع التقطيع
+    const networkStatus = document.getElementById('networkStatus');
+    const networkIndicator = document.getElementById('networkIndicator');
+    const networkText = document.getElementById('networkText');
+    const preloadProgress = document.getElementById('preloadProgress');
+    const preloadProgressBar = document.getElementById('preloadProgressBar');
+
     let currentStationIndex = -1; // Index in the `allStations` array
     let playStartTime = null;
     let timeInterval = null;
     let prayerTimes = {};
     let nextPrayerInterval = null;
     let sleepTimer = null;
+
+    // متغيرات جديدة لمنع التقطيع
+    let hls = null; // لـ HLS.js
+    let bufferCheckInterval = null;
+    let retryCount = 0;
+    let maxRetries = 3;
+    let retryDelay = 2000;
+    let isBuffering = false;
+    let lastBufferCheck = 0;
+    let networkCheckInterval = null;
+
+    // إعدادات البافر
+    const BUFFER_SIZE = 15; // ثواني من البافر المطلوبة
+    const MIN_BUFFER = 3; // الحد الأدنى للبافر قبل الإيقاف المؤقت
+    const PRELOAD_AMOUNT = 30; // مقدار التحميل المسبق بالثواني
 
     // Function to set the language and update content
     function setLanguage(lang) {
@@ -1472,25 +1568,314 @@
         }
     }
 
+    // وظائف منع التقطيع الجديدة
+    function initHLS(url) {
+      if (Hls.isSupported()) {
+        hls = new Hls({
+          debug: false,
+          enableWorker: true,
+          lowLatencyMode: false,
+          backBufferLength: 90,
+          maxBufferLength: 120,
+          maxMaxBufferLength: 600,
+          liveSyncDurationCount: 3,
+          liveMaxLatencyDurationCount: 10,
+          highBufferWatchdogPeriod: 1,
+          nudgeOffset: 0.1,
+          nudgeMaxRetry: 3,
+          maxFragLookUpTolerance: 0.2,
+          manifestLoadingTimeOut: 10000,
+          manifestLoadingMaxRetry: 3,
+          manifestLoadingRetryDelay: 1000,
+          levelLoadingTimeOut: 10000,
+          levelLoadingMaxRetry: 3,
+          levelLoadingRetryDelay: 1000,
+          fragLoadingTimeOut: 20000,
+          fragLoadingMaxRetry: 3,
+          fragLoadingRetryDelay: 1000,
+          startLevel: -1,
+          startFragPrefetch: false,
+          fpsDroppedMonitoringPeriod: 5000,
+          fpsDroppedMonitoringThreshold: 0.2,
+          appendErrorMaxRetry: 3,
+          loader: Hls.DefaultConfig.loader,
+          fLoader: Hls.DefaultConfig.fLoader,
+          pLoader: Hls.DefaultConfig.pLoader,
+          xhrSetup: function(xhr, url) {
+            xhr.setRequestHeader('Cache-Control', 'no-cache');
+            xhr.setRequestHeader('Pragma', 'no-cache');
+          },
+          fetchSetup: function(context, initParams) {
+            initParams.headers = initParams.headers || {};
+            initParams.headers['Cache-Control'] = 'no-cache';
+            initParams.headers['Pragma'] = 'no-cache';
+            return initParams;
+          }
+        });
+
+        hls.loadSource(url);
+        hls.attachMedia(player);
+        
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          console.log('Manifest loaded, starting playback');
+          player.play().catch(e => {
+            console.error('Playback failed:', e);
+            handlePlaybackError(e);
+          });
+        });
+
+        hls.on(Hls.Events.ERROR, function(event, data) {
+          console.error('HLS Error:', data);
+          if (data.fatal) {
+            switch(data.type) {
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                console.log('Network error, retrying...');
+                hls.startLoad();
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                console.log('Media error, recovering...');
+                hls.recoverMediaError();
+                break;
+              default:
+                console.log('Fatal error, stopping playback');
+                stopRadio();
+                break;
+            }
+          }
+        });
+
+        return true;
+      } else if (player.canPlayType('application/vnd.apple.mpegurl')) {
+        // For Safari native HLS support
+        player.src = url;
+        player.play().catch(e => {
+          console.error('Playback failed:', e);
+          handlePlaybackError(e);
+        });
+        return true;
+      }
+      return false;
+    }
+
+    function checkBuffer() {
+      if (!player.src || player.paused || player.ended) return;
+
+      const now = Date.now();
+      if (now - lastBufferCheck < 500) return; // Check every 500ms max
+      lastBufferCheck = now;
+
+      if (player.buffered.length > 0) {
+        const bufferedEnd = player.buffered.end(player.buffered.length - 1);
+        const currentTime = player.currentTime;
+        const duration = player.duration;
+        const remainingBuffer = bufferedEnd - currentTime;
+
+        // Update preload progress
+        if (duration > 0) {
+          const preloadPercentage = Math.min((bufferedEnd / duration) * 100, 100);
+          preloadProgressBar.style.width = preloadPercentage + '%';
+        }
+
+        // Check if buffer is too low
+        if (remainingBuffer < MIN_BUFFER && !isBuffering) {
+          console.log('Buffer too low, pausing playback');
+          isBuffering = true;
+          player.pause();
+          onBufferingStart();
+          
+          // Wait for buffer to recover
+          setTimeout(() => {
+            if (player.buffered.length > 0) {
+              const newBufferedEnd = player.buffered.end(player.buffered.length - 1);
+              if (newBufferedEnd > currentTime + MIN_BUFFER) {
+                console.log('Buffer recovered, resuming playback');
+                isBuffering = false;
+                onBufferingEnd();
+                player.play().catch(e => {
+                  console.error('Resume failed:', e);
+                  handlePlaybackError(e);
+                });
+              }
+            }
+          }, 1000);
+        }
+
+        // Preload more content if needed
+        if (remainingBuffer < BUFFER_SIZE && bufferedEnd < duration) {
+          preloadSegment();
+        }
+      }
+    }
+
+    function preloadSegment() {
+      if (!player.src || player.paused || player.ended) return;
+
+      if (player.buffered.length > 0) {
+        const bufferedEnd = player.buffered.end(player.buffered.length - 1);
+        const duration = player.duration;
+        const currentTime = player.currentTime;
+        
+        if (duration > 0 && bufferedEnd < duration) {
+          const preloadTarget = Math.min(bufferedEnd + PRELOAD_AMOUNT, duration);
+          
+          if (preloadTarget > currentTime) {
+            // Show preload progress bar
+            preloadProgress.style.display = 'block';
+            
+            // Try to seek ahead to trigger more buffering
+            const originalTime = currentTime;
+            player.currentTime = Math.min(preloadTarget, duration - 1);
+            
+            // Return to original position after a short delay
+            setTimeout(() => {
+              player.currentTime = originalTime;
+            }, 100);
+          }
+        } else {
+          // Hide preload progress bar when fully loaded
+          preloadProgress.style.display = 'none';
+        }
+      }
+    }
+
+    function handlePlaybackError(error) {
+      console.error('Playback error:', error);
+      retryCount++;
+      
+      if (retryCount <= maxRetries) {
+        console.log(`Retrying playback (${retryCount}/${maxRetries})...`);
+        setTimeout(() => {
+          const currentUrl = player.src;
+          player.load();
+          player.play().catch(e => {
+            console.error('Retry failed:', e);
+            if (retryCount >= maxRetries) {
+              nowPlayingSpan.textContent = `${translations[currentLanguage].playbackError} ${nowPlayingSpan.textContent}`;
+              stopRadio();
+            }
+          });
+        }, retryDelay * retryCount);
+      } else {
+        nowPlayingSpan.textContent = `${translations[currentLanguage].playbackError} ${nowPlayingSpan.textContent}`;
+        stopRadio();
+      }
+    }
+
+    function checkNetworkStatus() {
+      if (navigator.connection) {
+        const connection = navigator.connection;
+        const effectiveType = connection.effectiveType;
+        const downlink = connection.downlink;
+        
+        let status = 'good';
+        let statusText = translations[currentLanguage].networkGood;
+        
+        if (effectiveType === 'slow-2g' || effectiveType === '2g' || downlink < 0.5) {
+          status = 'slow';
+          statusText = translations[currentLanguage].networkSlow;
+          // Reduce buffer size for slow connections
+          BUFFER_SIZE = 8;
+          MIN_BUFFER = 2;
+        } else if (effectiveType === '4g' && downlink > 2) {
+          status = 'good';
+          statusText = translations[currentLanguage].networkGood;
+          // Increase buffer size for good connections
+          BUFFER_SIZE = 20;
+          MIN_BUFFER = 5;
+        }
+        
+        // Update network indicator
+        networkIndicator.className = 'network-indicator';
+        if (status === 'slow') {
+          networkIndicator.classList.add('slow');
+        }
+        networkText.textContent = statusText;
+        
+        // Adjust quality based on network
+        if (hls && hls.levels.length > 1) {
+          if (status === 'slow') {
+            hls.currentLevel = 0; // Lowest quality
+          } else {
+            hls.currentLevel = -1; // Auto quality
+          }
+        }
+      } else {
+        // Fallback for browsers that don't support Network Information API
+        networkText.textContent = translations[currentLanguage].networkGood;
+      }
+    }
+
+    function startBufferMonitoring() {
+      if (bufferCheckInterval) {
+        clearInterval(bufferCheckInterval);
+      }
+      
+      bufferCheckInterval = setInterval(() => {
+        checkBuffer();
+      }, 500);
+    }
+
+    function stopBufferMonitoring() {
+      if (bufferCheckInterval) {
+        clearInterval(bufferCheckInterval);
+        bufferCheckInterval = null;
+      }
+    }
+
+    function startNetworkMonitoring() {
+      if (networkCheckInterval) {
+        clearInterval(networkCheckInterval);
+      }
+      
+      // Check network status immediately
+      checkNetworkStatus();
+      
+      // Check network status every 5 seconds
+      networkCheckInterval = setInterval(() => {
+        checkNetworkStatus();
+      }, 5000);
+      
+      // Listen for network changes
+      if (navigator.connection) {
+        navigator.connection.addEventListener('change', checkNetworkStatus);
+      }
+    }
+
+    function stopNetworkMonitoring() {
+      if (networkCheckInterval) {
+        clearInterval(networkCheckInterval);
+        networkCheckInterval = null;
+      }
+      
+      if (navigator.connection) {
+        navigator.connection.removeEventListener('change', checkNetworkStatus);
+      }
+    }
+
     // تشغيل المحطة مع تحسين البافر
     function playRadio(url, stationName, elementToActivate) { 
+      // Reset retry count
+      retryCount = 0;
+      
+      // Stop any current playback
       player.pause();
-      player.src = url;
-      player.volume = 0.5; // Reset volume to default
+      if (hls) {
+        hls.destroy();
+        hls = null;
+      }
       
       // Show buffering indicator
       playingIndicator.style.display = 'none';
       bufferingLoader.style.display = 'inline-block';
       
+      // Update UI
       document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
-      
       const currentCard = elementToActivate.closest('.card');
       currentCard.classList.add('active');
-      
       nowPlayingSpan.textContent = stationName;
       
+      // Find station index
       let foundIndex = -1;
-      
       foundIndex = allStations.findIndex(station => {
           if (station.type === 'azkar') {
               return station.recordings.some(rec => rec.url === url);
@@ -1513,32 +1898,53 @@
       player.addEventListener('playing', onBufferingEnd);
       player.addEventListener('canplay', onBufferingEnd);
       
-      player.play().then(() => {
-        playStartTime = Date.now();
-        startTimeCounter();
-      }).catch(error => {
-        console.error('Playback error:', error);
-        nowPlayingSpan.textContent = `${translations[currentLanguage].playbackError} ${stationName}`;
-        bufferingLoader.style.display = 'none';
-        currentCard.classList.remove('active');
-      });
+      // Try to use HLS if the URL supports it
+      const isHLS = url.includes('.m3u8') || url.includes('playlist.m3u8');
+      
+      if (isHLS && initHLS(url)) {
+        // HLS initialization successful
+        console.log('Using HLS for streaming');
+      } else {
+        // Use regular HTML5 audio
+        console.log('Using regular HTML5 audio');
+        player.src = url;
+        player.volume = 0.5;
+        
+        player.play().then(() => {
+          playStartTime = Date.now();
+          startTimeCounter();
+          startBufferMonitoring();
+        }).catch(error => {
+          console.error('Playback error:', error);
+          handlePlaybackError(error);
+        });
+      }
     }
 
     // Buffering event handlers
     function onBufferingStart() {
       playingIndicator.style.display = 'none';
       bufferingLoader.style.display = 'inline-block';
+      isBuffering = true;
     }
 
     function onBufferingEnd() {
       bufferingLoader.style.display = 'none';
       playingIndicator.style.display = 'block';
+      isBuffering = false;
     }
 
     // إيقاف التشغيل
     function stopRadio() {
       player.pause();
       player.src = "";
+      
+      // Destroy HLS instance if exists
+      if (hls) {
+        hls.destroy();
+        hls = null;
+      }
+      
       nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
       playingIndicator.style.display = 'none';
       bufferingLoader.style.display = 'none';
@@ -1548,6 +1954,14 @@
       currentStationIndex = -1;
       updatePlaylistButtons();
       stopTimeCounter();
+      stopBufferMonitoring();
+      
+      // Hide preload progress
+      preloadProgress.style.display = 'none';
+      preloadProgressBar.style.width = '0%';
+      
+      // Reset retry count
+      retryCount = 0;
     }
 
     // مؤقت النوم
@@ -2034,6 +2448,31 @@
         initializeStations();
         updatePlaylistButtons();
         fetchPrayerTimes();
+        
+        // Start network monitoring
+        startNetworkMonitoring();
+        
+        // Add online/offline event listeners
+        window.addEventListener('online', () => {
+          console.log('Network connection restored');
+          checkNetworkStatus();
+        });
+        
+        window.addEventListener('offline', () => {
+          console.log('Network connection lost');
+          networkIndicator.className = 'network-indicator offline';
+          networkText.textContent = translations[currentLanguage].networkOffline;
+        });
+    });
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+      stopNetworkMonitoring();
+      stopBufferMonitoring();
+      if (hls) {
+        hls.destroy();
+        hls = null;
+      }
     });
   </script>
 </body>
