@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUmFkaW8gUXVyYW4iLCJzaG9ydF9uYW1lIjoiUXVyYW4gUmFkaW8iLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJ0aGVtZV9jb2xvciI6IiM0Q0FGNTAiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzExMSIsImljb25zIjpbXSwibm90aWZpY2F0aW9ucyI6eyJpY29uIjoiaWNvbi5wbmciLCJ2aWJyYXRlIjoxLCJzb3VuZCI6MX19">
   <style>
+    /* نفس الأنماط السابقة كاملة */
     body {
       margin: 0;
       font-family: 'Cairo', 'Arial', sans-serif;
@@ -563,7 +564,7 @@
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%3E%3Cpath%20fill%3D%22%234CAF50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E' );
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234CAF50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E' );
         background-repeat: no-repeat;
         background-size: 12px;
     }
@@ -947,16 +948,21 @@
     let currentLanguage = 'ar'; // Default language
     let notificationPermissionGranted = false;
 
-    // خواطر الشيخ الشعراوي في تفسير القرآن الكريم
+    // خواطر الشيخ الشعراوي في تفسير القرآن الكريم (محدثة)
     const sharawyTafsirRecordings = [
+        // المقدمات
         { name: "مقدمة 1", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro1.mp3" },
         { name: "مقدمة 2", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro2.mp3" },
         { name: "مقدمة 3", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro3.mp3" },
         { name: "مقدمة 4", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro4.mp3" },
+        
+        // سورة الفاتحة
         { name: "سورة الفاتحة 001", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_001.mp3" },
         { name: "سورة الفاتحة 002", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_002.mp3" },
         { name: "سورة الفاتحة 003", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_003.mp3" },
         { name: "سورة الفاتحة 004", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_004.mp3" },
+        
+        // سورة البقرة
         { name: "سورة البقرة (001-001)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah001_001.mp3" },
         { name: "سورة البقرة (001-002)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah001_002.mp3" },
         { name: "سورة البقرة (003-005)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah003_005.mp3" },
@@ -1052,10 +1058,58 @@
         { name: "سورة البقرة (279-282)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah279_282.mp3" },
         { name: "سورة البقرة (283-284)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah283_284.mp3" },
         { name: "سورة البقرة (284-286)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah284_286.mp3" },
-        { name: "سورة البقرة (286-286)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah286_286.mp3" }
+        { name: "سورة البقرة (286-286)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah286_286.mp3" },
+        
+        // ===== سورة آل عمرan (الإضافة الجديدة) =====
+        { name: "سورة آل عمران (001-007)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran001_007.mp3" },
+        { name: "سورة آل عمران (007-013)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran007_013.mp3" },
+        { name: "سورة آل عمران (013-014)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran013_014.mp3" },
+        { name: "سورة آل عمران (014-016)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran014_016.mp3" },
+        { name: "سورة آل عمران (016-018)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran016_018.mp3" },
+        { name: "سورة آل عمران (018-020)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran018_020.mp3" },
+        { name: "سورة آل عمران (020-023)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran020_023.mp3" },
+        { name: "سورة آل عمران (023-026)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran023_026.mp3" },
+        { name: "سورة آل عمران (026-030)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran026_030.mp3" },
+        { name: "سورة آل عمران (030-035)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran030_035.mp3" },
+        { name: "سورة آل عمران (035-041)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran035_041.mp3" },
+        { name: "سورة آل عمران (037-046)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran037_046.mp3" },
+        { name: "سورة آل عمران (046-051)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran046_051.mp3" },
+        { name: "سورة آل عمران (051-054)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran051_054.mp3" },
+        { name: "سورة آل عمران (054-057)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran054_057.mp3" },
+        { name: "سورة آل عمران (058-067)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran058_067.mp3" },
+        { name: "سورة آل عمران (067-075)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran067_075.mp3" },
+        { name: "سورة آل عمران (075-078)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran075_078.mp3" },
+        { name: "سورة آل عمران (078-082)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran078_082.mp3" },
+        { name: "سورة آل عمران (081-084)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran081_084.mp3" },
+        { name: "سورة آل عمران (084-092)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran084_092.mp3" },
+        { name: "سورة آل عمران (092-096)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran092_096.mp3" },
+        { name: "سورة آل عمران (096-097)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran096_097.mp3" },
+        { name: "سورة آل عمران (097-101)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran097_101.mp3" },
+        { name: "سورة آل عمران (101-106)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran101_106.mp3" },
+        { name: "سورة آل عمران (106-111)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran106_111.mp3" },
+        { name: "سورة آل عمران (111-117)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran111_117.mp3" },
+        { name: "سورة آل عمران (117-118)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran117_118.mp3" },
+        { name: "سورة آل عمران (118-122)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran118_122.mp3" },
+        { name: "سورة آل عمران (121-130)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran121_130.mp3" },
+        { name: "سورة آل عمران (130-136)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran130_136.mp3" },
+        { name: "سورة آل عمران (136-139)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran136_139.mp3" },
+        { name: "سورة آل عمران (139-144)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran139_144.mp3" },
+        { name: "سورة آل عمران (144-146)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran144_146.mp3" },
+        { name: "سورة آل عمران (146-154)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran146_154.mp3" },
+        { name: "سورة آل عمران (154-159)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran154_159.mp3" },
+        { name: "سورة آل عمران (159-164)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran159_164.mp3" },
+        { name: "سورة آل عمران (162-165)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran162_165.mp3" },
+        { name: "سورة آل عمران (165-174)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran165_174.mp3" },
+        { name: "سورة آل عمران (173-177)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran173_177.mp3" },
+        { name: "سورة آل عمران (177-181)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran177_181.mp3" },
+        { name: "سورة آل عمران (181-184)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran181_184.mp3" },
+        { name: "سورة آل عمران (184-188)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran184_188.mp3" },
+        { name: "سورة آل عمران (188-190)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran188_190.mp3" },
+        { name: "سورة آل عمران (190-197)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran190_197.mp3" },
+        { name: "سورة آل عمران (197-200)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran197_200.mp3" }
     ];
 
-    // Quran Suras data for Mishary Rashid
+    // باقي الكود كما هو (بدون تغيير)
     const misharyQuranSuras = [
         { num: '001', name: { ar: 'الفاتحة', en: 'Al-Fatiha' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/001.mp3' },
         { num: '002', name: { ar: 'البقرة', en: 'Al-Baqarah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/002.mp3' },
