@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>مصحف الشيخ مشاري راشد</title>
+  
+  <!-- نفس الخطوط من الصفحة الرئيسية -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== نفس الألوان والتصميم من الصفحة الرئيسية ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Cairo', 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #111, #333);
+      color: #fff;
+      text-align: center;
+      padding: 30px 10px;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+      overflow-x: hidden;
+    }
+    
+    /* ===== العنوان الرئيسي (نفس الصفحة الرئيسية) ===== */
+    h1 {
+      font-family: 'Amiri', serif;
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 5px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, #4CAF50, #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    h1::before {
+      content: "﴿";
+      color: #4CAF50;
+      margin-left: 10px;
+    }
+    
+    h1::after {
+      content: "﴾";
+      color: #4CAF50;
+      margin-right: 10px;
+    }
+    
+    /* ===== العنوان الفرعي (تم التعديل - نفس الصفحة الرئيسية) ===== */
+    .subtitle { 
+      font-size: 1.1em;
+      margin-bottom: 15px;
+      color: #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .subtitle a {
+      color: inherit;
+      text-decoration: none;
+      background: linear-gradient(45deg, #4CAF50, #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: transform 0.3s ease;
+      font-weight: 600;
+    }
+
+    .subtitle a:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
+    }
+    
+    /* ===== العنوان الثان (الجديد) ===== */
+    .second-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.8em;
+      font-weight: 700;
+      margin-bottom: 25px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, #FF9800, #FFC107);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .second-title::before {
+      content: "﴿";
+      color: #FF9800;
+      margin-left: 10px;
+    }
+    
+    .second-title::after {
+      content: "﴾";
+      color: #FF9800;
+      margin-right: 10px;
+    }
+    
+    /* ===== زرار التحكم ===== */
+    .controls-container {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+    }
+    
+    .back-btn {
+      background: #2196F3;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .back-btn:hover {
+      background: #0b7dda;
+    }
+    
+    .share-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .share-btn:hover {
+      background: #45a049;
+    }
+    
+    /* ===== مشغل الصوت ===== */
+    .player-container {
+      background: rgba(34, 34, 34, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+    
+    .now-playing {
+      font-size: 1.1em;
+      color: #4CAF50;
+      margin-bottom: 15px;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .playing-indicator {
+      width: 12px;
+      height: 12px;
+      background: #4CAF50;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    .loader {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #fff;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+    
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* ===== قائمة السور ===== */
+    .sura-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      max-width: 1200px;
+      margin: 30px auto;
+    }
+    
+    .sura-card {
+      background: #222;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+    
+    .sura-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(76, 175, 80, 0.3);
+      border-color: rgba(76, 175, 80, 0.5);
+    }
+    
+    .sura-card.active {
+      border-color: #4CAF50;
+      background: rgba(76, 175, 80, 0.1);
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.4);
+    }
+    
+    .sura-number {
+      font-size: 0.9em;
+      color: #4CAF50;
+      font-weight: 600;
+    }
+    
+    .sura-name {
+      font-size: 1.1em;
+      margin: 8px 0;
+      font-family: 'Amiri', serif;
+    }
+    
+    .sura-verse-count {
+      font-size: 0.8em;
+      color: #aaa;
+    }
+    
+    .progress-bar {
+      margin-top: 10px;
+      height: 3px;
+      width: 100%;
+      background: #555;
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    
+    .sura-card.active .progress-bar::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 30%;
+      background: #4caf50;
+      animation: move 2s linear infinite;
+    }
+    
+    @keyframes move {
+      from { left: -30%; }
+      to { left: 100%; }
+    }
+    
+    /* ===== التوقير (نفس الصفحة الرئيسية) ===== */
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    
+    .footer-text {
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 20px;
+    }
+    
+    /* ===== زر الواتساب في نهاية الصفحة (نفس الصفحة الرئيسية) ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: none;
+      text-decoration: none;
+    }
+    
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+    }
+    
+    .whatsapp-float svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+    
+    .whatsapp-tooltip {
+      position: absolute;
+      right: 70px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85em;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .whatsapp-tooltip::after {
+      content: '';
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 6px solid transparent;
+      border-left-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .whatsapp-float:hover .whatsapp-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* ===== للهواتف ===== */
+    @media (max-width: 768px) {
+      h1 { font-size: 2em; }
+      .second-title { font-size: 1.5em; }
+      .subtitle { font-size: 1em; }
+      .sura-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+      .sura-card { padding: 12px; }
+      .sura-name { font-size: 1em; }
+      .controls-container { 
+        top: 10px; 
+        left: 10px;
+        gap: 5px;
+      }
+      .back-btn, .share-btn { 
+        font-size: 0.8em; 
+        padding: 6px 12px;
+      }
+      .whatsapp-float { 
+        width: 50px; 
+        height: 50px; 
+        bottom: 15px; 
+        right: 15px; 
+      }
+      .whatsapp-float svg { 
+        width: 26px; 
+        height: 26px; 
+      }
+      .whatsapp-tooltip { 
+        right: 60px; 
+        font-size: 0.8em; 
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== زرار التحكم (الرجوع + المشاركة) ===== -->
+  <div class="controls-container">
+    <button class="back-btn" onclick="goBack()">← رجوع</button>
+    <button class="share-btn" onclick="shareApp()">
+      <span>📤</span>
+      <span>مشاركة</span>
+    </button>
+  </div>
+  
+  <!-- ===== العنوان الرئيسي (نفس الصفحة الرئيسية) ===== -->
+  <h1>
+    <span>راديو قرآن</span>
+  </h1>
+  
+  <!-- ===== العنوان الفرعي (نفس الصفحة الرئيسية) ===== -->
+  <div class="subtitle">
+    <span>صفحة</span>
+    <a href="https://www.facebook.com/lakel7amd" target="_blank">اللهم لك الحمد</a>
+  </div>
+  
+  <!-- ===== العنوان الثان (الجديد) ===== -->
+  <h2 class="second-title">
+    <span>مصحف الشيخ مشاري راشد</span>
+  </h2>
+  
+  <!-- ===== مشغل الصوت ===== -->
+  <div class="player-container">
+    <div class="now-playing" id="nowPlaying">
+      <div class="playing-indicator" id="playingIndicator" style="display: none;"></div>
+      <div class="loader" id="bufferingLoader" style="display: none;"></div>
+      <span id="currentSura">اختر سورة للاستماع</span>
+    </div>
+    
+    <audio id="audioPlayer" controls style="width: 100%;"></audio>
+  </div>
+  
+  <!-- ===== قائمة السور ===== -->
+  <div class="sura-grid" id="suraGrid">
+    <!-- السور ستضاف هنا بواسطة JavaScript -->
+  </div>
+
+  <!-- ===== التوقير (نفس الصفحة الرئيسية) ===== -->
+  <footer>
+    <div class="footer-text">راديو قرآن - صفحة اللهم لك الحمد</div>
+  </footer>
+
+  <!-- ===== زر الواتساب في نهاية الصفحة (نفس الصفحة الرئيسية) ===== -->
+  <button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn">
+    <div class="whatsapp-tooltip" id="whatsappTooltip">الإبلاغ عن رابط معطل</div>
+    <svg viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.520.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.520-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
+    </svg>
+  </button>
+
+  <script>
+    // بيانات السور (كاملة - 114 سورة) للشيخ مشاري راشد
+    const suras = [
+      { num: '001', name: 'الفاتحة', verses: 7, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/001.mp3' },
+      { num: '002', name: 'البقرة', verses: 286, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/002.mp3' },
+      { num: '003', name: 'آل عمران', verses: 200, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/003.mp3' },
+      { num: '004', name: 'النساء', verses: 176, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/004.mp3' },
+      { num: '005', name: 'المائدة', verses: 120, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/005.mp3' },
+      { num: '006', name: 'الأنعام', verses: 165, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/006.mp3' },
+      { num: '007', name: 'الأعراف', verses: 206, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/007.mp3' },
+      { num: '008', name: 'الأنفال', verses: 75, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/008.mp3' },
+      { num: '009', name: 'التوبة', verses: 129, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/009.mp3' },
+      { num: '010', name: 'يونس', verses: 109, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/010.mp3' },
+      { num: '011', name: 'هود', verses: 123, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/011.mp3' },
+      { num: '012', name: 'يوسف', verses: 111, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/012.mp3' },
+      { num: '013', name: 'الرعد', verses: 43, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/013.mp3' },
+      { num: '014', name: 'إبراهيم', verses: 52, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/014.mp3' },
+      { num: '015', name: 'الحجر', verses: 99, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/015.mp3' },
+      { num: '016', name: 'النحل', verses: 128, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/016.mp3' },
+      { num: '017', name: 'الإسراء', verses: 111, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/017.mp3' },
+      { num: '018', name: 'الكهف', verses: 110, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/018.mp3' },
+      { num: '019', name: 'مريم', verses: 98, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/019.mp3' },
+      { num: '020', name: 'طه', verses: 135, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/020.mp3' },
+      { num: '021', name: 'الأنبياء', verses: 112, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/021.mp3' },
+      { num: '022', name: 'الحج', verses: 78, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/022.mp3' },
+      { num: '023', name: 'المؤمنون', verses: 118, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/023.mp3' },
+      { num: '024', name: 'النور', verses: 64, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/024.mp3' },
+      { num: '025', name: 'الفرقان', verses: 77, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/025.mp3' },
+      { num: '026', name: 'الشعراء', verses: 227, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/026.mp3' },
+      { num: '027', name: 'النمل', verses: 93, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/027.mp3' },
+      { num: '028', name: 'القصص', verses: 88, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/028.mp3' },
+      { num: '029', name: 'العنكبوت', verses: 69, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/029.mp3' },
+      { num: '030', name: 'الروم', verses: 60, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/030.mp3' },
+      { num: '031', name: 'لقمان', verses: 34, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/031.mp3' },
+      { num: '032', name: 'السجدة', verses: 30, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/032.mp3' },
+      { num: '033', name: 'الأحزاب', verses: 73, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/033.mp3' },
+      { num: '034', name: 'سبأ', verses: 54, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/034.mp3' },
+      { num: '035', name: 'فاطر', verses: 45, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/035.mp3' },
+      { num: '036', name: 'يس', verses: 83, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/036.mp3' },
+      { num: '037', name: 'الصافات', verses: 182, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/037.mp3' },
+      { num: '038', name: 'ص', verses: 88, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/038.mp3' },
+      { num: '039', name: 'الزمر', verses: 75, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/039.mp3' },
+      { num: '040', name: 'غافر', verses: 85, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/040.mp3' },
+      { num: '041', name: 'فصلت', verses: 54, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/041.mp3' },
+      { num: '042', name: 'الشورى', verses: 53, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/042.mp3' },
+      { num: '043', name: 'الزخرف', verses: 89, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/043.mp3' },
+      { num: '044', name: 'الدخان', verses: 59, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/044.mp3' },
+      { num: '045', name: 'الجاثية', verses: 37, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/045.mp3' },
+      { num: '046', name: 'الأحقاف', verses: 35, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/046.mp3' },
+      { num: '047', name: 'محمد', verses: 38, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/047.mp3' },
+      { num: '048', name: 'الفتح', verses: 29, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/048.mp3' },
+      { num: '049', name: 'الحجرات', verses: 18, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/049.mp3' },
+      { num: '050', name: 'ق', verses: 45, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/050.mp3' },
+      { num: '051', name: 'الذاريات', verses: 60, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/051.mp3' },
+      { num: '052', name: 'الطور', verses: 49, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/052.mp3' },
+      { num: '053', name: 'النجم', verses: 62, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/053.mp3' },
+      { num: '054', name: 'القمر', verses: 55, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/054.mp3' },
+      { num: '055', name: 'الرحمن', verses: 78, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/055.mp3' },
+      { num: '056', name: 'الواقعة', verses: 96, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/056.mp3' },
+      { num: '057', name: 'الحديد', verses: 29, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/057.mp3' },
+      { num: '058', name: 'المجادلة', verses: 22, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/058.mp3' },
+      { num: '059', name: 'الحشر', verses: 24, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/059.mp3' },
+      { num: '060', name: 'الممتحنة', verses: 13, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/060.mp3' },
+      { num: '061', name: 'الصف', verses: 14, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/061.mp3' },
+      { num: '062', name: 'الجمعة', verses: 11, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/062.mp3' },
+      { num: '063', name: 'المنافقون', verses: 11, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/063.mp3' },
+      { num: '064', name: 'التغابن', verses: 18, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/064.mp3' },
+      { num: '065', name: 'الطلاق', verses: 12, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/065.mp3' },
+      { num: '066', name: 'التحريم', verses: 12, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/066.mp3' },
+      { num: '067', name: 'الملك', verses: 30, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/067.mp3' },
+      { num: '068', name: 'القلم', verses: 52, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/068.mp3' },
+      { num: '069', name: 'الحاقة', verses: 52, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/069.mp3' },
+      { num: '070', name: 'المعارج', verses: 44, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/070.mp3' },
+      { num: '071', name: 'نوح', verses: 28, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/071.mp3' },
+      { num: '072', name: 'الجن', verses: 28, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/072.mp3' },
+      { num: '073', name: 'المزمل', verses: 20, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/073.mp3' },
+      { num: '074', name: 'المدثر', verses: 56, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/074.mp3' },
+      { num: '075', name: 'القيامة', verses: 40, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/075.mp3' },
+      { num: '076', name: 'الإنسان', verses: 31, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/076.mp3' },
+      { num: '077', name: 'المرسلات', verses: 50, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/077.mp3' },
+      { num: '078', name: 'النبأ', verses: 40, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/078.mp3' },
+      { num: '079', name: 'النازعات', verses: 46, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/079.mp3' },
+      { num: '080', name: 'عبس', verses: 42, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/080.mp3' },
+      { num: '081', name: 'التكوير', verses: 29, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/081.mp3' },
+      { num: '082', name: 'الإنفطار', verses: 19, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/082.mp3' },
+      { num: '083', name: 'المطففين', verses: 36, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/083.mp3' },
+      { num: '084', name: 'الإنشقاق', verses: 25, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/084.mp3' },
+      { num: '085', name: 'البروج', verses: 22, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/085.mp3' },
+      { num: '086', name: 'الطارق', verses: 17, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/086.mp3' },
+      { num: '087', name: 'الأعلى', verses: 19, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/087.mp3' },
+      { num: '088', name: 'الغاشية', verses: 26, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/088.mp3' },
+      { num: '089', name: 'الفجر', verses: 30, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/089.mp3' },
+      { num: '090', name: 'البلد', verses: 20, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/090.mp3' },
+      { num: '091', name: 'الشمس', verses: 15, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/091.mp3' },
+      { num: '092', name: 'الليل', verses: 21, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/092.mp3' },
+      { num: '093', name: 'الضحى', verses: 11, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/093.mp3' },
+      { num: '094', name: 'الشرح', verses: 8, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/094.mp3' },
+      { num: '095', name: 'التين', verses: 8, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/095.mp3' },
+      { num: '096', name: 'العلق', verses: 19, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/096.mp3' },
+      { num: '097', name: 'القدر', verses: 5, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/097.mp3' },
+      { num: '098', name: 'البينة', verses: 8, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/098.mp3' },
+      { num: '099', name: 'الزلزلة', verses: 8, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/099.mp3' },
+      { num: '100', name: 'العاديات', verses: 11, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/100.mp3' },
+      { num: '101', name: 'القارعة', verses: 11, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/101.mp3' },
+      { num: '102', name: 'التكاثر', verses: 8, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/102.mp3' },
+      { num: '103', name: 'العصر', verses: 3, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/103.mp3' },
+      { num: '104', name: 'الهمزة', verses: 9, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/104.mp3' },
+      { num: '105', name: 'الفيل', verses: 5, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/105.mp3' },
+      { num: '106', name: 'قريش', verses: 4, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/106.mp3' },
+      { num: '107', name: 'الماعون', verses: 7, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/107.mp3' },
+      { num: '108', name: 'الكوثر', verses: 3, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/108.mp3' },
+      { num: '109', name: 'الكافرون', verses: 6, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/109.mp3' },
+      { num: '110', name: 'النصر', verses: 3, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/110.mp3' },
+      { num: '111', name: 'المسد', verses: 5, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/111.mp3' },
+      { num: '112', name: 'الإخلاص', verses: 4, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/112.mp3' },
+      { num: '113', name: 'الفلق', verses: 5, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/113.mp3' },
+      { num: '114', name: 'الناس', verses: 6, url: 'https://download.quranicaudio.com/quran/mishaari_raashid_al_afaasy/114.mp3' }
+    ];
+
+    const player = document.getElementById('audioPlayer');
+    const nowPlaying = document.getElementById('currentSura');
+    const playingIndicator = document.getElementById('playingIndicator');
+    const bufferingLoader = document.getElementById('bufferingLoader');
+    const suraGrid = document.getElementById('suraGrid');
+    let currentSuraCard = null;
+
+    // تحميل السور في الصفحة
+    function loadSuras() {
+      suras.forEach(sura => {
+        const card = document.createElement('div');
+        card.className = 'sura-card';
+        card.innerHTML = `
+          <div class="sura-number">سورة ${sura.num}</div>
+          <div class="sura-name">${sura.name}</div>
+          <div class="sura-verse-count">${sura.verses} آية</div>
+          <div class="progress-bar"></div>
+        `;
+        
+        card.addEventListener('click', () => playSura(sura, card));
+        suraGrid.appendChild(card);
+      });
+    }
+
+    // تشغيل السورة
+    function playSura(sura, cardElement) {
+      // إزالة التفعيل من السورة الحالية
+      if (currentSuraCard) {
+        currentSuraCard.classList.remove('active');
+      }
+      
+      // تفعيل السورة الجديدة
+      cardElement.classList.add('active');
+      currentSuraCard = cardElement;
+      
+      // تحديث المشغل
+      player.src = sura.url;
+      nowPlaying.textContent = `جاري تشغيل: ${sura.name}`;
+      bufferingLoader.style.display = 'inline-block';
+      playingIndicator.style.display = 'none';
+      
+      player.play().then(() => {
+        bufferingLoader.style.display = 'none';
+        playingIndicator.style.display = 'block';
+      }).catch(error => {
+        console.error('خطأ في التشغيل:', error);
+        nowPlaying.textContent = `خطأ في تشغيل ${sura.name}`;
+        bufferingLoader.style.display = 'none';
+      });
+    }
+
+    // الرجوع لصفحة الراديو
+    function goBack() {
+      window.location.href = 'index.html'; // غير هذا المسار حسب اسم صفحتك الرئيسية
+    }
+
+    // دالة المشاركة (نفس الصفحة الرئيسية)
+    function shareApp() {
+      const shareData = {
+        title: 'مصحف الشيخ مشاري راشد',
+        text: 'استمع إلى مصحف الشيخ مشاري راشد - صفحة اللهم لك الحمد',
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData)
+          .catch(console.error);
+      } else {
+        // Fallback: copy to clipboard
+        const textToCopy = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          alert('تم نسخ الرابط إلى الحافظة!');
+        }).catch(() => {
+          alert('فشل النسخ، يرجى نسخ الرابط يدوياً');
+        });
+      }
+    }
+
+    // دالة الإبلاغ عن رابط معطل (نفس الصفحة الرئيسية)
+    function reportBrokenLink() {
+      const phoneNumber = '+201092116092';
+      const message = 'يوجد رابط معطل في مصحف الشيخ مشاري راشد، يرجى التحقق';
+      const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
+      
+      window.open(whatsappUrl, '_blank');
+      
+      return false;
+    }
+
+    // أحداث المشغل
+    player.addEventListener('pause', () => {
+      playingIndicator.style.display = 'none';
+    });
+
+    player.addEventListener('play', () => {
+      playingIndicator.style.display = 'block';
+    });
+
+    player.addEventListener('ended', () => {
+      playingIndicator.style.display = 'none';
+      nowPlaying.textContent = 'انتهت السورة';
+    });
+
+    // عند تحميل الصفحة
+    window.addEventListener('DOMContentLoaded', loadSuras);
+  </script>
+</body>
+</html>
