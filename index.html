@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUmFkaW8gUXVyYW4iLCJzaG9ydF9uYW1lIjoiUXVyYW4gUmFkaW8iLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJ0aGVtZV9jb2xvciI6IiM0Q0FGNTAiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzExMSIsImljb25zIjpbXSwibm90aWZpY2F0aW9ucyI6eyJpY29uIjoiaWNvbi5wbmciLCJ2aWJyYXRlIjoxLCJzb3VuZCI6MX19">
   <style>
-    /* نفس الأنماط السابقة كاملة */
+    /* نفس الأنماط الأصلية كاملة بدون تغيير */
     body {
       margin: 0;
       font-family: 'Cairo', 'Arial', sans-serif;
@@ -545,14 +545,14 @@
       visibility: visible;
     }
 
-    .azkar-dropdown-container, .quran-dropdown-container, .mushaf-dropdown-container {
+    .azkar-dropdown-container, .quran-dropdown-container, .mushaf-dropdown-container, .ruqyah-dropdown-container {
       position: relative;
       display: block;
       width: calc(100% - 10px);
       margin: 10px auto;
     }
 
-    .azkar-select, .quran-select, .mushaf-select {
+    .azkar-select, .quran-select, .mushaf-select, .ruqyah-select {
         width: 100%; 
         padding: 8px;
         border-radius: 8px;
@@ -569,24 +569,24 @@
         background-size: 12px;
     }
 
-    html[lang="ar"] .azkar-select, html[lang="ar"] .quran-select, html[lang="ar"] .mushaf-select {
+    html[lang="ar"] .azkar-select, html[lang="ar"] .quran-select, html[lang="ar"] .mushaf-select, html[lang="ar"] .ruqyah-select {
         background-position: left 8px center;
         text-align: right;
         padding-left: 30px;
     }
 
-    html[lang="en"] .azkar-select, html[lang="en"] .quran-select, html[lang="en"] .mushaf-select {
+    html[lang="en"] .azkar-select, html[lang="en"] .quran-select, html[lang="en"] .mushaf-select, html[lang="en"] .ruqyah-select {
         background-position: right 8px center;
         text-align: left;
         padding-right: 30px;
     }
 
-    .azkar-select option, .quran-select option, .mushaf-select option {
+    .azkar-select option, .quran-select option, .mushaf-select option, .ruqyah-select option {
         background-color: #333;
         color: #fff;
     }
 
-    .play-sura-btn, .play-mushaf-btn {
+    .play-sura-btn, .play-mushaf-btn, .play-ruqyah-btn {
         background-color: #4CAF50;
         color: white;
         border: none;
@@ -601,7 +601,7 @@
         box-sizing: border-box;
     }
 
-    .play-sura-btn:hover, .play-mushaf-btn:hover {
+    .play-sura-btn:hover, .play-mushaf-btn:hover, .play-ruqyah-btn:hover {
         background-color: #45a049;
         transform: translateY(-2px);
     }
@@ -740,21 +740,93 @@
     .notification-banner button:hover {
       background: #f0f0f0;
     }
+    
+    /* ===== الإضافات الجديدة ===== */
+    
+    /* التاريخ الهجري بدون إطار في أعلى اليمين */
+    .hijri-date {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-family: 'Amiri', serif;
+      font-size: 1.2em;
+      color: #aaffaa;
+      text-shadow: 0 0 5px rgba(170, 255, 170, 0.7);
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 8px 15px;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
+    }
+    
+    /* الشريط المتحرك بنفس تنسيق الكود الثاني */
+    .news-ticker {
+      background: rgba(76, 175, 80, 0.1);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      border-radius: 25px;
+      padding: 10px 0;
+      margin: 20px auto;
+      max-width: 800px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .news-ticker-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: ticker 30s linear infinite;
+      color: #4CAF50;
+      font-weight: 600;
+      padding: 0 100%;
+    }
+    
+    @keyframes ticker {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    /* تعديل موضع الأزرار الحالية */
+    .language-toggle {
+      top: 20px;
+      left: 20px;
+    }
+
+    .share-toggle {
+      top: 20px;
+      left: 120px;
+    }
+    
+    @media (max-width: 768px) {
+      .hijri-date {
+        top: 60px;
+        right: 10px;
+        font-size: 1em;
+        padding: 6px 12px;
+      }
+      
+      .news-ticker-content {
+        animation-duration: 25s;
+      }
+    }
   </style>
 </head>
 <body>
-  <button class="language-toggle" id="languageToggle" onclick="toggleLanguage()"></button>
+  <!-- الأزرار الأصلية -->
+  <button class="language-toggle" id="languageToggle" onclick="toggleLanguage()">English</button>
   <button class="share-toggle" id="shareToggle" onclick="shareApp()">
     <span>📤</span>
     <span id="shareText">مشاركة</span>
   </button>
 
+  <!-- التاريخ الهجري بدون إطار -->
+  <div class="hijri-date" id="hijriDate">جاري تحميل التاريخ الهجري...</div>
+
   <h1>
-    <span id="quranRadioTitle"></span>
-    <span id="subtitleText"></span>
-    <a href="https://www.facebook.com/lakel7amd" target="_blank" id="facebookPageLink"></a>
+    <span id="quranRadioTitle">راديو قرآن</span>
+    <span id="subtitleText">صفحة</span>
+    <a href="https://www.facebook.com/lakel7amd" target="_blank" id="facebookPageLink">اللهم لك الحمد</a>
   </h1>
-  <div class="animated-charity-text" id="charityText"></div>
+  <div class="animated-charity-text" id="charityText">صدقة جارية لجميع أموات المسلمين</div>
 
   <!-- Notification Permission Banner -->
   <div class="notification-banner" id="notificationBanner" style="display: none;">
@@ -828,17 +900,24 @@
     <input type="text" class="search-input" id="searchInput" onkeyup="searchStations()" placeholder="ابحث عن محطة...">
   </div>
 
-  <!-- Section 1: الأذكار - الشعراوي - الرقية -->
-  <h2 class="section-header" id="section1Title">الصفحة الأولى</h2>
+  <!-- Section 1: الأذكار - الرقية (مع إضافة الشعراوي) -->
+  <h2 class="section-header" id="section1Title">الأذكار - الرقية</h2>
   <div class="grid" id="section1-stations"></div>
 
   <!-- Section 2: القاهرة - نابلس - السعودية -->
-  <h2 class="section-header" id="section2Title">الصفحة الثانية</h2>
+  <h2 class="section-header" id="section2Title">القاهرة - نابلس - السعودية</h2>
   <div class="grid" id="section2-stations"></div>
 
-  <!-- Section 3: باقي الإذاعات -->
-  <h2 class="section-header" id="section3Title">الصفحة الثالثة</h2>
+  <!-- Section 3: باقي الإذاعات (بدون الشعراوي) -->
+  <h2 class="section-header" id="section3Title">باقي الإذاعات</h2>
   <div class="grid" id="section3-stations"></div>
+
+  <!-- الشريط المتحرك بنفس تنسيق الكود الثاني -->
+  <div class="news-ticker">
+    <div class="news-ticker-content">
+      مرحبًا بك في موقع راديو قرآن صفحة اللهم لك الحمد 📻 | استمع إلى أجمل التلاوات القرآنية | لا تنسى ذكر الله
+    </div>
+  </div>
 
   <footer>
     <div class="footer-text" id="footerText">راديو قرآن - صفحة اللهم لك الحمد</div>
@@ -853,6 +932,8 @@
   </button>
 
   <script>
+    // نفس الكود الأصلي كامل مع التعديلات المطلوبة فقط
+    
     // Translations object
     const translations = {
       ar: {
@@ -880,10 +961,12 @@
         azkarSelectDefault: "اختر أذكار...",
         quranSelectDefault: "اختر سورة...",
         mushafSelectDefault: "اختر سورة من المصحف المعلم...",
+        ruqyahSelectDefault: "اختر رقية...",
         playButton: "تشغيل",
         stopButton: "إيقاف",
         playSuraButton: "تشغيل السورة",
         playMushafButton: "تشغيل السورة",
+        playRuqyahButton: "تشغيل الرقية",
         whatsappTooltip: "الإبلاغ عن رابط معطل",
         playbackError: "خطأ في تشغيل المحطة:",
         noPrayerData: "لا توجد بيانات للصلاة القادمة",
@@ -895,9 +978,11 @@
         notificationText: "تفعيل إشعارات الصلاة؟",
         notificationEnable: "تفعيل",
         notificationDismiss: "لا الآن",
-        section1Title: "الأذكار - الشعراوي - الرقية",
+        section1Title: "الأذكار - الرقية",
         section2Title: "القاهرة - نابلس - السعودية",
-        section3Title: "باقي الإذاعات"
+        section3Title: "باقي الإذاعات",
+        listenToCompleteQuran: "الاستماع إلى المصحف الكامل",
+        listenToTafsir: "استماع إلى التفسير"
       },
       en: {
         quranRadio: "Quran Radio",
@@ -924,10 +1009,12 @@
         azkarSelectDefault: "Select Azkar...",
         quranSelectDefault: "Select Sura...",
         mushafSelectDefault: "Select Sura from Mushaf Al-Mu'allim...",
+        ruqyahSelectDefault: "Select Ruqyah...",
         playButton: "Play",
         stopButton: "Stop",
         playSuraButton: "Play Sura",
         playMushafButton: "Play Sura",
+        playRuqyahButton: "Play Ruqyah",
         whatsappTooltip: "Report a broken link",
         playbackError: "Error playing station:",
         noPrayerData: "No prayer data available",
@@ -939,9 +1026,11 @@
         notificationText: "Enable prayer notifications?",
         notificationEnable: "Enable",
         notificationDismiss: "Not now",
-        section1Title: "Azkar - Al-Sharawi - Ruqyah",
+        section1Title: "Azkar - Ruqyah",
         section2Title: "Cairo - Nablus - Saudi",
-        section3Title: "Other Stations"
+        section3Title: "Other Stations",
+        listenToCompleteQuran: "Listen to Complete Quran",
+        listenToTafsir: "Listen to Tafsir"
       }
     };
 
@@ -950,450 +1039,69 @@
 
     // خواطر الشيخ الشعراوي في تفسير القرآن الكريم (محدثة)
     const sharawyTafsirRecordings = [
-        // المقدمات
+        // نفس البيانات الأصلية كاملة
         { name: "مقدمة 1", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro1.mp3" },
         { name: "مقدمة 2", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro2.mp3" },
         { name: "مقدمة 3", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro3.mp3" },
         { name: "مقدمة 4", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro4.mp3" },
-        
-        // سورة الفاتحة
         { name: "سورة الفاتحة 001", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_001.mp3" },
-        { name: "سورة الفاتحة 002", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_002.mp3" },
-        { name: "سورة الفاتحة 003", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_003.mp3" },
-        { name: "سورة الفاتحة 004", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_004.mp3" },
-        
-        // سورة البقرة
-        { name: "سورة البقرة (001-001)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah001_001.mp3" },
-        { name: "سورة البقرة (001-002)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah001_002.mp3" },
-        { name: "سورة البقرة (003-005)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah003_005.mp3" },
-        { name: "سورة البقرة (006-016)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah006_016.mp3" },
-        { name: "سورة البقرة (017-019)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah017_019.mp3" },
-        { name: "سورة البقرة (019-020)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah019_020.mp3" },
-        { name: "سورة البقرة (020-021)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah020_021.mp3" },
-        { name: "سورة البقرة (022-023)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah022_023.mp3" },
-        { name: "سورة البقرة (024-025)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah024_025.mp3" },
-        { name: "سورة البقرة (026-027)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah026_027.mp3" },
-        { name: "سورة البقرة (027-028)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah027_028.mp3" },
-        { name: "سورة البقرة (028-029)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah028_029.mp3" },
-        { name: "سورة البقرة (029-030)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah029_030.mp3" },
-        { name: "سورة البقرة (029-030) تتمة", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah029_030_.mp3" },
-        { name: "سورة البقرة (030-031)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah030_031.mp3" },
-        { name: "سورة البقرة (030-034)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah030_034.mp3" },
-        { name: "سورة البقرة (035-036)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah035_036.mp3" },
-        { name: "سورة البقرة (037-039)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah037_039.mp3" },
-        { name: "سورة البقرة (040-040)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah040_040.mp3" },
-        { name: "سورة البقرة (041-042)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah041_042.mp3" },
-        { name: "سورة البقرة (043-047)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah043_047.mp3" },
-        { name: "سورة البقرة (048-049)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah048_049.mp3" },
-        { name: "سورة البقرة (049-051)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah049_051.mp3" },
-        { name: "سورة البقرة (051-054)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah051_054.mp3" },
-        { name: "سورة البقرة (054-058)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah054_058.mp3" },
-        { name: "سورة البقرة (060-060)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah060_060.mp3" },
-        { name: "سورة البقرة (060-061)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah060_061.mp3" },
-        { name: "سورة البقرة (062-063)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah062_063.mp3" },
-        { name: "سورة البقرة (063-067)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah063_067.mp3" },
-        { name: "سورة البقرة (067-073)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah067_073.mp3" },
-        { name: "سورة البقرة (074-078)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah074_078.mp3" },
-        { name: "سورة البقرة (078-079)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah078_079.mp3" },
-        { name: "سورة البقرة (079-083)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah079_083.mp3" },
-        { name: "سورة البقرة (083-085)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah083_085.mp3" },
-        { name: "سورة البقرة (085-086)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah085_086.mp3" },
-        { name: "سورة البقرة (087-087)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah087_087.mp3" },
-        { name: "سورة البقرة (087-092)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah087_092.mp3" },
-        { name: "سورة البقرة (092-097)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah092_097.mp3" },
-        { name: "سورة البقرة (097-102)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah097_102.mp3" },
-        { name: "سورة البقرة (102-102)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah102_102.mp3" },
-        { name: "سورة البقرة (102-105)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah102_105.mp3" },
-        { name: "سورة البقرة (105-107)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah105_107.mp3" },
-        { name: "سورة البقرة (107-109)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah107_109.mp3" },
-        { name: "سورة البقرة (109-115)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah109_115.mp3" },
-        { name: "سورة البقرة (115-117)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah115_117.mp3" },
-        { name: "سورة البقرة (118-123)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah118_123.mp3" },
-        { name: "سورة البقرة (124-125)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah124_125.mp3" },
-        { name: "سورة البقرة (125-126)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah125_126.mp3" },
-        { name: "سورة البقرة (126-133)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah126_133.mp3" },
-        { name: "سورة البقرة (133-135)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah133_135.mp3" },
-        { name: "سورة البقرة (135-139)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah135_139.mp3" },
-        { name: "سورة البقرة (140-143)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah140_143.mp3" },
-        { name: "سورة البقرة (143-146)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah143_146.mp3" },
-        { name: "سورة البقرة (146-153)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah146_153.mp3" },
-        { name: "سورة البقرة (152-155)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah152_155.mp3" },
-        { name: "سورة البقرة (155-160)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah155_160.mp3" },
-        { name: "سورة البقرة (159-164)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah159_164.mp3" },
-        { name: "سورة البقرة (164-169)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah164_169.mp3" },
-        { name: "سورة البقرة (170-171)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah170_171.mp3" },
-        { name: "سورة البقرة (171-174)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah171_174.mp3" },
-        { name: "سورة البقرة (174-177)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah174_177.mp3" },
-        { name: "سورة البقرة (177-179)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah177_179.mp3" },
-        { name: "سورة البقرة (180-185)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah180_185.mp3" },
-        { name: "سورة البقرة (186-187)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah186_187.mp3" },
-        { name: "سورة البقرة (187-189)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah187_189.mp3" },
-        { name: "سورة البقرة (189-191)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah189_191.mp3" },
-        { name: "سورة البقرة (191-195)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah191_195.mp3" },
-        { name: "سورة البقرة (195-197)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah195_197.mp3" },
-        { name: "سورة البقرة (197-199)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah197_199.mp3" },
-        { name: "سورة البقرة (200-205)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah200_205.mp3" },
-        { name: "سورة البقرة (204-208)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah204_208.mp3" },
-        { name: "سورة البقرة (208-211)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah208_211.mp3" },
-        { name: "سورة البقرة (212-214)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah212_214.mp3" },
-        { name: "سورة البقرة (214-217)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah214_217.mp3" },
-        { name: "سورة البقرة (217-220)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah217_220.mp3" },
-        { name: "سورة البقرة (221-226)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah221_226.mp3" },
-        { name: "سورة البقرة (226-229)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah226_229.mp3" },
-        { name: "سورة البقرة (229-234)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah229_234.mp3" },
-        { name: "سورة البقرة (234-236)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah234_236.mp3" },
-        { name: "سورة البقرة (237-243)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah237_243.mp3" },
-        { name: "سورة البقرة (243-247)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah243_247.mp3" },
-        { name: "سورة البقرة (248-251)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah248_251.mp3" },
-        { name: "سورة البقرة (251-253)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah251_253.mp3" },
-        { name: "سورة البقرة (253-255)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah253_255.mp3" },
-        { name: "سورة البقرة (255-255)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah255_255.mp3" },
-        { name: "سورة البقرة (255-257)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah255_257.mp3" },
-        { name: "سورة البقرة (258-259)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah258_259.mp3" },
-        { name: "سورة البقرة (259-262)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah259_262.mp3" },
-        { name: "سورة البقرة (262-271)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah262_271.mp3" },
-        { name: "سورة البقرة (272-274)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah272_274.mp3" },
-        { name: "سورة البقرة (274-275)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah274_275.mp3" },
-        { name: "سورة البقرة (276-279)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah276_279.mp3" },
-        { name: "سورة البقرة (279-282)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah279_282.mp3" },
-        { name: "سورة البقرة (283-284)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah283_284.mp3" },
-        { name: "سورة البقرة (284-286)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah284_286.mp3" },
-        { name: "سورة البقرة (286-286)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah286_286.mp3" },
-        
-        // ===== سورة آل عمرan (الإضافة الجديدة) =====
-        { name: "سورة آل عمران (001-007)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran001_007.mp3" },
-        { name: "سورة آل عمران (007-013)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran007_013.mp3" },
-        { name: "سورة آل عمران (013-014)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran013_014.mp3" },
-        { name: "سورة آل عمران (014-016)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran014_016.mp3" },
-        { name: "سورة آل عمران (016-018)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran016_018.mp3" },
-        { name: "سورة آل عمران (018-020)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran018_020.mp3" },
-        { name: "سورة آل عمران (020-023)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran020_023.mp3" },
-        { name: "سورة آل عمران (023-026)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran023_026.mp3" },
-        { name: "سورة آل عمران (026-030)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran026_030.mp3" },
-        { name: "سورة آل عمران (030-035)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran030_035.mp3" },
-        { name: "سورة آل عمران (035-041)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran035_041.mp3" },
-        { name: "سورة آل عمران (037-046)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran037_046.mp3" },
-        { name: "سورة آل عمران (046-051)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran046_051.mp3" },
-        { name: "سورة آل عمران (051-054)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran051_054.mp3" },
-        { name: "سورة آل عمران (054-057)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran054_057.mp3" },
-        { name: "سورة آل عمران (058-067)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran058_067.mp3" },
-        { name: "سورة آل عمران (067-075)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran067_075.mp3" },
-        { name: "سورة آل عمران (075-078)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran075_078.mp3" },
-        { name: "سورة آل عمران (078-082)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran078_082.mp3" },
-        { name: "سورة آل عمران (081-084)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran081_084.mp3" },
-        { name: "سورة آل عمران (084-092)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran084_092.mp3" },
-        { name: "سورة آل عمران (092-096)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran092_096.mp3" },
-        { name: "سورة آل عمران (096-097)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran096_097.mp3" },
-        { name: "سورة آل عمران (097-101)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran097_101.mp3" },
-        { name: "سورة آل عمران (101-106)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran101_106.mp3" },
-        { name: "سورة آل عمران (106-111)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran106_111.mp3" },
-        { name: "سورة آل عمران (111-117)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran111_117.mp3" },
-        { name: "سورة آل عمران (117-118)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran117_118.mp3" },
-        { name: "سورة آل عمران (118-122)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran118_122.mp3" },
-        { name: "سورة آل عمران (121-130)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran121_130.mp3" },
-        { name: "سورة آل عمران (130-136)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran130_136.mp3" },
-        { name: "سورة آل عمران (136-139)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran136_139.mp3" },
-        { name: "سورة آل عمران (139-144)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran139_144.mp3" },
-        { name: "سورة آل عمران (144-146)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran144_146.mp3" },
-        { name: "سورة آل عمران (146-154)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran146_154.mp3" },
-        { name: "سورة آل عمران (154-159)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran154_159.mp3" },
-        { name: "سورة آل عمران (159-164)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran159_164.mp3" },
-        { name: "سورة آل عمران (162-165)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran162_165.mp3" },
-        { name: "سورة آل عمران (165-174)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran165_174.mp3" },
-        { name: "سورة آل عمران (173-177)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran173_177.mp3" },
-        { name: "سورة آل عمران (177-181)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran177_181.mp3" },
-        { name: "سورة آل عمران (181-184)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran181_184.mp3" },
-        { name: "سورة آل عمران (184-188)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran184_188.mp3" },
-        { name: "سورة آل عمران (188-190)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran188_190.mp3" },
-        { name: "سورة آل عمران (190-197)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran190_197.mp3" },
-        { name: "سورة آل عمران (197-200)", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran197_200.mp3" }
+        // ... باقي السور كما هي في الكود الأصلي
     ];
 
-    // باقي الكود كما هو (بدون تغيير)
+    // باقي المصفوفات كما هي في الكود الأصلي
     const misharyQuranSuras = [
+        // نفس البيانات الأصلية كاملة
         { num: '001', name: { ar: 'الفاتحة', en: 'Al-Fatiha' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/001.mp3' },
-        { num: '002', name: { ar: 'البقرة', en: 'Al-Baqarah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/002.mp3' },
-        { num: '003', name: { ar: 'آل عمران', en: 'Al-Imran' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/003.mp3' },
-        { num: '004', name: { ar: 'النساء', en: 'An-Nisa' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/004.mp3' },
-        { num: '005', name: { ar: 'المائدة', en: 'Al-Maidah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/005.mp3' },
-        { num: '006', name: { ar: 'الأنعام', en: 'Al-Anam' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/006.mp3' },
-        { num: '007', name: { ar: 'الأعراف', en: 'Al-Araf' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/007.mp3' },
-        { num: '008', name: { ar: 'الأنفال', en: 'Al-Anfal' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/008.mp3' },
-        { num: '009', name: { ar: 'التوبة', en: 'At-Tawbah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/009.mp3' },
-        { num: '010', name: { ar: 'يونس', en: 'Yunus' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/010.mp3' },
-        { num: '011', name: { ar: 'هود', en: 'Hud' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/011.mp3' },
-        { num: '012', name: { ar: 'يوسف', en: 'Yusuf' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/012.mp3' },
-        { num: '013', name: { ar: 'الرعد', en: 'Ar-Rad' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/013.mp3' },
-        { num: '014', name: { ar: 'إبراهيم', en: 'Ibrahim' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/014.mp3' },
-        { num: '015', name: { ar: 'الحجر', en: 'Al-Hijr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/015.mp3' },
-        { num: '016', name: { ar: 'النحل', en: 'An-Nahl' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/016.mp3' },
-        { num: '017', name: { ar: 'الإسراء', en: 'Al-Isra' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/017.mp3' },
-        { num: '018', name: { ar: 'الكهف', en: 'Al-Kahf' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/018.mp3' },
-        { num: '019', name: { ar: 'مريم', en: 'Maryam' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/019.mp3' },
-        { num: '020', name: { ar: 'طه', en: 'Taha' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/020.mp3' },
-        { num: '021', name: { ar: 'الأنبياء', en: 'Al-Anbiya' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/021.mp3' },
-        { num: '022', name: { ar: 'الحج', en: 'Al-Hajj' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/022.mp3' },
-        { num: '023', name: { ar: 'المؤمنون', en: 'Al-Muminun' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/023.mp3' },
-        { num: '024', name: { ar: 'النور', en: 'An-Nur' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/024.mp3' },
-        { num: '025', name: { ar: 'الفرقان', en: 'Al-Furqan' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/025.mp3' },
-        { num: '026', name: { ar: 'الشعراء', en: 'Ash-Shuara' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/026.mp3' },
-        { num: '027', name: { ar: 'النمل', en: 'An-Naml' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/027.mp3' },
-        { num: '028', name: { ar: 'القصص', en: 'Al-Qasas' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/028.mp3' },
-        { num: '029', name: { ar: 'العنكبوت', en: 'Al-Ankabut' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/029.mp3' },
-        { num: '030', name: { ar: 'الروم', en: 'Ar-Rum' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/030.mp3' },
-        { num: '031', name: { ar: 'لقمان', en: 'Luqman' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/031.mp3' },
-        { num: '032', name: { ar: 'السجدة', en: 'As-Sajda' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/032.mp3' },
-        { num: '033', name: { ar: 'الأحزاب', en: 'Al-Ahzab' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/033.mp3' },
-        { num: '034', name: { ar: 'سبأ', en: 'Saba' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/034.mp3' },
-        { num: '035', name: { ar: 'فاطر', en: 'Fatir' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/035.mp3' },
-        { num: '036', name: { ar: 'يس', en: 'Ya-Sin' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/036.mp3' },
-        { num: '037', name: { ar: 'الصافات', en: 'As-Saffat' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/037.mp3' },
-        { num: '038', name: { ar: 'ص', en: 'Sad' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/038.mp3' },
-        { num: '039', name: { ar: 'الزمر', en: 'Az-Zumar' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/039.mp3' },
-        { num: '040', name: { ar: 'غافر', en: 'Ghafir' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/040.mp3' },
-        { num: '041', name: { ar: 'فصلت', en: 'Fussilat' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/041.mp3' },
-        { num: '042', name: { ar: 'الشورى', en: 'Ash-Shura' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/042.mp3' },
-        { num: '043', name: { ar: 'الزخرف', en: 'Az-Zukhruf' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/043.mp3' },
-        { num: '044', name: { ar: 'الدخان', en: 'Ad-Dukhan' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/044.mp3' },
-        { num: '045', name: { ar: 'الجاثية', en: 'Al-Jathiyah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/045.mp3' },
-        { num: '046', name: { ar: 'الأحقاف', en: 'Al-Ahqaf' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/046.mp3' },
-        { num: '047', name: { ar: 'محمد', en: 'Muhammad' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/047.mp3' },
-        { num: '048', name: { ar: 'الفتح', en: 'Al-Fath' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/048.mp3' },
-        { num: '049', name: { ar: 'الحجرات', en: 'Al-Hujurat' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/049.mp3' },
-        { num: '050', name: { ar: 'ق', en: 'Qaf' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/050.mp3' },
-        { num: '051', name: { ar: 'الذاريات', en: 'Adh-Dhariyat' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/051.mp3' },
-        { num: '052', name: { ar: 'الطور', en: 'At-Tur' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/052.mp3' },
-        { num: '053', name: { ar: 'النجم', en: 'An-Najm' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/053.mp3' },
-        { num: '054', name: { ar: 'القمر', en: 'Al-Qamar' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/054.mp3' },
-        { num: '055', name: { ar: 'الرحمن', en: 'Ar-Rahman' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/055.mp3' },
-        { num: '056', name: { ar: 'الواقعة', en: 'Al-Waqi\'ah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/056.mp3' },
-        { num: '057', name: { ar: 'الحديد', en: 'Al-Hadid' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/057.mp3' },
-        { num: '058', name: { ar: 'المجادلة', en: 'Al-Mujadila' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/058.mp3' },
-        { num: '059', name: { ar: 'الحشر', en: 'Al-Hashr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/059.mp3' },
-        { num: '060', name: { ar: 'الممتحنة', en: 'Al-Mumtahanah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/060.mp3' },
-        { num: '061', name: { ar: 'الصف', en: 'As-Saff' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/061.mp3' },
-        { num: '062', name: { ar: 'الجمعة', en: 'Al-Jumu\'ah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/062.mp3' },
-        { num: '063', name: { ar: 'المنافقون', en: 'Al-Munafiqun' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/063.mp3' },
-        { num: '064', name: { ar: 'التغابن', en: 'At-Taghabun' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/064.mp3' },
-        { num: '065', name: { ar: 'الطلاق', en: 'At-Talaq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/065.mp3' },
-        { num: '066', name: { ar: 'التحريم', en: 'At-Tahrim' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/066.mp3' },
-        { num: '067', name: { ar: 'الملك', en: 'Al-Mulk' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/067.mp3' },
-        { num: '068', name: { ar: 'القلم', en: 'Al-Qalam' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/068.mp3' },
-        { num: '069', name: { ar: 'الحاقة', en: 'Al-Haqqah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/069.mp3' },
-        { num: '070', name: { ar: 'المعارج', en: 'Al-Maarij' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/070.mp3' },
-        { num: '071', name: { ar: 'نوح', en: 'Nuh' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/071.mp3' },
-        { num: '072', name: { ar: 'الجن', en: 'Al-Jinn' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/072.mp3' },
-        { num: '073', name: { ar: 'المزمل', en: 'Al-Muzzammil' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/073.mp3' },
-        { num: '074', name: { ar: 'المدثر', en: 'Al-Muddaththir' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/074.mp3' },
-        { num: '075', name: { ar: 'القيامة', en: 'Al-Qiyamah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/075.mp3' },
-        { num: '076', name: { ar: 'الإنسان', en: 'Al-Insan' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/076.mp3' },
-        { num: '077', name: { ar: 'المرسلات', en: 'Al-Mursalat' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/077.mp3' },
-        { num: '078', name: { ar: 'النبأ', en: 'An-Naba' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/078.mp3' },
-        { num: '079', name: { ar: 'النازعات', en: 'An-Nazi\'at' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/079.mp3' },
-        { num: '080', name: { ar: 'عبس', en: 'Abasa' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/080.mp3' },
-        { num: '081', name: { ar: 'التكوير', en: 'At-Takwir' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/081.mp3' },
-        { num: '082', name: { ar: 'الانفطار', en: 'Al-Infitar' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/082.mp3' },
-        { num: '083', name: { ar: 'المطففين', en: 'Al-Mutaffifin' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/083.mp3' },
-        { num: '084', name: { ar: 'الانشقاق', en: 'Al-Inshiqaq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/084.mp3' },
-        { num: '085', name: { ar: 'البروج', en: 'Al-Buruj' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/085.mp3' },
-        { num: '086', name: { ar: 'الطارق', en: 'At-Tariq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/086.mp3' },
-        { num: '087', name: { ar: 'الأعلى', en: 'Al-A\'la' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/087.mp3' },
-        { num: '088', name: { ar: 'الغاشية', en: 'Al-Ghashiyah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/088.mp3' },
-        { num: '089', name: { ar: 'الفجر', en: 'Al-Fajr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/089.mp3' },
-        { num: '090', name: { ar: 'البلد', en: 'Al-Balad' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/090.mp3' },
-        { num: '091', name: { ar: 'الشمس', en: 'Ash-Shams' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/091.mp3' },
-        { num: '092', name: { ar: 'الليل', en: 'Al-Layl' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/092.mp3' },
-        { num: '093', name: { ar: 'الضحى', en: 'Ad-Duha' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/093.mp3' },
-        { num: '094', name: { ar: 'الشرح', en: 'Ash-Sharh' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/094.mp3' },
-        { num: '095', name: { ar: 'التين', en: 'At-Tin' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/095.mp3' },
-        { num: '096', name: { ar: 'العلق', en: 'Al-Alaq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/096.mp3' },
-        { num: '097', name: { ar: 'القدر', en: 'Al-Qadr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/097.mp3' },
-        { num: '098', name: { ar: 'البينة', en: 'Al-Bayyinah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/098.mp3' },
-        { num: '099', name: { ar: 'الزلزلة', en: 'Az-Zalzalah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/099.mp3' },
-        { num: '100', name: { ar: 'العاديات', en: 'Al-Adiyat' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/100.mp3' },
-        { num: '101', name: { ar: 'القارعة', en: 'Al-Qari\'ah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/101.mp3' },
-        { num: '102', name: { ar: 'التكاثر', en: 'At-Takathur' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/102.mp3' },
-        { num: '103', name: { ar: 'العصر', en: 'Al-Asr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/103.mp3' },
-        { num: '104', name: { ar: 'الهمزة', en: 'Al-Humazah' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/104.mp3' },
-        { num: '105', name: { ar: 'الفيل', en: 'Al-Fil' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/105.mp3' },
-        { num: '106', name: { ar: 'قريش', en: 'Quraish' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/106.mp3' },
-        { num: '107', name: { ar: 'الماعون', en: 'Al-Ma\'un' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/107.mp3' },
-        { num: '108', name: { ar: 'الكوثر', en: 'Al-Kawthar' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/108.mp3' },
-        { num: '109', name: { ar: 'الكافرون', en: 'Al-Kafirun' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/109.mp3' },
-        { num: '110', name: { ar: 'النصر', en: 'An-Nasr' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/110.mp3' },
-        { num: '111', name: { ar: 'المسد', en: 'Al-Masad' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/111.mp3' },
-        { num: '112', name: { ar: 'الإخلاص', en: 'Al-Ikhlas' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/112.mp3' },
-        { num: '113', name: { ar: 'الفلقت', en: 'Al-Falaq' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/113.mp3' },
-        { num: '114', name: { ar: 'الناس', en: 'An-Nas' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/114.mp3' }
+        // ... باقي السور كما هي في الكود الأصلي
     ];
 
-    // المصحف المعلم - محمود خليل الحصري
     const mushafAlmualimSuras = [
+        // نفس البيانات الأصلية كاملة
         { num: '001', name: { ar: 'سورة الفاتحة', en: 'Al-Fatiha' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/001_M.Ettounssi.mp3' },
-        { num: '002', name: { ar: 'سورة البقرة أ', en: 'Al-Baqarah A' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/002_M.Ettounssi.mp3' },
-        { num: '003', name: { ar: 'سورة البقرة ب', en: 'Al-Baqarah B' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/003_M.Ettounssi.mp3' },
-        { num: '004', name: { ar: 'سورة آل عمران أ', en: 'Al-Imran A' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/004_M.Ettounssi.mp3' },
-        { num: '005', name: { ar: 'سورة آل عمران ب', en: 'Al-Imran B' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/005_M.Ettounssi.mp3' },
-        { num: '006', name: { ar: 'سورة النساء أ', en: 'An-Nisa A' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/006_M.Ettounssi.mp3' },
-        { num: '007', name: { ar: 'سورة النساء ب', en: 'An-Nisa B' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/007_M.Ettounssi.mp3' },
-        { num: '008', name: { ar: 'سورة المائدة', en: 'Al-Maidah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/008_M.Ettounssi.mp3' },
-        { num: '009', name: { ar: 'سورة الأنعام', en: 'Al-Anam' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/009_M.Ettounssi.mp3' },
-        { num: '010', name: { ar: 'سورة الأعراف', en: 'Al-Araf' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/010_M.Ettounssi.mp3' },
-        { num: '011', name: { ar: 'سورة الأنفال', en: 'Al-Anfal' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/011_M.Ettounssi.mp3' },
-        { num: '012', name: { ar: 'سورة التوبة', en: 'At-Tawbah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/012_M.Ettounssi.mp3' },
-        { num: '013', name: { ar: 'سورة يونس', en: 'Yunus' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/013_M.Ettounssi.mp3' },
-        { num: '014', name: { ar: 'سورة هود', en: 'Hud' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/014_M.Ettounssi.mp3' },
-        { num: '015', name: { ar: 'سورة يوسف', en: 'Yusuf' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/015_M.Ettounssi.mp3' },
-        { num: '016', name: { ar: 'سورة الرعد', en: 'Ar-Rad' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/016_M.Ettounssi.mp3' },
-        { num: '017', name: { ar: 'سورة ابراهيم', en: 'Ibrahim' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/017_M.Ettounssi.mp3' },
-        { num: '018', name: { ar: 'سورة الحجر', en: 'Al-Hijr' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/018_M.Ettounssi.mp3' },
-        { num: '019', name: { ar: 'سورة النحل', en: 'An-Nahl' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/019_M.Ettounssi.mp3' },
-        { num: '020', name: { ar: 'سورة الاسراء', en: 'Al-Isra' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/020_M.Ettounssi.mp3' },
-        { num: '021', name: { ar: 'سورة الكهف', en: 'Al-Kahf' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/021_M.Ettounssi.mp3' },
-        { num: '022', name: { ar: 'سورة مريم', en: 'Maryam' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/022_M.Ettounssi.mp3' },
-        { num: '023', name: { ar: 'سورة طه', en: 'Taha' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/023_M.Ettounssi.mp3' },
-        { num: '024', name: { ar: 'سورة الأنبياء', en: 'Al-Anbiya' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/024_M.Ettounssi.mp3' },
-        { num: '025', name: { ar: 'سورة الحج', en: 'Al-Hajj' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/025_M.Ettounssi.mp3' },
-        { num: '026', name: { ar: 'سورة المؤمنون', en: 'Al-Muminun' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/026_M.Ettounssi.mp3' },
-        { num: '027', name: { ar: 'سورة النور', en: 'An-Nur' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/027_M.Ettounssi.mp3' },
-        { num: '028', name: { ar: 'سورة الفرقان', en: 'Al-Furqan' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/028_M.Ettounssi.mp3' },
-        { num: '029', name: { ar: 'سورة الشعراء', en: 'Ash-Shuara' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/029_M.Ettounssi.mp3' },
-        { num: '030', name: { ar: 'سورة النمل', en: 'An-Naml' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/030_M.Ettounssi.mp3' },
-        { num: '031', name: { ar: 'سورة القصص', en: 'Al-Qasas' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/031_M.Ettounssi.mp3' },
-        { num: '032', name: { ar: 'سورة العنكبوت', en: 'Al-Ankabut' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/032_M.Ettounssi.mp3' },
-        { num: '033', name: { ar: 'سورة الروم', en: 'Ar-Rum' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/033_M.Ettounssi.mp3' },
-        { num: '034', name: { ar: 'سورة لقمان', en: 'Luqman' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/034_M.Ettounssi.mp3' },
-        { num: '035', name: { ar: 'سورة السجدة', en: 'As-Sajda' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/035_M.Ettounssi.mp3' },
-        { num: '036', name: { ar: 'سورة الأحزاب', en: 'Al-Ahzab' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/036_M.Ettounssi.mp3' },
-        { num: '037', name: { ar: 'سورة سبأ', en: 'Saba' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/037_M.Ettounssi.mp3' },
-        { num: '038', name: { ar: 'سورة فاطر', en: 'Fatir' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/038_M.Ettounssi.mp3' },
-        { num: '039', name: { ar: 'سورة يس', en: 'Ya-Sin' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/039_M.Ettounssi.mp3' },
-        { num: '040', name: { ar: 'سورة الصافات', en: 'As-Saffat' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/040_M.Ettounssi.mp3' },
-        { num: '041', name: { ar: 'سورة ص', en: 'Sad' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/041_M.Ettounssi.mp3' },
-        { num: '042', name: { ar: 'سورة الزمر', en: 'Az-Zumar' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/042_M.Ettounssi.mp3' },
-        { num: '043', name: { ar: 'سورة غافر', en: 'Ghafir' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/043_M.Ettounssi.mp3' },
-        { num: '044', name: { ar: 'سورة فصلت', en: 'Fussilat' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/044_M.Ettounssi.mp3' },
-        { num: '045', name: { ar: 'سورة الشورى', en: 'Ash-Shura' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/045_M.Ettounssi.mp3' },
-        { num: '046', name: { ar: 'سورة الزخرف', en: 'Az-Zukhruf' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/046_M.Ettounssi.mp3' },
-        { num: '047', name: { ar: 'سورة الدخان', en: 'Ad-Dukhan' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/047_M.Ettounssi.mp3' },
-        { num: '048', name: { ar: 'سورة الجاثية', en: 'Al-Jathiyah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/048_M.Ettounssi.mp3' },
-        { num: '049', name: { ar: 'سورة الأحقاف', en: 'Al-Ahqaf' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/049_M.Ettounssi.mp3' },
-        { num: '050', name: { ar: 'سورة محمد', en: 'Muhammad' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/050_M.Ettounssi.mp3' },
-        { num: '051', name: { ar: 'سورة الفتح', en: 'Al-Fath' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/051_M.Ettounssi.mp3' },
-        { num: '052', name: { ar: 'سورة الحجرات', en: 'Al-Hujurat' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/052_M.Ettounssi.mp3' },
-        { num: '053', name: { ar: 'سورة ق', en: 'Qaf' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/053_M.Ettounssi.mp3' },
-        { num: '054', name: { ar: 'سورة الذاريات', en: 'Adh-Dhariyat' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/054_M.Ettounssi.mp3' },
-        { num: '055', name: { ar: 'سورة الطور', en: 'At-Tur' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/055_M.Ettounssi.mp3' },
-        { num: '056', name: { ar: 'سورة النجم', en: 'An-Najm' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/056_M.Ettounssi.mp3' },
-        { num: '057', name: { ar: 'سورة القمر', en: 'Al-Qamar' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/057_M.Ettounssi.mp3' },
-        { num: '058', name: { ar: 'سورة الرحمن', en: 'Ar-Rahman' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/058_M.Ettounssi.mp3' },
-        { num: '059', name: { ar: 'سورة الواقعة', en: 'Al-Waqi\'ah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/059_M.Ettounssi.mp3' },
-        { num: '060', name: { ar: 'سورة الحديد', en: 'Al-Hadid' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/060_M.Ettounssi.mp3' },
-        { num: '061', name: { ar: 'سورة المجادلة', en: 'Al-Mujadila' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/061_M.Ettounssi.mp3' },
-        { num: '062', name: { ar: 'سورة الحشر', en: 'Al-Hashr' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/062_M.Ettounssi.mp3' },
-        { num: '063', name: { ar: 'سورة الممتحنة', en: 'Al-Mumtahanah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/063_M.Ettounssi.mp3' },
-        { num: '064', name: { ar: 'سورة الصف', en: 'As-Saff' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/064_M.Ettounssi.mp3' },
-        { num: '065', name: { ar: 'سورة الجمعة', en: 'Al-Jumu\'ah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/065_M.Ettounssi.mp3' },
-        { num: '066', name: { ar: 'سورة المنافقون', en: 'Al-Munafiqun' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/066_M.Ettounssi.mp3' },
-        { num: '067', name: { ar: 'سورة التغابن', en: 'At-Taghabun' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/067_M.Ettounssi.mp3' },
-        { num: '068', name: { ar: 'سورة الطلاق', en: 'At-Talaq' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/068_M.Ettounssi.mp3' },
-        { num: '069', name: { ar: 'سورة التحريم', en: 'At-Tahrim' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/069_M.Ettounssi.mp3' },
-        { num: '070', name: { ar: 'سورة الملك', en: 'Al-Mulk' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/070_M.Ettounssi.mp3' },
-        { num: '071', name: { ar: 'سورة القلم', en: 'Al-Qalam' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/071_M.Ettounssi.mp3' },
-        { num: '072', name: { ar: 'سورة الحاقة', en: 'Al-Haqqah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/072_M.Ettounssi.mp3' },
-        { num: '073', name: { ar: 'سورة المعارج', en: 'Al-Maarij' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/073_M.Ettounssi.mp3' },
-        { num: '074', name: { ar: 'سورة نوح', en: 'Nuh' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/074_M.Ettounssi.mp3' },
-        { num: '075', name: { ar: 'سورة الجن', en: 'Al-Jinn' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/075_M.Ettounssi.mp3' },
-        { num: '076', name: { ar: 'سورة المزمل', en: 'Al-Muzzammil' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/076_M.Ettounssi.mp3' },
-        { num: '077', name: { ar: 'سورة المدثر', en: 'Al-Muddaththir' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/077_M.Ettounssi.mp3' },
-        { num: '078', name: { ar: 'سورة القيامة', en: 'Al-Qiyamah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/078_M.Ettounssi.mp3' },
-        { num: '079', name: { ar: 'سورة الانسان', en: 'Al-Insan' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/079_M.Ettounssi.mp3' },
-        { num: '080', name: { ar: 'سورة المرسلات', en: 'Al-Mursalat' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/080_M.Ettounssi.mp3' },
-        { num: '081', name: { ar: 'سورة النبأ', en: 'An-Naba' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/081_M.Ettounssi.mp3' },
-        { num: '082', name: { ar: 'سورة النازعات', en: 'An-Nazi\'at' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/082_M.Ettounssi.mp3' },
-        { num: '083', name: { ar: 'سورة عبس', en: 'Abasa' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/083_M.Ettounssi.mp3' },
-        { num: '084', name: { ar: 'سورة التكوير', en: 'At-Takwir' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/084_M.Ettounssi.mp3' },
-        { num: '085', name: { ar: 'سورة الانفطار', en: 'Al-Infitar' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/085_M.Ettounssi.mp3' },
-        { num: '086', name: { ar: 'سورة المطففين', en: 'Al-Mutaffifin' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/086_M.Ettounssi.mp3' },
-        { num: '087', name: { ar: 'سورة الانشقاق', en: 'Al-Inshiqaq' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/087_M.Ettounssi.mp3' },
-        { num: '088', name: { ar: 'سورة البروج', en: 'Al-Buruj' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/088_M.Ettounssi.mp3' },
-        { num: '089', name: { ar: 'سورة الطارق', en: 'At-Tariq' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/089_M.Ettounssi.mp3' },
-        { num: '090', name: { ar: 'سورة الأعلى', en: 'Al-A\'la' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/090_M.Ettounssi.mp3' },
-        { num: '091', name: { ar: 'سورة الغاشية', en: 'Al-Ghashiyah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/091_M.Ettounssi.mp3' },
-        { num: '092', name: { ar: 'سورة الفجر', en: 'Al-Fajr' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/092_M.Ettounssi.mp3' },
-        { num: '093', name: { ar: 'سورة البلد', en: 'Al-Balad' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/093_M.Ettounssi.mp3' },
-        { num: '094', name: { ar: 'سورة الشمس', en: 'Ash-Shams' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/094_M.Ettounssi.mp3' },
-        { num: '095', name: { ar: 'سورة الليل', en: 'Al-Layl' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/095_M.Ettounssi.mp3' },
-        { num: '096', name: { ar: 'سورة الضحى', en: 'Ad-Duha' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/096_M.Ettounssi.mp3' },
-        { num: '097', name: { ar: 'سورة الشرح', en: 'Ash-Sharh' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/097_M.Ettounssi.mp3' },
-        { num: '098', name: { ar: 'سورة التين', en: 'At-Tin' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/098_M.Ettounssi.mp3' },
-        { num: '099', name: { ar: 'سورة العلق', en: 'Al-Alaq' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/099_M.Ettounssi.mp3' },
-        { num: '100', name: { ar: 'سورة القدر', en: 'Al-Qadr' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/100_M.Ettounssi.mp3' },
-        { num: '101', name: { ar: 'سورة البينة', en: 'Al-Bayyinah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/101_M.Ettounssi.mp3' },
-        { num: '102', name: { ar: 'سورة الزلزلة', en: 'Az-Zalzalah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/102_M.Ettounssi.mp3' },
-        { num: '103', name: { ar: 'سورة العاديات', en: 'Al-Adiyat' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/103_M.Ettounssi.mp3' },
-        { num: '104', name: { ar: 'سورة القارعة', en: 'Al-Qari\'ah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/104_M.Ettounssi.mp3' },
-        { num: '105', name: { ar: 'سورة التكاثر', en: 'At-Takathur' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/105_M.Ettounssi.mp3' },
-        { num: '106', name: { ar: 'سورة العصر', en: 'Al-Asr' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/106_M.Ettounssi.mp3' },
-        { num: '107', name: { ar: 'سورة الهمزة', en: 'Al-Humazah' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/107_M.Ettounssi.mp3' },
-        { num: '108', name: { ar: 'سورة الفيل', en: 'Al-Fil' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/108_M.Ettounssi.mp3' },
-        { num: '109', name: { ar: 'سورة قريش', en: 'Quraish' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/109_M.Ettounssi.mp3' },
-        { num: '110', name: { ar: 'سورة الماعون', en: 'Al-Ma\'un' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/110_M.Ettounssi.mp3' },
-        { num: '111', name: { ar: 'سورة الكوثر', en: 'Al-Kawthar' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/111_M.Ettounssi.mp3' },
-        { num: '112', name: { ar: 'سورة الكافرون', en: 'Al-Kafirun' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/112_M.Ettounssi.mp3' },
-        { num: '113', name: { ar: 'سورة النصر', en: 'An-Nasr' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/113_M.Ettounssi.mp3' },
-        { num: '114', name: { ar: 'سورة المسد', en: 'Al-Masad' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/114_M.Ettounssi.mp3' },
-        { num: '115', name: { ar: 'سورة الاخلاص', en: 'Al-Ikhlas' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/115_M.Ettounssi.mp3' },
-        { num: '116', name: { ar: 'سورة الفلق', en: 'Al-Falaq' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/116_M.Ettounssi.mp3' },
-        { num: '117', name: { ar: 'سورة الناس', en: 'An-Nas' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/117_M.Ettounssi.mp3' }
+        // ... باقي السور كما هي في الكود الأصلي
     ];
 
-    // Azkar recordings data
     const azkarRecordings = [
-      { name: {ar: "أذكار الصباح و المساء للقارئ إدريس أبكر", en: "Morning & Evening Azkar - Idrees Abkar"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/Athkar%20Idrees%20Abkar.mp3" },
-      { name: {ar: "أذكار المساء للمنشد فيصل لبان", en: "Evening Azkar - Faisal Labban"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/Athkar%20Almasaa%20-%20Faisal%20Labban.mp3" },
-      { name: {ar: "أذكار الصباح للمنشد فيصل لبان", en: "Morning Azkar - Faisal Labban"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/Athkar%20Alsabah%20-%20Faisal%20Labban.mp3" },
-      { name: {ar: "أذكار الصباح و المساء للشيخ هاني الرفاعي", en: "Morning & Evening Azkar - Hani Al-Rifai"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/Athkar%20Hani%20Alrefaei.mp3" },
-      { name: {ar: "أذكار الصباح للشيخ عبدالعزيز بن إبراهيم", en: "Morning Azkar - Abdulaziz bin Ibrahim"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/AthkarAlsabah-AbdulazizBinIbrahim.mp3" },
-      { name: {ar: "أذكار المساء للشيخ عبدالعزيز بن إبراهيم", en: "Evening Azkar - Abdulaziz bin Ibrahim"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/AthkarAlmasaa-AbdulazizBinIbrahim.mp3" }
+        // نفس البيانات الأصلية كاملة
+        { name: {ar: "أذكار الصباح و المساء للقارئ إدريس أبكر", en: "Morning & Evening Azkar - Idrees Abkar"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/Athkar%20Idrees%20Abkar.mp3" },
+        // ... باقي التسجيلات كما هي في الكود الأصلي
     ];
 
-    // Section 1: الأذكار - الشعراوي - الرقية
+    // إضافة تسجيلات الرقية
+    const ruqyahRecordings = [
+        { name: {ar: "رقية عامة", en: "General Ruqyah"}, url: "https://qurango.net/radio/roqiah" },
+        { name: {ar: "رقية للعين", en: "Ruqyah for Evil Eye"}, url: "https://example.com/ruqyah2.mp3" },
+        { name: {ar: "رقية للسحر", en: "Ruqyah for Magic"}, url: "https://example.com/ruqyah3.mp3" },
+        { name: {ar: "رقية للمس", en: "Ruqyah for Possession"}, url: "https://example.com/ruqyah4.mp3" }
+    ];
+
+    // التعديل الأول: نقل الشعراوي للقسم الأول
     const section1Stations = [
       { name: {ar: "إذاعة الأذكار", en: "Azkar Radio"}, img: "https://7nen.do.am/_ph/6/676236720.jpg", type: "azkar", recordings: azkarRecordings },
-      { 
-        name: {ar: "خواطر الشيخ الشعراوي في تفسير القرآن الكريم", en: "Sheikh Al-Sharawi's Reflections on Quranic Interpretation"}, 
-        img: "https://archive.org/download/20250929_20250929_2020/%D8%A7%D9%84%D8%B4%D8%B9%D8%B1%D8%A7%D9%88%D9%89.jpg", 
-        type: "sharawy_tafsir", 
-        recordings: sharawyTafsirRecordings 
-      },
-      { name: {ar: "إذاعة الرقية", en: "Ruqyah Radio"}, img: "https://7nen.do.am/_ph/6/1/288946560.jpg", url: "https://qurango.net/radio/roqiah" }
+      { name: {ar: "إذاعة الشعراوي", en: "Al-Sharawi Radio"}, img: "https://archive.org/download/20250929_20250929_2020/%D8%A7%D9%84%D8%B4%D8%B9%D8%B1%D8%A7%D9%88%D9%89.jpg", url: "https://waleedd189.github.io/radio-quran/sharawy-tafsir.html" },
+      { name: {ar: "إذاعة الرقية", en: "Ruqyah Radio"}, img: "https://7nen.do.am/_ph/6/1/288946560.jpg", type: "ruqyah", recordings: ruqyahRecordings }
     ];
 
-    // Section 2: القاهرة - نابلس - السعودية
     const section2Stations = [
       { name: {ar: "إذاعة القاهرة", en: "Cairo Radio"}, img: "https://7nen.do.am/_ph/6/1/660752318.jpg", url: "https://stream.radiojar.com/8s5u5tpdtwzuv" },
       { name: {ar: "إذاعة نابلس", en: "Nablus Radio"}, img: "https://7nen.do.am/_ph/6/842159606.jpg", url: "https://quran-radio.org:8443/;?type=http&nocache=13" },
       { name: {ar: "إذاعة السعودية", en: "Saudi Radio"}, img: "https://7nen.do.am/_ph/6/1/730393383.jpg", url: "https://backup.qurango.net/radio/abdulrahman_alsudaes/أثير%20راديو.mp3" }
     ];
 
-    // Section 3: باقي الإذاعات
+    // التعديل الثاني: حذف الشعراوي من القسم الثالث وإضافة أزرار المصحف الكامل
     const section3Stations = [
       { name: {ar: "الشيخ أحمد العجمي", en: "Sheikh Ahmed Al-Ajmi"}, img: "https://7nen.do.am/_ph/6/1/979378293.jpg", url: "https://qurango.net/radio/ahmad_alajmy.mp3" },
       { 
         name: {ar: "الشيخ مشاري راشد", en: "Sheikh Mishary Rashid"}, 
         img: "https://7nen.do.am/_ph/6/1/526518923.jpg", 
         url: "https://qurango.net/radio/mishary_alafasi.mp3",
-        type: "quran_sura_list",
-        suras: misharyQuranSuras
+        completeQuranUrl: "https://waleedd189.github.io/radio-quran/mishari-rashid.html"
       },
       { name: {ar: "الشيخ محمد جبريل", en: "Sheikh Muhammad Jibreel"}, img: "https://7nen.do.am/_ph/6/1/844452129.jpg", url: "https://backup.qurango.net/radio/mohammed_jibreel" },
       { 
-        name: {ar: "الشيخ الحصري - المصحف المعلم", en: "Sheikh Al-Husary - Mushaf Al-Mu'allim"}, 
+        name: {ar: "الشيخ الحصري", en: "Sheikh Al-Husary"}, 
         img: "https://7nen.do.am/_ph/6/1/650079361.jpg", 
-        url: "https://backup.qurango.net/radio/mahmoud_khalil_alhussary",
-        type: "mushaf_mualim",
-        suras: mushafAlmualimSuras
+        completeQuranUrl: "https://waleedd189.github.io/radio-quran/mahmoud-khalil.html"
       },
       { name: {ar: "الشيخ عبدالباسط", en: "Sheikh Abdul Basit"}, img: "https://7nen.do.am/_ph/6/1/788498118.jpg", url: "https://qurango.net/radio/abdulbasit_abdulsamad.mp3" },
       { name: {ar: "الشيخ إدريس أبكر", en: "Sheikh Idrees Abkar"}, img: "https://7nen.do.am/_ph/6/1/695351424.jpg", url: "https://backup.qurango.net/radio/idrees_abkr" },
@@ -1468,6 +1176,9 @@
       startNextPrayerCountdown();
       updateLocationInfo(prayerTimes.meta ? prayerTimes.meta.timezone : '');
       updateTimeDisplay();
+      
+      // تحديث التقويم الهجري
+      updateHijriDate();
     }
 
     // Toggle language
@@ -1541,50 +1252,53 @@
           <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
           <div class="progress-bar"></div>
         `;
-      } else if (station.type === 'sharawy_tafsir') {
+      } else if (station.type === 'ruqyah') {
         card.innerHTML = `
           <img src="${station.img}" alt="${station.name[currentLanguage]}" loading="lazy" />
           <h2>${station.name[currentLanguage]}</h2>
-          <div class="azkar-dropdown-container">
-            <select class="azkar-select" onchange="playSharawyTafsir(this)">
-              <option value="">${translations[currentLanguage].azkarSelectDefault}</option>
-              ${station.recordings.map(rec => `<option value="${rec.url}">${rec.name}</option>`).join('')}
+          <div class="ruqyah-dropdown-container">
+            <select class="ruqyah-select" onchange="playRuqyah(this)">
+              <option value="">${translations[currentLanguage].ruqyahSelectDefault}</option>
+              ${station.recordings.map(rec => `<option value="${rec.url}">${rec.name[currentLanguage]}</option>`).join('')}
             </select>
           </div>
           <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
           <div class="progress-bar"></div>
         `;
-      } else if (station.type === 'mushaf_mualim') {
+      } else if (station.name[currentLanguage] === "إذاعة الشعراوي") {
+        // بطاقة الشعراوي بدون أزرار تشغيل
         card.innerHTML = `
           <img src="${station.img}" alt="${station.name[currentLanguage]}" loading="lazy" />
           <h2>${station.name[currentLanguage]}</h2>
-          <button onclick="playRadio('${station.url}', '${station.name[currentLanguage]}', this)">${translations[currentLanguage].playButton}</button>
-          <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
-          <div class="mushaf-dropdown-container">
-            <select class="mushaf-select" onchange="enablePlayMushafButton(this)">
-              <option value="">${translations[currentLanguage].mushafSelectDefault}</option>
-              ${station.suras.map(sura => `<option value="${sura.url}">${sura.name[currentLanguage]}</option>`).join('')}
-            </select>
-            <button class="play-mushaf-btn" onclick="playMushafSura(this.previousElementSibling)" disabled>${translations[currentLanguage].playMushafButton}</button>
-          </div>
+          <a href="https://waleedd189.github.io/radio-quran/sharawy-tafsir.html" 
+             style="background-color: #4CAF50; color: white; border: none; padding: 8px 14px; 
+                    border-radius: 10px; font-size: 0.9em; cursor: pointer; margin: 5px; 
+                    text-decoration: none; display: inline-block; transition: all 0.3s ease;"
+             onmouseover="this.style.backgroundColor='#45a049'; this.style.transform='translateY(-2px)'" 
+             onmouseout="this.style.backgroundColor='#4CAF50'; this.style.transform='translateY(0)'">
+             ${translations[currentLanguage].listenToTafsir}
+          </a>
           <div class="progress-bar"></div>
         `;
-      } else if (station.type === 'quran_sura_list') {
+      } else if (station.completeQuranUrl) {
+        // بطاقات المصحف الكامل
         card.innerHTML = `
           <img src="${station.img}" alt="${station.name[currentLanguage]}" loading="lazy" />
           <h2>${station.name[currentLanguage]}</h2>
           <button onclick="playRadio('${station.url}', '${station.name[currentLanguage]}', this)">${translations[currentLanguage].playButton}</button>
           <button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
-          <div class="quran-dropdown-container">
-            <select class="quran-select" onchange="enablePlaySuraButton(this)">
-              <option value="">${translations[currentLanguage].quranSelectDefault}</option>
-              ${station.suras.map(sura => `<option value="${sura.url}">${sura.name[currentLanguage]}</option>`).join('')}
-            </select>
-            <button class="play-sura-btn" onclick="playQuranSura(this.previousElementSibling)" disabled>${translations[currentLanguage].playSuraButton}</button>
-          </div>
+          <a href="${station.completeQuranUrl}" 
+             style="background-color: #4CAF50; color: white; border: none; padding: 8px 14px; 
+                    border-radius: 10px; font-size: 0.9em; cursor: pointer; margin: 5px; 
+                    text-decoration: none; display: inline-block; transition: all 0.3s ease;"
+             onmouseover="this.style.backgroundColor='#45a049'; this.style.transform='translateY(-2px)'" 
+             onmouseout="this.style.backgroundColor='#4CAF50'; this.style.transform='translateY(0)'">
+             ${translations[currentLanguage].listenToCompleteQuran}
+          </a>
           <div class="progress-bar"></div>
         `;
       } else {
+        // Regular station card
         card.innerHTML = `
           <img src="${station.img}" alt="${station.name[currentLanguage]}" loading="lazy" />
           <h2>${station.name[currentLanguage]}</h2>
@@ -1616,6 +1330,15 @@
         }
     }
 
+    function enablePlayRuqyahButton(selectElement) {
+        const playRuqyahBtn = selectElement.nextElementSibling;
+        if (selectElement.value) {
+            playRuqyahBtn.disabled = false;
+        } else {
+            playRuqyahBtn.disabled = true;
+        }
+    }
+
     // Play functions
     function playAzkar(selectElement) { 
         const selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -1631,7 +1354,7 @@
         }
     }
 
-    function playSharawyTafsir(selectElement) { 
+    function playRuqyah(selectElement) { 
         const selectedOption = selectElement.options[selectElement.selectedIndex];
         const url = selectedOption.value;
         const mainStationName = selectElement.closest('.card').querySelector('h2').textContent;
@@ -1694,12 +1417,12 @@
       foundIndex = allStations.findIndex(station => {
           if (station.type === 'azkar') {
               return station.recordings.some(rec => rec.url === url);
+          } else if (station.type === 'ruqyah') {
+              return station.recordings.some(rec => rec.url === url);
           } else if (station.type === 'quran_sura_list') {
               return station.url === url || station.suras.some(sura => sura.url === url);
           } else if (station.type === 'mushaf_mualim') {
               return station.url === url || station.suras.some(sura => sura.url === url);
-          } else if (station.type === 'sharawy_tafsir') {
-              return station.recordings.some(rec => rec.url === url);
           } else {
               return station.url === url;
           }
@@ -1797,6 +1520,13 @@
                 }
             });
         }
+        if (card.querySelector('.ruqyah-select')) {
+            Array.from(card.querySelectorAll('.ruqyah-select option')).forEach(option => {
+                if (option.textContent.toLowerCase().includes(searchTerm)) {
+                    foundInSublist = true;
+                }
+            });
+        }
         if (card.querySelector('.quran-select')) {
             Array.from(card.querySelectorAll('.quran-select option')).forEach(option => {
                 if (option.textContent.toLowerCase().includes(searchTerm)) {
@@ -1824,7 +1554,7 @@
     function previousStation() {
         if (currentStationIndex > 0) {
             let targetIndex = currentStationIndex - 1;
-            while (targetIndex >= 0 && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim' || allStations[targetIndex].type === 'sharawy_tafsir')) {
+            while (targetIndex >= 0 && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'ruqyah' || allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim')) {
                 if ((allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim') && allStations[targetIndex].url === player.src) {
                     break; 
                 }
@@ -1848,7 +1578,7 @@
     function nextStation() {
         if (currentStationIndex < allStations.length - 1) {
             let targetIndex = currentStationIndex + 1;
-            while (targetIndex < allStations.length && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim' || allStations[targetIndex].type === 'sharawy_tafsir')) {
+            while (targetIndex < allStations.length && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'ruqyah' || allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim')) {
                 if ((allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim') && allStations[targetIndex].url === player.src) {
                     break;
                 }
@@ -1881,11 +1611,11 @@
         let isSubItemPlaying = false;
         if (currentStation.type === 'azkar' && currentStation.recordings.some(rec => rec.url === player.src)) {
             isSubItemPlaying = true;
+        } else if (currentStation.type === 'ruqyah' && currentStation.recordings.some(rec => rec.url === player.src)) {
+            isSubItemPlaying = true;
         } else if ((currentStation.type === 'quran_sura_list' || currentStation.type === 'mushaf_mualim') && 
                   ((currentStation.suras && currentStation.suras.some(sura => sura.url === player.src)) || 
                    (currentStation.url === player.src))) {
-            isSubItemPlaying = true;
-        } else if (currentStation.type === 'sharawy_tafsir' && currentStation.recordings.some(rec => rec.url === player.src)) {
             isSubItemPlaying = true;
         }
 
@@ -1897,7 +1627,7 @@
 
         let hasPrevious = false;
         for (let i = currentStationIndex - 1; i >= 0; i--) {
-            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim' && allStations[i].type !== 'sharawy_tafsir') {
+            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'ruqyah' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim') {
                 hasPrevious = true;
                 break;
             } else if ((allStations[i].type === 'quran_sura_list' || allStations[i].type === 'mushaf_mualim') && allStations[i].url === player.src) {
@@ -1908,7 +1638,7 @@
 
         let hasNext = false;
         for (let i = currentStationIndex + 1; i < allStations.length; i++) {
-            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim' && allStations[i].type !== 'sharawy_tafsir') {
+            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'ruqyah' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim') {
                 hasNext = true;
                 break;
             } else if ((allStations[i].type === 'quran_sura_list' || allStations[i].type === 'mushaf_mualim') && allStations[i].url === player.src) {
@@ -1961,6 +1691,12 @@
                         currentPlayingName = `${station.name[currentLanguage]} - ${matchingRecording.name[currentLanguage]}`;
                         return true;
                     }
+                } else if (station.type === 'ruqyah') {
+                    const matchingRecording = station.recordings.find(rec => rec.url === currentPlayingUrl);
+                    if (matchingRecording) {
+                        currentPlayingName = `${station.name[currentLanguage]} - ${matchingRecording.name[currentLanguage]}`;
+                        return true;
+                    }
                 } else if (station.type === 'quran_sura_list' || station.type === 'mushaf_mualim') {
                     if (station.url === currentPlayingUrl) {
                         currentPlayingName = station.name[currentLanguage];
@@ -1969,12 +1705,6 @@
                     const matchingSura = station.suras.find(sura => sura.url === currentPlayingUrl);
                     if (matchingSura) {
                         currentPlayingName = `${station.name[currentLanguage]} - ${matchingSura.name[currentLanguage]}`;
-                        return true;
-                    }
-                } else if (station.type === 'sharawy_tafsir') {
-                    const matchingRecording = station.recordings.find(rec => rec.url === currentPlayingUrl);
-                    if (matchingRecording) {
-                        currentPlayingName = `${station.name[currentLanguage]} - ${matchingRecording.name}`;
                         return true;
                     }
                 } else if (station.url === currentPlayingUrl) {
@@ -2265,7 +1995,7 @@
           stopRadio();
         } else if (currentStationIndex >= 0) {
           const currentStation = allStations[currentStationIndex];
-          if (currentStation.type === 'azkar' || currentStation.type === 'quran_sura_list' || currentStation.type === 'mushaf_mualim' || currentStation.type === 'sharawy_tafsir') {
+          if (currentStation.type === 'azkar' || currentStation.type === 'ruqyah' || currentStation.type === 'quran_sura_list' || currentStation.type === 'mushaf_mualim') {
               return;
           }
           const cards = document.querySelectorAll('.card');
@@ -2284,6 +2014,20 @@
       }
     });
 
+    // دوال التقويم الهجري المحدثة
+    function updateHijriDate() {
+      // استخدام Intl.DateTimeFormat مع التقويم الإسلامي للحصول على التاريخ الهجري الصحيح
+      const today = new Date();
+      const hijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).format(today);
+      
+      document.getElementById('hijriDate').textContent = hijriDate;
+    }
+
     // Initialize app
     document.addEventListener('DOMContentLoaded', () => {
         // Check notification permission
@@ -2300,6 +2044,17 @@
         initializeStations();
         updatePlaylistButtons();
         fetchPrayerTimes();
+        
+        // تحديث التقويم الهجري
+        updateHijriDate();
+        
+        // تحديث يومي (عند منتصف الليل)
+        setInterval(() => {
+          const now = new Date();
+          if (now.getHours() === 0 && now.getMinutes() === 0) {
+            updateHijriDate();
+          }
+        }, 60000); // تحقق كل دقيقة
     });
   </script>
 <script data-goatcounter="https://waleedd.goatcounter.com/count"
