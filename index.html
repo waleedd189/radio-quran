@@ -908,9 +908,13 @@
   <h2 class="section-header" id="section2Title">القاهرة - نابلس - السعودية</h2>
   <div class="grid" id="section2-stations"></div>
 
-  <!-- Section 3: باقي الإذاعات (مع إضافة فارس عباد والمنشاوي) -->
+  <!-- Section 3: باقي الإذاعات (مع إضافة فارس عباد والمنشاوي وماهر المعيقلي) -->
   <h2 class="section-header" id="section3Title">باقي الإذاعات</h2>
   <div class="grid" id="section3-stations"></div>
+
+  <!-- Section 4: دروس وعبر -->
+  <h2 class="section-header" id="section4Title">دروس وعبر</h2>
+  <div class="grid" id="section4-stations"></div>
 
   <!-- الشريط المتحرك بنفس تنسيق الكود الثاني -->
   <div class="news-ticker">
@@ -981,8 +985,10 @@
         section1Title: "الأذكار - الرقية",
         section2Title: "القاهرة - نابلس - السعودية",
         section3Title: "باقي الإذاعات",
+        section4Title: "دروس وعبر",
         listenToCompleteQuran: "اختر سورة",
-        listenToTafsir: "استماع إلى التفسير"
+        listenToTafsir: "استماع إلى التفسير",
+        listenToLessons: "استماع للدروس"
       },
       en: {
         quranRadio: "Quran Radio",
@@ -1029,8 +1035,10 @@
         section1Title: "Azkar - Ruqyah",
         section2Title: "Cairo - Nablus - Saudi",
         section3Title: "Other Stations",
+        section4Title: "Lessons & Wisdom",
         listenToCompleteQuran: "Listen to Complete Quran",
-        listenToTafsir: "Listen to Tafsir"
+        listenToTafsir: "Listen to Tafsir",
+        listenToLessons: "Listen to Lessons"
       }
     };
 
@@ -1067,12 +1075,13 @@
         // ... باقي التسجيلات كما هي في الكود الأصلي
     ];
 
-    // إضافة تسجيلات الرقية
+    // إضافة تسجيلات الرقية مع الرابط الجديد
     const ruqyahRecordings = [
         { name: {ar: "رقية عامة", en: "General Ruqyah"}, url: "https://qurango.net/radio/roqiah" },
         { name: {ar: "رقية للعين", en: "Ruqyah for Evil Eye"}, url: "https://example.com/ruqyah2.mp3" },
         { name: {ar: "رقية للسحر", en: "Ruqyah for Magic"}, url: "https://example.com/ruqyah3.mp3" },
-        { name: {ar: "رقية للمس", en: "Ruqyah for Possession"}, url: "https://example.com/ruqyah4.mp3" }
+        { name: {ar: "رقية للمس", en: "Ruqyah for Possession"}, url: "https://example.com/ruqyah4.mp3" },
+        { name: {ar: "رقية شرعية", en: "Islamic Ruqyah"}, url: "https://server03.quran-uni.com:7012/;*.mp3" }
     ];
 
     // التعديل الأول: نقل الشعراوي للقسم الأول
@@ -1088,7 +1097,7 @@
       { name: {ar: "إذاعة السعودية", en: "Saudi Radio"}, img: "https://7nen.do.am/_ph/6/1/730393383.jpg", url: "https://backup.qurango.net/radio/abdulrahman_alsudaes/أثير%20راديو.mp3" }
     ];
 
-    // التعديل الثاني: إعادة ترتيب القسم الثالث وإضافة المنشاوي
+    // التعديل الثاني: إعادة ترتيب القسم الثالث وإضافة المنشاوي وماهر المعيقلي
     const section3Stations = [
       { name: {ar: "الشيخ الحصري", en: "Sheikh Al-Husary"}, img: "https://7nen.do.am/_ph/6/1/650079361.jpg", completeQuranUrl: "https://waleedd189.github.io/radio-quran/mahmoud-khalil.html" },
       { name: {ar: "الشيخ عبدالباسط", en: "Sheikh Abdul Basit"}, img: "https://7nen.do.am/_ph/6/1/788498118.jpg", url: "https://qurango.net/radio/abdulbasit_abdulsamad.mp3" },
@@ -1114,15 +1123,31 @@
         img: "https://tvquran.com/uploads/authors/images/%D9%81%D8%A7%D8%B1%D8%B3%20%D8%B9%D8%A8%D8%A7%D8%AF.jpg", 
         url: "https://qurango.net/radio/fares_abbad.mp3",
         completeQuranUrl: "https://waleedd189.github.io/radio-quran/fares-abbad.html"
+      },
+      // إضافة إذاعة ماهر المعيقلي بعد فارس عباد
+      {
+        name: {ar: "الشيخ ماهر المعيقلي", en: "Sheikh Maher Al-Muaiqly"}, 
+        img: "https://i.postimg.cc/WzgpPS5k/image.png", 
+        url: "https://server03.quran-uni.com:7005/;*.mp3"
+      }
+    ];
+
+    // إضافة قسم جديد "دروس وعبر"
+    const section4Stations = [
+      { 
+        name: {ar: "دروس عمر عبدالكافي", en: "Lessons by Omar Abdul Kafi"}, 
+        img: "https://i.postimg.cc/k5Sn0qfb/image.jpg", 
+        lessonsUrl: "https://waleedd189.github.io/radio-quran/Omar-Kafee.html" // استبدل هذا بالرابط الفعلي
       }
     ];
 
     // Combine all stations for search functionality
-    const allStations = [...section1Stations, ...section2Stations, ...section3Stations];
+    const allStations = [...section1Stations, ...section2Stations, ...section3Stations, ...section4Stations];
     
     const section1Container = document.getElementById('section1-stations');
     const section2Container = document.getElementById('section2-stations');
     const section3Container = document.getElementById('section3-stations');
+    const section4Container = document.getElementById('section4-stations');
     const player = document.getElementById('radioPlayer');
     const nowPlayingSpan = document.getElementById('stationName');
     const playingIndicator = document.getElementById('playingIndicator');
@@ -1163,6 +1188,7 @@
       document.getElementById('section1Title').textContent = translations[lang].section1Title;
       document.getElementById('section2Title').textContent = translations[lang].section2Title;
       document.getElementById('section3Title').textContent = translations[lang].section3Title;
+      document.getElementById('section4Title').textContent = translations[lang].section4Title;
       
       // Update prayer names
       document.querySelectorAll('.prayer-name').forEach(el => {
@@ -1219,6 +1245,7 @@
       section1Container.innerHTML = '';
       section2Container.innerHTML = '';
       section3Container.innerHTML = '';
+      section4Container.innerHTML = '';
 
       // Render Section 1 stations
       section1Stations.forEach((station) => {
@@ -1236,6 +1263,12 @@
       section3Stations.forEach((station) => {
         const card = createStationCard(station);
         section3Container.appendChild(card);
+      });
+
+      // Render Section 4 stations
+      section4Stations.forEach((station) => {
+        const card = createStationCard(station);
+        section4Container.appendChild(card);
       });
     }
 
@@ -1282,6 +1315,21 @@
              onmouseover="this.style.backgroundColor='#45a049'; this.style.transform='translateY(-2px)'" 
              onmouseout="this.style.backgroundColor='#4CAF50'; this.style.transform='translateY(0)'">
              ${translations[currentLanguage].listenToTafsir}
+          </a>
+          <div class="progress-bar"></div>
+        `;
+      } else if (station.lessonsUrl) {
+        // بطاقة عمر عبدالكافي بدون أزرار تشغيل وإيقاف
+        card.innerHTML = `
+          <img src="${station.img}" alt="${station.name[currentLanguage]}" loading="lazy" />
+          <h2>${station.name[currentLanguage]}</h2>
+          <a href="${station.lessonsUrl}" 
+             style="background-color: #4CAF50; color: white; border: none; padding: 8px 14px; 
+                    border-radius: 10px; font-size: 0.9em; cursor: pointer; margin: 5px; 
+                    text-decoration: none; display: inline-block; transition: all 0.3s ease;"
+             onmouseover="this.style.backgroundColor='#45a049'; this.style.transform='translateY(-2px)'" 
+             onmouseout="this.style.backgroundColor='#4CAF50'; this.style.transform='translateY(0)'">
+             ${translations[currentLanguage].listenToLessons}
           </a>
           <div class="progress-bar"></div>
         `;
