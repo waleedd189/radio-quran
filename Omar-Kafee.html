@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>دروس الشيخ عمر عبدالكافي</title>
+  
+  <!-- نفس الخطوط من الصفحة الرئيسية -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* ===== نفس الألوان والتصميم من الصفحة الرئيسية ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Cairo', 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #111, #333);
+      color: #fff;
+      text-align: center;
+      padding: 30px 10px;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+      overflow-x: hidden;
+    }
+    
+    /* ===== العنوان الرئيسي (نفس الصفحة الرئيسية) ===== */
+    h1 {
+      font-family: 'Amiri', serif;
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 5px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, #4CAF50, #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    h1::before {
+      content: "﴿";
+      color: #4CAF50;
+      margin-left: 10px;
+    }
+    
+    h1::after {
+      content: "﴾";
+      color: #4CAF50;
+      margin-right: 10px;
+    }
+    
+    /* ===== العنوان الفرعي (تم التعديل - نفس الصفحة الرئيسية) ===== */
+    .subtitle { 
+      font-size: 1.1em;
+      margin-bottom: 15px;
+      color: #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .subtitle a {
+      color: inherit;
+      text-decoration: none;
+      background: linear-gradient(45deg, #4CAF50, #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: transform 0.3s ease;
+      font-weight: 600;
+    }
+
+    .subtitle a:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
+    }
+    
+    /* ===== العنوان الثان (الجديد) ===== */
+    .second-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.8em;
+      font-weight: 700;
+      margin-bottom: 25px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, #FF9800, #FFC107);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .second-title::before {
+      content: "﴿";
+      color: #FF9800;
+      margin-left: 10px;
+    }
+    
+    .second-title::after {
+      content: "﴾";
+      color: #FF9800;
+      margin-right: 10px;
+    }
+    
+    /* ===== زرار التحكم ===== */
+    .controls-container {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+    }
+    
+    .back-btn, .share-btn, .sleep-timer-btn, .download-btn, .wait-btn {
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .back-btn {
+      background: #2196F3;
+    }
+    
+    .back-btn:hover {
+      background: #0b7dda;
+    }
+    
+    .share-btn {
+      background: #4CAF50;
+    }
+    
+    .share-btn:hover {
+      background: #45a049;
+    }
+    
+    .sleep-timer-btn {
+      background: #9C27B0;
+    }
+    
+    .sleep-timer-btn:hover {
+      background: #7B1FA2;
+    }
+    
+    .sleep-timer-btn.active {
+      background: #7B1FA2;
+      box-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
+    }
+    
+    .download-btn {
+      background: #FF5722;
+    }
+    
+    .download-btn:hover {
+      background: #E64A19;
+    }
+    
+    .wait-btn {
+      background: #00BCD4;
+    }
+    
+    .wait-btn:hover {
+      background: #0097A7;
+    }
+    
+    .wait-btn.active {
+      background: #0097A7;
+      box-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+    }
+    
+    /* ===== مشغل الصوت ===== */
+    .player-container {
+      background: rgba(34, 34, 34, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+    
+    .now-playing {
+      font-size: 1.1em;
+      color: #4CAF50;
+      margin-bottom: 15px;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .playing-indicator {
+      width: 12px;
+      height: 12px;
+      background: #4CAF50;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    .loader {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #fff;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+    
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* ===== قائمة الدروس ===== */
+    .lessons-container {
+      background: rgba(34, 34, 34, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 152, 0, 0.3);
+    }
+    
+    .station-image {
+      width: 200px; /* تم تكبير الحجم من 150px إلى 200px */
+      height: 200px; /* تم تكبير الحجم من 150px إلى 200px */
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      border: 5px solid rgba(255, 152, 0, 0.3); /* تم زيادة سمك الحدود من 4px إلى 5px */
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* تم زيادة قوة الظل */
+      transition: transform 0.3s ease;
+    }
+    
+    .station-image:hover {
+      transform: scale(1.08); /* تم زيادة التكبير عند التمرير */
+      border-color: rgba(255, 152, 0, 0.8);
+    }
+    
+    .lessons-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.3em;
+      color: #FF9800;
+      margin-bottom: 15px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    
+    .lessons-dropdown {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 152, 0, 0.3);
+      color: white;
+      font-size: 1em;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FF9800%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E');
+      background-repeat: no-repeat;
+      background-position: left 15px center;
+      background-size: 12px;
+    }
+    
+    .lessons-dropdown:focus {
+      outline: none;
+      border-color: #FF9800;
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .lessons-dropdown option {
+      background: #333;
+      color: white;
+      padding: 10px;
+    }
+    
+    .play-lesson-btn {
+      background: #FF9800;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    
+    .play-lesson-btn:hover {
+      background: #F57C00;
+      transform: translateY(-2px);
+    }
+    
+    .stop-btn {
+      background: #f44336 !important;
+    }
+    
+    .stop-btn:hover {
+      background: #da190b !important;
+    }
+    
+    .progress-bar {
+      margin-top: 15px;
+      height: 4px;
+      width: 100%;
+      background: #555;
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    
+    .progress-bar::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 30%;
+      background: #FF9800;
+      animation: move 2s linear infinite;
+    }
+    
+    .lessons-container.active .progress-bar::before {
+      animation: move 1s linear infinite;
+      background: linear-gradient(90deg, #FF9800, #FFC107, #FF9800);
+    }
+    
+    @keyframes move {
+      from { left: -30%; }
+      to { left: 100%; }
+    }
+    
+    /* ===== التوقير (نفس الصفحة الرئيسية) ===== */
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    
+    .footer-text {
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 20px;
+    }
+    
+    /* ===== النص الجديد في التوقير ===== */
+    .footer-special-text {
+      font-family: 'Amiri', serif;
+      font-size: 1.1em;
+      color: #FF9800; /* لون برتقالي مميز */
+      margin-top: 15px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      font-weight: 600;
+    }
+    
+    /* ===== زر الواتساب في نهاية الصفحة (نفس الصفحة الرئيسية) ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: none;
+      text-decoration: none;
+    }
+    
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+    }
+    
+    .whatsapp-float svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+    
+    .whatsapp-tooltip {
+      position: absolute;
+      right: 70px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85em;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .whatsapp-tooltip::after {
+      content: '';
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 6px solid transparent;
+      border-left-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .whatsapp-float:hover .whatsapp-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* ===== نافذة مؤقت النوم ===== */
+    .sleep-timer-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .sleep-timer-content {
+      background: #333;
+      border-radius: 15px;
+      padding: 25px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(156, 39, 176, 0.3);
+    }
+    
+    .sleep-timer-title {
+      font-size: 1.3em;
+      margin-bottom: 20px;
+      color: #9C27B0;
+      font-weight: 600;
+    }
+    
+    .timer-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .timer-option {
+      background: #444;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1em;
+    }
+    
+    .timer-option:hover {
+      background: #555;
+      transform: translateY(-2px);
+    }
+    
+    .timer-option.selected {
+      background: #9C27B0;
+      box-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
+    }
+    
+    .timer-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    
+    .timer-cancel, .timer-confirm {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+    
+    .timer-cancel {
+      background: #555;
+    }
+    
+    .timer-cancel:hover {
+      background: #666;
+    }
+    
+    .timer-confirm {
+      background: #9C27B0;
+    }
+    
+    .timer-confirm:hover {
+      background: #7B1FA2;
+    }
+    
+    .timer-status {
+      margin-top: 15px;
+      padding: 10px;
+      background: rgba(156, 39, 176, 0.1);
+      border-radius: 8px;
+      color: #9C27B0;
+      font-size: 0.9em;
+      display: none;
+    }
+    
+    /* ===== نافذة الانتظار ===== */
+    .wait-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .wait-content {
+      background: #333;
+      border-radius: 15px;
+      padding: 25px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 188, 212, 0.3);
+      text-align: center;
+    }
+    
+    .wait-title {
+      font-size: 1.3em;
+      margin-bottom: 20px;
+      color: #00BCD4;
+      font-weight: 600;
+    }
+    
+    .wait-message {
+      margin-bottom: 20px;
+      color: #ccc;
+      line-height: 1.6;
+    }
+    
+    .wait-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    
+    .wait-cancel, .wait-confirm {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+    
+    .wait-cancel {
+      background: #555;
+    }
+    
+    .wait-cancel:hover {
+      background: #666;
+    }
+    
+    .wait-confirm {
+      background: #00BCD4;
+    }
+    
+    .wait-confirm:hover {
+      background: #0097A7;
+    }
+    
+    /* ===== للهواتف ===== */
+    @media (max-width: 768px) {
+      h1 { font-size: 2em; }
+      .second-title { font-size: 1.5em; }
+      .subtitle { font-size: 1em; }
+      .station-image {
+        width: 180px; /* تم تعديل الحجم للهواتف */
+        height: 180px; /* تم تعديل الحجم للهواتف */
+      }
+      .controls-container { 
+        top: 10px; 
+        left: 10px;
+        gap: 5px;
+      }
+      .back-btn, .share-btn, .sleep-timer-btn, .download-btn, .wait-btn { 
+        font-size: 0.8em; 
+        padding: 6px 12px;
+      }
+      .whatsapp-float { 
+        width: 50px; 
+        height: 50px; 
+        bottom: 15px; 
+        right: 15px; 
+      }
+      .whatsapp-float svg { 
+        width: 26px; 
+        height: 26px; 
+      }
+      .whatsapp-tooltip { 
+        right: 60px; 
+        font-size: 0.8em; 
+      }
+      .timer-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== زرار التحكم (الرجوع + المشاركة + مؤقت النوم + انتظار) ===== -->
+  <div class="controls-container">
+    <button class="back-btn" onclick="goBack()">
+      <i class="fas fa-arrow-right"></i>
+      <span>رجوع</span>
+    </button>
+    <button class="share-btn" onclick="shareApp()">
+      <i class="fas fa-share-alt"></i>
+      <span>مشاركة</span>
+    </button>
+    <button class="sleep-timer-btn" id="sleepTimerBtn" onclick="toggleSleepTimer()">
+      <i class="fas fa-clock"></i>
+      <span>مؤقت النوم</span>
+    </button>
+    <button class="wait-btn" id="waitBtn" onclick="toggleWait()">
+      <i class="fas fa-hourglass-half"></i>
+      <span>انتظار</span>
+    </button>
+  </div>
+  
+  <!-- ===== العنوان الرئيسي (نفس الصفحة الرئيسية) ===== -->
+  <h1>
+    <span>راديو قرآن</span>
+  </h1>
+  
+  <!-- ===== العنوان الفرعي (نفس الصفحة الرئيسية) ===== -->
+  <div class="subtitle">
+    <span>صفحة</span>
+    <a href="https://www.facebook.com/lakel7amd" target="_blank">اللهم لك الحمد</a>
+  </div>
+  
+  <!-- ===== العنوان الثان (الجديد) ===== -->
+  <h2 class="second-title">
+    <span>دروس الشيخ عمر عبدالكافي</span>
+  </h2>
+  
+  <!-- ===== مشغل الصوت ===== -->
+  <div class="player-container">
+    <div class="now-playing" id="nowPlaying">
+      <div class="playing-indicator" id="playingIndicator" style="display: none;"></div>
+      <div class="loader" id="bufferingLoader" style="display: none;"></div>
+      <span id="currentLesson">اختر درساً للاستماع</span>
+    </div>
+    
+    <audio id="audioPlayer" controls style="width: 100%;"></audio>
+    
+    <div class="timer-status" id="timerStatus">
+      مؤقت النوم مفعل: <span id="timerCountdown">--:--</span>
+    </div>
+  </div>
+  
+  <!-- ===== قائمة الدروس ===== -->
+  <div class="lessons-container" id="lessonsContainer">
+    <img src="https://i.postimg.cc/HnbJtb71/image.jpg" alt="الشيخ عمر عبدالكافي" class="station-image">
+    
+    <div class="lessons-title">سلسلة الوعد الحق ج 1</div>
+    <select class="lessons-dropdown" id="lessonsDropdown">
+      <option value="">اختر درساً...</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/001.mp3">الوعد الحق – المقدمة</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/002.mp3">مرض الموت</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/003.mp3">الوصية</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/004.mp3">علامات الساعة الصغرى - 1</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/005.mp3">علامات الساعة الصغرى - 2</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/006.mp3">علامات الساعة الصغرى - 4</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/007.mp3">علامات الساعة الصغرى - 5</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/008.mp3">علامات الساعة الكبرى - 1</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/009.mp3">علامات الساعة الكبرى - 2</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/010.mp3">علامات الساعة الكبرى - 3</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/011.mp3">صفات النبي صلى الله عليه و سلم</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/012.mp3">وفاة النبي صلى الله عليه و سلم</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/013.mp3">موجبات عذاب القبر - 1</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/014.mp3">موجبات عذاب القبر - 2</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/015.mp3">هول المطلع</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/016.mp3">الحشر</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/017.mp3">الصراط</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/018.mp3">الحوض والشفاعة</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/019.mp3">أول المنازل - 1</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/020.mp3">أول المنازل - 2</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/021.mp3">أول المنازل - 3</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/022.mp3">منجنيات عذاب القبر - 1</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/023.mp3">منجنيات عذاب القبر - 2</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/024.mp3">حسن وسوء الخاتمة</option>
+      <option value="https://archive.org/download/Wa3d-Haq_Omar-abdlkafee/025.mp3">سوء الخاتمة</option>
+    </select>
+    
+    <button class="play-lesson-btn" onclick="playSelectedLesson()">
+      <i class="fas fa-play"></i>
+      تشغيل الدرس
+    </button>
+    
+    <button class="play-lesson-btn stop-btn" onclick="stopLesson()">
+      <i class="fas fa-stop"></i>
+      إيقاف الدرس
+    </button>
+    
+    <div class="progress-bar"></div>
+  </div>
+
+  <!-- ===== التوقير (نفس الصفحة الرئيسية) ===== -->
+  <footer>
+    <div class="footer-text">راديو قرآن - صفحة اللهم لك الحمد</div>
+    <!-- ===== النص الجديد في التوقير ===== -->
+    <div class="footer-special-text">دروس الشيخ عمر عبدالكافي</div>
+  </footer>
+
+  <!-- ===== زر الواتساب في نهاية الصفحة (نفس الصفحة الرئيسية) ===== -->
+  <button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn">
+    <div class="whatsapp-tooltip" id="whatsappTooltip">الإبلاغ عن رابط معطل</div>
+    <svg viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.520.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.520-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
+    </svg>
+  </button>
+  
+  <!-- ===== نافذة مؤقت النوم ===== -->
+  <div class="sleep-timer-modal" id="sleepTimerModal">
+    <div class="sleep-timer-content">
+      <div class="sleep-timer-title">مؤقت النوم</div>
+      <div class="timer-options">
+        <button class="timer-option" data-minutes="5">5 دقائق</button>
+        <button class="timer-option" data-minutes="10">10 دقائق</button>
+        <button class="timer-option" data-minutes="15">15 دقيقة</button>
+        <button class="timer-option" data-minutes="30">30 دقيقة</button>
+        <button class="timer-option" data-minutes="45">45 دقيقة</button>
+        <button class="timer-option" data-minutes="60">60 دقيقة</button>
+      </div>
+      <div class="timer-actions">
+        <button class="timer-cancel" onclick="closeSleepTimerModal()">إلغاء</button>
+        <button class="timer-confirm" onclick="setSleepTimer()">تأكيد</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ===== نافذة الانتظار ===== -->
+  <div class="wait-modal" id="waitModal">
+    <div class="wait-content">
+      <div class="wait-title">وضع الانتظار</div>
+      <div class="wait-message">
+        سيتم تشغيل الدرس التالي تلقائياً بعد انتهاء الدرس الحالي. هل تريد تفعيل وضع الانتظار؟
+      </div>
+      <div class="wait-actions">
+        <button class="wait-cancel" onclick="closeWaitModal()">إلغاء</button>
+        <button class="wait-confirm" onclick="enableWaitMode()">تفعيل</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const player = document.getElementById('audioPlayer');
+    const nowPlaying = document.getElementById('currentLesson');
+    const playingIndicator = document.getElementById('playingIndicator');
+    const bufferingLoader = document.getElementById('bufferingLoader');
+    const lessonsDropdown = document.getElementById('lessonsDropdown');
+    const lessonsContainer = document.getElementById('lessonsContainer');
+    
+    // متغيرات مؤقت النوم
+    let sleepTimer = null;
+    let sleepTimerMinutes = 0;
+    let sleepTimerSeconds = 0;
+    let sleepTimerInterval = null;
+    const sleepTimerBtn = document.getElementById('sleepTimerBtn');
+    const sleepTimerModal = document.getElementById('sleepTimerModal');
+    const timerStatus = document.getElementById('timerStatus');
+    const timerCountdown = document.getElementById('timerCountdown');
+    let selectedMinutes = 0;
+    
+    // متغيرات وضع الانتظار
+    let waitMode = false;
+    const waitBtn = document.getElementById('waitBtn');
+    const waitModal = document.getElementById('waitModal');
+    let currentLessonIndex = -1;
+
+    // تشغيل الدرس المحدد
+    function playSelectedLesson() {
+      const selectedOption = lessonsDropdown.options[lessonsDropdown.selectedIndex];
+      const lessonUrl = selectedOption.value;
+      const lessonName = selectedOption.text;
+      
+      if (!lessonUrl) {
+        alert('الرجاء اختيار درس أولاً');
+        return;
+      }
+      
+      // حفظ فهرس الدرس الحالي
+      currentLessonIndex = lessonsDropdown.selectedIndex;
+      
+      // تحديث المشغل
+      player.src = lessonUrl;
+      nowPlaying.textContent = `جاري تشغيل: ${lessonName}`;
+      bufferingLoader.style.display = 'inline-block';
+      playingIndicator.style.display = 'none';
+      
+      // تفعيل حاوية الدروس
+      lessonsContainer.classList.add('active');
+      
+      player.play().then(() => {
+        bufferingLoader.style.display = 'none';
+        playingIndicator.style.display = 'block';
+      }).catch(error => {
+        console.error('خطأ في التشغيل:', error);
+        nowPlaying.textContent = `خطأ في تشغيل ${lessonName}`;
+        bufferingLoader.style.display = 'none';
+        lessonsContainer.classList.remove('active');
+      });
+    }
+
+    // إيقاف الدرس
+    function stopLesson() {
+      player.pause();
+      player.src = "";
+      nowPlaying.textContent = 'اختر درساً للاستماع';
+      playingIndicator.style.display = 'none';
+      bufferingLoader.style.display = 'none';
+      lessonsContainer.classList.remove('active');
+      lessonsDropdown.value = '';
+      currentLessonIndex = -1;
+      
+      // إلغاء وضع الانتظار
+      if (waitMode) {
+        waitMode = false;
+        waitBtn.classList.remove('active');
+      }
+    }
+
+    // الرجوع لصفحة الراديو
+    function goBack() {
+      window.location.href = 'index.html'; // غير هذا المسار حسب اسم صفحتك الرئيسية
+    }
+
+    // دالة المشاركة (نفس الصفحة الرئيسية)
+    function shareApp() {
+      const shareData = {
+        title: 'دروس الشيخ عمر عبدالكافي',
+        text: 'استمع إلى دروس الشيخ عمر عبدالكافي - سلسلة الوعد الحق ج 1 - صفحة اللهم لك الحمد',
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData)
+          .catch(console.error);
+      } else {
+        // Fallback: copy to clipboard
+        const textToCopy = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          alert('تم نسخ الرابط إلى الحافظة!');
+        }).catch(() => {
+          alert('فشل النسخ، يرجى نسخ الرابط يدوياً');
+        });
+      }
+    }
+
+    // دالة الإبلاغ عن رابط معطل (نفس الصفحة الرئيسية)
+    function reportBrokenLink() {
+      const phoneNumber = '+201092116092';
+      const message = 'يوجد رابط معطل في دروس الشيخ عمر عبدالكافي، يرجى التحقق';
+      const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
+      
+      window.open(whatsappUrl, '_blank');
+      
+      return false;
+    }
+
+    // ===== دوال مؤقت النوم =====
+    
+    // فتح نافذة مؤقت النوم
+    function toggleSleepTimer() {
+      if (sleepTimerInterval) {
+        // إذا كان المؤقت مفعل، قم بإيقافه
+        cancelSleepTimer();
+      } else {
+        // إذا لم يكن المؤقت مفعل، افتح النافذة
+        sleepTimerModal.style.display = 'flex';
+        
+        // إضافة مستمعي الأحداث لأزرار الوقت
+        const timerOptions = document.querySelectorAll('.timer-option');
+        timerOptions.forEach(option => {
+          option.addEventListener('click', function() {
+            // إزالة التحديد من جميع الأزرار
+            timerOptions.forEach(opt => opt.classList.remove('selected'));
+            // تحديد الزر المضغوط عليه
+            this.classList.add('selected');
+            // حفظ الوقت المحدد
+            selectedMinutes = parseInt(this.getAttribute('data-minutes'));
+          });
+        });
+      }
+    }
+    
+    // إغلاق نافذة مؤقت النوم
+    function closeSleepTimerModal() {
+      sleepTimerModal.style.display = 'none';
+    }
+    
+    // ضبط مؤقت النوم
+    function setSleepTimer() {
+      if (selectedMinutes === 0) {
+        alert('الرجاء اختيار وقت للمؤقت');
+        return;
+      }
+      
+      // إيقاف أي مؤقت نشط
+      if (sleepTimerInterval) {
+        clearInterval(sleepTimerInterval);
+      }
+      
+      // ضبط الوقت المتبقي
+      sleepTimerMinutes = selectedMinutes;
+      sleepTimerSeconds = 0;
+      
+      // تحديث واجهة المستخدم
+      sleepTimerBtn.classList.add('active');
+      timerStatus.style.display = 'block';
+      updateTimerDisplay();
+      
+      // بدء العد التنازلي
+      sleepTimerInterval = setInterval(() => {
+        sleepTimerSeconds--;
+        
+        if (sleepTimerSeconds < 0) {
+          sleepTimerMinutes--;
+          sleepTimerSeconds = 59;
+        }
+        
+        updateTimerDisplay();
+        
+        // التحقق من انتهاء الوقت
+        if (sleepTimerMinutes <= 0 && sleepTimerSeconds <= 0) {
+          // إيقاف الصوت
+          player.pause();
+          
+          // إيقاف المؤقت
+          clearInterval(sleepTimerInterval);
+          sleepTimerInterval = null;
+          
+          // تحديث واجهة المستخدم
+          sleepTimerBtn.classList.remove('active');
+          timerStatus.style.display = 'none';
+          
+          // إظهار رسالة للمستخدم
+          nowPlaying.textContent = 'تم إيقاف التشغيل حسب مؤقت النوم';
+          lessonsContainer.classList.remove('active');
+        }
+      }, 1000);
+      
+      // إغلاق النافذة
+      closeSleepTimerModal();
+    }
+    
+    // إلغاء مؤقت النوم
+    function cancelSleepTimer() {
+      if (sleepTimerInterval) {
+        clearInterval(sleepTimerInterval);
+        sleepTimerInterval = null;
+      }
+      
+      sleepTimerBtn.classList.remove('active');
+      timerStatus.style.display = 'none';
+      selectedMinutes = 0;
+    }
+    
+    // تحديث عرض المؤقت
+    function updateTimerDisplay() {
+      const minutes = sleepTimerMinutes.toString().padStart(2, '0');
+      const seconds = sleepTimerSeconds.toString().padStart(2, '0');
+      timerCountdown.textContent = `${minutes}:${seconds}`;
+    }
+
+    // ===== دوال وضع الانتظار =====
+    
+    // فتح نافذة الانتظار
+    function toggleWait() {
+      if (waitMode) {
+        // إذا كان وضع الانتظار مفعل، قم بإلغائه
+        waitMode = false;
+        waitBtn.classList.remove('active');
+        nowPlaying.textContent = nowPlaying.textContent.replace(' (وضع الانتظار مفعل)', '');
+      } else {
+        // إذا لم يكن وضع الانتظار مفعل، افتح النافذة
+        if (currentLessonIndex === -1) {
+          alert('الرجاء تشغيل درس أولاً');
+          return;
+        }
+        waitModal.style.display = 'flex';
+      }
+    }
+    
+    // إغلاق نافذة الانتظار
+    function closeWaitModal() {
+      waitModal.style.display = 'none';
+    }
+    
+    // تفعيل وضع الانتظار
+    function enableWaitMode() {
+      waitMode = true;
+      waitBtn.classList.add('active');
+      nowPlaying.textContent += ' (وضع الانتظار مفعل)';
+      closeWaitModal();
+    }
+
+    // أحداث المشغل
+    player.addEventListener('pause', () => {
+      playingIndicator.style.display = 'none';
+    });
+
+    player.addEventListener('play', () => {
+      playingIndicator.style.display = 'block';
+    });
+
+    player.addEventListener('ended', () => {
+      playingIndicator.style.display = 'none';
+      
+      // التحقق من وضع الانتظار
+      if (waitMode && currentLessonIndex > 0 && currentLessonIndex < lessonsDropdown.options.length - 1) {
+        // تشغيل الدرس التالي
+        currentLessonIndex++;
+        lessonsDropdown.selectedIndex = currentLessonIndex;
+        playSelectedLesson();
+      } else {
+        // إذا لم يكن وضع الانتظار مفعل أو وصلنا لنهاية القائمة
+        nowPlaying.textContent = 'انتهى الدرس';
+        lessonsContainer.classList.remove('active');
+        
+        // إلغاء وضع الانتظار
+        if (waitMode) {
+          waitMode = false;
+          waitBtn.classList.remove('active');
+        }
+      }
+    });
+
+    // عند اختيار درس جديد من القائمة
+    lessonsDropdown.addEventListener('change', function() {
+      if (this.value && player.src) {
+        playSelectedLesson();
+      }
+    });
+  </script>
+</body>
+</html>
