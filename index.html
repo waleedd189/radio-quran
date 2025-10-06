@@ -908,7 +908,7 @@
   <h2 class="section-header" id="section2Title">القاهرة - نابلس - السعودية</h2>
   <div class="grid" id="section2-stations"></div>
 
-  <!-- Section 3: باقي الإذاعات (مع إضافة فارس عباد) -->
+  <!-- Section 3: باقي الإذاعات (مع إضافة فارس عباد والمنشاوي) -->
   <h2 class="section-header" id="section3Title">باقي الإذاعات</h2>
   <div class="grid" id="section3-stations"></div>
 
@@ -1088,8 +1088,15 @@
       { name: {ar: "إذاعة السعودية", en: "Saudi Radio"}, img: "https://7nen.do.am/_ph/6/1/730393383.jpg", url: "https://backup.qurango.net/radio/abdulrahman_alsudaes/أثير%20راديو.mp3" }
     ];
 
-    // التعديل الثاني: حذف الشعراوي من القسم الثالث وإضافة أزرار المصحف الكامل مع إضافة فارس عباد
+    // التعديل الثاني: إعادة ترتيب القسم الثالث وإضافة المنشاوي
     const section3Stations = [
+      { name: {ar: "الشيخ الحصري", en: "Sheikh Al-Husary"}, img: "https://7nen.do.am/_ph/6/1/650079361.jpg", completeQuranUrl: "https://waleedd189.github.io/radio-quran/mahmoud-khalil.html" },
+      { name: {ar: "الشيخ عبدالباسط", en: "Sheikh Abdul Basit"}, img: "https://7nen.do.am/_ph/6/1/788498118.jpg", url: "https://qurango.net/radio/abdulbasit_abdulsamad.mp3" },
+      { name: {ar: "الشيخ محمود علي البنا", en: "Sheikh Mahmoud Ali Al-Banna"}, img: "https://7nen.do.am/_ph/6/1/592190149.jpg", url: "https://backup.qurango.net/radio/mahmoud_ali__albanna" },
+      { name: {ar: "الشيخ مصطفى إسماعيل", en: "Sheikh Mustafa Ismail"}, img: "https://7nen.do.am/_ph/6/1/49597189.jpg", url: "https://backup.qurango.net/radio/mustafa_ismail" },
+      // إضافة إذاعة المنشاوي
+      { name: {ar: "الشيخ محمد صديق المنشاوي", en: "Sheikh Muhammad Siddiq Al-Minshawi"}, img: "https://i.postimg.cc/tJ0v8zZn/image.jpg", url: "https://server03.quran-uni.com:7036/;*.mp3" },
+      // باقي الإذاعات
       { name: {ar: "الشيخ أحمد العجمي", en: "Sheikh Ahmed Al-Ajmi"}, img: "https://7nen.do.am/_ph/6/1/979378293.jpg", url: "https://qurango.net/radio/ahmad_alajmy.mp3" },
       { 
         name: {ar: "الشيخ مشاري راشد", en: "Sheikh Mishary Rashid"}, 
@@ -1098,19 +1105,10 @@
         completeQuranUrl: "https://waleedd189.github.io/radio-quran/mishari-rashid.html"
       },
       { name: {ar: "الشيخ محمد جبريل", en: "Sheikh Muhammad Jibreel"}, img: "https://7nen.do.am/_ph/6/1/844452129.jpg", url: "https://backup.qurango.net/radio/mohammed_jibreel" },
-      { 
-        name: {ar: "الشيخ الحصري", en: "Sheikh Al-Husary"}, 
-        img: "https://7nen.do.am/_ph/6/1/650079361.jpg", 
-        completeQuranUrl: "https://waleedd189.github.io/radio-quran/mahmoud-khalil.html"
-      },
-      { name: {ar: "الشيخ عبدالباسط", en: "Sheikh Abdul Basit"}, img: "https://7nen.do.am/_ph/6/1/788498118.jpg", url: "https://qurango.net/radio/abdulbasit_abdulsamad.mp3" },
       { name: {ar: "الشيخ إدريس أبكر", en: "Sheikh Idrees Abkar"}, img: "https://7nen.do.am/_ph/6/1/695351424.jpg", url: "https://backup.qurango.net/radio/idrees_abkr" },
-      { name: {ar: "الشيخ محمود علي البنا", en: "Sheikh Mahmoud Ali Al-Banna"}, img: "https://7nen.do.am/_ph/6/1/592190149.jpg", url: "https://backup.qurango.net/radio/mahmoud_ali__albanna" },
       { name: {ar: "الشيخ سعد الغامدي", en: "Sheikh Saad Al-Ghamdi"}, img: "https://7nen.do.am/_ph/6/1/613525566.jpg", url: "https://backup.qurango.net/radio/saad_alghamdi" },
-      { name: {ar: "الشيخ مصطفى إسماعيل", en: "Sheikh Mustafa Ismail"}, img: "https://7nen.do.am/_ph/6/1/49597189.jpg", url: "https://backup.qurango.net/radio/mustafa_ismail" },
       { name: {ar: "الشيخ مصطفى اللاهوني", en: "Sheikh Mustafa Al-Lahouni"}, img: "https://7nen.do.am/_ph/6/1/586864154.jpg", url: "https://backup.qurango.net/radio/mustafa_allahoni" },
       { name: {ar: "الشيخ عبدالرحمن الشحات", en: "Sheikh Abdul Rahman Al-Shahhat"}, img: "https://7nen.do.am/_ph/6/1/397155617.jpg", url: "https://backup.qurango.net/radio/a_alshahhat" },
-      // إضافة إذاعة الشيخ فارس عباد مع الرابط المصحح
       {
         name: {ar: "الشيخ فارس عباد", en: "Sheikh Fares Abbad"}, 
         img: "https://tvquran.com/uploads/authors/images/%D9%81%D8%A7%D8%B1%D8%B3%20%D8%B9%D8%A8%D8%A7%D8%AF.jpg", 
@@ -1342,7 +1340,7 @@
         if (selectElement.value) {
             playRuqyahBtn.disabled = false;
         } else {
-            playRuqyahBtn.disabled = true;
+            playRuqyhBtn.disabled = true;
         }
     }
 
