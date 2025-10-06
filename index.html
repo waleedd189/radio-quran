@@ -290,40 +290,6 @@
       background: #d32f2f;
     }
     
-    .search-container {
-      margin: 20px 0;
-    }
-    
-    .search-input {
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(76, 175, 80, 0.3);
-      border-radius: 25px;
-      padding: 12px 20px;
-      color: white;
-      font-size: 1em;
-      width: 300px;
-      max-width: 90%;
-      transition: all 0.3s ease;
-    }
-
-    html[lang="ar"] .search-input {
-      text-align: right;
-    }
-
-    html[lang="en"] .search-input {
-      text-align: left;
-    }
-    
-    .search-input:focus {
-      outline: none;
-      border-color: #4CAF50;
-      background: rgba(255, 255, 255, 0.15);
-    }
-    
-    .search-input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-    
     .playlist-controls {
       display: flex;
       justify-content: center;
@@ -702,11 +668,6 @@
       .controls-panel {
         padding: 8px;
       }
-      
-      .search-input {
-        width: 250px;
-        padding: 10px 15px;
-      }
     }
 
     /* Notification Permission Banner */
@@ -763,9 +724,9 @@
     .news-ticker {
       background: rgba(76, 175, 80, 0.1);
       border: 1px solid rgba(76, 175, 80, 0.3);
-      border-radius: 25px;
+      border-radius: 15px;
       padding: 10px 0;
-      margin: 20px auto;
+      margin: 5px auto;
       max-width: 800px;
       overflow: hidden;
       position: relative;
@@ -896,8 +857,11 @@
     <div class="time-display" id="timeDisplay"></div>
   </div>
 
-  <div class="search-container">
-    <input type="text" class="search-input" id="searchInput" onkeyup="searchStations()" placeholder="ابحث عن محطة...">
+  <!-- الشريط المتحرك تم نقله إلى هنا بدلاً من مربع البحث -->
+  <div class="news-ticker">
+    <div class="news-ticker-content">
+      مرحبًا بك في موقع راديو قرآن صفحة اللهم لك الحمد 📻 | تم إنشاء صفحة مستقلة بتفسير الشيخ الشعرواى * تم إنشاء صفحة خاصة بدروس الشيخ عمر عبدالكافى | لا تنسى ذكر الله
+    </div>
   </div>
 
   <!-- Section 1: الأذكار - الرقية (مع إضافة الشعراوي) -->
@@ -915,13 +879,6 @@
   <!-- Section 4: دروس وعبر -->
   <h2 class="section-header" id="section4Title">دروس وعبر</h2>
   <div class="grid" id="section4-stations"></div>
-
-  <!-- الشريط المتحرك بنفس تنسيق الكود الثاني -->
-  <div class="news-ticker">
-    <div class="news-ticker-content">
-      مرحبًا بك في موقع راديو قرآن صفحة اللهم لك الحمد 📻 | تم إنشاء صفحة مستقلة بتفسير الشيخ الشعرواى * تم إنشاء صفحة خاصة بمصحف الشيخ الحصرى - المعلم * تم إنشاء صفحة خاصة بمصحف الشيخ الشعراوى * تم إنشاء صفحة خاصة بمصحف الشيخ فارس عباد | لا تنسى ذكر الله
-    </div>
-  </div>
 
   <footer>
     <div class="footer-text" id="footerText">راديو قرآن - صفحة اللهم لك الحمد</div>
@@ -1180,7 +1137,6 @@
       document.getElementById('prayerTimesTitle').textContent = translations[lang].prayerTimesTitle;
       document.getElementById('prevBtn').textContent = translations[lang].prevBtn;
       document.getElementById('nextBtn').textContent = translations[lang].nextBtn;
-      document.getElementById('searchInput').setAttribute('placeholder', translations[lang].searchPlaceholder);
       document.getElementById('whatsappTooltip').textContent = translations[lang].whatsappTooltip;
       document.getElementById('footerText').textContent = translations[lang].footerDesignedBy;
       document.getElementById('sleepTimerBtn').textContent = translations[lang].sleepTimerText;
@@ -1554,53 +1510,6 @@
           sleepTimerSelect.value = '0';
         }, minutes * 60 * 1000);
       }
-    }
-
-    // Search stations
-    function searchStations() {
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      const allCards = document.querySelectorAll('.card'); 
-      
-      allCards.forEach(card => {
-        const stationNameEl = card.querySelector('h2');
-        const stationName = stationNameEl ? stationNameEl.textContent.toLowerCase() : '';
-        
-        let foundInSublist = false;
-        if (card.querySelector('.azkar-select')) {
-            Array.from(card.querySelectorAll('.azkar-select option')).forEach(option => {
-                if (option.textContent.toLowerCase().includes(searchTerm)) {
-                    foundInSublist = true;
-                }
-            });
-        }
-        if (card.querySelector('.ruqyah-select')) {
-            Array.from(card.querySelectorAll('.ruqyah-select option')).forEach(option => {
-                if (option.textContent.toLowerCase().includes(searchTerm)) {
-                    foundInSublist = true;
-                }
-            });
-        }
-        if (card.querySelector('.quran-select')) {
-            Array.from(card.querySelectorAll('.quran-select option')).forEach(option => {
-                if (option.textContent.toLowerCase().includes(searchTerm)) {
-                    foundInSublist = true;
-                }
-            });
-        }
-        if (card.querySelector('.mushaf-select')) {
-            Array.from(card.querySelectorAll('.mushaf-select option')).forEach(option => {
-                if (option.textContent.toLowerCase().includes(searchTerm)) {
-                    foundInSublist = true;
-                }
-            });
-        }
-
-        if (stationName.includes(searchTerm) || foundInSublist) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
     }
 
     // Playlist navigation
