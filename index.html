@@ -860,7 +860,7 @@
   <!-- الشريط المتحرك تم نقله إلى هنا بدلاً من مربع البحث -->
   <div class="news-ticker">
     <div class="news-ticker-content">
-      مرحبًا بك في موقع راديو قرآن صفحة اللهم لك الحمد 📻 | تم إنشاء صفحة مستقلة بتفسير الشيخ الشعرواى * تم إنشاء صفحة خاصة بدروس الشيخ عمر عبدالكافى | لا تنسى ذكر الله
+      مرحبًا بك في موقع راديو قرآن صفحة اللهم لك الحمد 📻 | تم إنشاء صفحة مستقلة بدروس الشيخ صالح بن عواد المغامسي  * تم إنشاء صفحة خاصة بدروس الشيخ عمر عبدالكافى | لا تنسى ذكر الله
     </div>
   </div>
 
@@ -1089,12 +1089,17 @@
       }
     ];
 
-    // إضافة قسم جديد "دروس وعبر"
+    // إضافة قسم جديد "دروس وعبر" مع محطتي عمر عبدالكافي وصالح المغامسي
     const section4Stations = [
       { 
         name: {ar: "دروس عمر عبدالكافي", en: "Lessons by Omar Abdul Kafi"}, 
         img: "https://i.postimg.cc/k5Sn0qfb/image.jpg", 
-        lessonsUrl: "https://waleedd189.github.io/radio-quran/Omar-Kafee.html" // استبدل هذا بالرابط الفعلي
+        lessonsUrl: "https://waleedd189.github.io/radio-quran/Omar-Kafee.html"
+      },
+      { 
+        name: {ar: "دروس صالح المغامسي", en: "Lessons by Saleh Al-Maghamsi"}, 
+        img: "https://i.postimg.cc/3NngSQdg/image.jpg", 
+        lessonsUrl: "https://waleedd189.github.io/radio-quran/Saleh-Al-Maghamsi.html"
       }
     ];
 
@@ -1275,7 +1280,7 @@
           <div class="progress-bar"></div>
         `;
       } else if (station.lessonsUrl) {
-        // بطاقة عمر عبدالكافي بدون أزرار تشغيل وإيقاف
+        // بطاقات الدروس بدون أزرار تشغيل وإيقاف
         card.innerHTML = `
           <img src="${station.img}" alt="${station.name[currentLanguage]}" loading="lazy" />
           <h2>${station.name[currentLanguage]}</h2>
@@ -1342,7 +1347,7 @@
     function enablePlayRuqyahButton(selectElement) {
         const playRuqyahBtn = selectElement.nextElementSibling;
         if (selectElement.value) {
-            playRuqyahBtn.disabled = false;
+            playRuqyhBtn.disabled = false;
         } else {
             playRuqyhBtn.disabled = true;
         }
