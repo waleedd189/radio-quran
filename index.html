@@ -757,6 +757,91 @@
       left: 120px;
     }
     
+    /* أنماط المشغل العام */
+    #globalAudioPlayerContainer {
+      display: none;
+      margin: 20px auto;
+      max-width: 600px;
+      background: rgba(34, 34, 34, 0.9);
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    #globalAudioPlayer {
+      width: 100%;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+    }
+
+    /* تخصيص ألوان مشغل الصوت */
+    #globalAudioPlayer::-webkit-media-controls-panel {
+      background-color: rgba(34, 34, 34, 0.9);
+    }
+
+    #globalAudioPlayer::-webkit-media-controls-play-button,
+    #globalAudioPlayer::-webkit-media-controls-pause-button {
+      background-color: #4CAF50;
+      border-radius: 50%;
+    }
+
+    #globalAudioPlayer::-webkit-media-controls-timeline {
+      background-color: #555;
+    }
+
+    #globalAudioPlayer::-webkit-media-controls-volume-slider {
+      background-color: #4CAF50;
+    }
+
+    #globalAudioPlayer::-webkit-media-controls-mute-button {
+      background-color: #4CAF50;
+    }
+
+    #globalAudioPlayer::-webkit-media-controls-timeline {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    #globalAudioPlayer::-webkit-media-controls-current-time-display,
+    #globalAudioPlayer::-webkit-media-controls-time-remaining-display {
+      color: #ccc;
+    }
+
+    .global-player-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    #globalPlayerStationName {
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
+    .close-player-btn {
+      background: none;
+      border: none;
+      color: #aaa;
+      cursor: pointer;
+      font-size: 1.2em;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .close-player-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    
     @media (max-width: 768px) {
       .hijri-date {
         top: 60px;
@@ -767,6 +852,11 @@
       
       .news-ticker-content {
         animation-duration: 25s;
+      }
+      
+      #globalAudioPlayerContainer {
+        margin: 15px 10px;
+        max-width: calc(100% - 20px);
       }
     }
   </style>
@@ -857,11 +947,20 @@
     <div class="time-display" id="timeDisplay"></div>
   </div>
 
-  <!-- الشريط المتحرك تم نقله إلى هنا بدلاً من مربع البحث -->
+  <!-- الشريط المتحرك -->
   <div class="news-ticker">
     <div class="news-ticker-content">
       مرحبًا بك في موقع راديو قرآن صفحة اللهم لك الحمد 📻 | تم إنشاء صفحة مستقلة بدروس الشيخ صالح بن عواد المغامسي  * تم إنشاء صفحة خاصة بدروس الشيخ عمر عبدالكافى | لا تنسى ذكر الله
     </div>
+  </div>
+
+  <!-- المشغل العام -->
+  <div id="globalAudioPlayerContainer">
+    <div class="global-player-header">
+      <div id="globalPlayerStationName">اختر محطة للتشغيل</div>
+      <button class="close-player-btn" onclick="toggleGlobalPlayer()">×</button>
+    </div>
+    <audio id="globalAudioPlayer" controls></audio>
   </div>
 
   <!-- Section 1: الأذكار - الرقية (مع إضافة الشعراوي) -->
@@ -1004,7 +1103,6 @@
 
     // خواطر الشيخ الشعراوي في تفسير القرآن الكريم (محدثة)
     const sharawyTafsirRecordings = [
-        // نفس البيانات الأصلية كاملة
         { name: "مقدمة 1", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro1.mp3" },
         { name: "مقدمة 2", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro2.mp3" },
         { name: "مقدمة 3", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro3.mp3" },
@@ -1015,19 +1113,16 @@
 
     // باقي المصفوفات كما هي في الكود الأصلي
     const misharyQuranSuras = [
-        // نفس البيانات الأصلية كاملة
         { num: '001', name: { ar: 'الفاتحة', en: 'Al-Fatiha' }, url: 'https://archive.org/download/Islamic_Tape-192_uP_bY_mUSLEm/001.mp3' },
         // ... باقي السور كما هي في الكود الأصلي
     ];
 
     const mushafAlmualimSuras = [
-        // نفس البيانات الأصلية كاملة
         { num: '001', name: { ar: 'سورة الفاتحة', en: 'Al-Fatiha' }, url: 'https://archive.org/download/Islamic_Tape-227_uP_bY_mUSLEm/001_M.Ettounssi.mp3' },
         // ... باقي السور كما هي في الكود الأصلي
     ];
 
     const azkarRecordings = [
-        // نفس البيانات الأصلية كاملة
         { name: {ar: "أذكار الصباح و المساء للقارئ إدريس أبكر", en: "Morning & Evening Azkar - Idrees Abkar"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/Athkar%20Idrees%20Abkar.mp3" },
         // ... باقي التسجيلات كما هي في الكود الأصلي
     ];
@@ -1111,6 +1206,7 @@
     const section3Container = document.getElementById('section3-stations');
     const section4Container = document.getElementById('section4-stations');
     const player = document.getElementById('radioPlayer');
+    const globalPlayer = document.getElementById('globalAudioPlayer');
     const nowPlayingSpan = document.getElementById('stationName');
     const playingIndicator = document.getElementById('playingIndicator');
     const bufferingLoader = document.getElementById('bufferingLoader');
@@ -1412,9 +1508,9 @@
 
     // Main play radio function
     function playRadio(url, stationName, elementToActivate) { 
+      // إيقاف المشغل الحالي
       player.pause();
-      player.src = url;
-      player.volume = 0.5;
+      player.src = "";
       
       playingIndicator.style.display = 'none';
       bufferingLoader.style.display = 'inline-block';
@@ -1425,6 +1521,15 @@
       currentCard.classList.add('active');
       
       nowPlayingSpan.textContent = stationName;
+      
+      // إعداد المشغل العام
+      const globalPlayerContainer = document.getElementById('globalAudioPlayerContainer');
+      const globalPlayerStationName = document.getElementById('globalPlayerStationName');
+      
+      globalPlayer.src = url;
+      globalPlayer.volume = 0.5;
+      globalPlayerContainer.style.display = 'block';
+      globalPlayerStationName.textContent = stationName;
       
       let foundIndex = -1;
       
@@ -1445,11 +1550,22 @@
       currentStationIndex = foundIndex; 
       updatePlaylistButtons();
       
-      player.addEventListener('waiting', onBufferingStart);
-      player.addEventListener('playing', onBufferingEnd);
-      player.addEventListener('canplay', onBufferingEnd);
+      // إضافة مستمعي الأحداث للمشغل العام
+      globalPlayer.addEventListener('waiting', onBufferingStart);
+      globalPlayer.addEventListener('playing', onBufferingEnd);
+      globalPlayer.addEventListener('canplay', onBufferingEnd);
+      globalPlayer.addEventListener('play', () => {
+        playStartTime = Date.now();
+        startTimeCounter();
+      });
+      globalPlayer.addEventListener('pause', () => {
+        playingIndicator.style.display = 'none';
+      });
+      globalPlayer.addEventListener('ended', () => {
+        stopRadio();
+      });
       
-      player.play().then(() => {
+      globalPlayer.play().then(() => {
         playStartTime = Date.now();
         startTimeCounter();
       }).catch(error => {
@@ -1457,6 +1573,7 @@
         nowPlayingSpan.textContent = `${translations[currentLanguage].playbackError} ${stationName}`;
         bufferingLoader.style.display = 'none';
         currentCard.classList.remove('active');
+        globalPlayerContainer.style.display = 'none';
       });
     }
 
@@ -1473,8 +1590,35 @@
 
     // Stop radio
     function stopRadio() {
+      const globalPlayerContainer = document.getElementById('globalAudioPlayerContainer');
+      
+      globalPlayer.pause();
+      globalPlayer.src = "";
+      globalPlayerContainer.style.display = 'none';
+      
       player.pause();
       player.src = "";
+      nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
+      playingIndicator.style.display = 'none';
+      bufferingLoader.style.display = 'none';
+      
+      document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+      
+      currentStationIndex = -1;
+      updatePlaylistButtons();
+      stopTimeCounter();
+    }
+
+    // Toggle global player
+    function toggleGlobalPlayer() {
+      const globalPlayerContainer = document.getElementById('globalAudioPlayerContainer');
+      const globalPlayer = document.getElementById('globalAudioPlayer');
+      
+      globalPlayerContainer.style.display = 'none';
+      globalPlayer.pause();
+      globalPlayer.src = "";
+      
+      // إعادة تعيين حالة التشغيل
       nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
       playingIndicator.style.display = 'none';
       bufferingLoader.style.display = 'none';
@@ -1522,7 +1666,7 @@
         if (currentStationIndex > 0) {
             let targetIndex = currentStationIndex - 1;
             while (targetIndex >= 0 && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'ruqyah' || allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim')) {
-                if ((allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim') && allStations[targetIndex].url === player.src) {
+                if ((allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim') && allStations[targetIndex].url === globalPlayer.src) {
                     break; 
                 }
                 targetIndex--;
@@ -1546,7 +1690,7 @@
         if (currentStationIndex < allStations.length - 1) {
             let targetIndex = currentStationIndex + 1;
             while (targetIndex < allStations.length && (allStations[targetIndex].type === 'azkar' || allStations[targetIndex].type === 'ruqyah' || allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim')) {
-                if ((allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim') && allStations[targetIndex].url === player.src) {
+                if ((allStations[targetIndex].type === 'quran_sura_list' || allStations[targetIndex].type === 'mushaf_mualim') && allStations[targetIndex].url === globalPlayer.src) {
                     break;
                 }
                 targetIndex++;
@@ -1567,55 +1711,55 @@
     }
 
     function updatePlaylistButtons() {
-        if (currentStationIndex === -1) {
-            prevBtn.disabled = true;
-            nextBtn.disabled = true;
-            return;
-        }
+      if (currentStationIndex === -1) {
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
 
-        const currentStation = allStations[currentStationIndex];
-        
-        let isSubItemPlaying = false;
-        if (currentStation.type === 'azkar' && currentStation.recordings.some(rec => rec.url === player.src)) {
-            isSubItemPlaying = true;
-        } else if (currentStation.type === 'ruqyah' && currentStation.recordings.some(rec => rec.url === player.src)) {
-            isSubItemPlaying = true;
-        } else if ((currentStation.type === 'quran_sura_list' || currentStation.type === 'mushaf_mualim') && 
-                  ((currentStation.suras && currentStation.suras.some(sura => sura.url === player.src)) || 
-                   (currentStation.url === player.src))) {
-            isSubItemPlaying = true;
-        }
+      const currentStation = allStations[currentStationIndex];
+      
+      let isSubItemPlaying = false;
+      if (currentStation.type === 'azkar' && currentStation.recordings.some(rec => rec.url === globalPlayer.src)) {
+        isSubItemPlaying = true;
+      } else if (currentStation.type === 'ruqyah' && currentStation.recordings.some(rec => rec.url === globalPlayer.src)) {
+        isSubItemPlaying = true;
+      } else if ((currentStation.type === 'quran_sura_list' || currentStation.type === 'mushaf_mualim') && 
+                ((currentStation.suras && currentStation.suras.some(sura => sura.url === globalPlayer.src)) || 
+                 (currentStation.url === globalPlayer.src))) {
+        isSubItemPlaying = true;
+      }
 
-        if (isSubItemPlaying) {
-            prevBtn.disabled = true;
-            nextBtn.disabled = true;
-            return;
-        }
+      if (isSubItemPlaying) {
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
 
-        let hasPrevious = false;
-        for (let i = currentStationIndex - 1; i >= 0; i--) {
-            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'ruqyah' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim') {
-                hasPrevious = true;
-                break;
-            } else if ((allStations[i].type === 'quran_sura_list' || allStations[i].type === 'mushaf_mualim') && allStations[i].url === player.src) {
-                hasPrevious = true;
-                break;
-            }
+      let hasPrevious = false;
+      for (let i = currentStationIndex - 1; i >= 0; i--) {
+        if (allStations[i].type !== 'azkar' && allStations[i].type !== 'ruqyah' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim') {
+          hasPrevious = true;
+          break;
+        } else if ((allStations[i].type === 'quran_sura_list' || allStations[i].type === 'mushaf_mualim') && allStations[i].url === globalPlayer.src) {
+          hasPrevious = true;
+          break;
         }
+      }
 
-        let hasNext = false;
-        for (let i = currentStationIndex + 1; i < allStations.length; i++) {
-            if (allStations[i].type !== 'azkar' && allStations[i].type !== 'ruqyah' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim') {
-                hasNext = true;
-                break;
-            } else if ((allStations[i].type === 'quran_sura_list' || allStations[i].type === 'mushaf_mualim') && allStations[i].url === player.src) {
-                hasNext = true;
-                break;
-            }
+      let hasNext = false;
+      for (let i = currentStationIndex + 1; i < allStations.length; i++) {
+        if (allStations[i].type !== 'azkar' && allStations[i].type !== 'ruqyah' && allStations[i].type !== 'quran_sura_list' && allStations[i].type !== 'mushaf_mualim') {
+          hasNext = true;
+          break;
+        } else if ((allStations[i].type === 'quran_sura_list' || allStations[i].type === 'mushaf_mualim') && allStations[i].url === globalPlayer.src) {
+          hasNext = true;
+          break;
         }
+      }
 
-        prevBtn.disabled = !hasPrevious;
-        nextBtn.disabled = !hasNext;
+      prevBtn.disabled = !hasPrevious;
+      nextBtn.disabled = !hasNext;
     }
 
     // Time counter
@@ -1647,9 +1791,9 @@
     }
 
     function updateNowPlayingText() {
-        if (player.src) {
+        if (globalPlayer.src) {
             let currentPlayingName = translations[currentLanguage].initialStationText;
-            const currentPlayingUrl = player.src;
+            const currentPlayingUrl = globalPlayer.src;
 
             const foundStation = allStations.find(station => {
                 if (station.type === 'azkar') {
@@ -1681,7 +1825,7 @@
                 return false;
             });
             nowPlayingSpan.textContent = currentPlayingName;
-            playingIndicator.style.display = 'block';
+            playingIndicator.style.display = globalPlayer.paused ? 'none' : 'block';
         } else {
             nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
             playingIndicator.style.display = 'none';
@@ -1958,7 +2102,7 @@
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Space') {
         e.preventDefault();
-        if (player.src && !player.paused) {
+        if (globalPlayer.src && !globalPlayer.paused) {
           stopRadio();
         } else if (currentStationIndex >= 0) {
           const currentStation = allStations[currentStationIndex];
