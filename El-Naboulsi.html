@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>دروس الشيخ الدكتور محمد راتب النابلسي</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Cairo', 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #111, #333);
+      color: #fff;
+      text-align: center;
+      padding: 30px 10px;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+      overflow-x: hidden;
+    }
+    
+    h1 {
+      font-family: 'Amiri', serif;
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 5px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, #4CAF50, #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    h1::before {
+      content: "﴿";
+      color: #4CAF50;
+      margin-left: 10px;
+    }
+    
+    h1::after {
+      content: "﴾";
+      color: #4CAF50;
+      margin-right: 10px;
+    }
+    
+    .subtitle { 
+      font-size: 1.1em;
+      margin-bottom: 15px;
+      color: #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .subtitle a {
+      color: inherit;
+      text-decoration: none;
+      background: linear-gradient(45deg, #4CAF50, #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: transform 0.3s ease;
+      font-weight: 600;
+    }
+
+    .subtitle a:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
+    }
+    
+    .second-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.8em;
+      font-weight: 700;
+      margin-bottom: 25px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, #9C27B0, #E040FB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .second-title::before {
+      content: "﴿";
+      color: #9C27B0;
+      margin-left: 10px;
+    }
+    
+    .second-title::after {
+      content: "﴾";
+      color: #9C27B0;
+      margin-right: 10px;
+    }
+    
+    .controls-container {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+    }
+    
+    .back-btn, .share-btn, .sleep-timer-btn, .download-btn, .wait-btn {
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .back-btn {
+      background: #2196F3;
+    }
+    
+    .back-btn:hover {
+      background: #0b7dda;
+    }
+    
+    .share-btn {
+      background: #4CAF50;
+    }
+    
+    .share-btn:hover {
+      background: #45a049;
+    }
+    
+    .sleep-timer-btn {
+      background: #FF9800;
+    }
+    
+    .sleep-timer-btn:hover {
+      background: #F57C00;
+    }
+    
+    .sleep-timer-btn.active {
+      background: #F57C00;
+      box-shadow: 0 0 10px rgba(255, 152, 0, 0.5);
+    }
+    
+    .download-btn {
+      background: #9C27B0;
+    }
+    
+    .download-btn:hover {
+      background: #7B1FA2;
+    }
+    
+    .wait-btn {
+      background: #00BCD4;
+    }
+    
+    .wait-btn:hover {
+      background: #0097A7;
+    }
+    
+    .wait-btn.active {
+      background: #0097A7;
+      box-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+    }
+    
+    .player-container {
+      background: rgba(34, 34, 34, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 800px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(156, 39, 176, 0.3);
+    }
+    
+    .now-playing {
+      font-size: 1.1em;
+      color: #9C27B0;
+      margin-bottom: 15px;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .playing-indicator {
+      width: 12px;
+      height: 12px;
+      background: #9C27B0;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    .loader {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #fff;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+    
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* تبويبات المشغلات */
+    .player-tabs {
+      display: none;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 6px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .player-tab {
+      flex: 1;
+      padding: 12px 20px;
+      background: transparent;
+      border: none;
+      color: #ccc;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-size: 1em;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .player-tab:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .player-tab.active {
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    .player-tab.audio-tab.active {
+      background: linear-gradient(45deg, #2196F3, #64B5F6);
+    }
+    
+    .player-tab.video-tab.active {
+      background: linear-gradient(45deg, #9C27B0, #BA68C8);
+    }
+    
+    /* مشغلات الصوت والفيديو */
+    .players-container {
+      position: relative;
+      margin: 20px 0;
+    }
+    
+    .audio-player-container {
+      background: rgba(33, 150, 243, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: none;
+      border: 1px solid rgba(33, 150, 243, 0.3);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .audio-player-container.active {
+      display: block;
+    }
+    
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .audio-play-btn {
+      background: #2196F3;
+      border: none;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4em;
+      box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+      transition: all 0.3s ease;
+    }
+    
+    .audio-play-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(33, 150, 243, 0.6);
+    }
+    
+    .audio-progress {
+      flex: 1;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+      min-width: 120px;
+    }
+    
+    .audio-progress-bar {
+      height: 100%;
+      background: linear-gradient(45deg, #2196F3, #64B5F6);
+      border-radius: 4px;
+      width: 0%;
+      transition: width 0.1s ease;
+      box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+    }
+    
+    .audio-time {
+      color: #ccc;
+      font-size: 0.9em;
+      min-width: 100px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 5px 10px;
+      border-radius: 15px;
+    }
+    
+    .audio-volume {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 5px 10px;
+      border-radius: 15px;
+    }
+    
+    .volume-slider {
+      width: 80px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+    
+    .video-player-container {
+      display: none;
+      background: #000;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      margin: 10px 0;
+    }
+    
+    .video-player-container.active {
+      display: block;
+    }
+    
+    .video-player {
+      width: 100%;
+      height: auto;
+      min-height: 400px;
+      max-height: 600px;
+      object-fit: contain;
+      background: #000;
+    }
+    
+    .video-error {
+      display: none;
+      background: linear-gradient(45deg, rgba(244, 67, 54, 0.1), rgba(244, 67, 54, 0.2));
+      border: 1px solid rgba(244, 67, 54, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      color: #ff6b6b;
+      margin: 15px 0;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(244, 67, 54, 0.2);
+    }
+    
+    .video-error.show {
+      display: block;
+    }
+    
+    .video-error i {
+      font-size: 2em;
+      margin-bottom: 10px;
+      display: block;
+    }
+    
+    .main-lessons-container {
+      background: rgba(34, 34, 34, 0.9);
+      border-radius: 20px;
+      padding: 25px;
+      margin: 20px auto;
+      max-width: 700px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(156, 39, 176, 0.3);
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    }
+    
+    .main-lessons-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    }
+    
+    .station-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      border: 5px solid rgba(156, 39, 176, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
+    }
+    
+    .station-image:hover {
+      transform: scale(1.1);
+      border-color: rgba(156, 39, 176, 0.8);
+      box-shadow: 0 15px 40px rgba(156, 39, 176, 0.4);
+    }
+    
+    .lessons-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.4em;
+      color: #9C27B0;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      font-weight: 600;
+    }
+    
+    .lessons-dropdown {
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(156, 39, 176, 0.3);
+      color: white;
+      font-size: 1em;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%239C27B0%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E');
+      background-repeat: no-repeat;
+      background-position: left 20px center;
+      background-size: 12px;
+      padding-right: 20px;
+      padding-left: 45px;
+    }
+    
+    .lessons-dropdown:focus {
+      outline: none;
+      border-color: #9C27B0;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px rgba(156, 39, 176, 0.3);
+    }
+    
+    .lessons-dropdown option {
+      background: #333;
+      color: white;
+      padding: 12px;
+    }
+    
+    .play-buttons-container {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .play-lesson-btn {
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 12px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .audio-btn {
+      background: linear-gradient(45deg, #2196F3, #64B5F6);
+    }
+    
+    .audio-btn:hover {
+      background: linear-gradient(45deg, #1976D2, #42A5F5);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+    }
+    
+    .video-btn {
+      background: linear-gradient(45deg, #9C27B0, #BA68C8);
+    }
+    
+    .video-btn:hover {
+      background: linear-gradient(45deg, #7B1FA2, #AB47BC);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4);
+    }
+    
+    .stop-btn {
+      background: linear-gradient(45deg, #f44336, #ef5350) !important;
+      width: 100%;
+    }
+    
+    .stop-btn:hover {
+      background: linear-gradient(45deg, #d32f2f, #e53935) !important;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+    }
+    
+    .progress-bar {
+      margin-top: 20px;
+      height: 4px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    
+    .progress-bar::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 30%;
+      background: linear-gradient(45deg, #9C27B0, #E040FB);
+      animation: move 2s linear infinite;
+    }
+    
+    .main-lessons-container.active .progress-bar::before {
+      animation: move 1s linear infinite;
+      background: linear-gradient(90deg, #9C27B0, #E040FB, #9C27B0);
+    }
+    
+    footer {
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    
+    .footer-text {
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 20px;
+    }
+    
+    .footer-special-text {
+      font-family: 'Amiri', serif;
+      font-size: 1.2em;
+      color: #9C27B0;
+      margin-top: 20px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      font-weight: 600;
+    }
+    
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 65px;
+      height: 65px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: none;
+      text-decoration: none;
+    }
+    
+    .whatsapp-float:hover {
+      transform: scale(1.15);
+      box-shadow: 0 8px 30px rgba(37, 211, 102, 0.7);
+    }
+    
+    .whatsapp-float svg {
+      width: 35px;
+      height: 35px;
+      fill: white;
+    }
+    
+    .whatsapp-tooltip {
+      position: absolute;
+      right: 75px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 0.9em;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .whatsapp-tooltip::after {
+      content: '';
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 8px solid transparent;
+      border-left-color: rgba(0, 0, 0, 0.9);
+    }
+    
+    .whatsapp-float:hover .whatsapp-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .sleep-timer-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+    
+    .sleep-timer-content {
+      background: linear-gradient(45deg, #333, #444);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 152, 0, 0.3);
+    }
+    
+    .sleep-timer-title {
+      font-size: 1.5em;
+      margin-bottom: 25px;
+      color: #FF9800;
+      font-weight: 600;
+      text-align: center;
+    }
+    
+    .timer-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    
+    .timer-option {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.1em;
+      font-weight: 500;
+    }
+    
+    .timer-option:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    .timer-option.selected {
+      background: linear-gradient(45deg, #FF9800, #FFB74D);
+      box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+    }
+    
+    .timer-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+    
+    .timer-cancel, .timer-confirm {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    
+    .timer-cancel {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .timer-cancel:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .timer-confirm {
+      background: linear-gradient(45deg, #FF9800, #FFB74D);
+    }
+    
+    .timer-confirm:hover {
+      background: linear-gradient(45deg, #F57C00, #FFA726);
+    }
+    
+    .timer-status {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255, 152, 0, 0.1);
+      border-radius: 12px;
+      color: #FF9800;
+      font-size: 1em;
+      display: none;
+      text-align: center;
+      border: 1px solid rgba(255, 152, 0, 0.3);
+    }
+    
+    .wait-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+    
+    .wait-content {
+      background: linear-gradient(45deg, #333, #444);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(0, 188, 212, 0.3);
+      text-align: center;
+    }
+    
+    .wait-title {
+      font-size: 1.5em;
+      margin-bottom: 25px;
+      color: #00BCD4;
+      font-weight: 600;
+    }
+    
+    .wait-message {
+      margin-bottom: 25px;
+      color: #ccc;
+      line-height: 1.8;
+      font-size: 1.1em;
+    }
+    
+    .wait-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+    
+    .wait-cancel, .wait-confirm {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    
+    .wait-cancel {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .wait-cancel:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .wait-confirm {
+      background: linear-gradient(45deg, #00BCD4, #4DD0E1);
+    }
+    
+    .wait-confirm:hover {
+      background: linear-gradient(45deg, #0097A7, #26C6DA);
+    }
+    
+    /* محطات الدروس */
+    .stations-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 30px auto;
+      max-width: 1200px;
+    }
+    
+    .station-card {
+      background: rgba(34, 34, 34, 0.9);
+      border-radius: 20px;
+      padding: 25px;
+      width: 100%;
+      max-width: 500px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(156, 39, 176, 0.3);
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+    }
+    
+    .station-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    }
+    
+    .station-card.active {
+      border-color: #9C27B0;
+      box-shadow: 0 0 20px rgba(156, 39, 176, 0.5);
+    }
+    
+    .station-card:nth-child(2) {
+      border-color: rgba(76, 175, 80, 0.3);
+    }
+    
+    .station-card:nth-child(2).active {
+      border-color: #4CAF50;
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+    }
+    
+    .station-card:nth-child(2) .lessons-title {
+      color: #4CAF50;
+    }
+    
+    .station-card:nth-child(2) .lessons-dropdown {
+      border-color: rgba(76, 175, 80, 0.3);
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234CAF50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E');
+    }
+    
+    .station-card:nth-child(2) .lessons-dropdown:focus {
+      border-color: #4CAF50;
+    }
+    
+    .station-card:nth-child(2) .audio-btn {
+      background: linear-gradient(45deg, #2196F3, #64B5F6);
+    }
+    
+    .station-card:nth-child(2) .video-btn {
+      background: linear-gradient(45deg, #4CAF50, #81C784);
+    }
+    
+    .station-card:nth-child(2) .progress-bar::before {
+      background: linear-gradient(45deg, #4CAF50, #81C784);
+    }
+    
+    .station-card:nth-child(2).active .progress-bar::before {
+      background: linear-gradient(90deg, #4CAF50, #81C784, #4CAF50);
+    }
+    
+    .station-card:nth-child(2) .station-image {
+      border-color: rgba(76, 175, 80, 0.3);
+    }
+    
+    .station-card:nth-child(2) .station-image:hover {
+      border-color: rgba(76, 175, 80, 0.8);
+      box-shadow: 0 15px 40px rgba(76, 175, 80, 0.4);
+    }
+    
+    @media (max-width: 768px) {
+      h1 { font-size: 2em; }
+      .second-title { font-size: 1.5em; }
+      .subtitle { font-size: 1em; }
+      .station-image {
+        width: 150px;
+        height: 150px;
+      }
+      .controls-container { 
+        top: 10px; 
+        left: 10px;
+        gap: 8px;
+      }
+      .back-btn, .share-btn, .sleep-timer-btn, .download-btn, .wait-btn { 
+        font-size: 0.8em; 
+        padding: 6px 12px;
+      }
+      .whatsapp-float { 
+        width: 55px; 
+        height: 55px; 
+        bottom: 15px; 
+        right: 15px; 
+      }
+      .whatsapp-float svg { 
+        width: 28px; 
+        height: 28px; 
+      }
+      .whatsapp-tooltip { 
+        right: 65px; 
+        font-size: 0.8em; 
+      }
+      .timer-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      
+      .main-lessons-container {
+        max-width: 100%;
+        width: 100%;
+        margin: 10px;
+        padding: 20px;
+      }
+      
+      .video-player {
+        min-height: 250px;
+      }
+      
+      .audio-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      
+      .audio-time {
+        min-width: auto;
+        text-align: center;
+        align-self: center;
+      }
+      
+      .play-buttons-container {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .player-tabs {
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .player-tab {
+        padding: 10px 15px;
+        font-size: 0.9em;
+      }
+      
+      .stations-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    
+    @media (min-width: 769px) and (max-width: 1200px) {
+      .stations-container {
+        max-width: 900px;
+      }
+      
+      .station-card {
+        max-width: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="controls-container">
+    <button class="back-btn" onclick="goBack()">
+      <i class="fas fa-arrow-right"></i>
+      <span>رجوع</span>
+    </button>
+    <button class="share-btn" onclick="shareApp()">
+      <i class="fas fa-share-alt"></i>
+      <span>مشاركة</span>
+    </button>
+    <button class="sleep-timer-btn" id="sleepTimerBtn" onclick="toggleSleepTimer()">
+      <i class="fas fa-clock"></i>
+      <span>مؤقت النوم</span>
+    </button>
+    <button class="wait-btn" id="waitBtn" onclick="toggleWait()">
+      <i class="fas fa-hourglass-half"></i>
+      <span>انتظار</span>
+    </button>
+  </div>
+  
+  <h1>
+    <span>راديو قرآن</span>
+  </h1>
+  
+  <div class="subtitle">
+    <span>صفحة</span>
+    <a href="https://www.facebook.com/lakel7amd" target="_blank">اللهم لك الحمد</a>
+  </div>
+  
+  <h2 class="second-title">
+    <span>دروس الشيخ الدكتور محمد راتب النابلسي</span>
+  </h2>
+  
+  <div class="player-container">
+    <div class="now-playing" id="nowPlaying">
+      <div class="playing-indicator" id="playingIndicator" style="display: none;"></div>
+      <div class="loader" id="bufferingLoader" style="display: none;"></div>
+      <span id="currentLesson">اختر درساً للمشاهدة</span>
+    </div>
+    
+    <div class="timer-status" id="timerStatus">
+      مؤقت النوم مفعل: <span id="timerCountdown">--:--</span>
+    </div>
+  </div>
+  
+  <!-- تبويبات المشغلات -->
+  <div class="player-tabs" id="playerTabs">
+    <button class="player-tab audio-tab" id="audioTab" onclick="switchPlayer('audio')">
+      <i class="fas fa-headphones"></i>
+      استماع صوتي
+    </button>
+    <button class="player-tab video-tab" id="videoTab" onclick="switchPlayer('video')">
+      <i class="fas fa-video"></i>
+      مشاهدة فيديو
+    </button>
+  </div>
+  
+  <div class="players-container">
+    <!-- مشغل الصوت -->
+    <div class="audio-player-container" id="audioPlayerContainer">
+      <div class="audio-controls">
+        <button class="audio-play-btn" id="audioPlayBtn">
+          <i class="fas fa-play"></i>
+        </button>
+        <div class="audio-progress" id="audioProgress">
+          <div class="audio-progress-bar" id="audioProgressBar"></div>
+        </div>
+        <div class="audio-time" id="audioTime">0:00 / 0:00</div>
+        <div class="audio-volume">
+          <i class="fas fa-volume-up"></i>
+          <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
+        </div>
+      </div>
+      <audio id="audioPlayer" preload="metadata"></audio>
+    </div>
+    
+    <!-- مشغل الفيديو -->
+    <div class="video-player-container" id="videoPlayerContainer">
+      <video id="videoPlayer" class="video-player" controls preload="metadata" playsinline>
+        <source src="" type="video/mp4">
+        <source src="" type="video/webm">
+        <source src="" type="video/ogg">
+        متصفحك لا يدعم تشغيل الفيديو.
+      </video>
+      <div class="video-error" id="videoError">
+        <i class="fas fa-exclamation-triangle"></i>
+        <div>لا يمكن تشغيل الفيديو حالياً</div>
+        <div style="font-size: 0.9em; margin-top: 8px;">يرجى تجربة الاستماع الصوتي أو التحقق من اتصالك بالإنترنت</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="stations-container">
+    <!-- محطة سلسلة سبل الوصول -->
+    <div class="main-lessons-container" id="mainLessonsContainer1">
+      <img src="https://i.postimg.cc/zfN7hLPV/image.jpg" alt="الشيخ محمد راتب النابلسي" class="station-image">
+      
+      <div class="lessons-title">سلسلة سبل الوصول وعلامات القبول الكاملة (70 درس)</div>
+      
+      <select class="lessons-dropdown" id="allLessonsDropdown1">
+        <option value="">اختر درساً...</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_01.ogv">سبل الوصول - الدرس 1</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_02.ogv">سبل الوصول - الدرس 2</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_03.ogv">سبل الوصول - الدرس 3</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_04.ogv">سبل الوصول - الدرس 4</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_05.ogv">سبل الوصول - الدرس 5</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_06.ogv">سبل الوصول - الدرس 6</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_07.ogv">سبل الوصول - الدرس 7</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_08.ogv">سبل الوصول - الدرس 8</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_09.ogv">سبل الوصول - الدرس 9</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_10.ogv">سبل الوصول - الدرس 10</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_11.ogv">سبل الوصول - الدرس 11</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_12.ogv">سبل الوصول - الدرس 12</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_13.ogv">سبل الوصول - الدرس 13</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_14.ogv">سبل الوصول - الدرس 14</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_15.ogv">سبل الوصول - الدرس 15</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_16.ogv">سبل الوصول - الدرس 16</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_17.ogv">سبل الوصول - الدرس 17</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_18.ogv">سبل الوصول - الدرس 18</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_19.ogv">سبل الوصول - الدرس 19</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_20.ogv">سبل الوصول - الدرس 20</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_21.ogv">سبل الوصول - الدرس 21</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_22.ogv">سبل الوصول - الدرس 22</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_23.ogv">سبل الوصول - الدرس 23</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_24.ogv">سبل الوصول - الدرس 24</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_25.ogv">سبل الوصول - الدرس 25</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_26.ogv">سبل الوصول - الدرس 26</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_27.ogv">سبل الوصول - الدرس 27</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_28.ogv">سبل الوصول - الدرس 28</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_29.ogv">سبل الوصول - الدرس 29</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_30.ogv">سبل الوصول - الدرس 30</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_31.ogv">سبل الوصول - الدرس 31</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_32.ogv">سبل الوصول - الدرس 32</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_33.ogv">سبل الوصول - الدرس 33</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_34.ogv">سبل الوصول - الدرس 34</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_35.ogv">سبل الوصول - الدرس 35</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_36.ogv">سبل الوصول - الدرس 36</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_37.ogv">سبل الوصول - الدرس 37</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_38.ogv">سبل الوصول - الدرس 38</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_39.ogv">سبل الوصول - الدرس 39</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_40.ogv">سبل الوصول - الدرس 40</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_41.ogv">سبل الوصول - الدرس 41</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_42.ogv">سبل الوصول - الدرس 42</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_43.ogv">سبل الوصول - الدرس 43</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_44.ogv">سبل الوصول - الدرس 44</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_45.ogv">سبل الوصول - الدرس 45</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_46.ogv">سبل الوصول - الدرس 46</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_47.ogv">سبل الوصول - الدرس 47</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_48.ogv">سبل الوصول - الدرس 48</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_49.ogv">سبل الوصول - الدرس 49</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_50.ogv">سبل الوصول - الدرس 50</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_51.ogv">سبل الوصول - الدرس 51</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_52.ogv">سبل الوصول - الدرس 52</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_53.ogv">سبل الوصول - الدرس 53</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_54.ogv">سبل الوصول - الدرس 54</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_55.ogv">سبل الوصول - الدرس 55</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_56.ogv">سبل الوصول - الدرس 56</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_57.ogv">سبل الوصول - الدرس 57</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_58.ogv">سبل الوصول - الدرس 58</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_59.ogv">سبل الوصول - الدرس 59</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_60.ogv">سبل الوصول - الدرس 60</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_61.ogv">سبل الوصول - الدرس 61</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_62.ogv">سبل الوصول - الدرس 62</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_63.ogv">سبل الوصول - الدرس 63</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_64.ogv">سبل الوصول - الدرس 64</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_65.ogv">سبل الوصول - الدرس 65</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_66.ogv">سبل الوصول - الدرس 66</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_67.ogv">سبل الوصول - الدرس 67</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_68.ogv">سبل الوصول - الدرس 68</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_69.ogv">سبل الوصول - الدرس 69</option>
+        <option value="https://archive.org/download/SobolAlWosoul58/Sobol_Al_wosoul_70.ogv">سبل الوصول - الدرس 70</option>
+      </select>
+      
+      <div class="play-buttons-container">
+        <button class="play-lesson-btn audio-btn" onclick="playLesson('audio', 1)">
+          <i class="fas fa-headphones"></i>
+          استماع صوتي
+        </button>
+        
+        <button class="play-lesson-btn video-btn" onclick="playLesson('video', 1)">
+          <i class="fas fa-video"></i>
+          مشاهدة فيديو
+        </button>
+      </div>
+      
+      <button class="play-lesson-btn stop-btn" onclick="stopLesson(1)">
+        <i class="fas fa-stop"></i>
+        إيقاف
+      </button>
+      
+      <div class="progress-bar"></div>
+    </div>
+    
+    <!-- محطة سلسلة أسماء الله الحسنى -->
+    <div class="main-lessons-container" id="mainLessonsContainer2">
+      <img src="https://i.postimg.cc/hGVbsV5N/image.webp" alt="الشيخ محمد راتب النابلسي" class="station-image">
+      
+      <div class="lessons-title">سلسلة أسماء الله الحسنى (200 درس)</div>
+      
+      <select class="lessons-dropdown" id="allLessonsDropdown2">
+        <option value="">اختر درساً...</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-001.ogv">أسماء الله الحسنى - الدرس 1</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-002.ogv">أسماء الله الحسنى - الدرس 2</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-003.ogv">أسماء الله الحسنى - الدرس 3</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-004.ogv">أسماء الله الحسنى - الدرس 4</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-005.ogv">أسماء الله الحسنى - الدرس 5</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-006.ogv">أسماء الله الحسنى - الدرس 6</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-007.ogv">أسماء الله الحسنى - الدرس 7</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-008.ogv">أسماء الله الحسنى - الدرس 8</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-009.ogv">أسماء الله الحسنى - الدرس 9</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-010.ogv">أسماء الله الحسنى - الدرس 10</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-011.ogv">أسماء الله الحسنى - الدرس 11</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-012.ogv">أسماء الله الحسنى - الدرس 12</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-013.ogv">أسماء الله الحسنى - الدرس 13</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-014.ogv">أسماء الله الحسنى - الدرس 14</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-015.ogv">أسماء الله الحسنى - الدرس 15</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-016.ogv">أسماء الله الحسنى - الدرس 16</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-017.ogv">أسماء الله الحسنى - الدرس 17</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-018.ogv">أسماء الله الحسنى - الدرس 18</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-019.ogv">أسماء الله الحسنى - الدرس 19</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-020.ogv">أسماء الله الحسنى - الدرس 20</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-021.ogv">أسماء الله الحسنى - الدرس 21</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-022.ogv">أسماء الله الحسنى - الدرس 22</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-023.ogv">أسماء الله الحسنى - الدرس 23</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-024.ogv">أسماء الله الحسنى - الدرس 24</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-025.ogv">أسماء الله الحسنى - الدرس 25</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-026.ogv">أسماء الله الحسنى - الدرس 26</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-027.ogv">أسماء الله الحسنى - الدرس 27</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-028.ogv">أسماء الله الحسنى - الدرس 28</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-029.ogv">أسماء الله الحسنى - الدرس 29</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-030.ogv">أسماء الله الحسنى - الدرس 30</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-031.ogv">أسماء الله الحسنى - الدرس 31</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-032.ogv">أسماء الله الحسنى - الدرس 32</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-033.ogv">أسماء الله الحسنى - الدرس 33</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-034.ogv">أسماء الله الحسنى - الدرس 34</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-035.ogv">أسماء الله الحسنى - الدرس 35</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-036.ogv">أسماء الله الحسنى - الدرس 36</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-037.ogv">أسماء الله الحسنى - الدرس 37</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-038.ogv">أسماء الله الحسنى - الدرس 38</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-039.ogv">أسماء الله الحسنى - الدرس 39</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-040.ogv">أسماء الله الحسنى - الدرس 40</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-041.ogv">أسماء الله الحسنى - الدرس 41</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-042.ogv">أسماء الله الحسنى - الدرس 42</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-043.ogv">أسماء الله الحسنى - الدرس 43</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-044.ogv">أسماء الله الحسنى - الدرس 44</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-045.ogv">أسماء الله الحسنى - الدرس 45</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-046.ogv">أسماء الله الحسنى - الدرس 46</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-047.ogv">أسماء الله الحسنى - الدرس 47</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-048.ogv">أسماء الله الحسنى - الدرس 48</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-049.ogv">أسماء الله الحسنى - الدرس 49</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-050.ogv">أسماء الله الحسنى - الدرس 50</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-051.ogv">أسماء الله الحسنى - الدرس 51</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-052.ogv">أسماء الله الحسنى - الدرس 52</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-053.ogv">أسماء الله الحسنى - الدرس 53</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-054.ogv">أسماء الله الحسنى - الدرس 54</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-055.ogv">أسماء الله الحسنى - الدرس 55</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-056.ogv">أسماء الله الحسنى - الدرس 56</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-057.ogv">أسماء الله الحسنى - الدرس 57</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-058.ogv">أسماء الله الحسنى - الدرس 58</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-059.ogv">أسماء الله الحسنى - الدرس 59</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-060.ogv">أسماء الله الحسنى - الدرس 60</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-061.ogv">أسماء الله الحسنى - الدرس 61</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-062.ogv">أسماء الله الحسنى - الدرس 62</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-063.ogv">أسماء الله الحسنى - الدرس 63</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-064.ogv">أسماء الله الحسنى - الدرس 64</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-065.ogv">أسماء الله الحسنى - الدرس 65</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-066.ogv">أسماء الله الحسنى - الدرس 66</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-067.ogv">أسماء الله الحسنى - الدرس 67</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-068.ogv">أسماء الله الحسنى - الدرس 68</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-069.ogv">أسماء الله الحسنى - الدرس 69</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-070.ogv">أسماء الله الحسنى - الدرس 70</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-071.ogv">أسماء الله الحسنى - الدرس 71</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-072.ogv">أسماء الله الحسنى - الدرس 72</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-073.ogv">أسماء الله الحسنى - الدرس 73</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-074.ogv">أسماء الله الحسنى - الدرس 74</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-075.ogv">أسماء الله الحسنى - الدرس 75</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-076.ogv">أسماء الله الحسنى - الدرس 76</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-077.ogv">أسماء الله الحسنى - الدرس 77</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-078.ogv">أسماء الله الحسنى - الدرس 78</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-079.ogv">أسماء الله الحسنى - الدرس 79</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-080.ogv">أسماء الله الحسنى - الدرس 80</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-081.ogv">أسماء الله الحسنى - الدرس 81</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-082.ogv">أسماء الله الحسنى - الدرس 82</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-083.ogv">أسماء الله الحسنى - الدرس 83</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-084.ogv">أسماء الله الحسنى - الدرس 84</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-085.ogv">أسماء الله الحسنى - الدرس 85</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-086.ogv">أسماء الله الحسنى - الدرس 86</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-087.ogv">أسماء الله الحسنى - الدرس 87</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-088.ogv">أسماء الله الحسنى - الدرس 88</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-089.ogv">أسماء الله الحسنى - الدرس 89</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-090.ogv">أسماء الله الحسنى - الدرس 90</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-091.ogv">أسماء الله الحسنى - الدرس 91</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-092.ogv">أسماء الله الحسنى - الدرس 92</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-093.ogv">أسماء الله الحسنى - الدرس 93</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-094.ogv">أسماء الله الحسنى - الدرس 94</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-095.ogv">أسماء الله الحسنى - الدرس 95</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-096.ogv">أسماء الله الحسنى - الدرس 96</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-097.ogv">أسماء الله الحسنى - الدرس 97</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-098.ogv">أسماء الله الحسنى - الدرس 98</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-099.ogv">أسماء الله الحسنى - الدرس 99</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-100.ogv">أسماء الله الحسنى - الدرس 100</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-101.ogv">أسماء الله الحسنى - الدرس 101</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-102.ogv">أسماء الله الحسنى - الدرس 102</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-103.ogv">أسماء الله الحسنى - الدرس 103</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-104.ogv">أسماء الله الحسنى - الدرس 104</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-105.ogv">أسماء الله الحسنى - الدرس 105</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-106.ogv">أسماء الله الحسنى - الدرس 106</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-107.ogv">أسماء الله الحسنى - الدرس 107</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-108.ogv">أسماء الله الحسنى - الدرس 108</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-109.ogv">أسماء الله الحسنى - الدرس 109</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-110.ogv">أسماء الله الحسنى - الدرس 110</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-111.ogv">أسماء الله الحسنى - الدرس 111</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-112.ogv">أسماء الله الحسنى - الدرس 112</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-113.ogv">أسماء الله الحسنى - الدرس 113</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-114.ogv">أسماء الله الحسنى - الدرس 114</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-115.ogv">أسماء الله الحسنى - الدرس 115</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-116.ogv">أسماء الله الحسنى - الدرس 116</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-117.ogv">أسماء الله الحسنى - الدرس 117</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-118.ogv">أسماء الله الحسنى - الدرس 118</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-119.ogv">أسماء الله الحسنى - الدرس 119</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-120.ogv">أسماء الله الحسنى - الدرس 120</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-121.ogv">أسماء الله الحسنى - الدرس 121</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-122.ogv">أسماء الله الحسنى - الدرس 122</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-123.ogv">أسماء الله الحسنى - الدرس 123</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-124.ogv">أسماء الله الحسنى - الدرس 124</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-125.ogv">أسماء الله الحسنى - الدرس 125</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-126.ogv">أسماء الله الحسنى - الدرس 126</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-127.ogv">أسماء الله الحسنى - الدرس 127</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-128.ogv">أسماء الله الحسنى - الدرس 128</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-129.ogv">أسماء الله الحسنى - الدرس 129</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-130.ogv">أسماء الله الحسنى - الدرس 130</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-131.ogv">أسماء الله الحسنى - الدرس 131</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-132.ogv">أسماء الله الحسنى - الدرس 132</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-133.ogv">أسماء الله الحسنى - الدرس 133</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-134.ogv">أسماء الله الحسنى - الدرس 134</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-135.ogv">أسماء الله الحسنى - الدرس 135</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-136.ogv">أسماء الله الحسنى - الدرس 136</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-137.ogv">أسماء الله الحسنى - الدرس 137</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-138.ogv">أسماء الله الحسنى - الدرس 138</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-139.ogv">أسماء الله الحسنى - الدرس 139</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-140.ogv">أسماء الله الحسنى - الدرس 140</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-141.ogv">أسماء الله الحسنى - الدرس 141</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-142.ogv">أسماء الله الحسنى - الدرس 142</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-143.ogv">أسماء الله الحسنى - الدرس 143</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-144.ogv">أسماء الله الحسنى - الدرس 144</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-145.ogv">أسماء الله الحسنى - الدرس 145</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-146.ogv">أسماء الله الحسنى - الدرس 146</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-147.ogv">أسماء الله الحسنى - الدرس 147</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-148.ogv">أسماء الله الحسنى - الدرس 148</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-149.ogv">أسماء الله الحسنى - الدرس 149</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-150.ogv">أسماء الله الحسنى - الدرس 150</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-151.ogv">أسماء الله الحسنى - الدرس 151</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-152.ogv">أسماء الله الحسنى - الدرس 152</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-153.ogv">أسماء الله الحسنى - الدرس 153</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-154.ogv">أسماء الله الحسنى - الدرس 154</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-155.ogv">أسماء الله الحسنى - الدرس 155</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-156.ogv">أسماء الله الحسنى - الدرس 156</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-157.ogv">أسماء الله الحسنى - الدرس 157</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-158.ogv">أسماء الله الحسنى - الدرس 158</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-159.ogv">أسماء الله الحسنى - الدرس 159</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-160.ogv">أسماء الله الحسنى - الدرس 160</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-161.ogv">أسماء الله الحسنى - الدرس 161</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-162.ogv">أسماء الله الحسنى - الدرس 162</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-163.ogv">أسماء الله الحسنى - الدرس 163</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-164.ogv">أسماء الله الحسنى - الدرس 164</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-165.ogv">أسماء الله الحسنى - الدرس 165</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-166.ogv">أسماء الله الحسنى - الدرس 166</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-167.ogv">أسماء الله الحسنى - الدرس 167</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-168.ogv">أسماء الله الحسنى - الدرس 168</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-169.ogv">أسماء الله الحسنى - الدرس 169</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-170.ogv">أسماء الله الحسنى - الدرس 170</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-171.ogv">أسماء الله الحسنى - الدرس 171</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-172.ogv">أسماء الله الحسنى - الدرس 172</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-173.ogv">أسماء الله الحسنى - الدرس 173</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-174.ogv">أسماء الله الحسنى - الدرس 174</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-175.ogv">أسماء الله الحسنى - الدرس 175</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-176.ogv">أسماء الله الحسنى - الدرس 176</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-177.ogv">أسماء الله الحسنى - الدرس 177</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-178.ogv">أسماء الله الحسنى - الدرس 178</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-179.ogv">أسماء الله الحسنى - الدرس 179</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-180.ogv">أسماء الله الحسنى - الدرس 180</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-181.ogv">أسماء الله الحسنى - الدرس 181</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-182.ogv">أسماء الله الحسنى - الدرس 182</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-183.ogv">أسماء الله الحسنى - الدرس 183</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-184.ogv">أسماء الله الحسنى - الدرس 184</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-185.ogv">أسماء الله الحسنى - الدرس 185</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-186.ogv">أسماء الله الحسنى - الدرس 186</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-187.ogv">أسماء الله الحسنى - الدرس 187</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-188.ogv">أسماء الله الحسنى - الدرس 188</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-189.ogv">أسماء الله الحسنى - الدرس 189</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-190.ogv">أسماء الله الحسنى - الدرس 190</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-191.ogv">أسماء الله الحسنى - الدرس 191</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-192.ogv">أسماء الله الحسنى - الدرس 192</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-193.ogv">أسماء الله الحسنى - الدرس 193</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-194.ogv">أسماء الله الحسنى - الدرس 194</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-195.ogv">أسماء الله الحسنى - الدرس 195</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-196.ogv">أسماء الله الحسنى - الدرس 196</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-197.ogv">أسماء الله الحسنى - الدرس 197</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-198.ogv">أسماء الله الحسنى - الدرس 198</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-199.ogv">أسماء الله الحسنى - الدرس 199</option>
+        <option value="https://archive.org/download/Islamic_Tape-578_uP_bY_mUSLEm/muslem.ettounsi-200.ogv">أسماء الله الحسنى - الدرس 200</option>
+      </select>
+      
+      <div class="play-buttons-container">
+        <button class="play-lesson-btn audio-btn" onclick="playLesson('audio', 2)">
+          <i class="fas fa-headphones"></i>
+          استماع صوتي
+        </button>
+        
+        <button class="play-lesson-btn video-btn" onclick="playLesson('video', 2)">
+          <i class="fas fa-video"></i>
+          مشاهدة فيديو
+        </button>
+      </div>
+      
+      <button class="play-lesson-btn stop-btn" onclick="stopLesson(2)">
+        <i class="fas fa-stop"></i>
+        إيقاف
+      </button>
+      
+      <div class="progress-bar"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-text">راديو قرآن - صفحة اللهم لك الحمد</div>
+    <div class="footer-special-text">دروس الشيخ الدكتور محمد راتب النابلسي</div>
+  </footer>
+
+  <button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn">
+    <div class="whatsapp-tooltip" id="whatsappTooltip">الإبلاغ عن رابط معطل</div>
+    <svg viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.520.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.520-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
+    </svg>
+  </button>
+  
+  <div class="sleep-timer-modal" id="sleepTimerModal">
+    <div class="sleep-timer-content">
+      <div class="sleep-timer-title">مؤقت النوم</div>
+      <div class="timer-options">
+        <button class="timer-option" data-minutes="5">5 دقائق</button>
+        <button class="timer-option" data-minutes="10">10 دقائق</button>
+        <button class="timer-option" data-minutes="15">15 دقيقة</button>
+        <button class="timer-option" data-minutes="30">30 دقيقة</button>
+        <button class="timer-option" data-minutes="45">45 دقيقة</button>
+        <button class="timer-option" data-minutes="60">60 دقيقة</button>
+      </div>
+      <div class="timer-actions">
+        <button class="timer-cancel" onclick="closeSleepTimerModal()">إلغاء</button>
+        <button class="timer-confirm" onclick="setSleepTimer()">تأكيد</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="wait-modal" id="waitModal">
+    <div class="wait-content">
+      <div class="wait-title">وضع الانتظار</div>
+      <div class="wait-message">
+        سيتم تشغيل الدرس التالي تلقائياً بعد انتهاء الدرس الحالي. هل تريد تفعيل وضع الانتظار؟
+      </div>
+      <div class="wait-actions">
+        <button class="wait-cancel" onclick="closeWaitModal()">إلغاء</button>
+        <button class="wait-confirm" onclick="enableWaitMode()">تفعيل</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // عناصر DOM
+    const audioPlayer = document.getElementById('audioPlayer');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const audioPlayerContainer = document.getElementById('audioPlayerContainer');
+    const videoPlayerContainer = document.getElementById('videoPlayerContainer');
+    const audioPlayBtn = document.getElementById('audioPlayBtn');
+    const audioProgress = document.getElementById('audioProgress');
+    const audioProgressBar = document.getElementById('audioProgressBar');
+    const audioTime = document.getElementById('audioTime');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const nowPlaying = document.getElementById('currentLesson');
+    const playingIndicator = document.getElementById('playingIndicator');
+    const bufferingLoader = document.getElementById('bufferingLoader');
+    const playerTabs = document.getElementById('playerTabs');
+    const audioTab = document.getElementById('audioTab');
+    const videoTab = document.getElementById('videoTab');
+    const videoError = document.getElementById('videoError');
+    
+    // متغيرات عامة
+    let currentPlayer = null; // 'audio' أو 'video'
+    let isPlaying = false;
+    let currentLessonUrl = '';
+    let currentLessonName = '';
+    let currentStation = 1; // 1 لسلسلة سبل الوصول، 2 لسلسلة أسماء الله الحسنى
+    
+    // متغيرات مؤقت النوم
+    let sleepTimer = null;
+    let sleepTimerMinutes = 0;
+    let sleepTimerSeconds = 0;
+    let sleepTimerInterval = null;
+    const sleepTimerBtn = document.getElementById('sleepTimerBtn');
+    const sleepTimerModal = document.getElementById('sleepTimerModal');
+    const timerStatus = document.getElementById('timerStatus');
+    const timerCountdown = document.getElementById('timerCountdown');
+    let selectedMinutes = 0;
+    
+    // متغيرات وضع الانتظار
+    let waitMode = false;
+    const waitBtn = document.getElementById('waitBtn');
+    const waitModal = document.getElementById('waitModal');
+
+    // تشغيل الدرس المحدد
+    function playLesson(type, station) {
+      // تحديد القائمة المنسدلة المناسبة حسب المحطة
+      const lessonsDropdown = document.getElementById(`allLessonsDropdown${station}`);
+      const selectedOption = lessonsDropdown.options[lessonsDropdown.selectedIndex];
+      currentLessonUrl = selectedOption.value;
+      currentLessonName = selectedOption.text;
+      currentStation = station;
+      
+      if (!currentLessonUrl) {
+        alert('الرجاء اختيار درس أولاً');
+        return;
+      }
+      
+      // إظهار تبويبات المشغلات
+      playerTabs.style.display = 'flex';
+      
+      // إيقاف أي تشغيل سابق
+      stopCurrentPlayer();
+      
+      // تحديث نوع المشغل الحالي
+      currentPlayer = type;
+      
+      // تحديث واجهة المستخدم
+      nowPlaying.textContent = `جاري تشغيل: ${currentLessonName} (${type === 'audio' ? 'صوت' : 'فيديو'})`;
+      bufferingLoader.style.display = 'inline-block';
+      playingIndicator.style.display = 'none';
+      
+      // تفعيل الحاوية الرئيسية
+      document.getElementById(`mainLessonsContainer${station}`).classList.add('active');
+      
+      // تحديث التبويبات النشطة
+      updatePlayerTabs(type);
+      
+      if (type === 'audio') {
+        playAudio();
+      } else {
+        playVideo();
+      }
+    }
+
+    // تشغيل الصوت
+    function playAudio() {
+      // إظهار مشغل الصوت وإخفاء الفيديو
+      audioPlayerContainer.classList.add('active');
+      videoPlayerContainer.classList.remove('active');
+      videoError.classList.remove('show');
+      
+      // تحميل وتشغيل الصوت
+      audioPlayer.src = currentLessonUrl;
+      audioPlayer.load();
+      
+      audioPlayer.play().then(() => {
+        isPlaying = true;
+        updateAudioPlayButton();
+        bufferingLoader.style.display = 'none';
+        playingIndicator.style.display = 'block';
+      }).catch(error => {
+        console.error('خطأ في تشغيل الصوت:', error);
+        nowPlaying.textContent = `خطأ في تشغيل الصوت: ${currentLessonName}`;
+        bufferingLoader.style.display = 'none';
+      });
+    }
+
+    // تشغيل الفيديو
+    function playVideo() {
+      // إظهار مشغل الفيديو وإخفاء الصوت
+      videoPlayerContainer.classList.add('active');
+      audioPlayerContainer.classList.remove('active');
+      
+      // إخفاء رسالة الخطأ
+      videoError.classList.remove('show');
+      
+      // تحضير روابط الفيديو (تجربة صيغ متعددة)
+      const mp4Url = currentLessonUrl.replace('.ogv', '.mp4');
+      const webmUrl = currentLessonUrl.replace('.ogv', '.webm');
+      const ogvUrl = currentLessonUrl;
+      
+      // تحديث مصادر الفيديو
+      videoPlayer.innerHTML = `
+        <source src="${mp4Url}" type="video/mp4">
+        <source src="${webmUrl}" type="video/webm">
+        <source src="${ogvUrl}" type="video/ogg">
+        متصفحك لا يدعم تشغيل الفيديو.
+      `;
+      
+      // تحميل وتشغيل الفيديو
+      videoPlayer.load();
+      
+      videoPlayer.play().then(() => {
+        bufferingLoader.style.display = 'none';
+        playingIndicator.style.display = 'block';
+      }).catch(error => {
+        console.error('خطأ في تشغيل الفيديو:', error);
+        showVideoError();
+        bufferingLoader.style.display = 'none';
+      });
+    }
+
+    // إظهار خطأ الفيديو
+    function showVideoError() {
+      videoError.classList.add('show');
+      nowPlaying.textContent = `خطأ في تشغيل الفيديو: ${currentLessonName}`;
+    }
+
+    // التبديل بين المشغلات
+    function switchPlayer(type) {
+      if (!currentLessonUrl) {
+        alert('الرجاء اختيار درس أولاً');
+        return;
+      }
+      
+      updatePlayerTabs(type);
+      
+      if (type === 'audio') {
+        playAudio();
+      } else {
+        playVideo();
+      }
+    }
+
+    // تحديث تبويبات المشغلات
+    function updatePlayerTabs(activeType) {
+      audioTab.classList.remove('active');
+      videoTab.classList.remove('active');
+      
+      if (activeType === 'audio') {
+        audioTab.classList.add('active');
+      } else {
+        videoTab.classList.add('active');
+      }
+    }
+
+    // إيقاف المشغل الحالي
+    function stopCurrentPlayer() {
+      if (currentPlayer === 'audio') {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+        isPlaying = false;
+        updateAudioPlayButton();
+      } else if (currentPlayer === 'video') {
+        videoPlayer.pause();
+        videoPlayer.currentTime = 0;
+      }
+    }
+
+    // إيقاف الدرس بالكامل
+    function stopLesson(station) {
+      stopCurrentPlayer();
+      
+      // إخفاء جميع المشغلات
+      audioPlayerContainer.classList.remove('active');
+      videoPlayerContainer.classList.remove('active');
+      playerTabs.style.display = 'none';
+      videoError.classList.remove('show');
+      
+      // تحديث واجهة المستخدم
+      nowPlaying.textContent = 'اختر درساً للمشاهدة';
+      playingIndicator.style.display = 'none';
+      bufferingLoader.style.display = 'none';
+      
+      // إلغاء تفعيل الحاوية الرئيسية
+      document.getElementById(`mainLessonsContainer${station}`).classList.remove('active');
+      
+      // إعادة تعيين التبويبات
+      audioTab.classList.remove('active');
+      videoTab.classList.remove('active');
+      
+      currentPlayer = null;
+      currentLessonUrl = '';
+      currentLessonName = '';
+      
+      // إلغاء وضع الانتظار
+      if (waitMode) {
+        waitMode = false;
+        waitBtn.classList.remove('active');
+      }
+    }
+
+    // تحديث زر تشغيل الصوت
+    function updateAudioPlayButton() {
+      const icon = audioPlayBtn.querySelector('i');
+      if (isPlaying) {
+        icon.className = 'fas fa-pause';
+      } else {
+        icon.className = 'fas fa-play';
+      }
+    }
+
+    // تحديث شريط تقدم الصوت
+    function updateAudioProgress() {
+      if (audioPlayer.duration) {
+        const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        audioProgressBar.style.width = progress + '%';
+        
+        const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
+        const currentSeconds = Math.floor(audioPlayer.currentTime % 60);
+        const durationMinutes = Math.floor(audioPlayer.duration / 60);
+        const durationSeconds = Math.floor(audioPlayer.duration % 60);
+        
+        audioTime.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')} / ${durationMinutes}:${durationSeconds.toString().padStart(2, '0')}`;
+      }
+    }
+
+    // أحداث مشغل الصوت
+    audioPlayBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        audioPlayer.pause();
+      } else {
+        audioPlayer.play();
+      }
+    });
+
+    audioPlayer.addEventListener('play', () => {
+      isPlaying = true;
+      updateAudioPlayButton();
+      playingIndicator.style.display = 'block';
+    });
+
+    audioPlayer.addEventListener('pause', () => {
+      isPlaying = false;
+      updateAudioPlayButton();
+      if (currentPlayer === 'audio') {
+        playingIndicator.style.display = 'none';
+      }
+    });
+
+    audioPlayer.addEventListener('timeupdate', updateAudioProgress);
+
+    audioPlayer.addEventListener('ended', () => {
+      isPlaying = false;
+      updateAudioPlayButton();
+      playingIndicator.style.display = 'none';
+      
+      if (waitMode) {
+        const lessonsDropdown = document.getElementById(`allLessonsDropdown${currentStation}`);
+        const currentIndex = lessonsDropdown.selectedIndex;
+        if (currentIndex < lessonsDropdown.options.length - 1) {
+          lessonsDropdown.selectedIndex = currentIndex + 1;
+          playLesson('audio', currentStation);
+        }
+      }
+    });
+
+    // النقر على شريط التقدم
+    audioProgress.addEventListener('click', (e) => {
+      const rect = audioProgress.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      audioPlayer.currentTime = pos * audioPlayer.duration;
+    });
+
+    // التحكم في الصوت
+    volumeSlider.addEventListener('input', (e) => {
+      audioPlayer.volume = e.target.value / 100;
+    });
+
+    // أحداث مشغل الفيديو
+    videoPlayer.addEventListener('play', () => {
+      playingIndicator.style.display = 'block';
+      videoError.classList.remove('show');
+    });
+
+    videoPlayer.addEventListener('pause', () => {
+      if (currentPlayer === 'video') {
+        playingIndicator.style.display = 'none';
+      }
+    });
+
+    videoPlayer.addEventListener('ended', () => {
+      playingIndicator.style.display = 'none';
+      
+      if (waitMode) {
+        const lessonsDropdown = document.getElementById(`allLessonsDropdown${currentStation}`);
+        const currentIndex = lessonsDropdown.selectedIndex;
+        if (currentIndex < lessonsDropdown.options.length - 1) {
+          lessonsDropdown.selectedIndex = currentIndex + 1;
+          playLesson('video', currentStation);
+        }
+      }
+    });
+
+    // معالجة أخطاء الفيديو
+    videoPlayer.addEventListener('error', () => {
+      showVideoError();
+    });
+
+    // عند اختيار درس جديد
+    document.addEventListener('change', function(e) {
+      if (e.target.classList.contains('lessons-dropdown')) {
+        const stationId = e.target.id.replace('allLessonsDropdown', '');
+        if (e.target.value && currentPlayer) {
+          playLesson(currentPlayer, parseInt(stationId));
+        }
+      }
+    });
+
+    // الرجوع لصفحة الراديو
+    function goBack() {
+      window.location.href = 'index.html';
+    }
+
+    // دالة المشاركة
+    function shareApp() {
+      const shareData = {
+        title: 'دروس الشيخ الدكتور محمد راتب النابلسي',
+        text: 'شاهد دروس الشيخ الدكتور محمد راتب النابلسي - صفحة اللهم لك الحمد',
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData)
+          .catch(console.error);
+      } else {
+        const textToCopy = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          alert('تم نسخ الرابط إلى الحافظة!');
+        }).catch(() => {
+          alert('فشل النسخ، يرجى نسخ الرابط يدوياً');
+        });
+      }
+    }
+
+    // دالة الإبلاغ عن رابط معطل
+    function reportBrokenLink() {
+      const phoneNumber = '+201092116092';
+      const message = 'يوجد رابط معطل في دروس الشيخ الدكتور محمد راتب النابلسي، يرجى التحقق';
+      const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
+      
+      window.open(whatsappUrl, '_blank');
+      
+      return false;
+    }
+
+    // دوال مؤقت النوم
+    function toggleSleepTimer() {
+      if (sleepTimerInterval) {
+        cancelSleepTimer();
+      } else {
+        sleepTimerModal.style.display = 'flex';
+        
+        const timerOptions = document.querySelectorAll('.timer-option');
+        timerOptions.forEach(option => {
+          option.addEventListener('click', function() {
+            timerOptions.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            selectedMinutes = parseInt(this.getAttribute('data-minutes'));
+          });
+        });
+      }
+    }
+    
+    function closeSleepTimerModal() {
+      sleepTimerModal.style.display = 'none';
+    }
+    
+    function setSleepTimer() {
+      if (selectedMinutes === 0) {
+        alert('الرجاء اختيار وقت للمؤقت');
+        return;
+      }
+      
+      if (sleepTimerInterval) {
+        clearInterval(sleepTimerInterval);
+      }
+      
+      sleepTimerMinutes = selectedMinutes;
+      sleepTimerSeconds = 0;
+      
+      sleepTimerBtn.classList.add('active');
+      timerStatus.style.display = 'block';
+      updateTimerDisplay();
+      
+      sleepTimerInterval = setInterval(() => {
+        sleepTimerSeconds--;
+        
+        if (sleepTimerSeconds < 0) {
+          sleepTimerMinutes--;
+          sleepTimerSeconds = 59;
+        }
+        
+        updateTimerDisplay();
+        
+        if (sleepTimerMinutes <= 0 && sleepTimerSeconds <= 0) {
+          stopCurrentPlayer();
+          clearInterval(sleepTimerInterval);
+          sleepTimerInterval = null;
+          sleepTimerBtn.classList.remove('active');
+          timerStatus.style.display = 'none';
+          nowPlaying.textContent = 'تم إيقاف التشغيل حسب مؤقت النوم';
+          document.getElementById(`mainLessonsContainer${currentStation}`).classList.remove('active');
+        }
+      }, 1000);
+      
+      closeSleepTimerModal();
+    }
+    
+    function cancelSleepTimer() {
+      if (sleepTimerInterval) {
+        clearInterval(sleepTimerInterval);
+        sleepTimerInterval = null;
+      }
+      
+      sleepTimerBtn.classList.remove('active');
+      timerStatus.style.display = 'none';
+      selectedMinutes = 0;
+    }
+    
+    function updateTimerDisplay() {
+      const minutes = sleepTimerMinutes.toString().padStart(2, '0');
+      const seconds = sleepTimerSeconds.toString().padStart(2, '0');
+      timerCountdown.textContent = `${minutes}:${seconds}`;
+    }
+
+    // دوال وضع الانتظار
+    function toggleWait() {
+      if (waitMode) {
+        waitMode = false;
+        waitBtn.classList.remove('active');
+        nowPlaying.textContent = nowPlaying.textContent.replace(' (وضع الانتظار مفعل)', '');
+      } else {
+        if (currentPlayer === null) {
+          alert('الرجاء تشغيل درس أولاً');
+          return;
+        }
+        waitModal.style.display = 'flex';
+      }
+    }
+    
+    function closeWaitModal() {
+      waitModal.style.display = 'none';
+    }
+    
+    function enableWaitMode() {
+      waitMode = true;
+      waitBtn.classList.add('active');
+      nowPlaying.textContent += ' (وضع الانتظار مفعل)';
+      closeWaitModal();
+    }
+  </script>
+</body>
+</html>
