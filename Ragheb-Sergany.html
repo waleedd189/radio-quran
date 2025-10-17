@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>دروس الشيخ راغب السرجاني</title>
+  <!-- الخطوط والأيقونات -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ===== متغيرات التصميم ===== */
+    :root {
+      --primary-color: #4CAF50;
+      --secondary-color: #FF9800;
+      --third-color: #2196F3;
+      --fourth-color: #9C27B0;
+      --fifth-color: #F44336;
+      --sixth-color: #00BCD4;
+      --background-color: #111;
+      --card-background: rgba(34, 34, 34, 0.9);
+      --text-color: #fff;
+    }
+    /* ===== الأساسيات ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Cairo', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #111 0%, #333 100%);
+      color: var(--text-color);
+      text-align: center;
+      padding: 30px 10px;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    /* ===== العناوين ===== */
+    h1 {
+      font-family: 'Amiri', serif;
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 5px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, var(--primary-color), #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    h1::before, h1::after {
+      content: "﴿";
+      color: var(--primary-color);
+      margin: 0 10px;
+      font-size: 1.2em;
+    }
+    h1::after {
+      content: "﴾";
+    }
+    .subtitle {
+      font-size: 1.1em;
+      margin-bottom: 15px;
+      color: #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .subtitle a {
+      color: inherit;
+      text-decoration: none;
+      background: linear-gradient(45deg, var(--primary-color), #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: transform 0.3s ease;
+      font-weight: 600;
+    }
+    .subtitle a:hover {
+      transform: scale(1.05);
+    }
+    /* ===== أزرار التحكم ===== */
+    .controls-container {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+    }
+    .control-btn {
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 25px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .control-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    .back-btn { background: var(--third-color); }
+    .share-btn { background: var(--primary-color); }
+    .sleep-timer-btn { background: var(--fourth-color); }
+    .wait-btn { background: var(--sixth-color); }
+    .control-btn.active {
+      box-shadow: 0 0 15px currentColor;
+    }
+    /* ===== مشغل الصوت ===== */
+    .player-container {
+      background: var(--card-background);
+      border-radius: 20px;
+      padding: 25px;
+      margin: 25px auto;
+      max-width: 700px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .now-playing {
+      font-size: 1.2em;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      min-height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .playing-indicator {
+      width: 14px;
+      height: 14px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .loader {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-bottom-color: white;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    /* ===== حاوية المحطات ===== */
+    .stations-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+      margin: 30px auto;
+      max-width: 1400px;
+      padding: 0 15px;
+    }
+    /* ===== بطاقة الدروس ===== */
+    .lessons-container {
+      background: var(--card-background);
+      border-radius: 20px;
+      padding: 25px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .lessons-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .lessons-container.active::before {
+      transform: scaleX(1);
+    }
+    .lessons-container:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+    .station-image {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      border: 5px solid rgba(255,255,255,0.2);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      transition: all 0.4s ease;
+      object-fit: cover;
+    }
+    .lessons-container:hover .station-image {
+      transform: scale(1.08);
+      border-color: rgba(255,255,255,0.5);
+    }
+    .lessons-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+      position: relative;
+      padding-bottom: 12px;
+    }
+    .lessons-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: var(--secondary-color);
+      border-radius: 2px;
+    }
+    .lessons-dropdown {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.2);
+      color: white;
+      font-size: 1em;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FF9800%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E');
+      background-repeat: no-repeat;
+      background-position: left 15px center;
+      background-size: 12px;
+      padding-left: 40px;
+    }
+    .lessons-dropdown:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+      background: rgba(255,255,255,0.15);
+    }
+    .lessons-dropdown option {
+      background: #333;
+      color: white;
+      padding: 10px;
+    }
+    .lesson-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .play-lesson-btn {
+      flex: 1;
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .play-lesson-btn:hover {
+      background: #F57C00;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255,152,0,0.3);
+    }
+    .stop-btn {
+      background: var(--fifth-color) !important;
+      flex: 0 0 45px;
+      padding: 12px;
+    }
+    .stop-btn:hover {
+      background: #D32F2F !important;
+    }
+    .progress-bar {
+      height: 4px;
+      width: 100%;
+      background: rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      margin-top: 15px;
+    }
+    .progress-bar::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+      animation: move 3s linear infinite;
+    }
+    .lessons-container.active .progress-bar::before {
+      width: 100%;
+      animation: move 2s linear infinite;
+    }
+    @keyframes move {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    /* ===== التذييل ===== */
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-text {
+      font-size: 0.9em;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+    .footer-special-text {
+      font-family: 'Amiri', serif;
+      font-size: 1.2em;
+      color: var(--secondary-color);
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      font-weight: 600;
+    }
+    /* ===== زر الواتساب ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 25px rgba(37,211,102,0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: none;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(37,211,102,0.6);
+    }
+    .whatsapp-float svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+    }
+    /* ===== النوافذ المنبثقة ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+    .modal-content {
+      background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      animation: modalFadeIn 0.4s ease;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-title {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      color: white;
+      font-weight: 600;
+      text-align: center;
+    }
+    .timer-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+    .timer-option {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 10px;
+      padding: 15px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1em;
+      font-weight: 500;
+    }
+    .timer-option:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+    .timer-option.selected {
+      background: var(--fourth-color);
+      box-shadow: 0 0 15px rgba(156,39,176,0.5);
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+    .modal-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+      font-size: 1em;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    .modal-cancel {
+      background: rgba(255,255,255,0.2);
+    }
+    .modal-cancel:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .modal-confirm {
+      background: var(--fourth-color);
+    }
+    .modal-confirm:hover {
+      background: #7B1FA2;
+    }
+    .timer-status {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(156,39,176,0.1);
+      border-radius: 12px;
+      color: var(--fourth-color);
+      font-size: 1em;
+      display: none;
+      text-align: center;
+      border: 1px solid rgba(156,39,176,0.2);
+    }
+    /* ===== للهواتف ===== */
+    @media (max-width: 768px) {
+      h1 { font-size: 2em; }
+      .subtitle { font-size: 1em; }
+      .station-image {
+        width: 150px;
+        height: 150px;
+      }
+      .controls-container { 
+        top: 15px; 
+        left: 15px;
+        gap: 8px;
+      }
+      .control-btn { 
+        font-size: 0.8em; 
+        padding: 8px 12px;
+      }
+      .whatsapp-float { 
+        width: 55px; 
+        height: 55px; 
+        bottom: 20px; 
+        right: 20px; 
+      }
+      .whatsapp-float svg { 
+        width: 26px; 
+        height: 26px; 
+      }
+      .timer-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .stations-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .modal-content {
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== أزرار التحكم ===== -->
+  <div class="controls-container">
+    <button class="control-btn back-btn" onclick="goBack()">
+      <i class="fas fa-arrow-right"></i>
+      <span>رجوع</span>
+    </button>
+    <button class="control-btn share-btn" onclick="shareApp()">
+      <i class="fas fa-share-alt"></i>
+      <span>مشاركة</span>
+    </button>
+    <button class="control-btn sleep-timer-btn" id="sleepTimerBtn" onclick="toggleSleepTimer()">
+      <i class="fas fa-clock"></i>
+      <span>مؤقت النوم</span>
+    </button>
+    <button class="control-btn wait-btn" id="waitBtn" onclick="toggleWait()">
+      <i class="fas fa-hourglass-half"></i>
+      <span>انتظار</span>
+    </button>
+  </div>
+  <!-- ===== العنوان الرئيسي ===== -->
+  <h1>
+    <span>دروس الشيخ راغب السرجاني</span>
+  </h1>
+  <!-- ===== العنوان الفرعي ===== -->
+  <div class="subtitle">
+    <span>صفحة</span>
+    <a href="https://www.facebook.com/lakel7amd" target="_blank">اللهم لك الحمد</a>
+  </div>
+  <!-- ===== مشغل الصوت ===== -->
+  <div class="player-container">
+    <div class="now-playing" id="nowPlaying">
+      <div class="playing-indicator" id="playingIndicator" style="display: none;"></div>
+      <div class="loader" id="bufferingLoader" style="display: none;"></div>
+      <span id="currentLesson">اختر درساً للاستماع</span>
+    </div>
+    <audio id="audioPlayer" controls style="width: 100%; border-radius: 10px; height: 40px;"></audio>
+    <div class="timer-status" id="timerStatus">
+      <i class="fas fa-clock"></i>
+      مؤقت النوم مفعل: <span id="timerCountdown">--:--</span>
+    </div>
+  </div>
+  <!-- ===== حاوية المحطات ===== -->
+  <div class="stations-container" id="stationsContainer">
+    <!-- سيتم إنشاء المحتوى هنا بواسطة JavaScript -->
+  </div>
+  <!-- ===== التذييل ===== -->
+  <footer>
+    <div class="footer-text">راديو قرآن - صفحة اللهم لك الحمد</div>
+    <div class="footer-special-text">دروس الشيخ راغب السرجاني</div>
+  </footer>
+  <!-- ===== زر الواتساب ===== -->
+  <button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn">
+    <svg viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.520.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.520-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
+    </svg>
+  </button>
+  <!-- ===== نافذة مؤقت النوم ===== -->
+  <div class="modal" id="sleepTimerModal">
+    <div class="modal-content">
+      <div class="modal-title">
+        <i class="fas fa-moon"></i>
+        مؤقت النوم
+      </div>
+      <div class="timer-options">
+        <button class="timer-option" data-minutes="5">5 دقائق</button>
+        <button class="timer-option" data-minutes="10">10 دقائق</button>
+        <button class="timer-option" data-minutes="15">15 دقيقة</button>
+        <button class="timer-option" data-minutes="30">30 دقيقة</button>
+        <button class="timer-option" data-minutes="45">45 دقيقة</button>
+        <button class="timer-option" data-minutes="60">60 دقيقة</button>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-cancel" onclick="closeSleepTimerModal()">إلغاء</button>
+        <button class="modal-btn modal-confirm" onclick="setSleepTimer()">تأكيد</button>
+      </div>
+    </div>
+  </div>
+  <!-- ===== نافذة الانتظار ===== -->
+  <div class="modal" id="waitModal">
+    <div class="modal-content">
+      <div class="modal-title">
+        <i class="fas fa-hourglass-half"></i>
+        وضع الانتظار
+      </div>
+      <div class="wait-message" style="margin: 20px 0; color: #ccc; line-height: 1.6;">
+        سيتم تشغيل الدرس التالي تلقائياً بعد انتهاء الدرس الحالي. هل تريد تفعيل وضع الانتظار؟
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-cancel" onclick="closeWaitModal()">إلغاء</button>
+        <button class="modal-btn modal-confirm" onclick="enableWaitMode()">تفعيل</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== بيانات الدروس =====
+    const lessonsData = {
+      series: [
+        {
+          id: 1,
+          title: "سلسلة الأندلس",
+          image: "https://i.postimg.cc/nVm5v5Zy/image.jpg",
+          color: "#FF9800",
+          lessons: [
+            { name: "الطريق إلى الأندلس", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/013_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "عهد الفتح الإسلامي", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/014_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "عهد الولاة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/015_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "عبد الرحمن الداخل صقر قريش", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/016_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "الإمارة الأموية", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/017_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "الخلافة الأموية", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/018_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "عهد الدولة العامرية والفتنة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/019_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "عهد ملوك الطوائف", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/020_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "دولة المرابطين", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/021_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "بين المرابطين والموحدين", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/022_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "دولة الموحدين", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/023_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سقوط الأندلس", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/024_uP_bY_mUSLEm.Ettounssi.mp3" }
+          ]
+        },
+        {
+          id: 2,
+          title: "سلسلة السيرة النبوية",
+          image: "https://i.postimg.cc/FsDxcgdX/image.jpg",
+          color: "#4CAF50",
+          lessons: [
+            { name: "سلسلة السيرة النبوية - السيرة وبناء الأمة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/025_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - من الظلمات إلى النور", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/026_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - من هنا بدأ الإسلام", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/027_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - بدء الوحي", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/028_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - الدعوة سراً", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/029_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - الدعوة جهراً", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/030_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - تربية الثبات", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/031_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - هجرة الحبشة الأولى", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/032_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - هجرة الحبشة الثانية", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/033_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - إسلام عمر", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/034_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - عام الحزن", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/035_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - بيعة العقبة الأولى", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/036_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - بيعة العقبة الثانية", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/037_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - الهجرة إلى المدينة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/038_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - قيام الدولة الإسلامية", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/039_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - مجتمع المدينة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/040_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - المشركون والدولة الإسلامية", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/041_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - اليهود والدولة الإسلامية", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/042_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - الطريق إلى بدر", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/043_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - أهل بدر", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/044_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - يوم بدر", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/045_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - نصر بدر", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/046_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - ما بعد بدر", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/047_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - الطريق إلى أحد", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/048_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - يوم أحد", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/049_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - الخروج من مصيبة أحد", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/050_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - الطريق إلى الأحزاب", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/051_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - الأحزاب", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/052_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - المسلمون بعد الأحزاب", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/053_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - الطريق إلى الحديبية", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/054_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - صلح الحديبية", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/055_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - ما بعد الحديبية", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/056_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - عالمية الإسلام", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/057_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - فتح خيبر", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/058_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - قوة الإسلام", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/059_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - نصر مؤتة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/060_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - الطريق إلى مكة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/061_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - فتح مكة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/062_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - إسلام مكة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/063_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - يوم حنين", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/064_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - بين حنين والطائف", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/065_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - إسلام هوازن", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/066_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - غزوة تبوك", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/067_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - ما بعد تبوك", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/068_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - الوداع", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/069_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة السيرة النبوية - خاتمة السيرة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/070_uP_bY_mUSLEm.Ettounssi.mp3" }
+          ]
+        },
+        {
+          id: 3,
+          title: "سلسلة التتار",
+          image: "https://i.postimg.cc/sx2MRSVS/image.jpg",
+          color: "#F44336",
+          lessons: [
+            { name: "سلسلة التتار - بداية القصة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/071_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة التتار - الاجتياح", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/072_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة التتار - المتساقطون", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/073_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة التتار - خطة غزو العراق", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/074_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة التتار - سقوط بغداد", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/075_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة التتار - سقوط سوريا", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/076_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة التتار - المماليك", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/077_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة التتار - قطز وبناء الأمة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/078_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة التتار - قرار الجهاد", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/079_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة التتار - عين جالوت", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/080_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة التتار - عين جالوت في الميزان", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/081_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة التتار - بغداد بين سقوطين", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/082_uP_bY_mUSLEm.Ettounssi.mp3" }
+          ]
+        },
+        {
+          id: 4,
+          title: "سلسلة الصديق",
+          image: "https://i.postimg.cc/TP92YwN5/image.jpg",
+          color: "#2196F3",
+          lessons: [
+            { name: "سلسلة الصديق - حب رسول الله صلى الله عليه وسلم", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/083_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة الصديق - رقة القلب", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/084_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة الصديق - نعمة السبق", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/085_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة الصديق - إنكار الذات", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/086_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة الصديق - نعمة الثبات", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/087_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة الصديق - وفاة الرسول صلى الله عليه وسلم", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/088_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة الصديق - يوم السقيفة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/089_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة الصديق - استخلاف الصديق", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/090_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة الصديق - شروط الاستخلاف", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/091_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة الصديق - الاستخلاف بين التصريح والتلميح", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/092_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة الصديق - شبهات حول استخلاف الصديق", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/093_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة الصديق - دروس من حياة الصديق", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/094_uP_bY_mUSLEm.Ettounssi.mp3" }
+          ]
+        },
+        {
+          id: 5,
+          title: "سلسلة فلسطين",
+          image: "https://i.postimg.cc/9fF09Z9H/image.jpg",
+          color: "#9C27B0",
+          lessons: [
+            { name: "سلسلة فلسطين - المؤامرة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/095_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة فلسطين - فلسطين إسلامية", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/096_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة فلسطين - مفاهيم خاطئة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/097_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة فلسطين - إسرائيل الكبرى", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/098_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة فلسطين - اغتيال الخلافة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/099_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة فلسطين - تهويد فلسطين", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/100_uP_bY_mUSLEm.Ettounssi.mp3" },
+            // ⚠️ ملاحظة: تم تغيير الرابط التالي مؤقتًا لأن الرقم 100 مكرر
+            { name: "سلسلة فلسطين - جريمة التقسيم", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/100a_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة فلسطين - أمة لن تموت", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/101_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة فلسطين - الجهاد بالمال", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/102_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة فلسطين - الدعاء (1)", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/103_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة فلسطين - الدعاء (2)", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/104_uP_bY_mUSLEm.Ettounssi.mp3" }
+          ]
+        },
+        {
+          id: 6,
+          title: "سلسلة كن صحابياً",
+          image: "https://i.postimg.cc/9QxVvSD8/image.jpg",
+          color: "#00BCD4",
+          lessons: [
+            { name: "سلسلة كن صحابياً - جيل فريد", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/105_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة كن صحابياً - القابضون على الجمر", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/106_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة كن صحابياً - صناعة الرجال", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/107_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة كن صحابياً - الصحابة والإخلاص", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/108_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة كن صحابياً - الصحابة والعلم", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/109_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة كن صحابياً - الصحابة والعمل", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/110_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة كن صحابياً - الصحابة والدنيا", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/111_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة كن صحابياً - الصحابة والجنة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/112_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة كن صحابياً - الصحابة واتباع الرسول", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/113_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة كن صحابياً - الصحابة والأخوة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/114_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة كن صحابياً - الصحابة والدعوة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/115_uP_bY_mUSLEm.Ettounssi.mp3" },
+            { name: "سلسلة كن صحابياً - الصحابة والتوبة", url: "https://archive.org/download/Sarjani_uP_bY_mUSLEm/116_uP_bY_mUSLEm.Ettounssi.mp3" }
+          ]
+        },
+        {
+          id: 7,
+          title: "سلسلة قصة الخلافة الراشدة",
+          image: "https://i.postimg.cc/W3LyK6w7/image.jpg",
+          color: "#FF5722",
+          lessons: [
+            { name: "نظام الخلافة في الإسلام", url: "https://example.com/khilafah1.mp3" },
+            { name: "عصر الخلفاء الراشدين", url: "https://example.com/khilafah2.mp3" },
+            { name: "إنجازات الخلافة الراشدة", url: "https://example.com/khilafah3.mp3" },
+            { name: "نهاية العصر الراشدي", url: "https://example.com/khilafah4.mp3" },
+            { name: "دروس من الخلافة الراشدة", url: "https://example.com/khilafah5.mp3" },
+            { name: "الخلافة بين الماضي والحاضر", url: "https://example.com/khilafah6.mp3" }
+          ]
+        }
+      ]
+    };
+
+    // ===== مشغل الدروس =====
+    const LessonPlayer = {
+      player: null,
+      nowPlaying: null,
+      playingIndicator: null,
+      bufferingLoader: null,
+      sleepTimer: null,
+      sleepTimerMinutes: 0,
+      sleepTimerSeconds: 0,
+      sleepTimerInterval: null,
+      waitMode: false,
+      currentLessonIndex: -1,
+      currentContainerId: null,
+
+      init() {
+        this.player = document.getElementById('audioPlayer');
+        this.nowPlaying = document.getElementById('currentLesson');
+        this.playingIndicator = document.getElementById('playingIndicator');
+        this.bufferingLoader = document.getElementById('bufferingLoader');
+        this.renderLessons();
+        this.setupEventListeners();
+      },
+
+      renderLessons() {
+        const container = document.getElementById('stationsContainer');
+        container.innerHTML = '';
+        lessonsData.series.forEach(serie => {
+          const serieElement = document.createElement('div');
+          serieElement.className = 'lessons-container';
+          serieElement.id = `lessonsContainer${serie.id}`;
+          let optionsHTML = '<option value="">اختر درساً...</option>';
+          serie.lessons.forEach(lesson => {
+            optionsHTML += `<option value="${lesson.url}">${lesson.name}</option>`;
+          });
+          serieElement.innerHTML = `
+            <img src="${serie.image}" alt="${serie.title}" class="station-image">
+            <div class="lessons-title" style="color: ${serie.color}">${serie.title}</div>
+            <select class="lessons-dropdown" id="lessonsDropdown${serie.id}">
+              ${optionsHTML}
+            </select>
+            <div class="lesson-buttons">
+              <button class="play-lesson-btn" onclick="LessonPlayer.playSelectedLesson(${serie.id})">
+                <i class="fas fa-play"></i>
+                تشغيل
+              </button>
+              <button class="play-lesson-btn stop-btn" onclick="LessonPlayer.stopLesson()">
+                <i class="fas fa-stop"></i>
+              </button>
+            </div>
+            <div class="progress-bar"></div>
+          `;
+          container.appendChild(serieElement);
+        });
+      },
+
+      setupEventListeners() {
+        this.player.addEventListener('pause', () => {
+          this.playingIndicator.style.display = 'none';
+        });
+        this.player.addEventListener('play', () => {
+          this.playingIndicator.style.display = 'block';
+        });
+        this.player.addEventListener('ended', () => {
+          this.handleLessonEnd();
+        });
+        document.querySelectorAll('.lessons-dropdown').forEach(dropdown => {
+          dropdown.addEventListener('change', (e) => {
+            const containerId = e.target.id.replace('lessonsDropdown', '');
+            if (e.target.value) {
+              this.playSelectedLesson(parseInt(containerId));
+            }
+          });
+        });
+      },
+
+      playSelectedLesson(containerId) {
+        const lessonsDropdown = document.getElementById(`lessonsDropdown${containerId}`);
+        const lessonsContainer = document.getElementById(`lessonsContainer${containerId}`);
+        const selectedOption = lessonsDropdown.options[lessonsDropdown.selectedIndex];
+        const lessonUrl = selectedOption.value;
+        const lessonName = selectedOption.text;
+        if (!lessonUrl) {
+          this.showMessage('الرجاء اختيار درس أولاً');
+          return;
+        }
+        this.currentLessonIndex = lessonsDropdown.selectedIndex;
+        this.currentContainerId = containerId;
+        this.player.src = lessonUrl;
+        this.nowPlaying.textContent = `جاري تشغيل: ${lessonName}`;
+        this.bufferingLoader.style.display = 'inline-block';
+        this.playingIndicator.style.display = 'none';
+        document.querySelectorAll('.lessons-container').forEach(container => {
+          container.classList.remove('active');
+        });
+        lessonsContainer.classList.add('active');
+        this.player.play().then(() => {
+          this.bufferingLoader.style.display = 'none';
+          this.playingIndicator.style.display = 'block';
+        }).catch(error => {
+          console.error('خطأ في التشغيل:', error);
+          this.nowPlaying.textContent = `خطأ في تشغيل ${lessonName}`;
+          this.bufferingLoader.style.display = 'none';
+          lessonsContainer.classList.remove('active');
+        });
+      },
+
+      stopLesson() {
+        this.player.pause();
+        this.player.src = "";
+        this.nowPlaying.textContent = 'اختر درساً للاستماع';
+        this.playingIndicator.style.display = 'none';
+        this.bufferingLoader.style.display = 'none';
+        document.querySelectorAll('.lessons-container').forEach(container => {
+          container.classList.remove('active');
+        });
+        document.querySelectorAll('.lessons-dropdown').forEach(dropdown => {
+          dropdown.value = '';
+        });
+        if (this.waitMode) {
+          this.waitMode = false;
+          document.getElementById('waitBtn').classList.remove('active');
+        }
+      },
+
+      handleLessonEnd() {
+        this.playingIndicator.style.display = 'none';
+        if (this.waitMode && this.currentContainerId !== null) {
+          const dropdown = document.getElementById(`lessonsDropdown${this.currentContainerId}`);
+          if (this.currentLessonIndex < dropdown.options.length - 1) {
+            this.currentLessonIndex++;
+            dropdown.selectedIndex = this.currentLessonIndex;
+            this.playSelectedLesson(this.currentContainerId);
+            return;
+          }
+        }
+        this.nowPlaying.textContent = 'انتهى الدرس';
+        document.querySelectorAll('.lessons-container').forEach(container => {
+          container.classList.remove('active');
+        });
+        if (this.waitMode) {
+          this.waitMode = false;
+          document.getElementById('waitBtn').classList.remove('active');
+        }
+      },
+
+      toggleSleepTimer() {
+        if (this.sleepTimerInterval) {
+          this.cancelSleepTimer();
+        } else {
+          document.getElementById('sleepTimerModal').style.display = 'flex';
+          this.setupTimerOptions();
+        }
+      },
+
+      setupTimerOptions() {
+        const timerOptions = document.querySelectorAll('.timer-option');
+        timerOptions.forEach(option => {
+          option.onclick = () => {
+            timerOptions.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+          };
+        });
+      },
+
+      setSleepTimer() {
+        const selectedOption = document.querySelector('.timer-option.selected');
+        if (!selectedOption) {
+          this.showMessage('الرجاء اختيار وقت للمؤقت');
+          return;
+        }
+        const minutes = parseInt(selectedOption.dataset.minutes);
+        if (this.sleepTimerInterval) clearInterval(this.sleepTimerInterval);
+        this.sleepTimerMinutes = minutes;
+        this.sleepTimerSeconds = 0;
+        document.getElementById('sleepTimerBtn').classList.add('active');
+        document.getElementById('timerStatus').style.display = 'block';
+        this.updateTimerDisplay();
+        this.sleepTimerInterval = setInterval(() => {
+          this.sleepTimerSeconds--;
+          if (this.sleepTimerSeconds < 0) {
+            this.sleepTimerMinutes--;
+            this.sleepTimerSeconds = 59;
+          }
+          this.updateTimerDisplay();
+          if (this.sleepTimerMinutes <= 0 && this.sleepTimerSeconds <= 0) {
+            this.stopLesson();
+            this.nowPlaying.textContent = 'تم إيقاف التشغيل حسب مؤقت النوم';
+            this.cancelSleepTimer();
+          }
+        }, 1000);
+        this.closeSleepTimerModal();
+      },
+
+      cancelSleepTimer() {
+        if (this.sleepTimerInterval) {
+          clearInterval(this.sleepTimerInterval);
+          this.sleepTimerInterval = null;
+        }
+        document.getElementById('sleepTimerBtn').classList.remove('active');
+        document.getElementById('timerStatus').style.display = 'none';
+      },
+
+      updateTimerDisplay() {
+        const minutes = this.sleepTimerMinutes.toString().padStart(2, '0');
+        const seconds = this.sleepTimerSeconds.toString().padStart(2, '0');
+        document.getElementById('timerCountdown').textContent = `${minutes}:${seconds}`;
+      },
+
+      closeSleepTimerModal() {
+        document.getElementById('sleepTimerModal').style.display = 'none';
+      },
+
+      toggleWait() {
+        if (this.waitMode) {
+          this.waitMode = false;
+          document.getElementById('waitBtn').classList.remove('active');
+          this.nowPlaying.textContent = this.nowPlaying.textContent.replace(' (وضع الانتظار مفعل)', '');
+        } else {
+          if (this.currentLessonIndex === -1) {
+            this.showMessage('الرجاء تشغيل درس أولاً');
+            return;
+          }
+          document.getElementById('waitModal').style.display = 'flex';
+        }
+      },
+
+      enableWaitMode() {
+        this.waitMode = true;
+        document.getElementById('waitBtn').classList.add('active');
+        this.nowPlaying.textContent += ' (وضع الانتظار مفعل)';
+        this.closeWaitModal();
+      },
+
+      closeWaitModal() {
+        document.getElementById('waitModal').style.display = 'none';
+      },
+
+      showMessage(message) {
+        alert(message);
+      }
+    };
+
+    // ===== دوال عامة =====
+    function goBack() {
+      window.location.href = 'index.html';
+    }
+
+    function shareApp() {
+      const shareData = {
+        title: 'دروس الشيخ راغب السرجاني',
+        text: 'استمع إلى دروس الشيخ راغب السرجاني - صفحة اللهم لك الحمد',
+        url: window.location.href
+      };
+      if (navigator.share) {
+        navigator.share(shareData).catch(console.error);
+      } else {
+        navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`).then(() => {
+          alert('تم نسخ الرابط إلى الحافظة!');
+        }).catch(() => {
+          alert('فشل النسخ، يرجى نسخ الرابط يدوياً');
+        });
+      }
+    }
+
+    function reportBrokenLink() {
+      const phoneNumber = '+201092116092';
+      const message = 'يوجد رابط معطل في دروس الشيخ راغب السرجاني، يرجى التحقق';
+      const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // ===== دوال واجهة المستخدم =====
+    function toggleSleepTimer() { LessonPlayer.toggleSleepTimer(); }
+    function setSleepTimer() { LessonPlayer.setSleepTimer(); }
+    function closeSleepTimerModal() { LessonPlayer.closeSleepTimerModal(); }
+    function toggleWait() { LessonPlayer.toggleWait(); }
+    function enableWaitMode() { LessonPlayer.enableWaitMode(); }
+    function closeWaitModal() { LessonPlayer.closeWaitModal(); }
+
+    // ===== تهيئة التطبيق =====
+    document.addEventListener('DOMContentLoaded', () => {
+      LessonPlayer.init();
+    });
+  </script>
+</body>
+</html>
+
