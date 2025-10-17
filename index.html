@@ -1184,7 +1184,7 @@
       }
     ];
 
-    // إضافة قسم جديد "دروس وعبر" مع محطتي عمر عبدالكافي وصالح المغامسي وراغب السرجاني
+    // إضافة قسم جديد "دروس وعبر" مع محطتي عمر عبدالكافي وصالح المغامسي وراغب السرجاني والنابلسي
     const section4Stations = [
       { 
         name: {ar: "دروس عمر عبدالكافي", en: "Lessons by Omar Abdul Kafi"}, 
@@ -1200,6 +1200,11 @@
         name: {ar: "دروس الدكتور راغب السرجاني", en: "Lessons by Dr. Ragheb Al-Sergani"}, 
         img: "https://i.postimg.cc/yNQMqFqW/image.jpg", 
         lessonsUrl: "https://waleedd189.github.io/radio-quran/Ragheb-Sergany.html"
+      },
+      { 
+        name: {ar: "دروس الشيخ محمد راتب النابلسي", en: "Lessons by Sheikh Muhammad Ratib Al-Nabulsi"}, 
+        img: "https://i.postimg.cc/3wh1Gyb8/image.jpg", 
+        lessonsUrl: "https://waleedd189.github.io/radio-quran/El-Naboulsi.html"
       }
     ];
 
@@ -1446,7 +1451,7 @@
     }
 
     function enablePlayRuqyahButton(selectElement) {
-        const playRuqyahBtn = selectElement.nextElementSibling;
+        const playRuqyhBtn = selectElement.nextElementSibling;
         if (selectElement.value) {
             playRuqyhBtn.disabled = false;
         } else {
