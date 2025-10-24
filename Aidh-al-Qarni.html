@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>دروس الشيخ عائض القرني</title>
+  <!-- الخطوط والأيقونات -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ===== متغيرات التصميم ===== */
+    :root {
+      --primary-color: #4CAF50;
+      --secondary-color: #FF9800;
+      --third-color: #2196F3;
+      --fourth-color: #9C27B0;
+      --fifth-color: #F44336;
+      --sixth-color: #00BCD4;
+      --background-color: #111;
+      --card-background: rgba(34, 34, 34, 0.9);
+      --text-color: #fff;
+    }
+    /* ===== الأساسيات ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Cairo', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #111 0%, #333 100%);
+      color: var(--text-color);
+      text-align: center;
+      padding: 30px 10px;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    /* ===== العناوين ===== */
+    h1 {
+      font-family: 'Amiri', serif;
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 5px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, var(--primary-color), #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    h1::before, h1::after {
+      content: "﴿";
+      color: var(--primary-color);
+      margin: 0 10px;
+      font-size: 1.2em;
+    }
+    h1::after {
+      content: "﴾";
+    }
+    .subtitle {
+      font-size: 1.1em;
+      margin-bottom: 15px;
+      color: #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .subtitle a {
+      color: inherit;
+      text-decoration: none;
+      background: linear-gradient(45deg, var(--primary-color), #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: transform 0.3s ease;
+      font-weight: 600;
+    }
+    .subtitle a:hover {
+      transform: scale(1.05);
+    }
+    /* ===== أزرار التحكم ===== */
+    .controls-container {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+    }
+    .control-btn {
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 25px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .control-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    .back-btn { background: var(--third-color); }
+    .share-btn { background: var(--primary-color); }
+    .sleep-timer-btn { background: var(--fourth-color); }
+    .wait-btn { background: var(--sixth-color); }
+    .control-btn.active {
+      box-shadow: 0 0 15px currentColor;
+    }
+    /* ===== مشغل الوسائط ===== */
+    .player-container {
+      background: var(--card-background);
+      border-radius: 20px;
+      padding: 25px;
+      margin: 25px auto;
+      max-width: 700px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .now-playing {
+      font-size: 1.2em;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      min-height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .playing-indicator {
+      width: 14px;
+      height: 14px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .loader {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-bottom-color: white;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .media-player {
+      width: 100%;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.3);
+      margin-bottom: 15px;
+    }
+    .media-player video {
+      width: 100%;
+      max-height: 300px;
+      border-radius: 10px 10px 0 0;
+      object-fit: cover;
+    }
+    .media-player audio {
+      width: 100%;
+      border-radius: 0 0 10px 10px;
+      height: 40px;
+    }
+    .media-type-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .media-type-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9em;
+    }
+    .media-type-btn.active {
+      background: var(--secondary-color);
+      border-color: var(--secondary-color);
+    }
+    .media-type-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .media-type-btn.active:hover {
+      background: #F57C00;
+    }
+    /* ===== حاوية المحطات ===== */
+    .stations-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+      margin: 30px auto;
+      max-width: 1400px;
+      padding: 0 15px;
+    }
+    /* ===== بطاقة الدروس ===== */
+    .lessons-container {
+      background: var(--card-background);
+      border-radius: 20px;
+      padding: 25px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .lessons-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .lessons-container.active::before {
+      transform: scaleX(1);
+    }
+    .lessons-container:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+    .station-image {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      border: 5px solid rgba(255,255,255,0.2);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      transition: all 0.4s ease;
+      object-fit: cover;
+    }
+    .lessons-container:hover .station-image {
+      transform: scale(1.08);
+      border-color: rgba(255,255,255,0.5);
+    }
+    .lessons-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+      position: relative;
+      padding-bottom: 12px;
+    }
+    .lessons-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: var(--secondary-color);
+      border-radius: 2px;
+    }
+    .lessons-dropdown {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.2);
+      color: white;
+      font-size: 1em;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FF9800%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E');
+      background-repeat: no-repeat;
+      background-position: left 15px center;
+      background-size: 12px;
+      padding-left: 40px;
+    }
+    .lessons-dropdown:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+      background: rgba(255,255,255,0.15);
+    }
+    .lessons-dropdown option {
+      background: #333;
+      color: white;
+      padding: 10px;
+    }
+    .lesson-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .play-lesson-btn {
+      flex: 1;
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .play-lesson-btn:hover {
+      background: #F57C00;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255,152,0,0.3);
+    }
+    .stop-btn {
+      background: var(--fifth-color) !important;
+      flex: 0 0 45px;
+      padding: 12px;
+    }
+    .stop-btn:hover {
+      background: #D32F2F !important;
+    }
+    .progress-bar {
+      height: 4px;
+      width: 100%;
+      background: rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      margin-top: 15px;
+    }
+    .progress-bar::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+      animation: move 3s linear infinite;
+    }
+    .lessons-container.active .progress-bar::before {
+      width: 100%;
+      animation: move 2s linear infinite;
+    }
+    @keyframes move {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    /* ===== التذييل ===== */
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-text {
+      font-size: 0.9em;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+    .footer-special-text {
+      font-family: 'Amiri', serif;
+      font-size: 1.2em;
+      color: var(--secondary-color);
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      font-weight: 600;
+    }
+    /* ===== زر الواتساب ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 25px rgba(37,211,102,0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: none;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(37,211,102,0.6);
+    }
+    .whatsapp-float svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+    }
+    /* ===== النوافذ المنبثقة ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+    .modal-content {
+      background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      animation: modalFadeIn 0.4s ease;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-title {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      color: white;
+      font-weight: 600;
+      text-align: center;
+    }
+    .timer-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+    .timer-option {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 10px;
+      padding: 15px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1em;
+      font-weight: 500;
+    }
+    .timer-option:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+    .timer-option.selected {
+      background: var(--fourth-color);
+      box-shadow: 0 0 15px rgba(156,39,176,0.5);
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+    .modal-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+      font-size: 1em;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    .modal-cancel {
+      background: rgba(255,255,255,0.2);
+    }
+    .modal-cancel:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .modal-confirm {
+      background: var(--fourth-color);
+    }
+    .modal-confirm:hover {
+      background: #7B1FA2;
+    }
+    .timer-status {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(156,39,176,0.1);
+      border-radius: 12px;
+      color: var(--fourth-color);
+      font-size: 1em;
+      display: none;
+      text-align: center;
+      border: 1px solid rgba(156,39,176,0.2);
+    }
+    /* ===== للهواتف ===== */
+    @media (max-width: 768px) {
+      h1 { font-size: 2em; }
+      .subtitle { font-size: 1em; }
+      .station-image {
+        width: 150px;
+        height: 150px;
+      }
+      .controls-container { 
+        top: 15px; 
+        left: 15px;
+        gap: 8px;
+      }
+      .control-btn { 
+        font-size: 0.8em; 
+        padding: 8px 12px;
+      }
+      .whatsapp-float { 
+        width: 55px; 
+        height: 55px; 
+        bottom: 20px; 
+        right: 20px; 
+      }
+      .whatsapp-float svg { 
+        width: 26px; 
+        height: 26px; 
+      }
+      .timer-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .stations-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .modal-content {
+        padding: 25px 20px;
+      }
+      .media-player video {
+        max-height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== أزرار التحكم ===== -->
+  <div class="controls-container">
+    <button class="control-btn back-btn" onclick="goBack()">
+      <i class="fas fa-arrow-right"></i>
+      <span>رجوع</span>
+    </button>
+    <button class="control-btn share-btn" onclick="shareApp()">
+      <i class="fas fa-share-alt"></i>
+      <span>مشاركة</span>
+    </button>
+    <button class="control-btn sleep-timer-btn" id="sleepTimerBtn" onclick="toggleSleepTimer()">
+      <i class="fas fa-clock"></i>
+      <span>مؤقت النوم</span>
+    </button>
+    <button class="control-btn wait-btn" id="waitBtn" onclick="toggleWait()">
+      <i class="fas fa-hourglass-half"></i>
+      <span>انتظار</span>
+    </button>
+  </div>
+  <!-- ===== العنوان الرئيسي ===== -->
+  <h1>
+    <span>دروس الشيخ عائض القرني</span>
+  </h1>
+  <!-- ===== العنوان الفرعي ===== -->
+  <div class="subtitle">
+    <span>صفحة</span>
+    <a href="https://www.facebook.com/lakel7amd" target="_blank">اللهم لك الحمد</a>
+  </div>
+  <!-- ===== مشغل الوسائط ===== -->
+  <div class="player-container">
+    <div class="now-playing" id="nowPlaying">
+      <div class="playing-indicator" id="playingIndicator" style="display: none;"></div>
+      <div class="loader" id="bufferingLoader" style="display: none;"></div>
+      <span id="currentLesson">اختر درساً للاستماع</span>
+    </div>
+    
+    <div class="media-type-toggle" id="mediaTypeToggle" style="display: none;">
+      <button class="media-type-btn active" id="audioBtn" onclick="switchToAudio()">
+        <i class="fas fa-headphones"></i>
+        صوت فقط
+      </button>
+      <button class="media-type-btn" id="videoBtn" onclick="switchToVideo()">
+        <i class="fas fa-video"></i>
+        فيديو
+      </button>
+    </div>
+    
+    <div class="media-player" id="mediaPlayer">
+      <video id="videoPlayer" style="display: none;" controls></video>
+      <audio id="audioPlayer" controls style="width: 100%; border-radius: 10px; height: 40px;"></audio>
+    </div>
+    
+    <div class="timer-status" id="timerStatus">
+      <i class="fas fa-clock"></i>
+      مؤقت النوم مفعل: <span id="timerCountdown">--:--</span>
+    </div>
+  </div>
+  <!-- ===== حاوية المحطات ===== -->
+  <div class="stations-container" id="stationsContainer">
+    <!-- سيتم إنشاء المحتوى هنا بواسطة JavaScript -->
+  </div>
+  <!-- ===== التذييل ===== -->
+  <footer>
+    <div class="footer-text">راديو قرآن - صفحة اللهم لك الحمد</div>
+    <div class="footer-special-text">دروس الشيخ عائض القرني</div>
+  </footer>
+  <!-- ===== زر الواتساب ===== -->
+  <button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn">
+    <svg viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.520.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.520-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
+    </svg>
+  </button>
+  <!-- ===== نافذة مؤقت النوم ===== -->
+  <div class="modal" id="sleepTimerModal">
+    <div class="modal-content">
+      <div class="modal-title">
+        <i class="fas fa-moon"></i>
+        مؤقت النوم
+      </div>
+      <div class="timer-options">
+        <button class="timer-option" data-minutes="5">5 دقائق</button>
+        <button class="timer-option" data-minutes="10">10 دقائق</button>
+        <button class="timer-option" data-minutes="15">15 دقيقة</button>
+        <button class="timer-option" data-minutes="30">30 دقيقة</button>
+        <button class="timer-option" data-minutes="45">45 دقيقة</button>
+        <button class="timer-option" data-minutes="60">60 دقيقة</button>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-cancel" onclick="closeSleepTimerModal()">إلغاء</button>
+        <button class="modal-btn modal-confirm" onclick="setSleepTimer()">تأكيد</button>
+      </div>
+    </div>
+  </div>
+  <!-- ===== نافذة الانتظار ===== -->
+  <div class="modal" id="waitModal">
+    <div class="modal-content">
+      <div class="modal-title">
+        <i class="fas fa-hourglass-half"></i>
+        وضع الانتظار
+      </div>
+      <div class="wait-message" style="margin: 20px 0; color: #ccc; line-height: 1.6;">
+        سيتم تشغيل الدرس التالي تلقائياً بعد انتهاء الدرس الحالي. هل تريد تفعيل وضع الانتظار؟
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-cancel" onclick="closeWaitModal()">إلغاء</button>
+        <button class="modal-btn modal-confirm" onclick="enableWaitMode()">تفعيل</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== بيانات الدروس =====
+    const lessonsData = {
+      series: [
+        {
+          id: 1,
+          title: "دعوة للفرح",
+          image: "https://i.postimg.cc/8ChWLqdw/dʿwt-llfrh.jpg",
+          color: "#FF9800",
+          lessons: [
+            { name: "دعوة للفرح - الحلقة 1", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/01_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 2", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/02_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 3", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/03_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 4", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/04_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 5", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/05_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 6", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/06_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 7", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/07_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 8", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/08_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 9", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/09_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 10", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/10_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 11", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/11_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 12", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/12_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 13", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/13_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 14", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/14_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 15", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/15_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 16", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/16_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 17", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/17_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 18", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/18_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 19", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/19_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 20", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/20_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 21", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/21_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 22", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/22_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 23", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/23_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 24", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/24_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 25", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/25_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 26", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/26_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 27", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/27_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 28", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/28_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 29", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/29_uP_bY_mUSLEm.mp4" },
+            { name: "دعوة للفرح - الحلقة 30", url: "https://archive.org/download/Daawa_Lel_Farah_uP_bY_mUSLEm/30_uP_bY_mUSLEm.mp4" }
+          ]
+        },
+        {
+          id: 2,
+          title: "حدّثنا الزمان",
+          image: "https://i.postimg.cc/qRTVgCQK/hd-thna-alzman.jpg",
+          color: "#F44336",
+          lessons: [
+            { name: "حدّثنا الزمان - الحلقة 1", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-245.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 2", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-246.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 3", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-247.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 4", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-248.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 5", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-249.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 6", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-250.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 7", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-251.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 8", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-252.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 253", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-253.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 254", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-254.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 255", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-255.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 256", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-256.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 257", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-257.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 258", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-258.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 259", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-259.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 260", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-260.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 261", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-261.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 262", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-262.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 263", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-263.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 264", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-264.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 265", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-265.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 266", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-266.mp4" },
+            { name: "حدّثنا الزمان - الحلقة 267", url: "https://archive.org/download/Islamic_Tape-502_uP_bY_mUSLEm/muslem.ettounsi-267.mp4" }
+          ]
+        },
+        {
+          id: 3,
+          title: "المفتاح",
+          image: "https://i.postimg.cc/PxjsN8KJ/almftah.jpg",
+          color: "#00BCD4",
+          lessons: [
+            { name: "المفتاح - الحلقة 122", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-122.mp4" },
+            { name: "المفتاح - الحلقة 123", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-123.mp4" },
+            { name: "المفتاح - الحلقة 124", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-124.mp4" },
+            { name: "المفتاح - الحلقة 125", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-125.mp4" },
+            { name: "المفتاح - الحلقة 126", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-126.mp4" },
+            { name: "المفتاح - الحلقة 127", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-127.mp4" },
+            { name: "المفتاح - الحلقة 128", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-128.mp4" },
+            { name: "المفتاح - الحلقة 129", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-129.mp4" },
+            { name: "المفتاح - الحلقة 130", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-130.mp4" },
+            { name: "المفتاح - الحلقة 131", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-131.mp4" },
+            { name: "المفتاح - الحلقة 132", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-132.mp4" },
+            { name: "المفتاح - الحلقة 133", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-133.mp4" },
+            { name: "المفتاح - الحلقة 134", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-134.mp4" },
+            { name: "المفتاح - الحلقة 135", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-135.mp4" },
+            { name: "المفتاح - الحلقة 136", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-136.mp4" },
+            { name: "المفتاح - الحلقة 137", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-137.mp4" },
+            { name: "المفتاح - الحلقة 138", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-138.mp4" },
+            { name: "المفتاح - الحلقة 139", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-139.mp4" },
+            { name: "المفتاح - الحلقة 140", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-140.mp4" },
+            { name: "المفتاح - الحلقة 141", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-141.mp4" },
+            { name: "المفتاح - الحلقة 142", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-142.mp4" },
+            { name: "المفتاح - الحلقة 143", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-143.mp4" },
+            { name: "المفتاح - الحلقة 144", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-144.mp4" },
+            { name: "المفتاح - الحلقة 145", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-145.mp4" },
+            { name: "المفتاح - الحلقة 146", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-146.mp4" },
+            { name: "المفتاح - الحلقة 147", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-147.mp4" },
+            { name: "المفتاح - الحلقة 148", url: "https://archive.org/download/Islamic_Tape-500_uP_bY_mUSLEm/muslem.ettounsi-148.mp4" }
+          ]
+        },
+        {
+          id: 4,
+          title: "غدًا أجمل",
+          image: "https://i.postimg.cc/qRTVgCQn/ghd-a-ajml.jpg",
+          color: "#795548",
+          lessons: [
+            { name: "غدًا أجمل - الحلقة 268", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-268.mp4" },
+            { name: "غدًا أجمل - الحلقة 269", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-269.mp4" },
+            { name: "غدًا أجمل - الحلقة 270", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-270.mp4" },
+            { name: "غدًا أجمل - الحلقة 271", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-271.mp4" },
+            { name: "غدًا أجمل - الحلقة 272", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-272.mp4" },
+            { name: "غدًا أجمل - الحلقة 273", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-273.mp4" },
+            { name: "غدًا أجمل - الحلقة 274", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-274.mp4" },
+            { name: "غدًا أجمل - الحلقة 275", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-275.mp4" },
+            { name: "غدًا أجمل - الحلقة 276", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-276.mp4" },
+            { name: "غدًا أجمل - الحلقة 277", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-277.mp4" },
+            { name: "غدًا أجمل - الحلقة 278", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-278.mp4" },
+            { name: "غدًا أجمل - الحلقة 279", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-279.mp4" },
+            { name: "غدًا أجمل - الحلقة 280", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-280.mp4" },
+            { name: "غدًا أجمل - الحلقة 281", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-281.mp4" },
+            { name: "غدًا أجمل - الحلقة 282", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-282.mp4" },
+            { name: "غدًا أجمل - الحلقة 283", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-283.mp4" },
+            { name: "غدًا أجمل - الحلقة 284", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-284.mp4" },
+            { name: "غدًا أجمل - الحلقة 285", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-285.mp4" },
+            { name: "غدًا أجمل - الحلقة 286", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-286.mp4" },
+            { name: "غدًا أجمل - الحلقة 287", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-287.mp4" },
+            { name: "غدًا أجمل - الحلقة 288", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-288.mp4" },
+            { name: "غدًا أجمل - الحلقة 289", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-289.mp4" },
+            { name: "غدًا أجمل - الحلقة 290", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-290.mp4" },
+            { name: "غدًا أجمل - الحلقة 291", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-291.mp4" },
+            { name: "غدًا أجمل - الحلقة 292", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-292.mp4" },
+            { name: "غدًا أجمل - الحلقة 293", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-293.mp4" },
+            { name: "غدًا أجمل - الحلقة 294", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-294.mp4" },
+            { name: "غدًا أجمل - الحلقة 295", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-295.mp4" },
+            { name: "غدًا أجمل - الحلقة 296", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-296.mp4" },
+            { name: "غدًا أجمل - الحلقة 297", url: "https://archive.org/download/Islamic_Tape-503_uP_bY_mUSLEm/muslem.ettounsi-297.mp4" }
+          ]
+        },
+        {
+          id: 5,
+          title: "ثورة التجديد",
+          image: "https://i.postimg.cc/vBsFD6X1/thwrt-altjdyd.jpg",
+          color: "#9C27B0",
+          lessons: [
+            { name: "ثورة التجديد - الحلقة 233", url: "https://archive.org/download/Islamic_Tape-501_uP_bY_mUSLEm/muslem.ettounsi-233.mp4" },
+            { name: "ثورة التجديد - الحلقة 234", url: "https://archive.org/download/Islamic_Tape-501_uP_bY_mUSLEm/muslem.ettounsi-234.mp4" },
+            { name: "ثورة التجديد - الحلقة 235", url: "https://archive.org/download/Islamic_Tape-501_uP_bY_mUSLEm/muslem.ettounsi-235.mp4" },
+            { name: "ثورة التجديد - الحلقة 236", url: "https://archive.org/download/Islamic_Tape-501_uP_bY_mUSLEm/muslem.ettounsi-236.mp4" },
+            { name: "ثورة التجديد - الحلقة 237", url: "https://archive.org/download/Islamic_Tape-501_uP_bY_mUSLEm/muslem.ettounsi-237.mp4" },
+            { name: "ثورة التجديد - الحلقة 238", url: "https://archive.org/download/Islamic_Tape-501_uP_bY_mUSLEm/muslem.ettounsi-238.mp4" },
+            { name: "ثورة التجديد - الحلقة 239", url: "https://archive.org/download/Islamic_Tape-501_uP_bY_mUSLEm/muslem.ettounsi-239.mp4" },
+            { name: "ثورة التجديد - الحلقة 240", url: "https://archive.org/download/Islamic_Tape-501_uP_bY_mUSLEm/muslem.ettounsi-240.mp4" },
+            { name: "ثورة التجديد - الحلقة 241", url: "https://archive.org/download/Islamic_Tape-501_uP_bY_mUSLEm/muslem.ettounsi-241.mp4" },
+            { name: "ثورة التجديد - الحلقة 242", url: "https://archive.org/download/Islamic_Tape-501_uP_bY_mUSLEm/muslem.ettounsi-242.mp4" },
+            { name: "ثورة التجديد - الحلقة 243", url: "https://archive.org/download/Islamic_Tape-501_uP_bY_mUSLEm/muslem.ettounsi-243.mp4" },
+            { name: "ثورة التجديد - الحلقة 244", url: "https://archive.org/download/Islamic_Tape-501_uP_bY_mUSLEm/muslem.ettounsi-244.mp4" }
+          ]
+        },
+        {
+          id: 6,
+          title: "ادخلوها بسلام",
+          image: "https://i.postimg.cc/RFB5qnG4/adkhlwha-bslam.jpg",
+          color: "#4CAF50",
+          lessons: [
+            { name: "ادخلوها بسلام - الحلقة 1", url: "https://archive.org/download/Islamic_Tape-496_uP_bY_mUSLEm/muslem.ettounsi-001.mp4" },
+            { name: "ادخلوها بسلام - الحلقة 2", url: "https://archive.org/download/Islamic_Tape-496_uP_bY_mUSLEm/muslem.ettounsi-002.mp4" },
+            { name: "ادخلوها بسلام - الحلقة 3", url: "https://archive.org/download/Islamic_Tape-496_uP_bY_mUSLEm/muslem.ettounsi-003.mp4" },
+            { name: "ادخلوها بسلام - الحلقة 4", url: "https://archive.org/download/Islamic_Tape-496_uP_bY_mUSLEm/muslem.ettounsi-004.mp4" },
+            { name: "ادخلوها بسلام - الحلقة 5", url: "https://archive.org/download/Islamic_Tape-496_uP_bY_mUSLEm/muslem.ettounsi-005.mp4" },
+            { name: "ادخلوها بسلام - الحلقة 6", url: "https://archive.org/download/Islamic_Tape-496_uP_bY_mUSLEm/muslem.ettounsi-006.mp4" },
+            { name: "ادخلوها بسلام - الحلقة 7", url: "https://archive.org/download/Islamic_Tape-496_uP_bY_mUSLEm/muslem.ettounsi-007.mp4" },
+            { name: "ادخلوها بسلام - الحلقة 8", url: "https://archive.org/download/Islamic_Tape-496_uP_bY_mUSLEm/muslem.ettounsi-008.mp4" },
+            { name: "ادخلوها بسلام - الحلقة 9", url: "https://archive.org/download/Islamic_Tape-496_uP_bY_mUSLEm/muslem.ettounsi-009.mp4" },
+            { name: "ادخلوها بسلام - الحلقة 10", url: "https://archive.org/download/Islamic_Tape-496_uP_bY_mUSLEm/muslem.ettounsi-010.mp4" }
+          ]
+        },
+        {
+          id: 7,
+          title: "الروائع",
+          image: "https://i.postimg.cc/Qt3GVWS8/alrwayʿ.jpg",
+          color: "#2196F3",
+          lessons: [
+            { name: "الروائع - الحلقة 43", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-043.mp4" },
+            { name: "الروائع - الحلقة 44", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-044.mp4" },
+            { name: "الروائع - الحلقة 45", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-045.mp4" },
+            { name: "الروائع - الحلقة 46", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-046.mp4" },
+            { name: "الروائع - الحلقة 47", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-047.mp4" },
+            { name: "الروائع - الحلقة 48", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-048.mp4" },
+            { name: "الروائع - الحلقة 49", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-049.mp4" },
+            { name: "الروائع - الحلقة 50", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-050.mp4" },
+            { name: "الروائع - الحلقة 51", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-051.mp4" },
+            { name: "الروائع - الحلقة 52", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-052.mp4" },
+            { name: "الروائع - الحلقة 53", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-053.mp4" },
+            { name: "الروائع - الحلقة 54", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-054.mp4" },
+            { name: "الروائع - الحلقة 55", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-055.mp4" },
+            { name: "الروائع - الحلقة 56", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-056.mp4" },
+            { name: "الروائع - الحلقة 57", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-057.mp4" },
+            { name: "الروائع - الحلقة 58", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-058.mp4" },
+            { name: "الروائع - الحلقة 59", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-059.mp4" },
+            { name: "الروائع - الحلقة 60", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-060.mp4" },
+            { name: "الروائع - الحلقة 61", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-061.mp4" },
+            { name: "الروائع - الحلقة 62", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-062.mp4" },
+            { name: "الروائع - الحلقة 63", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-063.mp4" },
+            { name: "الروائع - الحلقة 64", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-064.mp4" },
+            { name: "الروائع - الحلقة 65", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-065.mp4" },
+            { name: "الروائع - الحلقة 66", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-066.mp4" },
+            { name: "الروائع - الحلقة 67", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-067.mp4" },
+            { name: "الروائع - الحلقة 68", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-068.mp4" },
+            { name: "الروائع - الحلقة 69", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-069.mp4" },
+            { name: "الروائع - الحلقة 70", url: "https://archive.org/download/Islamic_Tape-497_uP_bY_mUSLEm/muslem.ettounsi-070.mp4" }
+          ]
+        },
+        {
+          id: 8,
+          title: "أولئك آبائي",
+          image: "https://i.postimg.cc/W3vLtJSd/awlyk-abayy.jpg",
+          color: "#FF5722",
+          lessons: [
+            { name: "أولئك آبائي - الحلقة 149", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-149.mp4" },
+            { name: "أولئك آبائي - الحلقة 150", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-150.mp4" },
+            { name: "أولئك آبائي - الحلقة 151", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-151.mp4" },
+            { name: "أولئك آبائي - الحلقة 152", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-152.mp4" },
+            { name: "أولئك آبائي - الحلقة 153", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-153.mp4" },
+            { name: "أولئك آبائي - الحلقة 154", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-154.mp4" },
+            { name: "أولئك آبائي - الحلقة 155", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-155.mp4" },
+            { name: "أولئك آبائي - الحلقة 156", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-156.mp4" },
+            { name: "أولئك آبائي - الحلقة 157", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-157.mp4" },
+            { name: "أولئك آبائي - الحلقة 158", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-158.mp4" },
+            { name: "أولئك آبائي - الحلقة 159", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-159.mp4" },
+            { name: "أولئك آبائي - الحلقة 160", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-160.mp4" },
+            { name: "أولئك آبائي - الحلقة 161", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-161.mp4" },
+            { name: "أولئك آبائي - الحلقة 162", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-162.mp4" },
+            { name: "أولئك آبائي - الحلقة 163", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-163.mp4" },
+            { name: "أولئك آبائي - الحلقة 164", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-164.mp4" },
+            { name: "أولئك آبائي - الحلقة 165", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-165.mp4" },
+            { name: "أولئك آبائي - الحلقة 166", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-166.mp4" },
+            { name: "أولئك آبائي - الحلقة 167", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-167.mp4" },
+            { name: "أولئك آبائي - الحلقة 168", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-168.mp4" },
+            { name: "أولئك آبائي - الحلقة 169", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-169.mp4" },
+            { name: "أولئك آبائي - الحلقة 170", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-170.mp4" },
+            { name: "أولئك آبائي - الحلقة 171", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-171.mp4" },
+            { name: "أولئك آبائي - الحلقة 172", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-172.mp4" },
+            { name: "أولئك آبائي - الحلقة 173", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-173.mp4" },
+            { name: "أولئك آبائي - الحلقة 174", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-174.mp4" },
+            { name: "أولئك آبائي - الحلقة 175", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-175.mp4" },
+            { name: "أولئك آبائي - الحلقة 176", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-176.mp4" },
+            { name: "أولئك آبائي - الحلقة 177", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-177.mp4" },
+            { name: "أولئك آبائي - الحلقة 178", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-178.mp4" },
+            { name: "أولئك آبائي - الحلقة 179", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-179.mp4" },
+            { name: "أولئك آبائي - الحلقة 180", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-180.mp4" },
+            { name: "أولئك آبائي - الحلقة 181", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-181.mp4" },
+            { name: "أولئك آبائي - الحلقة 182", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-182.mp4" },
+            { name: "أولئك آبائي - الحلقة 183", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-183.mp4" },
+            { name: "أولئك آبائي - الحلقة 184", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-184.mp4" },
+            { name: "أولئك آبائي - الحلقة 185", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-185.mp4" },
+            { name: "أولئك آبائي - الحلقة 186", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-186.mp4" },
+            { name: "أولئك آبائي - الحلقة 187", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-187.mp4" },
+            { name: "أولئك آبائي - الحلقة 188", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-188.mp4" },
+            { name: "أولئك آبائي - الحلقة 189", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-189.mp4" },
+            { name: "أولئك آبائي - الحلقة 190", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-190.mp4" },
+            { name: "أولئك آبائي - الحلقة 191", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-191.mp4" },
+            { name: "أولئك آبائي - الحلقة 192", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-192.mp4" },
+            { name: "أولئك آبائي - الحلقة 193", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-193.mp4" },
+            { name: "أولئك آبائي - الحلقة 194", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-194.mp4" },
+            { name: "أولئك آبائي - الحلقة 195", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-195.mp4" },
+            { name: "أولئك آبائي - الحلقة 196", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-196.mp4" },
+            { name: "أولئك آبائي - الحلقة 197", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-197.mp4" },
+            { name: "أولئك آبائي - الحلقة 198", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-198.mp4" },
+            { name: "أولئك آبائي - الحلقة 199", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-199.mp4" },
+            { name: "أولئك آبائي - الحلقة 200", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-200.mp4" },
+            { name: "أولئك آبائي - الحلقة 201", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-201.mp4" },
+            { name: "أولئك آبائي - الحلقة 202", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-202.mp4" },
+            { name: "أولئك آبائي - الحلقة 203", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-203.mp4" },
+            { name: "أولئك آبائي - الحلقة 204", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-204.mp4" },
+            { name: "أولئك آبائي - الحلقة 205", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-205.mp4" },
+            { name: "أولئك آبائي - الحلقة 206", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-206.mp4" },
+            { name: "أولئك آبائي - الحلقة 207", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-207.mp4" },
+            { name: "أولئك آبائي - الحلقة 208", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-208.mp4" },
+            { name: "أولئك آبائي - الحلقة 209", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-209.mp4" },
+            { name: "أولئك آبائي - الحلقة 210", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-210.mp4" },
+            { name: "أولئك آبائي - الحلقة 211", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-211.mp4" },
+            { name: "أولئك آبائي - الحلقة 212", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-212.mp4" },
+            { name: "أولئك آبائي - الحلقة 213", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-213.mp4" },
+            { name: "أولئك آبائي - الحلقة 214", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-214.mp4" },
+            { name: "أولئك آبائي - الحلقة 215", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-215.mp4" },
+            { name: "أولئك آبائي - الحلقة 216", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-216.mp4" },
+            { name: "أولئك آبائي - الحلقة 217", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-217.mp4" },
+            { name: "أولئك آبائي - الحلقة 218", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-218.mp4" },
+            { name: "أولئك آبائي - الحلقة 219", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-219.mp4" },
+            { name: "أولئك آبائي - الحلقة 220", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-220.mp4" },
+            { name: "أولئك آبائي - الحلقة 221", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-221.mp4" },
+            { name: "أولئك آبائي - الحلقة 222", url: "https://archive.org/download/Islamic_Tape-495_uP_bY_mUSLEm/muslem.ettounsi-222.mp4" }
+          ]
+        },
+        {
+          id: 9,
+          title: "السلام عليكم-1",
+          image: "https://i.postimg.cc/d1YPDTnY/alslam-ʿlykm-1.jpg",
+          color: "#8BC34A",
+          lessons: [
+            { name: "السلام عليكم-1- الحلقة 1", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-071.mp4" },
+            { name: "السلام عليكم-1- الحلقة 2", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-072.mp4" },
+            { name: "السلام عليكم-1- الحلقة 3", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-073.mp4" },
+            { name: "السلام عليكم-1- الحلقة 4", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-074.mp4" },
+            { name: "السلام عليكم-1- الحلقة 5", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-075.mp4" },
+            { name: "السلام عليكم-1- الحلقة 6", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-076.mp4" },
+            { name: "السلام عليكم-1- الحلقة 7", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-077.mp4" },
+            { name: "السلام عليكم-1- الحلقة 8", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-078.mp4" },
+            { name: "السلام عليكم-1- الحلقة 9", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-079.mp4" },
+            { name: "السلام عليكم-1- الحلقة 10", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-080.mp4" },
+            { name: "السلام عليكم-1- الحلقة 11", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-081.mp4" },
+            { name: "السلام عليكم-1- الحلقة 12", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-082.mp4" },
+            { name: "السلام عليكم-1- الحلقة 13", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-083.mp4" },
+            { name: "السلام عليكم-1- الحلقة 15", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-084.mp4" },
+            { name: "السلام عليكم-1- الحلقة 16", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-085.mp4" },
+            { name: "السلام عليكم-1- الحلقة 17", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-086.mp4" },
+            { name: "السلام عليكم-1- الحلقة 18", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-087.mp4" },
+            { name: "السلام عليكم-1- الحلقة 19", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-088.mp4" },
+            { name: "السلام عليكم-1- الحلقة 20", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-089.mp4" },
+            { name: "السلام عليكم-1- الحلقة 21", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-090.mp4" },
+            { name: "السلام عليكم-1- الحلقة 22", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-091.mp4" },
+            { name: "السلام عليكم-1- الحلقة 23", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-092.mp4" },
+            { name: "السلام عليكم-1- الحلقة 24", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-093.mp4" },
+            { name: "السلام عليكم-1- الحلقة 25", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-094.mp4" },
+            { name: "السلام عليكم-1- الحلقة 26", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-095.mp4" },
+            { name: "السلام عليكم-1- الحلقة 25", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-096.mp4" },
+            { name: "السلام عليكم-1- الحلقة 26", url: "https://archive.org/download/Islamic_Tape-498_uP_bY_mUSLEm/muslem.ettounsi-097.mp4" }
+
+          ]
+        },
+        {
+          id: 10,
+          title: "همسات",
+          image: "https://i.postimg.cc/Tw6MhWQP/alqrny.jpg",
+          color: "#E91E63",
+          lessons: [
+            { name: "همسات - الحلقة 1", url: "https://archive.org/download/Hamasat_Alqarni/01.mp4" },
+            { name: "همسات - الحلقة 2", url: "https://archive.org/download/Hamasat_Alqarni/02.mp4" },
+            { name: "همسات - الحلقة 3", url: "https://archive.org/download/Hamasat_Alqarni/03.mp4" },
+            { name: "همسات - الحلقة 4", url: "https://archive.org/download/Hamasat_Alqarni/04.mp4" },
+            { name: "همسات - الحلقة 5", url: "https://archive.org/download/Hamasat_Alqarni/05.mp4" },
+            { name: "همسات - الحلقة 6", url: "https://archive.org/download/Hamasat_Alqarni/06.mp4" },
+            { name: "همسات - الحلقة 7", url: "https://archive.org/download/Hamasat_Alqarni/07.mp4" },
+            { name: "همسات - الحلقة 8", url: "https://archive.org/download/Hamasat_Alqarni/08.mp4" },
+            { name: "همسات - الحلقة 9", url: "https://archive.org/download/Hamasat_Alqarni/09.mp4" },
+            { name: "همسات - الحلقة 10", url: "https://archive.org/download/Hamasat_Alqarni/10.mp4" },
+            { name: "همسات - الحلقة 11", url: "https://archive.org/download/Hamasat_Alqarni/11.mp4" },
+            { name: "همسات - الحلقة 12", url: "https://archive.org/download/Hamasat_Alqarni/12.mp4" }
+          ]
+        },
+        {
+          id: 11,
+          title: "من هنا وهناك",
+          image: "https://i.postimg.cc/Tw6MhWQP/alqrny.jpg",
+          color: "#3F51B5",
+          lessons: [
+            { name: "من هنا وهناك - الحلقة 1", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/01.mp4" },
+            { name: "من هنا وهناك - الحلقة 2", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/02.mp4" },
+            { name: "من هنا وهناك - الحلقة 3", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/03.mp4" },
+            { name: "من هنا وهناك - الحلقة 4", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/04.mp4" },
+            { name: "من هنا وهناك - الحلقة 5", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/05.mp4" },
+            { name: "من هنا وهناك - الحلقة 6", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/06.mp4" },
+            { name: "من هنا وهناك - الحلقة 7", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/07.mp4" },
+            { name: "من هنا وهناك - الحلقة 8", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/08.mp4" },
+            { name: "من هنا وهناك - الحلقة 9", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/09.mp4" },
+            { name: "من هنا وهناك - الحلقة 10", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/10.mp4" },
+            { name: "من هنا وهناك - الحلقة 11", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/11.mp4" },
+            { name: "من هنا وهناك - الحلقة 12", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/12.mp4" },
+            { name: "من هنا وهناك - الحلقة 13", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/13.mp4" },
+            { name: "من هنا وهناك - الحلقة 14", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/14.mp4" },
+            { name: "من هنا وهناك - الحلقة 15", url: "https://archive.org/download/Min_Hona_Wa_Honak_Alqarni/15.mp4" }
+          ]
+        },
+        {
+          id: 12,
+          title: "في رحاب القرآن",
+          image: "https://i.postimg.cc/Tw6MhWQP/alqrny.jpg",
+          color: "#009688",
+          lessons: [
+            { name: "في رحاب القرآن - الحلقة 1", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/01.mp4" },
+            { name: "في رحاب القرآن - الحلقة 2", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/02.mp4" },
+            { name: "في رحاب القرآن - الحلقة 3", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/03.mp4" },
+            { name: "في رحاب القرآن - الحلقة 4", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/04.mp4" },
+            { name: "في رحاب القرآن - الحلقة 5", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/05.mp4" },
+            { name: "في رحاب القرآن - الحلقة 6", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/06.mp4" },
+            { name: "في رحاب القرآن - الحلقة 7", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/07.mp4" },
+            { name: "في رحاب القرآن - الحلقة 8", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/08.mp4" },
+            { name: "في رحاب القرآن - الحلقة 9", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/09.mp4" },
+            { name: "في رحاب القرآن - الحلقة 10", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/10.mp4" },
+            { name: "في رحاب القرآن - الحلقة 11", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/11.mp4" },
+            { name: "في رحاب القرآن - الحلقة 12", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/12.mp4" },
+            { name: "في رحاب القرآن - الحلقة 13", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/13.mp4" },
+            { name: "في رحاب القرآن - الحلقة 14", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/14.mp4" },
+            { name: "في رحاب القرآن - الحلقة 15", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/15.mp4" },
+            { name: "في رحاب القرآن - الحلقة 16", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/16.mp4" },
+            { name: "في رحاب القرآن - الحلقة 17", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/17.mp4" },
+            { name: "في رحاب القرآن - الحلقة 18", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/18.mp4" },
+            { name: "في رحاب القرآن - الحلقة 19", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/19.mp4" },
+            { name: "في رحاب القرآن - الحلقة 20", url: "https://archive.org/download/Fi_Rihab_Alquran_Alqarni/20.mp4" }
+          ]
+        }
+      ]
+    };
+
+    // ===== مشغل الدروس =====
+    const LessonPlayer = {
+      audioPlayer: null,
+      videoPlayer: null,
+      nowPlaying: null,
+      playingIndicator: null,
+      bufferingLoader: null,
+      sleepTimer: null,
+      sleepTimerMinutes: 0,
+      sleepTimerSeconds: 0,
+      sleepTimerInterval: null,
+      waitMode: false,
+      currentLessonIndex: -1,
+      currentContainerId: null,
+      currentMediaUrl: "",
+      isVideoMode: false,
+
+      init() {
+        this.audioPlayer = document.getElementById('audioPlayer');
+        this.videoPlayer = document.getElementById('videoPlayer');
+        this.nowPlaying = document.getElementById('currentLesson');
+        this.playingIndicator = document.getElementById('playingIndicator');
+        this.bufferingLoader = document.getElementById('bufferingLoader');
+        this.renderLessons();
+        this.setupEventListeners();
+      },
+
+      renderLessons() {
+        const container = document.getElementById('stationsContainer');
+        container.innerHTML = '';
+        lessonsData.series.forEach(serie => {
+          const serieElement = document.createElement('div');
+          serieElement.className = 'lessons-container';
+          serieElement.id = `lessonsContainer${serie.id}`;
+          let optionsHTML = '<option value="">اختر درساً...</option>';
+          serie.lessons.forEach(lesson => {
+            optionsHTML += `<option value="${lesson.url}">${lesson.name}</option>`;
+          });
+          serieElement.innerHTML = `
+            <img src="${serie.image}" alt="${serie.title}" class="station-image">
+            <div class="lessons-title" style="color: ${serie.color}">${serie.title}</div>
+            <select class="lessons-dropdown" id="lessonsDropdown${serie.id}">
+              ${optionsHTML}
+            </select>
+            <div class="lesson-buttons">
+              <button class="play-lesson-btn" onclick="LessonPlayer.playSelectedLesson(${serie.id})">
+                <i class="fas fa-play"></i>
+                تشغيل
+              </button>
+              <button class="play-lesson-btn stop-btn" onclick="LessonPlayer.stopLesson()">
+                <i class="fas fa-stop"></i>
+              </button>
+            </div>
+            <div class="progress-bar"></div>
+          `;
+          container.appendChild(serieElement);
+        });
+      },
+
+      setupEventListeners() {
+        // مستمعات الأحداث لمشغل الصوت
+        this.audioPlayer.addEventListener('pause', () => {
+          if (!this.isVideoMode) {
+            this.playingIndicator.style.display = 'none';
+          }
+        });
+        this.audioPlayer.addEventListener('play', () => {
+          if (!this.isVideoMode) {
+            this.playingIndicator.style.display = 'block';
+          }
+        });
+        this.audioPlayer.addEventListener('ended', () => {
+          if (!this.isVideoMode) {
+            this.handleLessonEnd();
+          }
+        });
+
+        // مستمعات الأحداث لمشغل الفيديو
+        this.videoPlayer.addEventListener('pause', () => {
+          if (this.isVideoMode) {
+            this.playingIndicator.style.display = 'none';
+          }
+        });
+        this.videoPlayer.addEventListener('play', () => {
+          if (this.isVideoMode) {
+            this.playingIndicator.style.display = 'block';
+          }
+        });
+        this.videoPlayer.addEventListener('ended', () => {
+          if (this.isVideoMode) {
+            this.handleLessonEnd();
+          }
+        });
+
+        // مستمعات الأحداث للقوائم المنسدلة
+        document.querySelectorAll('.lessons-dropdown').forEach(dropdown => {
+          dropdown.addEventListener('change', (e) => {
+            const containerId = e.target.id.replace('lessonsDropdown', '');
+            if (e.target.value) {
+              this.playSelectedLesson(parseInt(containerId));
+            }
+          });
+        });
+      },
+
+      playSelectedLesson(containerId) {
+        const lessonsDropdown = document.getElementById(`lessonsDropdown${containerId}`);
+        const lessonsContainer = document.getElementById(`lessonsContainer${containerId}`);
+        const selectedOption = lessonsDropdown.options[lessonsDropdown.selectedIndex];
+        const lessonUrl = selectedOption.value;
+        const lessonName = selectedOption.text;
+        
+        if (!lessonUrl) {
+          this.showMessage('الرجاء اختيار درس أولاً');
+          return;
+        }
+        
+        this.currentLessonIndex = lessonsDropdown.selectedIndex;
+        this.currentContainerId = containerId;
+        this.currentMediaUrl = lessonUrl;
+        this.nowPlaying.textContent = `جاري تشغيل: ${lessonName}`;
+        this.bufferingLoader.style.display = 'inline-block';
+        this.playingIndicator.style.display = 'none';
+        
+        // إزالة الكلاس النشط من جميع الحاويات
+        document.querySelectorAll('.lessons-container').forEach(container => {
+          container.classList.remove('active');
+        });
+        lessonsContainer.classList.add('active');
+        
+        // إظهار أزرار التبديل بين الصوت والفيديو
+        document.getElementById('mediaTypeToggle').style.display = 'flex';
+        
+        // تشغيل الوسائط حسب الوضع الحالي
+        if (this.isVideoMode) {
+          this.playVideo();
+        } else {
+          this.playAudio();
+        }
+      },
+
+      playAudio() {
+        this.isVideoMode = false;
+        this.audioPlayer.style.display = 'block';
+        this.videoPlayer.style.display = 'none';
+        this.videoPlayer.pause();
+        this.videoPlayer.src = '';
+        
+        this.audioPlayer.src = this.currentMediaUrl;
+        this.audioPlayer.play().then(() => {
+          this.bufferingLoader.style.display = 'none';
+          this.playingIndicator.style.display = 'block';
+        }).catch(error => {
+          console.error('خطأ في تشغيل الصوت:', error);
+          // إذا فشل تشغيل الصوت، حاول تشغيل الفيديو تلقائياً
+          this.showMessage('لا يمكن تشغيل الصوت، سيتم التحويل إلى وضع الفيديو');
+          setTimeout(() => {
+            this.switchToVideo();
+          }, 1000);
+        });
+      },
+
+      playVideo() {
+        this.isVideoMode = true;
+        this.videoPlayer.style.display = 'block';
+        this.audioPlayer.style.display = 'none';
+        this.audioPlayer.pause();
+        this.audioPlayer.src = '';
+        
+        this.videoPlayer.src = this.currentMediaUrl;
+        this.videoPlayer.play().then(() => {
+          this.bufferingLoader.style.display = 'none';
+          this.playingIndicator.style.display = 'block';
+        }).catch(error => {
+          console.error('خطأ في تشغيل الفيديو:', error);
+          this.nowPlaying.textContent = `خطأ في تشغيل الفيديو`;
+          this.bufferingLoader.style.display = 'none';
+          document.querySelectorAll('.lessons-container').forEach(container => {
+            container.classList.remove('active');
+          });
+        });
+      },
+
+      stopLesson() {
+        this.audioPlayer.pause();
+        this.videoPlayer.pause();
+        this.audioPlayer.src = "";
+        this.videoPlayer.src = "";
+        this.nowPlaying.textContent = 'اختر درساً للاستماع';
+        this.playingIndicator.style.display = 'none';
+        this.bufferingLoader.style.display = 'none';
+        document.querySelectorAll('.lessons-container').forEach(container => {
+          container.classList.remove('active');
+        });
+        document.querySelectorAll('.lessons-dropdown').forEach(dropdown => {
+          dropdown.value = '';
+        });
+        document.getElementById('mediaTypeToggle').style.display = 'none';
+        
+        if (this.waitMode) {
+          this.waitMode = false;
+          document.getElementById('waitBtn').classList.remove('active');
+        }
+      },
+
+      handleLessonEnd() {
+        this.playingIndicator.style.display = 'none';
+        if (this.waitMode && this.currentContainerId !== null) {
+          const dropdown = document.getElementById(`lessonsDropdown${this.currentContainerId}`);
+          if (this.currentLessonIndex < dropdown.options.length - 1) {
+            this.currentLessonIndex++;
+            dropdown.selectedIndex = this.currentLessonIndex;
+            this.playSelectedLesson(this.currentContainerId);
+            return;
+          }
+        }
+        this.nowPlaying.textContent = 'انتهى الدرس';
+        document.querySelectorAll('.lessons-container').forEach(container => {
+          container.classList.remove('active');
+        });
+        if (this.waitMode) {
+          this.waitMode = false;
+          document.getElementById('waitBtn').classList.remove('active');
+        }
+      },
+
+      toggleSleepTimer() {
+        if (this.sleepTimerInterval) {
+          this.cancelSleepTimer();
+        } else {
+          document.getElementById('sleepTimerModal').style.display = 'flex';
+          this.setupTimerOptions();
+        }
+      },
+
+      setupTimerOptions() {
+        const timerOptions = document.querySelectorAll('.timer-option');
+        timerOptions.forEach(option => {
+          option.onclick = () => {
+            timerOptions.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+          };
+        });
+      },
+
+      setSleepTimer() {
+        const selectedOption = document.querySelector('.timer-option.selected');
+        if (!selectedOption) {
+          this.showMessage('الرجاء اختيار وقت للمؤقت');
+          return;
+        }
+        const minutes = parseInt(selectedOption.dataset.minutes);
+        if (this.sleepTimerInterval) clearInterval(this.sleepTimerInterval);
+        this.sleepTimerMinutes = minutes;
+        this.sleepTimerSeconds = 0;
+        document.getElementById('sleepTimerBtn').classList.add('active');
+        document.getElementById('timerStatus').style.display = 'block';
+        this.updateTimerDisplay();
+        this.sleepTimerInterval = setInterval(() => {
+          this.sleepTimerSeconds--;
+          if (this.sleepTimerSeconds < 0) {
+            this.sleepTimerMinutes--;
+            this.sleepTimerSeconds = 59;
+          }
+          this.updateTimerDisplay();
+          if (this.sleepTimerMinutes <= 0 && this.sleepTimerSeconds <= 0) {
+            this.stopLesson();
+            this.nowPlaying.textContent = 'تم إيقاف التشغيل حسب مؤقت النوم';
+            this.cancelSleepTimer();
+          }
+        }, 1000);
+        this.closeSleepTimerModal();
+      },
+
+      cancelSleepTimer() {
+        if (this.sleepTimerInterval) {
+          clearInterval(this.sleepTimerInterval);
+          this.sleepTimerInterval = null;
+        }
+        document.getElementById('sleepTimerBtn').classList.remove('active');
+        document.getElementById('timerStatus').style.display = 'none';
+      },
+
+      updateTimerDisplay() {
+        const minutes = this.sleepTimerMinutes.toString().padStart(2, '0');
+        const seconds = this.sleepTimerSeconds.toString().padStart(2, '0');
+        document.getElementById('timerCountdown').textContent = `${minutes}:${seconds}`;
+      },
+
+      closeSleepTimerModal() {
+        document.getElementById('sleepTimerModal').style.display = 'none';
+      },
+
+      toggleWait() {
+        if (this.waitMode) {
+          this.waitMode = false;
+          document.getElementById('waitBtn').classList.remove('active');
+          this.nowPlaying.textContent = this.nowPlaying.textContent.replace(' (وضع الانتظار مفعل)', '');
+        } else {
+          if (this.currentLessonIndex === -1) {
+            this.showMessage('الرجاء تشغيل درس أولاً');
+            return;
+          }
+          document.getElementById('waitModal').style.display = 'flex';
+        }
+      },
+
+      enableWaitMode() {
+        this.waitMode = true;
+        document.getElementById('waitBtn').classList.add('active');
+        this.nowPlaying.textContent += ' (وضع الانتظار مفعل)';
+        this.closeWaitModal();
+      },
+
+      closeWaitModal() {
+        document.getElementById('waitModal').style.display = 'none';
+      },
+
+      showMessage(message) {
+        alert(message);
+      }
+    };
+
+    // ===== دوال التبديل بين الصوت والفيديو =====
+    function switchToAudio() {
+      LessonPlayer.isVideoMode = false;
+      document.getElementById('audioBtn').classList.add('active');
+      document.getElementById('videoBtn').classList.remove('active');
+      if (LessonPlayer.currentMediaUrl) {
+        LessonPlayer.playAudio();
+      }
+    }
+
+    function switchToVideo() {
+      LessonPlayer.isVideoMode = true;
+      document.getElementById('videoBtn').classList.add('active');
+      document.getElementById('audioBtn').classList.remove('active');
+      if (LessonPlayer.currentMediaUrl) {
+        LessonPlayer.playVideo();
+      }
+    }
+
+    // ===== دوال عامة =====
+    function goBack() {
+      window.location.href = 'index.html';
+    }
+
+    function shareApp() {
+      const shareData = {
+        title: 'دروس الشيخ عائض القرني',
+        text: 'استمع إلى دروس الشيخ عائض القرني - صفحة اللهم لك الحمد',
+        url: window.location.href
+      };
+      if (navigator.share) {
+        navigator.share(shareData).catch(console.error);
+      } else {
+        navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`).then(() => {
+          alert('تم نسخ الرابط إلى الحافظة!');
+        }).catch(() => {
+          alert('فشل النسخ، يرجى نسخ الرابط يدوياً');
+        });
+      }
+    }
+
+    function reportBrokenLink() {
+      const phoneNumber = '+201092116092';
+      const message = 'يوجد رابط معطل في دروس الشيخ عائض القرني، يرجى التحقق';
+      const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // ===== دوال واجهة المستخدم =====
+    function toggleSleepTimer() { LessonPlayer.toggleSleepTimer(); }
+    function setSleepTimer() { LessonPlayer.setSleepTimer(); }
+    function closeSleepTimerModal() { LessonPlayer.closeSleepTimerModal(); }
+    function toggleWait() { LessonPlayer.toggleWait(); }
+    function enableWaitMode() { LessonPlayer.enableWaitMode(); }
+    function closeWaitModal() { LessonPlayer.closeWaitModal(); }
+
+    // ===== تهيئة التطبيق =====
+    document.addEventListener('DOMContentLoaded', () => {
+      LessonPlayer.init();
+    });
+  </script>
+</body>
+</html>
