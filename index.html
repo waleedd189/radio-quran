@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUmFkaW8gUXVyYW4iLCJzaG9ydF9uYW1lIjoiUXVyYW4gUmFkaW8iLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJ0aGVtZV9jb2xvciI6IiM0Q0FGNTAiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzExMSIsImljb25zIjpbXSwibm90aWZpY2F0aW9ucyI6eyJpY29uIjoiaWNvbi5wbmciLCJ2aWJyYXRlIjoxLCJzb3VuZCI6MX19">
   <style>
-    /* نفس الأنماط الأصلية كاملة بدون تغيير */
+    /* الأنماط الأساسية */
     body {
       margin: 0;
       font-family: 'Cairo', 'Arial', sans-serif;
@@ -19,6 +19,7 @@
       -webkit-user-select: none;
       user-select: none;
       overflow-x: hidden;
+      transition: background 0.3s ease;
     }
     
     html[lang="en"] body {
@@ -335,6 +336,23 @@
       transition: all 0.3s ease;
       border: 2px solid transparent;
       position: relative; 
+      overflow: hidden;
+    }
+    
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(76, 175, 80, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover::before {
+      opacity: 1;
     }
     
     .card:hover {
@@ -572,30 +590,14 @@
         transform: translateY(-2px);
     }
     
-    .language-toggle {
+    /* === التعديلات الجديدة === */
+    
+    /* زر القائمة الرئيسية */
+    .menu-toggle {
         position: fixed;
         top: 20px;
         left: 20px;
-        background: #4CAF50;
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 0.9em;
-        z-index: 1000;
-        transition: background-color 0.3s ease;
-    }
-
-    .language-toggle:hover {
-        background-color: #45a049;
-    }
-
-    .share-toggle {
-        position: fixed;
-        top: 20px;
-        left: 120px;
-        background: #2196F3;
+        background: #673AB7; /* لون بنفسجي مميز */
         color: white;
         border: none;
         padding: 8px 15px;
@@ -609,9 +611,98 @@
         gap: 5px;
     }
 
-    .share-toggle:hover {
-        background-color: #0b7dda;
+    .menu-toggle:hover {
+        background-color: #512DA8;
     }
+
+    /* تعديل مواقع الأزرار الأخرى */
+    .language-toggle {
+        top: 20px;
+        left: 120px; /* تم تعديله */
+    }
+
+    .share-toggle {
+        top: 20px;
+        left: 220px; /* تم تعديله */
+    }
+
+    /* أنماط البث المباشر بعد إزالة اليوتيوب */
+    .live-streams-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      max-width: 800px; /* تصغير العرض الأقصى */
+      margin: 20px auto;
+    }
+    
+    .live-stream-card {
+      background: rgba(34, 34, 34, 0.9);
+      border-radius: 15px;
+      padding: 20px; /* زيادة الحشو */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      transition: all 0.3s ease;
+      text-align: center; /* توسيط المحتوى */
+    }
+    
+    .live-stream-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+      border-color: rgba(76, 175, 80, 0.5);
+    }
+    
+    .live-stream-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px; /* زيادة المسافة */
+    }
+    
+    .live-stream-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.2em;
+      color: #4CAF50;
+      margin: 0;
+    }
+    
+    .live-badge {
+      background: #f44336;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.7em;
+      font-weight: bold;
+      animation: blink 2s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0.5; }
+    }
+    
+    .stream-controls {
+      display: flex;
+      justify-content: center; /* توسيط الزر */
+      gap: 10px;
+    }
+    
+    .audio-only-btn {
+      background: #2196F3;
+      color: white;
+      border: none;
+      padding: 10px 20px; /* زيادة الحشو */
+      border-radius: 8px;
+      font-size: 0.9em; /* زيادة حجم الخط */
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .audio-only-btn:hover {
+      background: #1976D2;
+      transform: translateY(-2px);
+    }
+
+    /* === نهاية التعديلات الجديدة === */
 
     /* Section Headers */
     .section-header {
@@ -650,8 +741,12 @@
       .whatsapp-float { width: 50px; height: 50px; bottom: 15px; right: 15px; }
       .whatsapp-float svg { width: 26px; height: 26px; }
       .whatsapp-tooltip { right: 60px; font-size: 0.8em; }
-      .language-toggle { top: 10px; left: 10px; padding: 6px 10px; font-size: 0.8em; }
-      .share-toggle { top: 10px; left: 85px; padding: 6px 10px; font-size: 0.8em; }
+      
+      /* تعديل مواقع الأزرار للموبايل */
+      .menu-toggle { top: 10px; left: 10px; padding: 6px 10px; font-size: 0.8em; }
+      .language-toggle { top: 10px; left: 80px; padding: 6px 10px; font-size: 0.8em; }
+      .share-toggle { top: 10px; left: 150px; padding: 6px 10px; font-size: 0.8em; }
+      
       h1 a { display: block; margin: 5px 0; }
       .section-header { font-size: 1.5em; margin: 20px 0 15px 0; }
       
@@ -667,6 +762,22 @@
       
       .controls-panel {
         padding: 8px;
+      }
+
+      /* تحسينات للبث المباشر على الموبايل */
+      .live-streams-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin: 15px 10px;
+      }
+      
+      .audio-only-btn {
+        font-size: 0.8em;
+        padding: 8px 15px;
+      }
+      
+      .live-stream-title {
+        font-size: 1em;
       }
     }
 
@@ -744,17 +855,6 @@
     @keyframes ticker {
       0% { transform: translateX(-100%); }
       100% { transform: translateX(100%); }
-    }
-    
-    /* تعديل موضع الأزرار الحالية */
-    .language-toggle {
-      top: 20px;
-      left: 20px;
-    }
-
-    .share-toggle {
-      top: 20px;
-      left: 120px;
     }
     
     /* أنماط المشغل العام */
@@ -914,6 +1014,11 @@
       top: 10px;
       right: 10px;
       z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
     }
     
     .favorite-btn:hover {
@@ -997,162 +1102,325 @@
       padding: 20px;
       font-style: italic;
     }
-    
-    /* أنماط البث المباشر الجديدة */
-    .live-streams-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      max-width: 1200px;
-      margin: 20px auto;
-    }
-    
-    .live-stream-card {
-      background: rgba(34, 34, 34, 0.9);
-      border-radius: 15px;
-      padding: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(76, 175, 80, 0.3);
+
+    /* أنماط الإشعارات */
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      z-index: 1001;
+      opacity: 0;
       transition: all 0.3s ease;
     }
     
-    .live-stream-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
-      border-color: rgba(76, 175, 80, 0.5);
+    .notification.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
     }
     
-    .live-stream-header {
+    .notification.success {
+      background: rgba(76, 175, 80, 0.9);
+    }
+    
+    .notification.error {
+      background: rgba(244, 67, 54, 0.9);
+    }
+    
+    .notification.info {
+      background: rgba(33, 150, 243, 0.9);
+    }
+
+    /* أنماط التحكم في السرعة */
+    .speed-control {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      justify-content: center;
+      margin: 10px 0;
+      gap: 10px;
     }
     
-    .live-stream-title {
-      font-family: 'Amiri', serif;
-      font-size: 1.2em;
-      color: #4CAF50;
-      margin: 0;
+    .speed-control label {
+      color: #ccc;
+      font-size: 0.9em;
     }
     
-    .live-badge {
-      background: #f44336;
+    .speed-control select {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      border-radius: 8px;
+      padding: 5px 10px;
       color: white;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 0.7em;
-      font-weight: bold;
-      animation: blink 2s infinite;
+      font-size: 0.9em;
+      cursor: pointer;
     }
-    
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0.5; }
-    }
-    
-    .live-stream-container {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* نسبة 16:9 */
-      height: 0;
-      overflow: hidden;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
-    
-    .live-stream-container iframe {
-      position: absolute;
+
+    /* أنماط نافذة المشاركة */
+    .share-dialog {
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      border: none;
-      border-radius: 10px;
-    }
-    
-    .stream-controls {
+      background: rgba(0, 0, 0, 0.8);
       display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 10px;
-    }
-    
-    .audio-only-btn {
-      background: #2196F3;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.8em;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .audio-only-btn:hover {
-      background: #1976D2;
-      transform: translateY(-2px);
-    }
-    
-    .fullscreen-btn {
-      background: #FF9800;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.8em;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .fullscreen-btn:hover {
-      background: #F57C00;
-      transform: translateY(-2px);
-    }
-    
-    /* تحسينات الأداء */
-    .lazy-image {
+      z-index: 1000;
       opacity: 0;
-      transition: opacity 0.3s;
+      transition: opacity 0.3s ease;
     }
     
-    .lazy-image.loaded {
+    .share-dialog.show {
       opacity: 1;
     }
     
-    /* تحسينات للبث المباشر على الموبايل */
+    .share-dialog-content {
+      background: #333;
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+    
+    .share-dialog.show .share-dialog-content {
+      transform: translateY(0);
+    }
+    
+    .share-dialog h3 {
+      margin-top: 0;
+      color: #4CAF50;
+      text-align: center;
+    }
+    
+    .share-dialog p {
+      margin-bottom: 20px;
+      color: #ccc;
+      text-align: center;
+    }
+    
+    .share-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .share-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 10px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .share-option:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+    
+    .share-icon {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+    
+    .close-dialog {
+      display: block;
+      width: 100%;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s ease;
+    }
+    
+    .close-dialog:hover {
+      background: #45a049;
+    }
+    
     @media (max-width: 768px) {
-      .live-streams-container {
-        grid-template-columns: 1fr;
-        gap: 15px;
-        margin: 15px 10px;
+      .share-options {
+        grid-template-columns: repeat(2, 1fr);
       }
-      
-      .live-stream-container {
-        padding-bottom: 75%; /* نسبة أفضل للموبايل */
-      }
-      
-      .stream-controls {
-        flex-wrap: wrap;
-      }
-      
-      .audio-only-btn, .fullscreen-btn {
-        font-size: 0.7em;
-        padding: 4px 8px;
-      }
-      
-      .live-stream-title {
-        font-size: 1em;
-      }
+    }
+
+    /* أنماط مؤشر التحميل */
+    .global-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .global-loader.show {
+      opacity: 1;
+    }
+    
+    .loader-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #4CAF50;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .global-loader p {
+      color: #fff;
+      font-size: 1.2em;
+    }
+
+    /* أنماط قسم الإعدادات */
+    .settings-section {
+      margin: 30px auto;
+      max-width: 600px;
+    }
+    
+    .settings-container {
+      background: rgba(34, 34, 34, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .setting-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    
+    .setting-item label {
+      color: #ccc;
+      font-size: 1em;
+    }
+    
+    .setting-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    
+    .setting-item select {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      border-radius: 8px;
+      padding: 5px 10px;
+      color: white;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+    
+    /* أنماط السمة الفاتحة */
+    body.light-theme {
+      background: linear-gradient(to bottom right, #f5f5f5, #ddd);
+      color: #333;
+    }
+    
+    body.light-theme .card {
+      background: #fff;
+      color: #333;
+    }
+    
+    body.light-theme .controls-panel,
+    body.light-theme .prayer-times-panel,
+    body.light-theme .settings-container {
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+    }
+    
+    body.light-theme .setting-item label {
+      color: #333;
+    }
+    
+    body.light-theme .setting-item select {
+      background: rgba(0, 0, 0, 0.1);
+      color: #333;
+    }
+
+    /* أنماط بطاقات المفضلة */
+    .favorite-card {
+      border-left: 4px solid #E91E63;
+    }
+    
+    .remove-favorite-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(244, 67, 54, 0.8);
+      color: white;
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+    
+    .remove-favorite-btn:hover {
+      background: rgba(244, 67, 54, 1);
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
-  <!-- الأزرار الأصلية -->
+  <!-- === التعديلات الجديدة === -->
+  <!-- زر القائمة الرئيسية -->
+  <button class="menu-toggle" id="menuToggle" onclick="goToHome()">
+    <span>🏠</span>
+    <span id="menuText">الرئيسية</span>
+  </button>
+
+  <!-- الأزرار الأصلية مع تعديل المواقع -->
   <button class="language-toggle" id="languageToggle" onclick="toggleLanguage()">English</button>
   <button class="share-toggle" id="shareToggle" onclick="shareApp()">
     <span>📤</span>
     <span id="shareText">مشاركة</span>
   </button>
+  <!-- === نهاية التعديلات الجديدة === -->
 
   <!-- التاريخ الهجري بدون إطار -->
   <div class="hijri-date" id="hijriDate">جاري تحميل التاريخ الهجري...</div>
@@ -1261,7 +1529,8 @@
     <audio id="globalAudioPlayer" controls></audio>
   </div>
 
-  <!-- البث المباشر (المنقول للأعلى) -->
+  <!-- === التعديلات الجديدة: البث المباشر بدون يوتيوب === -->
+  <!-- البث المباشر -->
   <h2 class="section-header" id="liveStreamsTitle">البث المباشر</h2>
   <div class="live-streams-container" id="live-streams-container">
     <!-- قناة مكة -->
@@ -1270,12 +1539,8 @@
         <h3 class="live-stream-title" id="makkahTitle">قناة القرآن الكريم - مكة المكرمة</h3>
         <div class="live-badge" id="liveBadge">مباشر</div>
       </div>
-      <div class="live-stream-container">
-        <iframe src="https://www.youtube.com/embed/G1uYDnGlLJo" allowfullscreen></iframe>
-      </div>
       <div class="stream-controls">
-        <button class="audio-only-btn" onclick="playLiveAudio('https://qurango.net/radio/makkah_live', 'قناة القرآن الكريم - مكة المكرمة')" id="makkahAudioBtn">صوت فقط</button>
-        <button class="fullscreen-btn" onclick="toggleFullscreen(this)" id="makkahFullscreenBtn">ملء الشاشة</button>
+        <button class="audio-only-btn" onclick="playLiveAudio('https://qurango.net/radio/makkah_live', 'قناة القرآن الكريم - مكة المكرمة')" id="makkahAudioBtn">استمع للبث</button>
       </div>
     </div>
 
@@ -1285,15 +1550,12 @@
         <h3 class="live-stream-title" id="madinahTitle">قناة السنة النبوية - المدينة المنورة</h3>
         <div class="live-badge" id="liveBadge">مباشر</div>
       </div>
-      <div class="live-stream-container">
-        <iframe src="https://www.youtube.com/embed/TpT8b8JFZ6E" allowfullscreen></iframe>
-      </div>
       <div class="stream-controls">
-        <button class="audio-only-btn" onclick="playLiveAudio('https://qurango.net/radio/madinah_live', 'قناة السنة النبوية - المدينة المنورة')" id="madinahAudioBtn">صوت فقط</button>
-        <button class="fullscreen-btn" onclick="toggleFullscreen(this)" id="madinahFullscreenBtn">ملء الشاشة</button>
+        <button class="audio-only-btn" onclick="playLiveAudio('https://qurango.net/radio/madinah_live', 'قناة السنة النبوية - المدينة المنورة')" id="madinahAudioBtn">استمع للبث</button>
       </div>
     </div>
   </div>
+  <!-- === نهاية التعديلات الجديدة === -->
 
   <!-- Section 1: الأذكار - الرقية (مع إضافة الشعراوي) -->
   <h2 class="section-header" id="section1Title">الأذكار - الرقية</h2>
@@ -1322,6 +1584,37 @@
     </div>
   </div>
 
+  <!-- قسم الإعدادات -->
+  <div class="settings-section" id="settingsSection">
+    <h2 class="section-header" id="settingsTitle">الإعدادات</h2>
+    <div class="settings-container">
+      <div class="setting-item">
+        <label for="autoPlaySetting">التشغيل التلقائي</label>
+        <input type="checkbox" id="autoPlaySetting">
+      </div>
+      <div class="setting-item">
+        <label for="notificationSetting">الإشعارات</label>
+        <input type="checkbox" id="notificationSetting">
+      </div>
+      <div class="setting-item">
+        <label for="themeSetting">السمة</label>
+        <select id="themeSetting">
+          <option value="dark">داكن</option>
+          <option value="light">فاتح</option>
+        </select>
+      </div>
+      <div class="setting-item">
+        <label for="qualitySetting">جودة التشغيل</label>
+        <select id="qualitySetting">
+          <option value="auto">تلقائي</option>
+          <option value="low">منخفضة</option>
+          <option value="medium">متوسطة</option>
+          <option value="high">عالية</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <div class="footer-text" id="footerText">راديو قرآن - صفحة اللهم لك الحمد</div>
   </footer>
@@ -1335,8 +1628,6 @@
   </button>
 
   <script>
-    // نفس الكود الأصلي كامل مع التعديلات المطلوبة فقط
-    
     // Translations object
     const translations = {
       ar: {
@@ -1394,9 +1685,34 @@
         emptyFavorites: "لا توجد محطات مفضلة",
         liveStreamMakkah: "قناة القرآن الكريم - مكة المكرمة",
         liveStreamMadinah: "قناة السنة النبوية - المدينة المنورة",
-        audioOnly: "صوت فقط",
+        audioOnly: "استمع للبث",
         fullscreen: "ملء الشاشة",
-        live: "مباشر"
+        live: "مباشر",
+        settingsTitle: "الإعدادات",
+        autoPlay: "التشغيل التلقائي",
+        notifications: "الإشعارات",
+        theme: "السمة",
+        darkTheme: "داكن",
+        lightTheme: "فاتح",
+        quality: "جودة التشغيل",
+        autoQuality: "تلقائي",
+        lowQuality: "منخفضة",
+        mediumQuality: "متوسطة",
+        highQuality: "عالية",
+        playbackSpeed: "سرعة التشغيل",
+        loading: "جاري التحميل...",
+        shareApp: "مشاركة التطبيق",
+        close: "إغلاق",
+        copyLink: "نسخ الرابط",
+        removeFromFavorites: "إزالة من المفضلة",
+        addedToFavorites: "تمت الإضافة إلى المفضلة",
+        removedFromFavorites: "تمت الإزالة من المفضلة",
+        allFavoritesCleared: "تم مسح جميع المفضلات",
+        sharedSuccessfully: "تمت المشاركة بنجاح",
+        linkCopied: "تم نسخ الرابط إلى الحافظة",
+        copyFailed: "فشل النسخ، يرجى المحاولة مرة أخرى",
+        menuButton: "الرئيسية",
+        menuButtonTooltip: "العودة للرئيسية"
       },
       en: {
         quranRadio: "Quran Radio",
@@ -1453,9 +1769,34 @@
         emptyFavorites: "No favorite stations",
         liveStreamMakkah: "Quran Channel - Makkah Live",
         liveStreamMadinah: "Sunnah Channel - Madinah Live",
-        audioOnly: "Audio Only",
+        audioOnly: "Listen Live",
         fullscreen: "Fullscreen",
-        live: "LIVE"
+        live: "LIVE",
+        settingsTitle: "Settings",
+        autoPlay: "Auto Play",
+        notifications: "Notifications",
+        theme: "Theme",
+        darkTheme: "Dark",
+        lightTheme: "Light",
+        quality: "Playback Quality",
+        autoQuality: "Auto",
+        lowQuality: "Low",
+        mediumQuality: "Medium",
+        highQuality: "High",
+        playbackSpeed: "Playback Speed",
+        loading: "Loading...",
+        shareApp: "Share App",
+        close: "Close",
+        copyLink: "Copy Link",
+        removeFromFavorites: "Remove from Favorites",
+        addedToFavorites: "Added to favorites",
+        removedFromFavorites: "Removed from favorites",
+        allFavoritesCleared: "All favorites cleared",
+        sharedSuccessfully: "Shared successfully",
+        linkCopied: "Link copied to clipboard",
+        copyFailed: "Failed to copy, please try again",
+        menuButton: "Home",
+        menuButtonTooltip: "Go to Home"
       }
     };
 
@@ -1610,7 +1951,14 @@
     let nextPrayerInterval = null;
     let sleepTimer = null;
 
-    // Function to set the language and update content
+    // === التعديلات الجديدة: دالة العودة للرئيسية ===
+    function goToHome() {
+      stopRadio();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // === نهاية التعديلات الجديدة ===
+
+    // Function to set language and update content
     function setLanguage(lang) {
       currentLanguage = lang;
       htmlElement.setAttribute('lang', lang);
@@ -1623,6 +1971,7 @@
       document.getElementById('charityText').textContent = translations[lang].charityText;
       document.getElementById('languageToggle').textContent = translations[lang].languageToggle;
       document.getElementById('shareText').textContent = translations[lang].shareText;
+      document.getElementById('menuText').textContent = translations[lang].menuButton; // تحديث زر القائمة
       document.getElementById('prayerTimesTitle').textContent = translations[lang].prayerTimesTitle;
       document.getElementById('prevBtn').textContent = translations[lang].prevBtn;
       document.getElementById('nextBtn').textContent = translations[lang].nextBtn;
@@ -1636,14 +1985,13 @@
       document.getElementById('section4Title').textContent = translations[lang].section4Title;
       document.getElementById('liveStreamsTitle').textContent = translations[lang].liveStreamsTitle;
       document.getElementById('searchInput').placeholder = translations[lang].searchPlaceholder;
+      document.getElementById('settingsTitle').textContent = translations[lang].settingsTitle;
       
       // Update live streams titles
       document.getElementById('makkahTitle').textContent = translations[lang].liveStreamMakkah;
       document.getElementById('madinahTitle').textContent = translations[lang].liveStreamMadinah;
       document.getElementById('makkahAudioBtn').textContent = translations[lang].audioOnly;
       document.getElementById('madinahAudioBtn').textContent = translations[lang].audioOnly;
-      document.getElementById('makkahFullscreenBtn').textContent = translations[lang].fullscreen;
-      document.getElementById('madinahFullscreenBtn').textContent = translations[lang].fullscreen;
       document.querySelectorAll('.live-badge').forEach(badge => {
         badge.textContent = translations[lang].live;
       });
@@ -1655,6 +2003,24 @@
           el.textContent = translations[lang][key];
         }
       });
+
+      // Update settings labels
+      document.querySelector('label[for="autoPlaySetting"]').textContent = translations[lang].autoPlay;
+      document.querySelector('label[for="notificationSetting"]').textContent = translations[lang].notifications;
+      document.querySelector('label[for="themeSetting"]').textContent = translations[lang].theme;
+      document.querySelector('label[for="qualitySetting"]').textContent = translations[lang].quality;
+      
+      // Update theme options
+      const themeSelect = document.getElementById('themeSetting');
+      themeSelect.options[0].text = translations[lang].darkTheme;
+      themeSelect.options[1].text = translations[lang].lightTheme;
+      
+      // Update quality options
+      const qualitySelect = document.getElementById('qualitySetting');
+      qualitySelect.options[0].text = translations[lang].autoQuality;
+      qualitySelect.options[1].text = translations[lang].lowQuality;
+      qualitySelect.options[2].text = translations[lang].mediumQuality;
+      qualitySelect.options[3].text = translations[lang].highQuality;
 
       // Re-initialize station cards to apply language-specific names and dropdowns
       initializeStations();
@@ -1688,15 +2054,13 @@
 
       if (navigator.share) {
         navigator.share(shareData)
+          .then(() => {
+            showNotification(translations[currentLanguage].sharedSuccessfully, 'success');
+          })
           .catch(console.error);
       } else {
-        // Fallback: copy to clipboard
-        const textToCopy = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
-        navigator.clipboard.writeText(textToCopy).then(() => {
-          alert(currentLanguage === 'ar' ? 'تم نسخ الرابط إلى الحافظة!' : 'Link copied to clipboard!');
-        }).catch(() => {
-          alert(currentLanguage === 'ar' ? 'فشل النسخ، يرجى نسخ الرابط يدوياً' : 'Failed to copy, please copy manually');
-        });
+        // Fallback: create share dialog
+        showShareDialog(shareData);
       }
     }
 
@@ -1846,34 +2210,6 @@
       return card;
     }
 
-    // Enable play buttons
-    function enablePlaySuraButton(selectElement) {
-        const playSuraBtn = selectElement.nextElementSibling;
-        if (selectElement.value) {
-            playSuraBtn.disabled = false;
-        } else {
-            playSuraBtn.disabled = true;
-        }
-    }
-
-    function enablePlayMushafButton(selectElement) {
-        const playMushafBtn = selectElement.nextElementSibling;
-        if (selectElement.value) {
-            playMushafBtn.disabled = false;
-        } else {
-            playMushafBtn.disabled = true;
-        }
-    }
-
-    function enablePlayRuqyahButton(selectElement) {
-        const playRuqyhBtn = selectElement.nextElementSibling;
-        if (selectElement.value) {
-            playRuqyhBtn.disabled = false;
-        } else {
-            playRuqyhBtn.disabled = true;
-        }
-    }
-
     // Play functions
     function playAzkar(selectElement) { 
         const selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -1897,34 +2233,6 @@
 
         if (url) {
             playRadio(url, `${mainStationName} - ${recordingName}`, selectElement);
-            selectElement.value = url;
-        } else {
-            stopRadio();
-        }
-    }
-
-    function playQuranSura(selectElement) {
-        const selectedOption = selectElement.options[selectElement.selectedIndex];
-        const url = selectedOption.value;
-        const mainStationName = selectElement.closest('.card').querySelector('h2').textContent;
-        const suraName = selectedOption.textContent;
-
-        if (url) {
-            playRadio(url, `${mainStationName} - ${suraName}`, selectElement);
-            selectElement.value = url;
-        } else {
-            stopRadio();
-        }
-    }
-
-    function playMushafSura(selectElement) {
-        const selectedOption = selectElement.options[selectElement.selectedIndex];
-        const url = selectedOption.value;
-        const mainStationName = selectElement.closest('.card').querySelector('h2').textContent;
-        const suraName = selectedOption.textContent;
-
-        if (url) {
-            playRadio(url, `${mainStationName} - ${suraName}`, selectElement);
             selectElement.value = url;
         } else {
             stopRadio();
@@ -2005,18 +2313,6 @@
     // Play live audio function
     function playLiveAudio(url, stationName) {
       playRadio(url, `${stationName} - ${translations[currentLanguage].audioOnly}`, event.target);
-    }
-
-    // Toggle fullscreen function
-    function toggleFullscreen(button) {
-      const iframe = button.closest('.live-stream-card').querySelector('iframe');
-      if (iframe.requestFullscreen) {
-        iframe.requestFullscreen();
-      } else if (iframe.webkitRequestFullscreen) {
-        iframe.webkitRequestFullscreen();
-      } else if (iframe.msRequestFullscreen) {
-        iframe.msRequestFullscreen();
-      }
     }
 
     // Buffering handlers
@@ -2349,12 +2645,33 @@
         if (!prayerTimes || !prayerTimes.timings) {
             return;
         }
-      document.getElementById('fajrTime').textContent = formatTime(prayerTimes.timings.Fajr);
-      document.getElementById('sunriseTime').textContent = formatTime(prayerTimes.timings.Sunrise);
-      document.getElementById('dhuhrTime').textContent = formatTime(prayerTimes.timings.Dhuhr);
-      document.getElementById('asrTime').textContent = formatTime(prayerTimes.timings.Asr);
-      document.getElementById('maghribTime').textContent = formatTime(prayerTimes.timings.Maghrib);
-      document.getElementById('ishaTime').textContent = formatTime(prayerTimes.timings.Isha);
+        
+        // إضافة أيقونات للصلوات
+        const prayerIcons = {
+            Fajr: '🌅',
+            Sunrise: '🌄',
+            Dhuhr: '☀️',
+            Asr: '🌤️',
+            Maghrib: '🌇',
+            Isha: '🌙'
+        };
+        
+        const prayers = [
+            { id: 'fajrTime', key: 'Fajr' },
+            { id: 'sunriseTime', key: 'Sunrise' },
+            { id: 'dhuhrTime', key: 'Dhuhr' },
+            { id: 'asrTime', key: 'Asr' },
+            { id: 'maghribTime', key: 'Maghrib' },
+            { id: 'ishaTime', key: 'Isha' }
+        ];
+        
+        prayers.forEach(prayer => {
+            const element = document.getElementById(prayer.id);
+            if (element) {
+                const time = formatTime(prayerTimes.timings[prayer.key]);
+                element.innerHTML = `${prayerIcons[prayer.key]} ${time}`;
+            }
+        });
     }
 
     function formatTime(timeString) {
@@ -2435,7 +2752,7 @@
         let timeDiffMinutes = nextPrayer.timeInMinutes - currentTimeInMinutes;
         
         if (timeDiffMinutes <= 0) {
-          timeDiffMinutes += 24 * 60; 
+            timeDiffMinutes += 24 * 60; 
         }
 
         const totalSecondsRemaining = (timeDiffMinutes * 60) - currentSeconds;
@@ -2444,12 +2761,24 @@
         const minutes = Math.floor((totalSecondsRemaining % 3600) / 60);
         const seconds = totalSecondsRemaining % 60;
 
-        document.getElementById('nextPrayerText').textContent = `${translations[currentLanguage].nextPrayerText} ${nextPrayer.name}`;
+        // إضافة أيقونة للصلاة التالية
+        const prayerIcons = {
+            [translations[currentLanguage].fajr]: '🌅',
+            [translations[currentLanguage].sunrise]: '🌄',
+            [translations[currentLanguage].dhuhr]: '☀️',
+            [translations[currentLanguage].asr]: '🌤️',
+            [translations[currentLanguage].maghrib]: '🌇',
+            [translations[currentLanguage].isha]: '🌙'
+        };
+        
+        const icon = prayerIcons[nextPrayer.name] || '🕌';
+        
+        document.getElementById('nextPrayerText').innerHTML = `${translations[currentLanguage].nextPrayerText} ${icon} ${nextPrayer.name}`;
         document.getElementById('nextPrayerCountdown').textContent = 
-          `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         
         document.querySelectorAll('.prayer-time-item').forEach(item => {
-          item.classList.remove('next-prayer');
+            item.classList.remove('next-prayer');
         });
         
         const nextPrayerElement = document.getElementById(nextPrayer.elementId);
@@ -2457,11 +2786,16 @@
             nextPrayerElement.closest('.prayer-time-item').classList.add('next-prayer');
         }
 
+        // إشعار قبل 10 دقائق من الصلاة
+        if (totalSecondsRemaining === 600 && notificationPermissionGranted) {
+            sendPrayerNotification(nextPrayer.name);
+        }
+
         if (totalSecondsRemaining <= 0) {
             fetchPrayerTimes();
         }
 
-      }, 1000);
+    }, 1000);
     }
 
     // Notification functions
@@ -2578,7 +2912,27 @@
         day: 'numeric'
       }).format(today);
       
-      document.getElementById('hijriDate').textContent = hijriDate;
+      // الحصول على التاريخ الميلادي
+      const gregorianDate = new Intl.DateTimeFormat(currentLanguage === 'ar' ? 'ar-EG' : 'en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).format(today);
+      
+      // عرض التاريخين مع فاصل
+      const dateDisplay = currentLanguage === 'ar' 
+        ? `${hijriDate} / ${gregorianDate}`
+        : `${gregorianDate} / ${hijriDate}`;
+        
+      document.getElementById('hijriDate').textContent = dateDisplay;
+      
+      // إضافة تأثير بسيط عند التغيير
+      const hijriDateElement = document.getElementById('hijriDate');
+      hijriDateElement.style.animation = 'none';
+      setTimeout(() => {
+        hijriDateElement.style.animation = 'pulseGlow 2s infinite alternate';
+      }, 10);
     }
 
     // Filter stations function
@@ -2594,6 +2948,29 @@
           card.classList.add('hidden');
         }
       });
+      
+      // تحديث عرض الأقسام بناءً على النتائج
+      updateSectionsVisibility();
+    }
+
+    function updateSectionsVisibility() {
+      const sections = document.querySelectorAll('.grid');
+      sections.forEach(section => {
+        const visibleCards = section.querySelectorAll('.card:not(.hidden)');
+        const sectionHeader = section.previousElementSibling;
+        
+        if (visibleCards.length === 0) {
+          section.style.display = 'none';
+          if (sectionHeader && sectionHeader.classList.contains('section-header')) {
+            sectionHeader.style.display = 'none';
+          }
+        } else {
+          section.style.display = 'grid';
+          if (sectionHeader && sectionHeader.classList.contains('section-header')) {
+            sectionHeader.style.display = 'block';
+          }
+        }
+      });
     }
 
     // Toggle favorite function
@@ -2607,11 +2984,18 @@
           nameAr: nameAr,
           nameEn: nameEn,
           img: img,
-          url: url
+          url: url,
+          addedAt: Date.now()
         });
+        
+        // إشعار بسيط للمستخدم
+        showNotification(translations[currentLanguage].addedToFavorites, 'success');
       } else {
         // Remove from favorites
         favorites.splice(favoriteIndex, 1);
+        
+        // إشعار بسيط للمستخدم
+        showNotification(translations[currentLanguage].removedFromFavorites, 'info');
       }
       
       // Save to localStorage
@@ -2632,12 +3016,22 @@
       favoritesSection.classList.add('active');
       favoritesContainer.innerHTML = '';
       
-      favorites.forEach(favorite => {
+      // ترتيب المفضلة حسب التاريخ
+      favorites.sort((a, b) => b.addedAt - a.addedAt);
+      
+      favorites.forEach((favorite, index) => {
         const card = document.createElement('div');
-        card.className = 'card';
+        card.className = 'card favorite-card';
+        
+        // إضافة زر إزالة من المفضلة
+        const removeBtn = `
+          <button class="remove-favorite-btn" onclick="removeFavorite(${index})" title="${translations[currentLanguage].removeFromFavorites}">
+            ✕
+          </button>
+        `;
         
         card.innerHTML = `
-          <button class="favorite-btn active" onclick="toggleFavorite('${favorite.nameAr}', '${favorite.nameEn}', '${favorite.img}', '${favorite.url}')">♡</button>
+          ${removeBtn}
           <img src="${favorite.img}" alt="${favorite.name}" loading="lazy" class="lazy-image" />
           <h2>${favorite.name}</h2>
           <button onclick="playRadio('${favorite.url}', '${favorite.name}', this)">${translations[currentLanguage].playButton}</button>
@@ -2657,6 +3051,25 @@
       });
     }
 
+    // Remove favorite function
+    function removeFavorite(index) {
+      const favorite = favorites[index];
+      favorites.splice(index, 1);
+      
+      // Save to localStorage
+      localStorage.setItem('radioFavorites', JSON.stringify(favorites));
+      
+      // Update UI
+      updateFavoritesSection();
+      initializeStations();
+      
+      // إشعار للمستخدم
+      showNotification(
+        currentLanguage === 'ar' ? `تمت إزالة ${favorite.name} من المفضلة` : `${favorite.name} removed from favorites`, 
+        'info'
+      );
+    }
+
     // Clear favorites function
     function clearFavorites() {
       if (confirm(currentLanguage === 'ar' ? 'هل أنت متأكد من مسح جميع المفضلات؟' : 'Are you sure you want to clear all favorites?')) {
@@ -2664,6 +3077,9 @@
         localStorage.setItem('radioFavorites', JSON.stringify(favorites));
         updateFavoritesSection();
         initializeStations();
+        
+        // إشعار للمستخدم
+        showNotification(translations[currentLanguage].allFavoritesCleared, 'info');
       }
     }
 
@@ -2674,9 +3090,271 @@
       }
     });
 
+    // إضافة وظيفة للإشعارات البسيطة
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      // إظهار الإشعار
+      setTimeout(() => {
+        notification.classList.add('show');
+      }, 10);
+      
+      // إخفاء الإشعار بعد 3 ثوانٍ
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 300);
+      }, 3000);
+    }
+
+    // Initialize player with speed control
+    function initializePlayer() {
+      const globalPlayerContainer = document.getElementById('globalAudioPlayerContainer');
+      const speedControl = document.createElement('div');
+      speedControl.className = 'speed-control';
+      speedControl.innerHTML = `
+        <label for="playbackSpeed">${translations[currentLanguage].playbackSpeed}:</label>
+        <select id="playbackSpeed" onchange="changePlaybackSpeed(this.value)">
+          <option value="0.5">0.5x</option>
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2x</option>
+        </select>
+      `;
+      
+      globalPlayerContainer.appendChild(speedControl);
+    }
+
+    // تغيير سرعة التشغيل
+    function changePlaybackSpeed(speed) {
+      const globalPlayer = document.getElementById('globalAudioPlayer');
+      globalPlayer.playbackRate = parseFloat(speed);
+    }
+
+    // حفظ موقع التشغيل
+    function savePlaybackPosition() {
+      const globalPlayer = document.getElementById('globalAudioPlayer');
+      if (globalPlayer.src && !globalPlayer.paused) {
+        const playbackData = {
+          url: globalPlayer.src,
+          currentTime: globalPlayer.currentTime,
+          timestamp: Date.now()
+        };
+        localStorage.setItem('playbackData', JSON.stringify(playbackData));
+      }
+    }
+
+    // استعادة موقع التشغيل
+    function restorePlaybackPosition() {
+      const savedData = localStorage.getItem('playbackData');
+      if (savedData) {
+        try {
+          const playbackData = JSON.parse(savedData);
+          const timeDiff = Date.now() - playbackData.timestamp;
+          
+          // إذا مرت أقل من 24 ساعة، استعد موقع التشغيل
+          if (timeDiff < 24 * 60 * 60 * 1000) {
+            const globalPlayer = document.getElementById('globalAudioPlayer');
+            globalPlayer.src = playbackData.url;
+            globalPlayer.currentTime = playbackData.currentTime;
+            
+            // تحديث اسم المحطة
+            const stationName = getStationNameByUrl(playbackData.url);
+            if (stationName) {
+              document.getElementById('globalPlayerStationName').textContent = stationName;
+              document.getElementById('stationName').textContent = stationName;
+            }
+          }
+        } catch (error) {
+          console.error('Error restoring playback position:', error);
+        }
+      }
+    }
+
+    // الحصول على اسم المحطة من الرابط
+    function getStationNameByUrl(url) {
+      const station = allStations.find(station => {
+        if (station.type === 'azkar' || station.type === 'ruqyah') {
+          return station.recordings.some(rec => rec.url === url);
+        } else if (station.type === 'quran_sura_list' || station.type === 'mushaf_mualim') {
+          return station.url === url || station.suras.some(sura => sura.url === url);
+        } else {
+          return station.url === url;
+        }
+      });
+      
+      return station ? station.name[currentLanguage] : null;
+    }
+
+    // إنشاء نافذة منبثقة للمشاركة
+    function showShareDialog(shareData) {
+      // إنشاء العنصر المنبثق
+      const dialog = document.createElement('div');
+      dialog.className = 'share-dialog';
+      
+      // إنشاء المحتوى
+      const content = document.createElement('div');
+      content.className = 'share-dialog-content';
+      content.innerHTML = `
+        <h3>${translations[currentLanguage].shareApp}</h3>
+        <p>${shareData.text}</p>
+        <div class="share-options">
+          <button class="share-option" onclick="shareOnFacebook('${shareData.url}')">
+            <span class="share-icon">📘</span>
+            <span>Facebook</span>
+          </button>
+          <button class="share-option" onclick="shareOnTwitter('${shareData.text}', '${shareData.url}')">
+            <span class="share-icon">🐦</span>
+            <span>Twitter</span>
+          </button>
+          <button class="share-option" onclick="shareOnWhatsApp('${shareData.text}', '${shareData.url}')">
+            <span class="share-icon">💬</span>
+            <span>WhatsApp</span>
+          </button>
+          <button class="share-option" onclick="copyToClipboard('${shareData.url}')">
+            <span class="share-icon">📋</span>
+            <span>${translations[currentLanguage].copyLink}</span>
+          </button>
+        </div>
+        <button class="close-dialog" onclick="closeShareDialog()">${translations[currentLanguage].close}</button>
+      `;
+      
+      dialog.appendChild(content);
+      document.body.appendChild(dialog);
+      
+      // إظهار النافذة
+      setTimeout(() => {
+        dialog.classList.add('show');
+      }, 10);
+    }
+
+    // المشاركة على فيسبوك
+    function shareOnFacebook(url) {
+      const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+      closeShareDialog();
+    }
+
+    // المشاركة على تويتر
+    function shareOnTwitter(text, url) {
+      const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+      closeShareDialog();
+    }
+
+    // المشاركة على واتساب
+    function shareOnWhatsApp(text, url) {
+      const shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+      window.open(shareUrl, '_blank');
+      closeShareDialog();
+    }
+
+    // نسخ الرابط إلى الحافظة
+    function copyToClipboard(url) {
+      navigator.clipboard.writeText(url).then(() => {
+        showNotification(translations[currentLanguage].linkCopied, 'success');
+        closeShareDialog();
+      }).catch(() => {
+        showNotification(translations[currentLanguage].copyFailed, 'error');
+      });
+    }
+
+    // إغلاق نافذة المشاركة
+    function closeShareDialog() {
+      const dialog = document.querySelector('.share-dialog');
+      if (dialog) {
+        dialog.classList.remove('show');
+        setTimeout(() => {
+          document.body.removeChild(dialog);
+        }, 300);
+      }
+    }
+
+    // إظهار مؤشر التحميل
+    function showLoadingIndicator() {
+      const loader = document.createElement('div');
+      loader.className = 'global-loader';
+      loader.innerHTML = `
+        <div class="loader-spinner"></div>
+        <p>${translations[currentLanguage].loading}</p>
+      `;
+      
+      document.body.appendChild(loader);
+      
+      // إظهار المؤشر
+      setTimeout(() => {
+        loader.classList.add('show');
+      }, 10);
+    }
+
+    // إخفاء مؤشر التحميل
+    function hideLoadingIndicator() {
+      const loader = document.querySelector('.global-loader');
+      if (loader) {
+        loader.classList.remove('show');
+        setTimeout(() => {
+          document.body.removeChild(loader);
+        }, 300);
+      }
+    }
+
+    // تطبيق السمة
+    function applyTheme(theme) {
+      if (theme === 'light') {
+        document.body.classList.add('light-theme');
+      } else {
+        document.body.classList.remove('light-theme');
+      }
+    }
+
+    // تطبيق جودة التشغيل
+    function applyQuality(quality) {
+      const globalPlayer = document.getElementById('globalAudioPlayer');
+      
+      switch (quality) {
+        case 'low':
+          // يمكن تعديل هذا الجزء حسب الحاجة
+          break;
+        case 'medium':
+          // يمكن تعديل هذا الجزء حسب الحاجة
+          break;
+        case 'high':
+          // يمكن تعديل هذا الجزء حسب الحاجة
+          break;
+        default:
+          // جودة تلقائية
+          break;
+      }
+    }
+
     // Initialize app
     document.addEventListener('DOMContentLoaded', () => {
-        // Check notification permission
+        // إظهار مؤشر التحميل
+        showLoadingIndicator();
+        
+        // التحقق من الإعدادات المحفوظة
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(savedTheme);
+        document.getElementById('themeSetting').value = savedTheme;
+        
+        const savedQuality = localStorage.getItem('quality') || 'auto';
+        applyQuality(savedQuality);
+        document.getElementById('qualitySetting').value = savedQuality;
+        
+        const savedAutoPlay = localStorage.getItem('autoPlay') === 'true';
+        document.getElementById('autoPlaySetting').checked = savedAutoPlay;
+        
+        const savedNotifications = localStorage.getItem('notifications') === 'true';
+        document.getElementById('notificationSetting').checked = savedNotifications;
+        
+        // التحقق من الإذن للإشعارات
         if ('Notification' in window) {
           const savedPermission = localStorage.getItem('notificationPermission');
           if (savedPermission === 'granted') {
@@ -2686,9 +3364,20 @@
           }
         }
 
+        // تهيئة اللغة
         setLanguage('ar');
+        
+        // تهيئة المحطات
         initializeStations();
         updatePlaylistButtons();
+        
+        // تهيئة المشغل
+        initializePlayer();
+        
+        // استعادة موقع التشغيل المحفوظ
+        restorePlaybackPosition();
+        
+        // جلب مواقيت الصلاة
         fetchPrayerTimes();
         
         // تحديث التقويم الهجري
@@ -2699,8 +3388,17 @@
           const now = new Date();
           if (now.getHours() === 0 && now.getMinutes() === 0) {
             updateHijriDate();
+            fetchPrayerTimes();
           }
         }, 60000); // تحقق كل دقيقة
+        
+        // حفظ موقع التشغيل كل 5 ثوانٍ
+        setInterval(savePlaybackPosition, 5000);
+        
+        // إخفاء مؤشر التحميل بعد اكتمال التهيئة
+        setTimeout(() => {
+          hideLoadingIndicator();
+        }, 1000);
     });
   </script>
 <script data-goatcounter="https://waleedd.goatcounter.com/count"
