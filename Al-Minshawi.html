@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مصحف الشيخ محمد صديق المنشاوي - استمع إلى تلاوات القرآن الكريم بصوت الشيخ المنشاوي">
+    <meta name="keywords" content="قرآن, المنشاوي, محمد صديق المنشاوي, تلاوات, مصحف">
+    <title>مصحف الشيخ محمد صديق المنشاوي</title>
+    
+    <!-- الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- تحسينات الأداء -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//archive.org">
+    
+    <style>
+        /* ===== متغيرات التصميم ===== */
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #FF9800;
+            --third-color: #2196F3;
+            --fourth-color: #9C27B0;
+            --fifth-color: #F44336;
+            --background-color: #111;
+            --card-background: rgba(34, 34, 34, 0.9);
+            --text-color: #fff;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --hover-color: #333;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --transition-speed: 0.3s;
+        }
+
+        /* ===== الأساسيات ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #111 0%, #333 100%);
+            color: var(--text-color);
+            text-align: center;
+            padding: 30px 10px 80px; /* إضافة مساحة أسفل المشغل */
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* ===== العناوين ===== */
+        h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(45deg, var(--primary-color), #81C784);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        h1::before, h1::after {
+            content: "﴿";
+            color: var(--primary-color);
+            margin: 0 10px;
+            font-size: 1.2em;
+        }
+
+        h1::after {
+            content: "﴾";
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
+
+        /* ===== أزرار التحكم ===== */
+        .controls-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+        }
+
+        .control-btn {
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .back-btn { background: var(--third-color); }
+        .share-btn { background: var(--primary-color); }
+        .sleep-timer-btn { background: var(--fourth-color); }
+        .control-btn.active {
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        /* ===== الحاوية الرئيسية ===== */
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* ===== بطاقة القسم ===== */
+        .section-card {
+            background: var(--card-background);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .section-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            color: var(--secondary-color);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        /* ===== قائمة المصحف المرتل ===== */
+        .murattal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .surah-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .surah-item:hover, .surah-item.active {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .surah-item.playing::after {
+            content: '\f04b';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            color: var(--primary-color);
+            font-size: 14px;
+        }
+
+        /* ===== قائمة روائع المنشاوي (المنسدلة) ===== */
+        .rawae-dropdown {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--border-color);
+            color: white;
+            font-size: 1em;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            margin-bottom: 20px;
+        }
+
+        .rawae-dropdown:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .rawae-dropdown option {
+            background: #333;
+            color: white;
+            padding: 10px;
+        }
+
+        .play-rawae-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        .play-rawae-btn:hover {
+            background: #F57C00;
+            transform: translateY(-2px);
+        }
+
+        /* ===== مشغل الصوت ===== */
+        .player-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--card-background);
+            backdrop-filter: blur(15px);
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            z-index: 1000;
+            transform: translateY(100%); /* مخفي افتراضيًا */
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .player-container.active {
+            transform: translateY(0); /* يظهر عند التشغيل */
+        }
+
+        .player-info {
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        .player-title {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        #audioPlayer {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .close-player-btn {
+            background: #F44336;
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== زر الواتساب ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 25px rgba(37,211,102,0.5);
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            z-index: 1000;
+            border: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(37,211,102,0.6);
+        }
+
+        .whatsapp-float svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+
+        /* ===== النوافذ المنبثقة ===== */
+        .modal {
+            display: none; /* مخفي افتراضيًا */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            animation: modalFadeIn 0.4s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-title {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .timer-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .timer-option {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .timer-option:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .timer-option.selected {
+            background: var(--fourth-color);
+            box-shadow: 0 0 15px rgba(156,39,176,0.5);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all var(--transition-speed) ease;
+            font-weight: 600;
+        }
+
+        .modal-cancel {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .modal-cancel:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .modal-confirm {
+            background: var(--fourth-color);
+        }
+
+        .modal-confirm:hover {
+            background: #7B1FA2;
+        }
+
+        .timer-status {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(156,39,176,0.1);
+            border-radius: 12px;
+            color: var(--fourth-color);
+            font-size: 1em;
+            display: none; /* مخفي افتراضيًا */
+            text-align: center;
+            border: 1px solid rgba(156,39,176,0.2);
+        }
+        
+        .timer-status #timerCountdown {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+
+        /* للهواتف */
+        @media (max-width: 600px) {
+            .murattal-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .player-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            #audioPlayer {
+                max-width: 100%;
+            }
+            .controls-container { 
+                top: 15px; 
+                left: 15px;
+                gap: 8px;
+            }
+            .control-btn { 
+                font-size: 0.8em; 
+                padding: 8px 12px;
+            }
+            .whatsapp-float { 
+                width: 55px; 
+                height: 55px; 
+                bottom: 20px; 
+                right: 20px; 
+            }
+            .whatsapp-float svg { 
+                width: 26px; 
+                height: 26px; 
+            }
+            .timer-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .modal-content {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== أزرار التحكم ===== -->
+    <div class="controls-container">
+        <button class="control-btn back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
+            <span>رجوع</span>
+        </button>
+        <button class="control-btn share-btn" onclick="shareApp()">
+            <i class="fas fa-share-alt"></i>
+            <span>مشاركة</span>
+        </button>
+        <button class="control-btn sleep-timer-btn" id="sleepTimerBtn" onclick="toggleSleepTimer()">
+            <i class="fas fa-clock"></i>
+            <span>مؤقت النوم</span>
+        </button>
+    </div>
+
+    <header>
+        <h1>مصحف الشيخ محمد صديق المنشاوي</h1>
+        <p class="subtitle">رحمه الله رحمة واسعة</p>
+    </header>
+
+    <div class="main-container">
+        <!-- ===== قسم المصحف المرتل ===== -->
+        <section class="section-card">
+            <h2 class="section-title"><i class="fas fa-book-open"></i> المصحف المرتل</h2>
+            <div class="murattal-grid" id="murattal-list">
+                <!-- سيتم إضافة السور هنا بواسطة الجافاسكريبت -->
+            </div>
+        </section>
+
+        <!-- ===== قسم روائع المنشاوي ===== -->
+        <section class="section-card">
+            <h2 class="section-title"><i class="fas fa-star"></i> روائع المنشاوي</h2>
+            <select class="rawae-dropdown" id="rawaeDropdown">
+                <option value="">اختر تلاوة نادرة...</option>
+                <!-- سيتم إضافة الخيارات هنا بواسطة الجافاسكريبت -->
+            </select>
+            <button class="play-rawae-btn" id="playRawaeBtn">
+                <i class="fas fa-play-circle"></i>
+                <span>تشغيل التلاوة المختارة</span>
+            </button>
+        </section>
+    </div>
+
+    <!-- مشغل الصوت المخفي -->
+    <div class="player-container" id="playerContainer">
+        <div class="player-info">
+            <div class="player-title" id="playerTitle">عنوان التلاوة</div>
+        </div>
+        <audio id="audioPlayer" controls></audio>
+        <button class="close-player-btn" id="closePlayerBtn">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- ===== زر الواتساب ===== -->
+    <button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn">
+        <svg viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.520.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.520-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
+        </svg>
+    </button>
+
+    <!-- ===== نافذة مؤقت النوم ===== -->
+    <div class="modal" id="sleepTimerModal">
+        <div class="modal-content">
+            <div class="modal-title">
+                <i class="fas fa-moon"></i>
+                مؤقت النوم
+            </div>
+            <div class="timer-options">
+                <button class="timer-option" data-minutes="5">5 دقائق</button>
+                <button class="timer-option" data-minutes="10">10 دقائق</button>
+                <button class="timer-option" data-minutes="15">15 دقيقة</button>
+                <button class="timer-option" data-minutes="30">30 دقيقة</button>
+                <button class="timer-option" data-minutes="45">45 دقيقة</button>
+                <button class="timer-option" data-minutes="60">60 دقيقة</button>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-cancel" onclick="closeSleepTimerModal()">إلغاء</button>
+                <button class="modal-btn modal-confirm" onclick="setSleepTimer()">تأكيد</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="timer-status" id="timerStatus">
+        سيتم إيقاف التشغيل خلال: <span id="timerCountdown">00:00</span>
+    </div>
+
+    <script>
+        // --- بيانات المصحف المرتل (روابط جديدة محدثة) ---
+        const murattalData = [
+            { name: "الفاتحة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/001-Al-fatiha-Up-By-MusleM.mp3" },
+            { name: "البقرة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/002-Al-baqara-Up-By-MusleM.mp3" },
+            { name: "آل عمران", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/003-Aal-e-imran-Up-By-MusleM.mp3" },
+            { name: "النساء", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/004-An-nisa-Up-By-MusleM.mp3" },
+            { name: "المائدة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/005-Al-maeda-Up-By-MusleM.mp3" },
+            { name: "الأنعام", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/006-Al-anaam-Up-By-MusleM.mp3" },
+            { name: "الأعراف", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/007-Al-araf-Up-By-MusleM.mp3" },
+            { name: "الأنفال", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/008-Al-anfal-Up-By-MusleM.mp3" },
+            { name: "التوبة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/009-At-tawba-Up-By-MusleM.mp3" },
+            { name: "يونس", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/010-Yunus-Up-By-MusleM.mp3" },
+            { name: "هود", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/011-Hud-Up-By-MusleM.mp3" },
+            { name: "يوسف", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/012-Yusuf-Up-By-MusleM.mp3" },
+            { name: "الرعد", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/013-Ar-rad-Up-By-MusleM.mp3" },
+            { name: "إبراهيم", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/014-Ibrahim-Up-By-MusleM.mp3" },
+            { name: "الحجر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/015-Al-hijr-Up-By-MusleM.mp3" },
+            { name: "النحل", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/016-An-nahl-Up-By-MusleM.mp3" },
+            { name: "الإسراء", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/017-Al-isra-Up-By-MusleM.mp3" },
+            { name: "الكهف", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/018-Al-kahf-Up-By-MusleM.mp3" },
+            { name: "مريم", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/019-Maryam-Up-By-MusleM.mp3" },
+            { name: "طه", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/020-Taha-Up-By-MusleM.mp3" },
+            { name: "الأنبياء", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/021-Al-anbiya-Up-By-MusleM.mp3" },
+            { name: "الحج", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/022-Al-hajj-Up-By-MusleM.mp3" },
+            { name: "المؤمنون", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/023-Al-mumenoon-Up-By-MusleM.mp3" },
+            { name: "النور", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/024-An-noor-Up-By-MusleM.mp3" },
+            { name: "الفرقان", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/025-Al-furqan-Up-By-MusleM.mp3" },
+            { name: "الشعراء", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/026-Ash-shuara-Up-By-MusleM.mp3" },
+            { name: "النمل", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/027-An-naml-Up-By-MusleM.mp3" },
+            { name: "القصص", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/028-Al-qasas-Up-By-MusleM.mp3" },
+            { name: "العنكبوت", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/029-Al-ankaboot-Up-By-MusleM.mp3" },
+            { name: "الروم", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/030-Ar-room-Up-By-MusleM.mp3" },
+            { name: "لقمان", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/031-Luqman-Up-By-MusleM.mp3" },
+            { name: "السجدة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/032-As-sajda-Up-By-MusleM.mp3" },
+            { name: "الأحزاب", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/033-Al-ahzab-Up-By-MusleM.mp3" },
+            { name: "سبأ", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/034-Saba-Up-By-MusleM.mp3" },
+            { name: "فاطر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/035-Fatir-Up-By-MusleM.mp3" },
+            { name: "يس", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/036-Ya-seen-Up-By-MusleM.mp3" },
+            { name: "الصافات", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/037-As-saaffat-Up-By-MusleM.mp3" },
+            { name: "ص", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/038-Sad-Up-By-MusleM.mp3" },
+            { name: "الزمر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/039-Az-zumar-Up-By-MusleM.mp3" },
+            { name: "غافر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/040-Ghafir-Up-By-MusleM.mp3" },
+            { name: "فصلت", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/041-Fussilat-Up-By-MusleM.mp3" },
+            { name: "الشورى", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/042-Ash-shura-Up-By-MusleM.mp3" },
+            { name: "الزخرف", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/043-Az-zukhruf-Up-By-MusleM.mp3" },
+            { name: "الدخان", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/044-Ad-dukhan-Up-By-MusleM.mp3" },
+            { name: "الجاثية", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/045-Al-jathiya-Up-By-MusleM.mp3" },
+            { name: "الأحقاف", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/046-Al-ahqaf-Up-By-MusleM.mp3" },
+            { name: "محمد", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/047-Muhammad-Up-By-MusleM.mp3" },
+            { name: "الفتح", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/048-Al-fath-Up-By-MusleM.mp3" },
+            { name: "الحجرات", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/049-Al-hujraat-Up-By-MusleM.mp3" },
+            { name: "ق", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/050-Qaf-Up-By-MusleM.mp3" },
+            { name: "الذاريات", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/051-Adh-dhariyat-Up-By-MusleM.mp3" },
+            { name: "الطور", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/052-At-tur-Up-By-MusleM.mp3" },
+            { name: "النجم", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/053-An-najm-Up-By-MusleM.mp3" },
+            { name: "القمر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/054-Al-qamar-Up-By-MusleM.mp3" },
+            { name: "الرحمن", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/055-Ar-rahman-Up-By-MusleM.mp3" },
+            { name: "الواقعة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/056-Al-waqia-Up-By-MusleM.mp3" },
+            { name: "الحديد", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/057-Al-hadid-Up-By-MusleM.mp3" },
+            { name: "المجادلة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/058-Al-mujadala-Up-By-MusleM.mp3" },
+            { name: "الحشر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/059-Al-hashr-Up-By-MusleM.mp3" },
+            { name: "الممتحنة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/060-Al-mumtahana-Up-By-MusleM.mp3" },
+            { name: "الصف", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/061-As-saff-Up-By-MusleM.mp3" },
+            { name: "الجمعة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/062-Al-jumua-Up-By-MusleM.mp3" },
+            { name: "المنافقون", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/063-Al-munafiqoon-Up-By-MusleM.mp3" },
+            { name: "التغابن", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/064-At-taghabun-Up-By-MusleM.mp3" },
+            { name: "الطلاق", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/065-At-talaq-Up-By-MusleM.mp3" },
+            { name: "التحريم", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/066-At-tahrim-Up-By-MusleM.mp3" },
+            { name: "الملك", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/067-Al-mulk-Up-By-MusleM.mp3" },
+            { name: "القلم", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/068-Al-qalam-Up-By-MusleM.mp3" },
+            { name: "الحاقة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/069-Al-haaqqa-Up-By-MusleM.mp3" },
+            { name: "المعارج", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/070-Al-maarij-Up-By-MusleM.mp3" },
+            { name: "نوح", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/071-Nooh-Up-By-MusleM.mp3" },
+            { name: "الجن", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/072-Al-jinn-Up-By-MusleM.mp3" },
+            { name: "المزمل", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/073-Al-muzzammil-Up-By-MusleM.mp3" },
+            { name: "المدثر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/074-Al-muddaththir-Up-By-MusleM.mp3" },
+            { name: "القيامة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/075-Al-qiyama-Up-By-MusleM.mp3" },
+            { name: "الإنسان", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/076-Al-insan-Up-By-MusleM.mp3" },
+            { name: "المرسلات", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/077-Al-mursalat-Up-By-MusleM.mp3" },
+            { name: "النبأ", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/078-An-naba-Up-By-MusleM.mp3" },
+            { name: "النازعات", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/079-An-naziat-Up-By-MusleM.mp3" },
+            { name: "عبس", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/080-Abasa-Up-By-MusleM.mp3" },
+            { name: "التكوير", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/081-At-takwir-Up-By-MusleM.mp3" },
+            { name: "الانفطار", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/082-Al-infitar-Up-By-MusleM.mp3" },
+            { name: "المطففين", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/083-Al-mutaffifin-Up-By-MusleM.mp3" },
+            { name: "الانشقاق", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/084-Al-inshiqaq-Up-By-MusleM.mp3" },
+            { name: "البروج", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/085-Al-burooj-Up-By-MusleM.mp3" },
+            { name: "الطارق", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/086-At-tariq-Up-By-MusleM.mp3" },
+            { name: "الأعلى", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/087-Al-ala-Up-By-MusleM.mp3" },
+            { name: "الغاشية", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/088-Al-ghashiya-Up-By-MusleM.mp3" },
+            { name: "الفجر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/089-Al-fajr-Up-By-MusleM.mp3" },
+            { name: "البلد", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/090-Al-balad-Up-By-MusleM.mp3" },
+            { name: "الشمس", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/091-Ash-shams-Up-By-MusleM.mp3" },
+            { name: "الليل", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/092-Al-layl-Up-By-MusleM.mp3" },
+            { name: "الضحى", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/093-Ad-dhuha-Up-By-MusleM.mp3" },
+            { name: "الشرح", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/094-As-sharh-Up-By-MusleM.mp3" },
+            { name: "التين", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/095-At-tin-Up-By-MusleM.mp3" },
+            { name: "العلق", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/096-Al-alaq-Up-By-MusleM.mp3" },
+            { name: "القدر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/097-Al-qadr-Up-By-MusleM.mp3" },
+            { name: "البينة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/098-Al-bayyina-Up-By-MusleM.mp3" },
+            { name: "الزلزلة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/099-Az-zalzala-Up-By-MusleM.mp3" },
+            { name: "العاديات", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/100-Al-adiyat-Up-By-MusleM.mp3" },
+            { name: "القارعة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/101-Al-qaria-Up-By-MusleM.mp3" },
+            { name: "التكاثر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/102-At-takathur-Up-By-MusleM.mp3" },
+            { name: "العصر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/103-Al-asr-Up-By-MusleM.mp3" },
+            { name: "الهمزة", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/104-Al-humaza-Up-By-MusleM.mp3" },
+            { name: "الفيل", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/105-Al-fil-Up-By-MusleM.mp3" },
+            { name: "قريش", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/106-Quraish-Up-By-MusleM.mp3" },
+            { name: "الماعون", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/107-Al-maun-Up-By-MusleM.mp3" },
+            { name: "الكوثر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/108-Al-kauther-Up-By-MusleM.mp3" },
+            { name: "الكافرون", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/109-Al-kafiroon-Up-By-MusleM.mp3" },
+            { name: "النصر", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/110-An-nasr-Up-By-MusleM.mp3" },
+            { name: "المسد", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/111-Al-masadd-Up-By-MusleM.mp3" },
+            { name: "الإخلاص", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/112-Al-ikhlas-Up-By-MusleM.mp3" },
+            { name: "الفلق", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/113-Al-falaq-Up-By-MusleM.mp3" },
+            { name: "الناس", url: "https://archive.org/download/Muhamad-Seddik_Al-Menchaoui_Murattal_Radio-Masr_up-by-muslem/114-An-nas-Up-By-MusleM.mp3" }
+        ];
+
+        // --- بيانات روائع المنشاوي (الروابط التي أرسلتها) ---
+        const rawaeData = [
+            { name: "ابراهيم 12-23 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/002-112-23-up_by_muslem.ettounssi.mp3" },
+            { name: "ال عمران 1-7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/003-11-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 18-34 من عام 1950", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/004-118-341950-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب من الاية 21 الى الاية 48 من سوهاج", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/005-12148-up_by_muslem.ettounssi.mp3" },
+            { name: "الاسراء 1 - 14 والنجم 1- 18 جامع الحسين", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/006-11-141-18-up_by_muslem.ettounssi.mp3" },
+            { name: "الاسراء 1-23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/007-11-23-up_by_muslem.ettounssi.mp3" },
+            { name: "الاعراف 31-40 من مصر", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/008-131-40-up_by_muslem.ettounssi.mp3" },
+            { name: "الانبياء 1-35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/009-11-35-up_by_muslem.ettounssi.mp3" },
+            { name: "الانعام 12 - 38 من سوريا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/010-112-38-up_by_muslem.ettounssi.mp3" },
+            { name: "الانفال 1-41", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/011-11-41-up_by_muslem.ettounssi.mp3" },
+            { name: "الانفطار الفجر العلق القارعة الفاتحة اوائل وخواتيم البقرة- من ادفو مصر", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/012-1--up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 1-7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/013-11-7-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 284-286 وال عمران 1-18 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/014-1284-2861-18-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 75-92 من الاذاعة السورية", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/015-175-92-up_by_muslem.ettounssi.mp3" },
+            { name: "التوبة 18 - 33", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/016-118-33-up_by_muslem.ettounssi.mp3" },
+            { name: "التوبة 18-22 العلق القارعة-صلاة جمعة 1965 - افتتاح مسجد المنشاوي", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/017-118-22-1965--up_by_muslem.ettounssi.mp3" },
+            { name: "الجاثية من الاية 1 الى الاية 30", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/018-1130-up_by_muslem.ettounssi.mp3" },
+            { name: "الحج 23-30 من الاسكنرية", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/019-123-30-up_by_muslem.ettounssi.mp3" },
+            { name: "الحج من اولها الى الاية 18 سوريا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/020-118-up_by_muslem.ettounssi.mp3" },
+            { name: "الحجر 53 - النحل 6 ناقصة اية البدء و ختام التلاوة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/021-153-6-up_by_muslem.ettounssi.mp3" },
+            { name: "الحجرات 13-18 وق 1-4 من المسجد الاقصى 1960", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/022-113-181-41960-up_by_muslem.ettounssi.mp3" },
+            { name: "الحديد 7-24 ثم الاية 28-29 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/023-17-2428-29-up_by_muslem.ettounssi.mp3" },
+            { name: "الحشر من الاية 18 الى آخرها والانشقاق والبروج والعلق القارعة... الاقصر", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/024-118--up_by_muslem.ettounssi.mp3" },
+            { name: "الذاريات 1- نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/025-11--up_by_muslem.ettounssi.mp3" },
+            { name: "الرعد 1-14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/026-11-14-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم من الاية 17 الى الاية 37 جامع الحسين", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/027-11737-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم من الاية 17 الى الاية 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/028-11747-up_by_muslem.ettounssi.mp3" },
+            { name: "الزخر68- 89 الدخان 1-8 و القدر -من مسجد الحسين", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/029-168-891-8--up_by_muslem.ettounssi.mp3" },
+            { name: "الزخرف 34 - 64 جزء من تلاوة مفقودة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/030-134-64-up_by_muslem.ettounssi.mp3" },
+            { name: "الزمر 1-31 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/031-11-31-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1-19 والعلق 1-8 نسخة صوت القاهرة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/032-11-191-8-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة من الاية 16 الى الاحزاب الاية 9", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/033-1169-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1- 90 نسخة رائعة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/034-11-90-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 69 - 89 من مسجد الفولي بالمنيا من مصر(2)", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/035-169-892-up_by_muslem.ettounssi.mp3" },
+            { name: "الشورى 1-19 من تلاوات سوريا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/036-11-19-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 108-148 جزء من تلاوة مفقودة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/037-1108-148-up_by_muslem.ettounssi.mp3" },
+            { name: "الصف 1-10 جزء من تلاوة مفقودة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/038-11-10-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46-الروم 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/039-146-6-up_by_muslem.ettounssi.mp3" },
+            { name: "الفتحة والبقرة 1-29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/040-11-29-up_by_muslem.ettounssi.mp3" },
+            { name: "الفتح 27 - 29 والحجرات وق 1-11 ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/041-127-291-11-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1-31 من تلاوات سوريافي الخمسينات", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/042-11-31-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 53 - 77 و الشعراء 1-3 من تلاوات العراق 1965", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/043-153-771-31965-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1-45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/044-11-45-up_by_muslem.ettounssi.mp3" },
+            { name: "القمر 12 - الرحمن 27 -ناقصة بداية التلاوة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/045-112-27--up_by_muslem.ettounssi.mp3" },
+            { name: "الكهف 18-57 ناقص بداية التلاوة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/046-118-57-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 29 من سوريا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/047-11-29-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 84-118 من مسجد الحسين - جودة ضعيفة ولكن رائعة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/048-184-118--up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 15-40 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/049-115-40-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 20 - 40 من تلاوات سوريا الرائعة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/050-120-40-up_by_muslem.ettounssi.mp3" },
+            { name: " الملك 10- 30 نهاية السورة - ناقص اولها وآخرها", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/051-110-30--up_by_muslem.ettounssi.mp3" },
+            { name: "النازعات المطففين الكوثر الفلق والناس نادر جدا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/052-1-up_by_muslem.ettounssi.mp3" },
+            { name: "النحل 1-30 من تلاوات القاهرة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/053-11-30-up_by_muslem.ettounssi.mp3" },
+            { name: "النحل من الاية 125 الى الاية 128 والاسراء من الاية 1 الى الاية 14 جامع الحسين", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/054-1125128114-up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 11-14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/055-111-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 94-114 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/056-194-114-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1-29 من القصر الجمهوري بالعراق 1965", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/057-11-291965-up_by_muslem.ettounssi.mp3" },
+            { name: "الواقعة 1-96 والحديد 1-3 من تلاوات سوريا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/058-11-961-3-up_by_muslem.ettounssi.mp3" },
+            { name: "الواقعة من الاية 58 الى الاية 62 حفلة بالاقصر", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/059-15862-up_by_muslem.ettounssi.mp3" },
+            { name: "ص 1-44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/060-11-44-up_by_muslem.ettounssi.mp3" },
+            { name: "طه 1-54 نادرة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/061-11-54-up_by_muslem.ettounssi.mp3" },
+            { name: "غافر 35 - 65 قرآن الفجر - من الحسين الستينات", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/062-135-65--up_by_muslem.ettounssi.mp3" },
+            { name: "غافر 39-68 تلاوة مختلفة من الخمسينات", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/063-139-68-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1-18 من نوادر ابوثائر", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/064-11-18-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 8-28", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/065-18-28-up_by_muslem.ettounssi.mp3" },
+            { name: "مريم 1 - 34 نادرة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/066-11-34-up_by_muslem.ettounssi.mp3" },
+            { name: "مريم 1 - 50 من ليبيا 1962", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/067-11-501962-up_by_muslem.ettounssi.mp3" },
+            { name: "هود 41 - 84 من ليبيا - نسخة اصلية", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/068-141-84--up_by_muslem.ettounssi.mp3" },
+            { name: "هود 6 - 26", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/069-16-26-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1-83 نسخة اصلية - صوت القاهرة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/070-11-83--up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 1-15", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/071-11-15-up_by_muslem.ettounssi.mp3" },
+            { name: "الطور 1-49 والحديد 1-12 من اسيوط", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/072-1-11-491-12-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 1-24 من مسجد الحسين", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/073-1-11-24-up_by_muslem.ettounssi.mp3" },
+            { name: "ابراهيم 23-52 من ليبيا - نسخة اصلية", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/074-1-123-52--up_by_muslem.ettounssi.mp3" },
+            { name: "ال عمران 121-152 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/075-1-1121-152-up_by_muslem.ettounssi.mp3" },
+            { name: "الاعراف42-74 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/076-1-142-74-up_by_muslem.ettounssi.mp3" },
+            { name: "الانعام 12-45 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/077-1-112-45-up_by_muslem.ettounssi.mp3" },
+            { name: "الانفال 1-28 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/078-1-11-28-up_by_muslem.ettounssi.mp3" },
+            { name: "الرعد 1 - 32 من ليبيا - النسخة الاصلية", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/079-1-11-32--up_by_muslem.ettounssi.mp3" },
+            { name: "الصف 4- 14 من الحسين -نسخة مزامير", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/080-1-14-14--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 - من اسيوط", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/081-1-168-88--up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر من الاية 10الى الاية 28 ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/082-1-11028-up_by_muslem.ettounssi.mp3" },
+            { name: "فصلت 30-46 من الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/083-1-130-46-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 8-34 والسجدة 1-7 من مسجد الحسين 1970", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/084-1-18-341-71970-up_by_muslem.ettounssi.mp3" },
+            { name: "يونس 1 - 26 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/085-1-11-26-up_by_muslem.ettounssi.mp3" },
+            { name: "يونس 1-17 أصلية من دمشق", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/086-1-11-17-up_by_muslem.ettounssi.mp3" },
+            { name: "ابراهيم 23- 52 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/087-1-223-52-up_by_muslem.ettounssi.mp3" },
+            { name: "الأعراف 42-74 من ليبيا -نسخة اخرى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/088-1-242-74--up_by_muslem.ettounssi.mp3" },
+            { name: "الانعام 12 - 45 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/089-1-212-45-up_by_muslem.ettounssi.mp3" },
+            { name: "الرعد 1-32 من ليبيا- نسخة مزامير", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/090-1-21-32--up_by_muslem.ettounssi.mp3" },
+            { name: "الزمر 1-31 من ليبيا - نسخة انقى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/091-1-21-31--up_by_muslem.ettounssi.mp3" },
+            { name: "الصف 4 - 14 جامع الحسين -نسخة اخرى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/092-1-24-14--up_by_muslem.ettounssi.mp3" },
+            { name: "الطور كاملة والحديد من اولها الى الاية 12 أسيوط تلاوة 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/093-1-2121-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 من اسيوط بمصر - نسخة اخرى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/094-1-268-88--up_by_muslem.ettounssi.mp3" },
+            { name: "فصلت 30-46 من الاقصى مع صدا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/095-1-230-46-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 8-34 والسجدة 1-7 من مسجد الحسين وهي أخر تسجيل للشيخ 1970", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/096-1-28-341-71970-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 1- 24 من مسجد الحسين - نسخة صدى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/097-1-21-24--up_by_muslem.ettounssi.mp3" },
+            { name: "يونس 1- 17 صدى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/098-1-21-17-up_by_muslem.ettounssi.mp3" },
+            { name: "يونس 1- 26 من ليبيا- نسخة اخرى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/099-1-21-26--up_by_muslem.ettounssi.mp3" },
+            { name: "الطور 1- 49 والحديد 1- 12 اسيوط", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/100-1-31-491-12-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 1-17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/151-121-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الكهف 46-62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/152-12046-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الكهف 60 - 78", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/153-12160-78-up_by_muslem.ettounssi.mp3" },
+            { name: "الكهف 74 - 98", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/154-12274-98-up_by_muslem.ettounssi.mp3" },
+            { name: "الكهف 98 - مريم 20", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/155-12398-20-up_by_muslem.ettounssi.mp3" },
+            { name: "مريم 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/156-1241-29-up_by_muslem.ettounssi.mp3" },
+            { name: "مريم 19 - 49", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/157-12519-49-up_by_muslem.ettounssi.mp3" },
+            { name: "مريم 41 - 65", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/158-12641-65-up_by_muslem.ettounssi.mp3" },
+            { name: "مريم 60 - طه 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/159-12760-6-up_by_muslem.ettounssi.mp3" },
+            { name: "طه 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/160-1281-23-up_by_muslem.ettounssi.mp3" },
+            { name: "طه 25 - 64", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/161-12925-64-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/162-13195-200-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 205-212", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/163-13205-212-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 141 - 180 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/164-13141-180--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 78 - 88 من الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/165-1378-88-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 10 - 20 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/166-1310-20-up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 114-118", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/167-13114-118-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 12-29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/168-1312-29-up_by_muslem.ettounssi.mp3" },
+            { name: "طه 62 - 100", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/169-13062-100-up_by_muslem.ettounssi.mp3" },
+            { name: "طه 99 - الأنبياء 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/170-13199-25-up_by_muslem.ettounssi.mp3" },
+            { name: "الانبياء 1 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/171-1321-35-up_by_muslem.ettounssi.mp3" },
+            { name: "الانبياء 34 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/172-13334-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الانبياء 57 - 81", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/173-13457-81-up_by_muslem.ettounssi.mp3" },
+            { name: "الانبياء 78 - 112 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/174-13578-112-up_by_muslem.ettounssi.mp3" },
+            { name: "الحج 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/175-1361-25-up_by_muslem.ettounssi.mp3" },
+            { name: "الحج 22 - 38", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/176-13722-38-up_by_muslem.ettounssi.mp3" },
+            { name: "الحج 34 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/177-13834-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الحج 54 - 78 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/178-13954-78-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/179-14195-200-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 217-225", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/180-14217-225-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/181-14104-140--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/182-1468-88-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/183-14110--up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/184-14117-124-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/185-1428-40-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/186-1401-25-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 48", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/187-14123-48-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/188-14247-74-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 71 - 101", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/189-14371-101-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/190-14499-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/191-1451-21-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/192-14620-45-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 42 - 62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/193-14742-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/194-1481-32-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 184-187", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/196-15184-187-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 228-237", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/197-15228-237-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 103 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/198-151-103--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 65-76", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/199-1565-76-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 41 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/200-1541-50-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 43 - 52", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/201-1543-52-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/202-15032-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/203-15158-27-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/204-1521-50-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 48 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/205-15348-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 89 - 131", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/206-15489-131-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 125 - 175", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/207-155125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 173 - النمل 14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/208-156173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/209-1571-29-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/210-15827-56-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/211-15955-77-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 243-247", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/212-16243-247-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 65-76", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/213-1665-76-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 51 - 65", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/214-1651-65-up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 135-156", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/215-16135-156-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 50 - 64", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/216-1650-64-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 77 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/217-16077-4-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/218-1611-25-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/219-16224-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 51 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/220-16351-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 67 - 88 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/221-16467-88-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/222-1651-32-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/223-16630-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/224-16746-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/225-1681-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/226-16917-42-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/227-17251-257-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/228-1767-78-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/229-1761-77-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/230-17041-2-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/231-1711-21-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/232-17220-2-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/233-1731-19-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/234-17416-301-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/235-1751-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/236-17619-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/237-17740-55-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/238-17854-69-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/239-17966-6-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/240-18263-268-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/241-1878-93-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/242-1875-86-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/243-1801-23-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/244-18120-45-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/245-1821-18-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/246-18315-35-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/247-18432-8-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/248-1851-47-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/249-18645-83-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 67", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/250-1871-67-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/251-18865-128-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/252-189127-10-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/253-1996-108-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/254-1986-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/255-19042-10-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/256-1911-46-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/257-19243-78-up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/258-1931-23-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/259-19420-41-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/260-1951-25-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/261-19622-47-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/262-19747-74-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 71 - 101", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/263-19871-101-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/264-19999-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/265-2001-20-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/266-20066-2-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 20", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/267-2011-20-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/268-20219-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/269-20341-2-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/270-2041-23-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 21 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/271-20521-42-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 40 - 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/272-20640-2-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/273-2071-35-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 32 - 68", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/274-20832-68-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/275-20966-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/276-2101-25-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/277-21124-50-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 74 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/278-21247-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/279-21351-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/280-21467-88-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 47 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/281-2151-32-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/282-21630-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/283-21746-7-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/284-2181-17-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/285-21917-42-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/286-2201-25-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/287-22164-94-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/288-22292-115-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/289-223137-156-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/290-224155-176-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/291-2251-22-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/292-22646-69-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/293-22793-118-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/294-228114-138-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/295-229154-174-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/296-230170-188-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/297-231186-200-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/298-2321-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/299-23318-43-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/300-23438-63-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/301-23560-90-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/302-23690-110-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/303-237109-22-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/304-2381-25-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/305-23923-57-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/306-24055-77-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/307-24174-95-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/308-24294-118-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/309-243136-154-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/310-244153-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 28", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/311-2451-28-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/312-24626-54-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/313-24752-86-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/314-24882-111-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/315-2491-25-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/316-25024-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/317-25148-93-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/318-25289-131-up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/319-253125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/320-254173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/321-2551-29-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 48", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/322-25627-56-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/323-25755-77-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 71 - 101", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/324-25874-4-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/325-2591-25-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/326-26020-46-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/327-26145-64-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 42 - 62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/328-26242-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/329-2631-32-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/330-26432-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/331-26558-27-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/332-2661-50-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 48 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/333-26748-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 89 - 131", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/334-26889-131-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 125 - 175", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/335-269125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 173 - النمل 14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/336-270173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/337-2711-29-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/338-27227-56-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/339-27355-77-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 74 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/340-27474-4-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/341-2751-25-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/342-27624-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 47 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/343-27747-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/344-27868-88-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/345-2791-32-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/346-28030-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/347-28146-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/348-2821-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/349-28317-42-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/350-28451-257-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/351-28567-78-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/352-28661-77-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/353-28741-2-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/354-2881-21-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/355-28920-2-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/356-2901-19-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/357-29116-301-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/358-2921-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/359-29319-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/360-29440-55-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/361-29554-69-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/362-29666-6-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/363-29763-268-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/364-29878-93-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/365-29975-86-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/366-3001-23-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/367-30120-45-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/368-3021-18-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/369-30315-35-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/370-30432-8-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/371-3051-47-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/372-30645-83-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 67", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/373-3071-67-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/374-30865-128-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/375-309127-10-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/376-310281-283-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/377-311104-140--up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/378-31268-88-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/379-313110--up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/380-314117-124-up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/381-31528-40-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/382-3161-25-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/383-31723-48-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/384-31847-74-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/385-31971-101-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/386-32099-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/387-3211-21-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/388-32220-45-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 42 - 62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/389-32342-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/390-3241-32-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/391-32532-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/392-32658-27-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/393-3271-50-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 48 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/394-32848-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 89 - 131", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/395-32989-131-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 125 - 175", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/396-330125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 173 - النمل 14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/397-331173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/398-3321-29-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/399-33327-56-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/400-33455-77-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 74 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/401-33574-4-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/402-3361-25-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/403-33724-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 47 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/404-33847-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/405-33968-88-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/406-3401-32-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/407-34130-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/408-34246-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/409-3431-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/410-34417-42-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/411-34551-257-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/412-34667-78-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/413-34761-77-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/414-34841-2-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/415-3491-21-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/416-35020-2-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/417-3511-19-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/418-35216-301-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/419-3531-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/420-35419-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/421-35540-55-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/422-35654-69-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/423-35766-6-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/424-35863-268-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/425-35978-93-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/426-36075-86-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/427-3611-23-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/428-36220-45-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/429-3631-18-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/430-36415-35-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/431-36532-8-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/432-3661-47-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/433-36745-83-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 67", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/434-3681-67-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/435-36965-128-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/436-370127-10-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/437-371195-200-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/438-372281-283-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/439-373104-140--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/440-37468-88-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/441-375110--up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/442-376117-124-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/443-37728-40-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/444-3781-25-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 48", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/445-37923-48-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/446-38047-74-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 71 - 101", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/447-38171-101-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/448-38299-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/449-3831-21-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/450-38420-45-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 42 - 62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/451-38542-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/452-3861-32-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/453-38732-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/454-38858-27-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/455-3891-50-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 48 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/456-39048-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 89 - 131", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/457-39189-131-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 125 - 175", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/458-392125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 173 - النمل 14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/459-393173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/460-3941-29-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/461-39527-56-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/462-39655-77-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 74 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/463-39774-4-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/464-3981-25-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/465-39924-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 47 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/466-40047-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/467-40168-88-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/468-4021-32-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/469-40330-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/470-40446-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/471-4051-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/472-40617-42-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/473-40751-257-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/474-40867-78-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/475-40961-77-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/476-41041-2-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/477-4111-21-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/478-41220-2-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/479-4131-19-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/480-41416-301-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/481-4151-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/482-41619-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/483-41740-55-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/484-41854-69-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/485-41966-6-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/486-42063-268-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/487-42178-93-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/488-42275-86-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/489-4231-23-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/490-42420-45-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/491-4251-18-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/492-42615-35-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/493-42732-8-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/494-4281-47-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/495-42945-83-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 67", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/496-4301-67-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/497-43165-128-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/498-432127-10-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/499-433195-200-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/500-434281-283-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/501-435104-140--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/502-43668-88-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/503-437110--up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/504-438117-124-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/505-43928-40-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/506-4401-25-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 48", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/507-44123-48-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/508-44247-74-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 71 - 101", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/509-44371-101-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/510-44499-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/511-4451-21-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/512-44620-45-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 42 - 62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/513-44742-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/514-4481-32-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/515-44932-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/516-45058-27-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/517-4511-50-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 48 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/518-45248-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 89 - 131", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/519-45389-131-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 125 - 175", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/520-454125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 173 - النمل 14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/521-455173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/522-4561-29-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/523-45727-56-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/524-45855-77-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 74 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/525-45974-4-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/526-4601-25-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/527-46124-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 47 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/528-46247-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/529-46368-88-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/530-4641-32-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/531-46530-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/532-46646-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/533-4671-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/534-46817-42-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/535-46951-257-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/536-47067-78-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/537-47161-77-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/538-47241-2-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/539-4731-21-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/540-47420-2-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/541-4751-19-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/542-47616-301-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/543-4771-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/544-47819-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/545-47940-55-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/546-48054-69-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/547-48166-6-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/548-48263-268-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/549-48378-93-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/550-48475-86-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/551-4851-23-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/552-48620-45-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/553-4871-18-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/554-48815-35-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/555-48932-8-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/556-4901-47-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/557-49145-83-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 67", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/558-4921-67-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/559-49365-128-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/560-494127-10-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/561-495195-200-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/562-496281-283-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/563-497104-140--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/564-49868-88-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/565-499110--up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/566-500117-124-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/567-50128-40-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/568-5021-25-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 48", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/569-50323-48-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/570-50447-74-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 71 - 101", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/571-50571-101-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/572-50699-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/573-5071-21-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/574-50820-45-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 42 - 62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/575-50942-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/576-5101-32-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/577-51132-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/578-51258-27-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/579-5131-50-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 48 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/580-51448-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 89 - 131", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/581-51589-131-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 125 - 175", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/582-516125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 173 - النمل 14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/583-517173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/584-5181-29-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/585-51927-56-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/586-52055-77-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 74 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/587-52174-4-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/588-5221-25-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/589-52324-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 47 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/590-52447-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/591-52568-88-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/592-5261-32-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/593-52730-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/594-52846-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/595-5291-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/596-53017-42-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/597-53151-257-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/598-53267-78-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/599-53361-77-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/600-53441-2-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/601-5351-21-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/602-53620-2-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/603-5371-19-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/604-53816-301-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/605-5391-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/606-54019-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/607-54140-55-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/608-54254-69-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/609-54366-6-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/610-54463-268-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/611-54578-93-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/612-54675-86-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/613-5471-23-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/614-54820-45-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/615-5491-18-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/616-55015-35-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/617-55132-8-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/618-5521-47-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/619-55345-83-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 67", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/620-5541-67-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/621-55565-128-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/622-556127-10-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/623-557195-200-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/624-558281-283-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/625-559104-140--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/626-56068-88-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/627-561110--up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/628-562117-124-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/629-56328-40-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/630-5641-25-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 48", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/631-56523-48-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/632-56647-74-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 71 - 101", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/633-56771-101-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/634-56899-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/635-5691-21-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/636-57020-45-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 42 - 62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/637-57142-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/638-5721-32-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/639-57332-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/640-57458-27-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/641-5751-50-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 48 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/642-57648-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 89 - 131", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/643-57789-131-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 125 - 175", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/644-578125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 173 - النمل 14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/645-579173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/646-5801-29-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/647-58127-56-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/648-58255-77-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 74 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/649-58374-4-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/650-5841-25-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/651-58524-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 47 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/652-58647-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/653-58768-88-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/654-5881-32-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/655-58930-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/656-59046-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/657-5911-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/658-59217-42-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/659-59351-257-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/660-59467-78-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/661-59561-77-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/662-59641-2-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/663-5971-21-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/664-59820-2-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/665-5991-19-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/666-60016-301-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/667-6011-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/668-60219-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/669-60340-55-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/670-60454-69-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/671-60566-6-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/672-60663-268-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/673-60778-93-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/674-60875-86-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/675-6091-23-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/676-61020-45-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/677-6111-18-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/678-61215-35-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/679-61332-8-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/680-6141-47-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/681-61545-83-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 67", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/682-6161-67-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/683-61765-128-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/684-618127-10-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/685-619195-200-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/686-620281-283-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/687-621104-140--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/688-62268-88-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/689-623110--up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/690-624117-124-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/691-62528-40-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/692-6261-25-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 48", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/693-62723-48-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/694-62847-74-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 71 - 101", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/695-62971-101-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/696-63099-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/697-6311-21-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/698-63220-45-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 42 - 62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/699-63342-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/700-6341-32-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/701-63532-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/702-63658-27-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/703-6371-50-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 48 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/704-63848-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 89 - 131", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/705-63989-131-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 125 - 175", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/706-640125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 173 - النمل 14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/707-641173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/708-6421-29-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/709-64327-56-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/710-64455-77-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 74 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/711-64574-4-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/712-6461-25-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/713-64724-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 47 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/714-64847-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/715-64968-88-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/716-6501-32-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/717-65130-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/718-65246-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/719-6531-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/720-65417-42-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/721-65551-257-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/722-65667-78-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/723-65761-77-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/724-65841-2-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/725-6591-21-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/726-66020-2-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/727-6611-19-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/728-66216-301-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/729-6631-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/730-66419-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/731-66540-55-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/732-66654-69-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/733-66766-6-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/734-66863-268-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/735-66978-93-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/736-67075-86-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/737-6711-23-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/738-67220-45-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/739-6731-18-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/740-67415-35-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/741-67532-8-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/742-6761-47-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/743-67745-83-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 67", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/744-6781-67-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/745-67965-128-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/746-680127-10-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/747-681195-200-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/748-682281-283-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/749-683104-140--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/750-68468-88-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/751-685110--up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/752-686117-124-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/753-68728-40-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/754-6881-25-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 48", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/755-68923-48-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/756-69047-74-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 71 - 101", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/757-69171-101-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/758-69299-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/759-6931-21-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/760-69420-45-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 42 - 62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/761-69542-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/762-6961-32-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/763-69732-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/764-69858-27-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/765-6991-50-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 48 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/766-70048-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 89 - 131", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/767-70189-131-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 125 - 175", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/768-702125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 173 - النمل 14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/769-703173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/770-7041-29-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/771-70527-56-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/772-70655-77-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 74 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/773-70774-4-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/774-7081-25-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/775-70924-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 47 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/776-71047-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/777-71168-88-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/778-7121-32-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/779-71330-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/780-71446-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/781-7151-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/782-71617-42-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/783-71751-257-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/784-71867-78-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/785-71961-77-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/786-72041-2-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/787-7211-21-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/788-72220-2-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/789-7231-19-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/790-72416-301-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/791-7251-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/792-72619-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/793-72740-55-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/794-72854-69-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/795-72966-6-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/796-73063-268-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/797-73178-93-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/798-73275-86-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/799-7331-23-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/800-73420-45-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/801-7351-18-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/802-73615-35-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/803-73732-8-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/804-7381-47-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/805-73945-83-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 67", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/806-7401-67-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/807-74165-128-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/808-742127-10-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/809-743195-200-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/810-744281-283-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/811-745104-140--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/812-74668-88-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/813-747110--up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/814-748117-124-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/815-74928-40-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/816-7501-25-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 48", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/817-75123-48-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/818-75247-74-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 71 - 101", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/819-75371-101-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/820-75499-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/821-7551-21-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/822-75620-45-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 42 - 62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/823-75742-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/824-7581-32-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/825-75932-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/826-76058-27-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/827-7611-50-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 48 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/828-76248-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 89 - 131", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/829-76389-131-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 125 - 175", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/830-764125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 173 - النمل 14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/831-765173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/832-7661-29-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/833-76727-56-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/834-76855-77-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 74 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/835-76974-4-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/836-7701-25-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/837-77124-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 47 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/838-77247-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/839-77368-88-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/840-7741-32-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/841-77530-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/842-77646-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/843-7771-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/844-77817-42-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/845-77951-257-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/846-78067-78-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/847-78161-77-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/848-78241-2-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/849-7831-21-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/850-78420-2-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/851-7851-19-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/852-78616-301-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/853-7871-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/854-78819-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/855-78940-55-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/856-79054-69-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/857-79166-6-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/858-79263-268-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/859-79378-93-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/860-79475-86-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/861-7951-23-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/862-79620-45-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/863-7971-18-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/864-79815-35-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/865-79932-8-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/866-8001-47-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/867-80145-83-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 67", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/868-8021-67-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/869-80365-128-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/870-804127-10-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/871-805195-200-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/872-806281-283-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/873-807104-140--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/874-80868-88-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/875-809110--up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/876-810117-124-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/877-81128-40-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/878-8121-25-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 48", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/879-81323-48-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/880-81447-74-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 71 - 101", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/881-81571-101-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/882-81699-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/883-8171-21-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/884-81820-45-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 42 - 62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/885-81942-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/886-8201-32-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/887-82132-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/888-82258-27-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/889-8231-50-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 48 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/890-82448-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 89 - 131", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/891-82589-131-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 125 - 175", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/892-826125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 173 - النمل 14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/893-827173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/894-8281-29-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/895-82927-56-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/896-83055-77-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 74 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/897-83174-4-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/898-8321-25-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/899-83324-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 47 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/900-83447-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/901-83568-88-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/902-8361-32-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/903-83730-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/904-83846-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/905-8391-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/906-84017-42-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/907-84151-257-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/908-84267-78-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/909-84361-77-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/910-84441-2-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/911-8451-21-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/912-84620-2-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/913-8471-19-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/914-84816-301-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/915-8491-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/916-85019-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/917-85140-55-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/918-85254-69-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/919-85366-6-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/920-85463-268-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/921-85578-93-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/922-85675-86-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/923-8571-23-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/924-85820-45-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/925-8591-18-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/926-86015-35-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/927-86132-8-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/928-8621-47-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/929-86345-83-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 67", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/930-8641-67-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/931-86565-128-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/932-866127-10-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/933-867195-200-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/934-868281-283-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/935-869104-140--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/936-87068-88-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/937-871110--up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/938-872117-124-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 28 - 40", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/939-87328-40-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/940-8741-25-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 23 - 48", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/941-87523-48-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 47 - 74", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/942-87647-74-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 71 - 101", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/943-87771-101-up_by_muslem.ettounssi.mp3" },
+            { name: "المؤمنون 99 - النور 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/944-87899-4-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/945-8791-21-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 20 - 45", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/946-88020-45-up_by_muslem.ettounssi.mp3" },
+            { name: "النور 42 - 62", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/947-88142-62-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/948-8821-32-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 32 - 58", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/949-88332-58-up_by_muslem.ettounssi.mp3" },
+            { name: "الفرقان 58 - الشعراء 27", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/950-88458-27-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 1 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/951-8851-50-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 48 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/952-88648-93-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 89 - 131", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/953-88789-131-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 125 - 175", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/954-888125-175-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 173 - النمل 14", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/955-889173-14-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 1 - 29", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/956-8901-29-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 27 - 56", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/957-89127-56-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 55 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/958-89255-77-up_by_muslem.ettounssi.mp3" },
+            { name: "النمل 74 - القصص 4", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/959-89374-4-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 1 - 25", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/960-8941-25-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 24 - 50", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/961-89524-50-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 47 - 70", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/962-89647-70-up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/963-89768-88-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 1 - 32", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/964-8981-32-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 30 - 46", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/965-89930-46-up_by_muslem.ettounssi.mp3" },
+            { name: "العنكبوت 46 - الروم 7", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/966-90046-7-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 1 - 17", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/967-9011-17-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 17 - 42", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/968-90217-42-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 251-257", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/969-90351-257-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 67 - 78 من ليبيا", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/970-90467-78-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 61 - 77", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/971-90561-77-up_by_muslem.ettounssi.mp3" },
+            { name: "الروم 41 - لقمان 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/972-90641-2-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/973-9071-21-up_by_muslem.ettounssi.mp3" },
+            { name: "لقمان 20 - السجدة 2", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/974-90820-2-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 1 - 19", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/975-9091-19-up_by_muslem.ettounssi.mp3" },
+            { name: "السجدة 16 - 30 والاحزاب 1", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/976-91016-301-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 1 - 21", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/977-9111-21-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 19 - 44", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/978-91219-44-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 40 - 55", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/979-91340-55-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 54 - 69", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/980-91454-69-up_by_muslem.ettounssi.mp3" },
+            { name: "الاحزاب 66 - سبأ 6", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/981-91566-6-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 263-268", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/982-91663-268-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 78 - 93", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/983-91778-93-up_by_muslem.ettounssi.mp3" },
+            { name: "يوسف 75 - 86", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/984-91875-86-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 1 - 23", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/985-9191-23-up_by_muslem.ettounssi.mp3" },
+            { name: "سبأ 20 - 45 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/986-92020-45-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 1 - 18", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/987-9211-18-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 15 - 35", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/988-92215-35-up_by_muslem.ettounssi.mp3" },
+            { name: "فاطر 32 - يس 8", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/989-92332-8-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 1 - 47", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/990-9241-47-up_by_muslem.ettounssi.mp3" },
+            { name: "يس 45 - 83 نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/991-92545-83-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 1 - 67", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/992-9261-67-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 65 - 128", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/993-92765-128-up_by_muslem.ettounssi.mp3" },
+            { name: "الصافات 127 - ص 10", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/994-928127-10-up_by_muslem.ettounssi.mp3" },
+            { name: "آل عمران 195-200", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/995-929195-200-up_by_muslem.ettounssi.mp3" },
+            { name: "البقرة 281-283", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/996-930281-283-up_by_muslem.ettounssi.mp3" },
+            { name: "الشعراء 104 - 140 - الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/997-931104-140--up_by_muslem.ettounssi.mp3" },
+            { name: "القصص 68 - 88 الاقصى", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/998-93268-88-up_by_muslem.ettounssi.mp3" },
+            { name: "المائدة 110 - نهاية السورة", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/999-933110--up_by_muslem.ettounssi.mp3" },
+            { name: "النساء 117-124", url: "https://archive.org/download/Torath_Mensheoui-1_uP_bY_mUSLEm/1000-934117-124-up_by_muslem.ettounssi.mp3" }
+        ];
+
+        // --- جلب العناصر من الصفحة ---
+        const murattalList = document.getElementById('murattal-list');
+        const rawaeDropdown = document.getElementById('rawaeDropdown');
+        const playRawaeBtn = document.getElementById('playRawaeBtn');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playerContainer = document.getElementById('playerContainer');
+        const playerTitle = document.getElementById('playerTitle');
+        const closePlayerBtn = document.getElementById('closePlayerBtn');
+        const sleepTimerBtn = document.getElementById('sleepTimerBtn');
+        const sleepTimerModal = document.getElementById('sleepTimerModal');
+        const whatsappBtn = document.getElementById('whatsappBtn');
+        const timerStatusDiv = document.getElementById('timerStatus');
+        const timerCountdownSpan = document.getElementById('timerCountdown');
+
+        // --- متغيرات عامة للتشغيل التلقائي ---
+        let currentPlaylist = null; // 'murattal' أو 'rawae'
+        let currentTrackIndex = -1;
+
+        // --- متغيرات مؤقت النوم ---
+        let sleepTimerInterval = null;
+        let sleepTimerEndTime = 0;
+
+        // --- دوال بناء القوائم ---
+        function createMurattalList() {
+            murattalData.forEach((surah, index) => {
+                const item = document.createElement('div');
+                item.className = 'surah-item';
+                item.textContent = surah.name;
+                item.addEventListener('click', () => playAudio(surah.url, surah.name, 'murattal', index));
+                murattalList.appendChild(item);
+            });
+        }
+
+        function populateRawaeDropdown() {
+            rawaeData.forEach(recitation => {
+                const option = document.createElement('option');
+                option.value = recitation.url;
+                option.textContent = recitation.name;
+                rawaeDropdown.appendChild(option);
+            });
+        }
+
+        // --- دالة تشغيل الصوت مع تحديث الحالة ---
+        function playAudio(url, title, playlist, index) {
+            // إلغاء تحديد السورة الحالية
+            document.querySelectorAll('.surah-item').forEach(el => el.classList.remove('playing'));
+
+            // تحديث القائمة والمسار الحالي
+            currentPlaylist = playlist;
+            currentTrackIndex = index;
+
+            // تشغيل الصوت
+            audioPlayer.src = url;
+            playerTitle.textContent = title;
+            playerContainer.classList.add('active');
+            audioPlayer.play();
+            
+            // إلغاء مؤقت النوم إذا كان نشطًا
+            if (sleepTimerInterval) {
+                cancelSleepTimer();
+            }
+        }
+
+        // --- دالة إلغاء مؤقت النوم ---
+        function cancelSleepTimer() {
+            if (sleepTimerInterval) {
+                clearInterval(sleepTimerInterval);
+                sleepTimerInterval = null;
+            }
+            sleepTimerBtn.classList.remove('active');
+            timerStatusDiv.style.display = 'none';
+        }
+
+        // --- دالة تعيين مؤقت النوم ---
+        function setSleepTimer() {
+            const selectedOption = document.querySelector('.timer-option.selected');
+            if (!selectedOption) {
+                showMessage('الرجاء اختيار وقت للمؤقت');
+                return;
+            }
+            const minutes = parseInt(selectedOption.dataset.minutes);
+            sleepTimerEndTime = Date.now() + (minutes * 60 * 1000);
+            
+            sleepTimerInterval = setInterval(updateSleepTimer, 1000);
+            sleepTimerBtn.classList.add('active');
+            timerStatusDiv.style.display = 'block';
+            closeSleepTimerModal();
+        }
+
+        // --- دالة تحديث عرض مؤقت النوم ---
+        function updateSleepTimer() {
+            const now = Date.now();
+            const remaining = sleepTimerEndTime - now;
+            
+            if (remaining <= 0) {
+                audioPlayer.pause();
+                playerContainer.classList.remove('active');
+                playerTitle.textContent = 'تم إيقاف التشغيل حسب مؤقت النوم';
+                cancelSleepTimer();
+            } else {
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+                timerCountdownSpan.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+
+        // --- دالة فتح نافذة مؤقت النوم ---
+        function toggleSleepTimer() {
+            if (sleepTimerInterval) {
+                cancelSleepTimer();
+            } else {
+                sleepTimerModal.style.display = 'flex';
+                setupTimerOptions();
+            }
+        }
+
+        // --- دالة إعداد خيارات مؤقت النوم ---
+        function setupTimerOptions() {
+            const timerOptions = document.querySelectorAll('.timer-option');
+            timerOptions.forEach(option => {
+                option.onclick = () => {
+                    timerOptions.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                };
+            });
+        }
+
+        // --- دالة إغلاق نافذة مؤقت النوم ---
+        function closeSleepTimerModal() {
+            sleepTimerModal.style.display = 'none';
+        }
+
+        // --- دالة المشاركة ---
+        function shareApp() {
+            const shareData = {
+                title: 'مصحف الشيخ محمد صديق المنشاوي',
+                text: 'استمع إلى تلاوات القرآن الكريم بصوت الشيخ المنشاوي',
+                url: window.location.href
+            };
+            if (navigator.share) {
+                navigator.share(shareData).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`).then(() => {
+                    showMessage('تم نسخ الرابط إلى الحافظة!');
+                }).catch(() => {
+                    showMessage('فشل النسخ، يرجى نسخ الرابط يدوياً');
+                });
+            }
+        }
+
+        // --- دالة الإبلاغ عن رابط معطل ---
+        function reportBrokenLink() {
+            const phoneNumber = '+201092116092';
+            const message = 'يوجد رابط معطلب في مصحف الشيخ محمد صديق المنشاوي، يرجى التحقق';
+            const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // --- دالة عرض رسالة ---
+        function showMessage(message) {
+            alert(message);
+        }
+
+        // --- دالة الرجوع ---
+        function goBack() {
+            window.location.href = 'https://waleedd189.github.io/radio-quran/index.html';
+        }
+
+        // --- مستمعي الأحداث ---
+        playRawaeBtn.addEventListener('click', () => {
+            const selectedUrl = rawaeDropdown.value;
+            const selectedName = rawaeDropdown.options[rawaeDropdown.selectedIndex].text;
+            if (selectedUrl) {
+                playAudio(selectedUrl, selectedName, 'rawae', -1);
+            }
+        });
+
+        closePlayerBtn.addEventListener('click', () => {
+            audioPlayer.pause();
+            playerContainer.classList.remove('active');
+            document.querySelectorAll('.surah-item').forEach(el => el.classList.remove('playing'));
+        });
+
+        audioPlayer.addEventListener('ended', () => {
+            // التشغيل التلقائي يعمل فقط مع قائمة المصحف المرتل
+            if (currentPlaylist === 'murattal') {
+                const nextIndex = currentTrackIndex + 1;
+                if (nextIndex < murattalData.length) {
+                    const nextSurah = murattalData[nextIndex];
+                    playAudio(nextSurah.url, nextSurah.name, 'murattal', nextIndex);
+                    return; // لا تخفي المشغل
+                }
+            }
+            // إذا لم يكن من المصحف المرتل أو كانت آخر سورة، أخفِ المشغل
+            playerContainer.classList.remove('active');
+            document.querySelectorAll('.surah-item').forEach(el => el.classList.remove('playing'));
+        });
+
+        // --- تشغيل الدوال عند تحميل الصفحة ---
+        document.addEventListener('DOMContentLoaded', () => {
+            createMurattalList();
+            populateRawaeDropdown();
+        });
+    </script>
+</body>
+</html>
