@@ -1217,6 +1217,8 @@ section4Title: "دروس وعبر",
 listenToCompleteQuran: "اختر سورة",
 listenToTafsir: "استماع إلى التفسير",
 listenToLessons: "استماع للدروس",
+mushafAlMinshawi: "المصحف المرتل",
+ruwayaAlMinshawi: "روائع المنشاوي",
 favoritesTitle: "المفضلات",
 clearFavorites: "مسح الكل",
 emptyFavorites: "لا توجد محطات مفضلة"
@@ -1270,6 +1272,8 @@ section4Title: "Lessons & Wisdom",
 listenToCompleteQuran: "Listen to Complete Quran",
 listenToTafsir: "Listen to Tafsir",
 listenToLessons: "Listen to Lessons",
+mushafAlMinshawi: "Mushaf Al-Minshawi",
+ruwayaAlMinshawi: "Minshawi's Masterpieces",
 favoritesTitle: "Favorites",
 clearFavorites: "Clear All",
 emptyFavorites: "No favorite stations"
@@ -1334,8 +1338,14 @@ const section3Stations = [
 { name: {ar: "الشيخ عبدالباسط", en: "Sheikh Abdul Basit"}, img: "https://7nen.do.am/_ph/6/1/788498118.jpg", url: "https://qurango.net/radio/abdulbasit_abdulsamad.mp3" },
 { name: {ar: "الشيخ محمود علي البنا", en: "Sheikh Mahmoud Ali Al-Banna"}, img: "https://7nen.do.am/_ph/6/1/592190149.jpg", url: "https://backup.qurango.net/radio/mahmoud_ali__albanna" },
 { name: {ar: "الشيخ مصطفى إسماعيل", en: "Sheikh Mustafa Ismail"}, img: "https://7nen.do.am/_ph/6/1/49597189.jpg", url: "https://backup.qurango.net/radio/mustafa_ismail" },
-// إضافة إذاعة المنشاوي
-{ name: {ar: "الشيخ محمد صديق المنشاوي", en: "Sheikh Muhammad Siddiq Al-Minshawi"}, img: "https://i.postimg.cc/tJ0v8zZn/image.jpg", url: "https://server03.quran-uni.com:7036/;*.mp3" },
+// إضافة إذاعة المنشاوي مع الأزرار الجديدة
+{ 
+name: {ar: "الشيخ محمد صديق المنشاوي", en: "Sheikh Muhammad Siddiq Al-Minshawi"}, 
+img: "https://i.postimg.cc/tJ0v8zZn/image.jpg", 
+url: "https://server03.quran-uni.com:7036/;*.mp3",
+mushafUrl: "https://waleedd189.github.io/radio-quran/Al-Minshawi.html",
+ruwayaUrl: "https://waleedd189.github.io/radio-quran/Al-Minshawi.html"
+},
 // باقي الإذاعات
 { name: {ar: "الشيخ أحمد العجمي", en: "Sheikh Ahmed Al-Ajmi"}, img: "https://7nen.do.am/_ph/6/1/979378293.jpg", url: "https://qurango.net/radio/ahmad_alajmy.mp3" },
 {
@@ -1547,7 +1557,7 @@ const card = document.createElement('div');
 card.className = 'card';
 
 // إضافة زر المفضلة
-const isFavorite = favorites.some(fav => fav.name === station.name.ar || fav.name === station.name.en);
+const isFavorite = favorites.some(fav => fav.name === station.name.ar || fav.name === station.en);
 const favoriteBtn = `<button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${station.name.ar}', '${station.name.en}', '${station.img}', '${station.url || station.lessonsUrl || ''}')">♡</button>`;
 
 if (station.type === 'azkar') {
@@ -1625,6 +1635,32 @@ text-decoration: none; display: inline-block; transition: all 0.3s ease;"
 onmouseover="this.style.backgroundColor='#45a049'; this.style.transform='translateY(-2px)'"
 onmouseout="this.style.backgroundColor='#4CAF50'; this.style.transform='translateY(0)'">
  ${translations[currentLanguage].listenToCompleteQuran}
+</a>
+<div class="progress-bar"></div>
+`;
+} else if (station.name[currentLanguage] === "الشيخ محمد صديق المنشاوي" || station.name.en === "Sheikh Muhammad Siddiq Al-Minshawi") {
+// بطاقة المنشاوي مع الأزرار الجديدة
+card.innerHTML = `
+ ${favoriteBtn}
+<img src="${station.img}" alt="${station.name[currentLanguage]}" loading="lazy" class="lazy-image" />
+<h2>${station.name[currentLanguage]}</h2>
+<button onclick="playRadio('${station.url}', '${station.name[currentLanguage]}', this)">${translations[currentLanguage].playButton}</button>
+<button class="stop-btn" onclick="stopRadio()">${translations[currentLanguage].stopButton}</button>
+<a href="${station.mushafUrl}"
+style="background-color: #4CAF50; color: white; border: none; padding: 8px 14px;
+border-radius: 10px; font-size: 0.9em; cursor: pointer; margin: 5px;
+text-decoration: none; display: inline-block; transition: all 0.3s ease;"
+onmouseover="this.style.backgroundColor='#45a049'; this.style.transform='translateY(-2px)'"
+onmouseout="this.style.backgroundColor='#4CAF50'; this.style.transform='translateY(0)'">
+ ${translations[currentLanguage].mushafAlMinshawi}
+</a>
+<a href="${station.ruwayaUrl}"
+style="background-color: #4CAF50; color: white; border: none; padding: 8px 14px;
+border-radius: 10px; font-size: 0.9em; cursor: pointer; margin: 5px;
+text-decoration: none; display: inline-block; transition: all 0.3s ease;"
+onmouseover="this.style.backgroundColor='#45a049'; this.style.transform='translateY(-2px)'"
+onmouseout="this.style.backgroundColor='#4CAF50'; this.style.transform='translateY(0)'">
+ ${translations[currentLanguage].ruwayaAlMinshawi}
 </a>
 <div class="progress-bar"></div>
 `;
