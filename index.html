@@ -1370,6 +1370,13 @@ completeQuranUrl: "https://waleedd189.github.io/radio-quran/fares-abbad.html"
 name: {ar: "الشيخ ماهر المعيقلي", en: "Sheikh Maher Al-Muaiqly"},
 img: "https://i.postimg.cc/WzgpPS5k/image.png",
 url: "https://server03.quran-uni.com:7005/;*.mp3"
+},
+// إضافة إذاعة الشيخ ناصر القطامي (الإضافة الجديدة)
+{
+name: {ar: "الشيخ ناصر القطامي", en: "Sheikh Nasser Al-Qatami"},
+img: "https://i.postimg.cc/ryhX50Xv/ناصر_القطامى.jpg",
+url: "https://qurango.net/radio/nasser_alqatami.mp3",
+completeQuranUrl: "https://waleedd189.github.io/radio-quran/nasser-al-qatami.html"
 }
 ];
 
@@ -1437,7 +1444,7 @@ let prayerTimes = {};
 let nextPrayerInterval = null;
 let sleepTimer = null;
 
-// Function to set the language and update content
+// Function to set language and update content
 function setLanguage(lang) {
 currentLanguage = lang;
 htmlElement.setAttribute('lang', lang);
