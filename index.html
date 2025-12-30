@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-<title>راديو قرآن v5.1 (المصحف الشريف)</title>
+<title>راديو قرآن v5.2 (المصحف الشريف)</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUmFkaW8gUXVyYW4iLCJzaG9ydF9uYW1lIjoiUXVyYW4gUmFkaW8iLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJ0aGVtZV9jb2xvciI6IiM0Q0FGNTAiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzExMSIsImljb25zIjpbXSwibm90aWZpY2F0aW9ucyI6eyJpY29uIjoiaWNvbi5wbmciLCJ2aWJyYXRlIjoxLCJzb3VuZCI6MX19">
 <style>
@@ -102,8 +102,14 @@ button:hover { background-color: #45a049; transform: translateY(-2px); }
 .stop-btn:hover { background-color: #da190b !important; }
 
 .progress-bar { margin-top: 10px; height: 4px; width: 100%; background: #555; position: relative; overflow: hidden; border-radius: 2px; }
-.progress-bar::before { content: ""; position: absolute; height: 100%; width: 30%; background: #4caf50; animation: move 2s linear infinite; }
-.card.active .progress-bar::before { animation: move 1s linear infinite; background: linear-gradient(90deg, #4caf50, #81c784, #4caf50); }
+.progress-bar::before {
+content: ""; position: absolute; height: 100%; width: 30%; background: #4caf50;
+/* التعديل الجديد: إزالة الحركة من الأساسي، سيتم إضافتها فقط في الحالة النشطة */
+}
+.card.active .progress-bar::before {
+animation: move 1s linear infinite;
+background: linear-gradient(90deg, #4caf50, #81c784, #4caf50);
+}
 @keyframes move { from { left: -30%; } to { left: 100%; } }
 
 /* التذييل والشريط المتحرك */
@@ -215,6 +221,21 @@ h1 { font-size: 2.2em; }
 .volume-slider { width: 100px; height: 5px; background: #555; outline: none; opacity: 0.7; transition: opacity 0.2s; border-radius: 5px; }
 .volume-slider:hover { opacity: 1; }
 .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 15px; height: 15px; background: #4CAF50; cursor: pointer; border-radius: 50%; }
+
+/* زر الواتساب العائم */
+.whatsapp-float {
+position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px;
+background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); cursor: pointer; transition: all 0.3s ease; z-index: 1000; border: none; text-decoration: none;
+}
+.whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6); }
+.whatsapp-tooltip {
+position: absolute; right: 70px; top: 50%; transform: translateY(-50%);
+background: rgba(0, 0, 0, 0.8); color: white; padding: 8px 12px; border-radius: 8px; font-size: 0.85em;
+white-space: nowrap; opacity: 0; visibility: hidden; transition: all 0.3s ease; pointer-events: none;
+}
+.whatsapp-float:hover .whatsapp-tooltip { opacity: 1; visibility: visible; }
+
 </style>
 </head>
 <body>
@@ -279,8 +300,11 @@ h1 { font-size: 2.2em; }
 <footer><div class="footer-text" id="footerText">راديو قرآن - صفحة اللهم لك الحمد</div></footer>
 <audio id="radioPlayer" controls style="display:none;" preload="auto"></audio>
 
-<!-- زر الواتساب -->
-<button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn"><div class="whatsapp-tooltip" id="whatsappTooltip">الإبلاغ عن رابط معطل</div><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.520.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/></svg></button>
+<!-- زر الواتساب (تم إصلاحه) -->
+<button class="whatsapp-float" onclick="reportBrokenLink()" id="whatsappBtn">
+<div class="whatsapp-tooltip" id="whatsappTooltip">الإبلاغ عن رابط معطل</div>
+<svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.520.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/></svg>
+</button>
 
 <!-- نافذة المصحف المحسنة -->
 <div class="quran-modal" id="quranModal">
@@ -317,13 +341,16 @@ en: { quranRadio: "Quran Radio", subtitle: "Page", facebookLinkText: "Allahuma L
 let currentLanguage = 'ar';
 let favorites = JSON.parse(localStorage.getItem('radioFavorites')) || [];
 
+// رقم الواتساب: يرجى تغييره برقمك (بدون الرموز الدولية أو +)
+const whatsappNumber = "201000000000"; 
+
 const sharawyTafsirRecordings = [{ name: "مقدمة 1", url: "https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro1.mp3" }];
 const azkarRecordings = [{ name: {ar: "أذكار الصباح و المساء", en: "Morning & Evening Azkar"}, url: "https://archive.org/download/AthkarAlsabahAbdulazizBi356856835685683356568/Athkar%20Idrees%20Abkar.mp3" }];
 const ruqyahRecordings = [{ name: {ar: "رقية عامة", en: "General Ruqyah"}, url: "https://qurango.net/radio/roqiah" }];
 
 const section1Stations = [
 { name: {ar: "إذاعة الأذكار", en: "Azkar Radio"}, img: "https://7nen.do.am/_ph/6/676236720.jpg", type: "azkar", recordings: azkarRecordings },
-{ name: {ar: "إذاعة الشعراوي", en: "Al-Sharawy Radio"}, img: "https://i.postimg.cc/cHWD43hb/alshʿrawy.jpg", url: "https://waleedd189.github.io/radio-quran/sharawy-tafsir.html" },
+{ name: {ar: "إذاعة الشعراوي", en: "Al-Sharawy Radio"}, img: "https://archive.org/download/20250929_20250929_2020/%D8%A7%D9%84%D8%B4%D8%B9%D8%B1%D9%88.jpg", url: "https://waleedd189.github.io/radio-quran/sharawy-tafsir.html" },
 { name: {ar: "إذاعة الرقية", en: "Ruqyah Radio"}, img: "https://7nen.do.am/_ph/6/1/288946560.jpg", type: "ruqyah", recordings: ruqyahRecordings }
 ];
 const section2Stations = [
@@ -383,6 +410,13 @@ let playStartTime = null;
 let timeInterval = null;
 let sleepTimer = null;
 let currentSurah = null;
+
+// === وظيفة زر الواتساب الجديدة ===
+function reportBrokenLink() {
+const stationName = nowPlayingSpan.textContent || "المحطة الحالية";
+const message = `السلام عليكم، وجدت رابط معطل في موقع راديو قرآن:\n\nالمحطة: ${stationName}\nالرابط: ${window.location.href}`;
+window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+}
 
 // === Quran Enhanced Functions ===
 function toggleQuranModal() {
@@ -508,7 +542,6 @@ tafsirModal.style.display = 'flex';
 tafsirText.textContent = "جاري جلب التفسير...";
 
 try {
-// Using specific Tafsir Al-Muyassar endpoint 'ar.muyassar'
 const response = await fetch(`https://api.alquran.cloud/v1/ayah/${ayahGlobalNumber}/editions/ar.muyassar`);
 const data = await response.json();
 
@@ -622,14 +655,29 @@ globalPlayer.addEventListener('pause', () => { playingIndicator.style.display = 
 globalPlayer.play().then(() => { playStartTime = Date.now(); startTimeCounter(); }).catch(error => { console.error(error); });
 }
 
+// دالة التشغيل للأذكار (مع الأوتوبلاي)
+function playAzkar(el) {
+const url = el.value;
+if(url) {
+const card = el.closest('.card'); // تحديد الكارت الحالي
+playRadio(url, `أذكار - ${el.options[el.selectedIndex].text}`, card);
+}
+}
+
+// دالة التشغيل للرقية (مع الأوتوبلاي)
+function playRuqyah(el) {
+const url = el.value;
+if(url) {
+const card = el.closest('.card');
+playRadio(url, `رقية - ${el.options[el.selectedIndex].text}`, card);
+}
+}
+
 function stopRadio() {
 globalPlayer.pause(); globalPlayer.src = ""; document.getElementById('globalAudioPlayerContainer').style.display = 'none';
 nowPlayingSpan.textContent = translations[currentLanguage].initialStationText; playingIndicator.style.display = 'none'; bufferingLoader.style.display = 'none';
 document.querySelectorAll('.card').forEach(card => card.classList.remove('active')); stopTimeCounter();
 }
-
-function playAzkar(el) { if(el.value) playRadio(el.value, `أذكار - ${el.options[el.selectedIndex].text}`, el); }
-function playRuqyah(el) { if(el.value) playRadio(el.value, `رقية - ${el.options[el.selectedIndex].text}`, el); }
 
 function toggleGlobalPlayer() {
 document.getElementById('globalAudioPlayerContainer').style.display = 'none';
