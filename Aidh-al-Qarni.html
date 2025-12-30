@@ -570,7 +570,7 @@
     </button>
     <button class="control-btn wait-btn" id="waitBtn" onclick="toggleWait()">
       <i class="fas fa-hourglass-half"></i>
-      <span>انتظار</span>
+      <span>AutoPlay</span>
     </button>
   </div>
   <!-- ===== العنوان الرئيسي ===== -->
@@ -655,7 +655,7 @@
         وضع الانتظار
       </div>
       <div class="wait-message" style="margin: 20px 0; color: #ccc; line-height: 1.6;">
-        سيتم تشغيل الدرس التالي تلقائياً بعد انتهاء الدرس الحالي. هل تريد تفعيل وضع الانتظار؟
+        سيتم تشغيل الدرس التالي تلقائياً بعد انتهاء الدرس الحالي. هل تريد تفعيل وضع التشغيل التلقائى؟
       </div>
       <div class="modal-actions">
         <button class="modal-btn modal-cancel" onclick="closeWaitModal()">إلغاء</button>
@@ -1373,7 +1373,7 @@
         if (this.waitMode) {
           this.waitMode = false;
           document.getElementById('waitBtn').classList.remove('active');
-          this.nowPlaying.textContent = this.nowPlaying.textContent.replace(' (وضع الانتظار مفعل)', '');
+          this.nowPlaying.textContent = this.nowPlaying.textContent.replace(' (وضع AutoPlay مفعل)', '');
         } else {
           if (this.currentLessonIndex === -1) {
             this.showMessage('الرجاء تشغيل درس أولاً');
@@ -1386,7 +1386,7 @@
       enableWaitMode() {
         this.waitMode = true;
         document.getElementById('waitBtn').classList.add('active');
-        this.nowPlaying.textContent += ' (وضع الانتظار مفعل)';
+        this.nowPlaying.textContent += ' (وضع AutoPlay مفعل)';
         this.closeWaitModal();
       },
 
@@ -1461,4 +1461,5 @@
     });
   </script>
 </body>
+
 </html>
