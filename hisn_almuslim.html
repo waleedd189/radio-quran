@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>حصن المسلم</title>
+  <!-- الخطوط والأيقونات -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ===== متغيرات التصميم ===== */
+    :root {
+      --primary-color: #4CAF50;
+      --secondary-color: #FF9800;
+      --third-color: #2196F3;
+      --fourth-color: #9C27B0;
+      --fifth-color: #F44336;
+      --sixth-color: #00BCD4;
+      --background-color: #111;
+      --card-background: rgba(34, 34, 34, 0.9);
+      --text-color: #fff;
+    }
+    /* ===== الأساسيات ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Cairo', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #111 0%, #333 100%);
+      color: var(--text-color);
+      text-align: center;
+      padding: 30px 10px;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    /* ===== العناوين ===== */
+    h1 {
+      font-family: 'Amiri', serif;
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 5px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, var(--primary-color), #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    h1::before, h1::after {
+      content: "﴿";
+      color: var(--primary-color);
+      margin: 0 10px;
+      font-size: 1.2em;
+    }
+    h1::after {
+      content: "﴾";
+    }
+    .subtitle {
+      font-size: 1.1em;
+      margin-bottom: 15px;
+      color: #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .subtitle a {
+      color: inherit;
+      text-decoration: none;
+      background: linear-gradient(45deg, var(--primary-color), #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: transform 0.3s ease;
+      font-weight: 600;
+    }
+    .subtitle a:hover {
+      transform: scale(1.05);
+    }
+    /* ===== أزرار التحكم ===== */
+    .controls-container {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+    }
+    .control-btn {
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 25px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .control-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    .back-btn { background: var(--third-color); }
+    .share-btn { background: var(--primary-color); }
+    .sleep-timer-btn { background: var(--fourth-color); }
+    .wait-btn { background: var(--sixth-color); }
+    .control-btn.active {
+      box-shadow: 0 0 15px currentColor;
+    }
+    /* ===== مشغل الوسائط ===== */
+    .player-container {
+      background: var(--card-background);
+      border-radius: 20px;
+      padding: 25px;
+      margin: 25px auto;
+      max-width: 700px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .now-playing {
+      font-size: 1.2em;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      min-height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .playing-indicator {
+      width: 14px;
+      height: 14px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .loader {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-bottom-color: white;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .media-player {
+      width: 100%;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.3);
+      margin-bottom: 15px;
+    }
+    .media-player video {
+      width: 100%;
+      max-height: 300px;
+      border-radius: 10px 10px 0 0;
+      object-fit: cover;
+    }
+    .media-player audio {
+      width: 100%;
+      border-radius: 0 0 10px 10px;
+      height: 40px;
+    }
+    .media-type-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .media-type-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9em;
+    }
+    .media-type-btn.active {
+      background: var(--secondary-color);
+      border-color: var(--secondary-color);
+    }
+    .media-type-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .media-type-btn.active:hover {
+      background: #F57C00;
+    }
+    /* ===== حاوية المحطات ===== */
+    .stations-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+      margin: 30px auto;
+      max-width: 1400px;
+      padding: 0 15px;
+    }
+    /* ===== بطاقة الدروس ===== */
+    .lessons-container {
+      background: var(--card-background);
+      border-radius: 20px;
+      padding: 25px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .lessons-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .lessons-container.active::before {
+      transform: scaleX(1);
+    }
+    .lessons-container:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+    .station-image {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      border: 5px solid rgba(255,255,255,0.2);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      transition: all 0.4s ease;
+      object-fit: cover;
+    }
+    .lessons-container:hover .station-image {
+      transform: scale(1.08);
+      border-color: rgba(255,255,255,0.5);
+    }
+    .lessons-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+      position: relative;
+      padding-bottom: 12px;
+    }
+    .lessons-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: var(--secondary-color);
+      border-radius: 2px;
+    }
+    .lessons-dropdown {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.2);
+      color: white;
+      font-size: 1em;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FF9800%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.5%2075.1a17.6%2017.6%200%200%200-24.7%2024.7l130.4%20130.4c6.9%206.9%2017.9%206.9%2024.8%200l130.4-130.4c6.9-6.9%206.9-18.1-.1-24.9z%22%2F%3E%3C%2Fsvg%3E');
+      background-repeat: no-repeat;
+      background-position: left 15px center;
+      background-size: 12px;
+      padding-left: 40px;
+      max-height: 300px;
+    }
+    .lessons-dropdown:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+      background: rgba(255,255,255,0.15);
+    }
+    .lessons-dropdown option {
+      background: #222;
+      color: white;
+      padding: 10px;
+    }
+    .lesson-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .play-lesson-btn {
+      flex: 1;
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .play-lesson-btn:hover {
+      background: #F57C00;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255,152,0,0.3);
+    }
+    .stop-btn {
+      background: var(--fifth-color) !important;
+      flex: 0 0 45px;
+      padding: 12px;
+    }
+    .stop-btn:hover {
+      background: #D32F2F !important;
+    }
+    .progress-bar {
+      height: 4px;
+      width: 100%;
+      background: rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      margin-top: 15px;
+    }
+    .progress-bar::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+      animation: move 3s linear infinite;
+    }
+    .lessons-container.active .progress-bar::before {
+      width: 100%;
+      animation: move 2s linear infinite;
+    }
+    @keyframes move {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    /* ===== التذييل ===== */
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-text {
+      font-size: 0.9em;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+    .footer-special-text {
+      font-family: 'Amiri', serif;
+      font-size: 1.2em;
+      color: var(--secondary-color);
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      font-weight: 600;
+    }
+    /* ===== زر الواتساب ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 25px rgba(37,211,102,0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: none;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(37,211,102,0.6);
+    }
+    .whatsapp-float svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+    }
+    /* ===== النوافذ المنبثقة ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+    .modal-content {
+      background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      animation: modalFadeIn 0.4s ease;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-title {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      color: white;
+      font-weight: 600;
+      text-align: center;
+    }
+    .timer-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+    .timer-option {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 10px;
+      padding: 15px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1em;
+      font-weight: 500;
+    }
+    .timer-option:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+    .timer-option.selected {
+      background: var(--fourth-color);
+      box-shadow: 0 0 15px rgba(156,39,176,0.5);
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+    .modal-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+      font-size: 1em;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    .modal-cancel {
+      background: rgba(255,255,255,0.2);
+    }
+    .modal-cancel:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .modal-confirm {
+      background: var(--fourth-color);
+    }
+    .modal-confirm:hover {
+      background: #7B1FA2;
+    }
+    .timer-status {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(156,39,176,0.1);
+      border-radius: 12px;
+      color: var(--fourth-color);
+      font-size: 1em;
+      display: none;
+      text-align: center;
+      border: 1px solid rgba(156,39,176,0.2);
+    }
+    /* ===== للهواتف ===== */
+    @media (max-width: 768px) {
+      h1 { font-size: 2em; }
+      .subtitle { font-size: 1em; }
+      .station-image {
+        width: 150px;
+        height: 150px;
+      }
+      .controls-container { 
+        top: 15px; 
+        left: 15px;
+        gap: 8px;
+      }
+      .control-btn { 
+        font-size: 0.8em; 
+        padding: 8px 12px;
+      }
+      .whatsapp-float { 
+        width: 55px; 
+        height: 55px; 
+        bottom: 20px; 
+        right: 20px; 
+      }
+      .whatsapp-float svg { 
+        width: 26px; 
+        height: 26px; 
+      }
+      .timer-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .stations-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .modal-content {
+        padding: 25px 20px;
+      }
+      .media-player video {
+        max-height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== أزرار التحكم ===== -->
+  <div class="controls-container">
+    <button class="control-btn back-btn" onclick="goBack()">
+      <i class="fas fa-arrow-right"></i>
+      <span>رجوع</span>
+    </button>
+    <button class="control-btn share-btn" onclick="shareApp()">
+      <i class="fas fa-share-alt"></i>
+      <span>مشاركة</span>
+    </button>
+    <button class="control-btn sleep-timer-btn" id="sleepTimerBtn" onclick="toggleSleepTimer()">
+      <i class="fas fa-clock"></i>
+      <span>مؤقت النوم</span>
+    </button>
+    <button class="control-btn wait-btn" id="waitBtn" onclick="toggleWait()">
+      <i class="fas fa-hourglass-half"></i>
+      <span>AutoPlay</span>
+    </button>
+  </div>
+  <!-- ===== العنوان الرئيسي ===== -->
+  <h1>
+    <span>حصن المسلم</span>
+  </h1>
+  <!-- ===== العنوان الفرعي ===== -->
+  <div class="subtitle">
+    <span>من أذكار الكتاب والسنة</span>
+    <a href="https://www.facebook.com/lakel7amd" target="_blank">اللهم لك الحمد</a>
+  </div>
+  <!-- ===== مشغل الوسائط ===== -->
+  <div class="player-container">
+    <div class="now-playing" id="nowPlaying">
+      <div class="playing-indicator" id="playingIndicator" style="display: none;"></div>
+      <div class="loader" id="bufferingLoader" style="display: none;"></div>
+      <span id="currentLesson">اختر ذكراً للاستماع</span>
+    </div>
+    
+    <div class="media-type-toggle" id="mediaTypeToggle" style="display: none;">
+      <button class="media-type-btn active" id="audioBtn" onclick="switchToAudio()">
+        <i class="fas fa-headphones"></i>
+        صوت فقط
+      </button>
+      <button class="media-type-btn" id="videoBtn" onclick="switchToVideo()">
+        <i class="fas fa-video"></i>
+        فيديو
+      </button>
+    </div>
+    
+    <div class="media-player" id="mediaPlayer">
+      <video id="videoPlayer" style="display: none;" controls></video>
+      <audio id="audioPlayer" controls style="width: 100%; border-radius: 10px; height: 40px;"></audio>
+    </div>
+    
+    <div class="timer-status" id="timerStatus">
+      <i class="fas fa-clock"></i>
+      مؤقت النوم مفعل: <span id="timerCountdown">--:--</span>
+    </div>
+  </div>
+  <!-- ===== حاوية المحطات ===== -->
+  <div class="stations-container" id="stationsContainer">
+    <!-- سيتم إنشاء المحتوى هنا بواسطة JavaScript -->
+  </div>
+  <!-- ===== التذييل ===== -->
+  <footer>
+    <div class="footer-text">تطبيق أذكار المسلم - صفحة اللهم لك الحمد</div>
+    <div class="footer-special-text">حصن المسلم من أذكار الكتاب والسنة</div>
+  </footer>
+  <!-- ===== زر الواتساب ===== -->
+  <button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn">
+    <svg viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.520.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.520-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
+    </svg>
+  </button>
+  <!-- ===== نافذة مؤقت النوم ===== -->
+  <div class="modal" id="sleepTimerModal">
+    <div class="modal-content">
+      <div class="modal-title">
+        <i class="fas fa-moon"></i>
+        مؤقت النوم
+      </div>
+      <div class="timer-options">
+        <button class="timer-option" data-minutes="5">5 دقائق</button>
+        <button class="timer-option" data-minutes="10">10 دقائق</button>
+        <button class="timer-option" data-minutes="15">15 دقيقة</button>
+        <button class="timer-option" data-minutes="30">30 دقيقة</button>
+        <button class="timer-option" data-minutes="45">45 دقيقة</button>
+        <button class="timer-option" data-minutes="60">60 دقيقة</button>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-cancel" onclick="closeSleepTimerModal()">إلغاء</button>
+        <button class="modal-btn modal-confirm" onclick="setSleepTimer()">تأكيد</button>
+      </div>
+    </div>
+  </div>
+  <!-- ===== نافذة الانتظار ===== -->
+  <div class="modal" id="waitModal">
+    <div class="modal-content">
+      <div class="modal-title">
+        <i class="fas fa-hourglass-half"></i>
+        وضع الانتظار
+      </div>
+      <div class="wait-message" style="margin: 20px 0; color: #ccc; line-height: 1.6;">
+        سيتم تشغيل الذكر التالي تلقائياً بعد انتهاء الذكر الحالي. هل تريد تفعيل وضع التشغيل التلقائى؟
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-cancel" onclick="closeWaitModal()">إلغاء</button>
+        <button class="modal-btn modal-confirm" onclick="enableWaitMode()">تفعيل</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== بيانات حصن المسلم =====
+    const lessonsData = {
+      series: [
+        {
+          id: 1,
+          title: "أذكار حصن المسلم",
+          image: "https://i.postimg.cc/N0bb5LJJ/hsn-almslm.jpg",
+          color: "#4CAF50",
+          lessons: [
+            { name: "حصن المسلم (1) المقدمة و فضل الذكر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-001.mp3" },
+            { name: "حصن المسلم (2) أذكار الاستيقاظ من النوم", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-002.mp3" },
+            { name: "حصن المسلم (3) دعاء ُلبْس الثوب", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-003.mp3" },
+            { name: "حصن المسلم (4) دعاء ُلبْس الثوب الجديد", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-004.mp3" },
+            { name: "حصن المسلم (5) الدعاء لمن لبس ثوبا جديدا", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-005.mp3" },
+            { name: "حصن المسلم (6) ما يقول إذا وضع ثوبه", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-006.mp3" },
+            { name: "حصن المسلم (7) دعاء دخول الخلاء", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-007.mp3" },
+            { name: "حصن المسلم (8) دعاء الخروج من الخلاء", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-008.mp3" },
+            { name: "حصن المسلم (9) الذكر قبل الوضوء", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-009.mp3" },
+            { name: "حصن المسلم (10) الذكر بعد الفراغ من الوضوء", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-010.mp3" },
+            { name: "حصن المسلم (11) الذكر عند الخروج من المنزل", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-011.mp3" },
+            { name: "حصن المسلم (12) الذكر عند دخول المنزل", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-012.mp3" },
+            { name: "حصن المسلم (13) دعاء الذهاب إلى المسجد", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-013.mp3" },
+            { name: "حصن المسلم (14) دعاء دخول المسجد", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-014.mp3" },
+            { name: "حصن المسلم (15) دعاء الخروج من المسجد", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-015.mp3" },
+            { name: "حصن المسلم (16) أذكار الآذان", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-016.mp3" },
+            { name: "حصن المسلم (17) دعاء الاستفتاح", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-017.mp3" },
+            { name: "حصن المسلم (18) دعاء الركوع", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-018.mp3" },
+            { name: "حصن المسلم (19) دعاء الرفع من الركوع", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-019.mp3" },
+            { name: "حصن المسلم (20) دعاء السجود", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-020.mp3" },
+            { name: "حصن المسلم (21) دعاء الجلسة بين السجدتين", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-021.mp3" },
+            { name: "حصن المسلم (22) دعاء سجود التلاوة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-022.mp3" },
+            { name: "حصن المسلم (23) التشهد", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-023.mp3" },
+            { name: "حصن المسلم (24) الصلاة على النبي بعد التشهد", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-024.mp3" },
+            { name: "حصن المسلم (25) الدعاء بعد التشهد الأخير قبل السلام", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-025.mp3" },
+            { name: "حصن المسلم (26) الأذكار بعد السلام من الصلاة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-026.mp3" },
+            { name: "حصن المسلم (27) دعاء صلاة الاستخارة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-027.mp3" },
+            { name: "حصن المسلم (28) أذكار الصباح والمساء", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-028.mp3" },
+            { name: "حصن المسلم (29) أذكار النوم", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-029.mp3" },
+            { name: "حصن المسلم (30) الدعاء إذا تقلب ليلا", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-030.mp3" },
+            { name: "حصن المسلم (31) دعاء الفزع في النوم و من بُلِيَ بالوحشة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-031.mp3" },
+            { name: "حصن المسلم (32) ما يفعل من رأى الرؤيا أو الحلم", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-032.mp3" },
+            { name: "حصن المسلم (33) دعاء قنوت الوتر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-033.mp3" },
+            { name: "حصن المسلم (34) الذكر عقب السلام من الوتر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-034.mp3" },
+            { name: "حصن المسلم (35) دعاء الهم والحزن", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-035.mp3" },
+            { name: "حصن المسلم (36) دعاء الكرب", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-036.mp3" },
+            { name: "حصن المسلم (37) دعاء لقاء العدو و ذي السلطان", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-037.mp3" },
+            { name: "حصن المسلم (38) دعاء من خاف ظلم السلطان", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-038.mp3" },
+            { name: "حصن المسلم (39) الدعاء على العدو", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-039.mp3" },
+            { name: "حصن المسلم (40) ما يقول من خاف قوما", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-040.mp3" },
+            { name: "حصن المسلم (41) دعاء من أصابه شك في الإيمان", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-041.mp3" },
+            { name: "حصن المسلم (42) دعاء قضاء الدين", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-042.mp3" },
+            { name: "حصن المسلم (43) دعاء الوسوسة في الصلاة و القراءة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-043.mp3" },
+            { name: "حصن المسلم (44) دعاء من استصعب عليه أمر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-044.mp3" },
+            { name: "حصن المسلم (45) ما يقول ويفعل من أذنب ذنبا", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-045.mp3" },
+            { name: "حصن المسلم (46) دعاء طرد الشيطان و وساوسه", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-046.mp3" },
+            { name: "حصن المسلم (47) الدعاء حينما يقع ما لا يرضاه", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-047.mp3" },
+            { name: "حصن المسلم (48) تهنئة المولود له وجوابه", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-048.mp3" },
+            { name: "حصن المسلم (49) ما يعوذ به الأولاد", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-049.mp3" },
+            { name: "حصن المسلم (50) الدعاء للمريض في عيادته", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-050.mp3" },
+            { name: "حصن المسلم (51) فضل عيادة المريض", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-051.mp3" },
+            { name: "حصن المسلم (52) دعاء المريض الذي يئس من حياته", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-052.mp3" },
+            { name: "حصن المسلم (53) تلقين المحتضر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-053.mp3" },
+            { name: "حصن المسلم (54) دعاء من أصيب بمصيبة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-054.mp3" },
+            { name: "حصن المسلم (55) الدعاء عند إغماض الميت", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-055.mp3" },
+            { name: "حصن المسلم (56) الدعاء للميت في الصلاة عليه", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-056.mp3" },
+            { name: "حصن المسلم (57) الدعاء للفرط في الصلاة عليه", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-057.mp3" },
+            { name: "حصن المسلم (58) دعاء التعزية", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-058.mp3" },
+            { name: "حصن المسلم (59) الدعاء عند إدخال الميت القبر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-059.mp3" },
+            { name: "حصن المسلم (60) الدعاء بعد دفن الميت", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-060.mp3" },
+            { name: "حصن المسلم (61) دعاء زيارة القبور", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-061.mp3" },
+            { name: "حصن المسلم (62) دعاء الريح", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-062.mp3" },
+            { name: "حصن المسلم (63) دعاء الرعد", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-063.mp3" },
+            { name: "حصن المسلم (64) من أدعية الاستسقاء", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-064.mp3" },
+            { name: "حصن المسلم (65) الدعاء إذا نزل المطر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-065.mp3" },
+            { name: "حصن المسلم (66) الذكر بعد نزول المطر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-066.mp3" },
+            { name: "حصن المسلم (67) من أدعية الاستصحاء", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-067.mp3" },
+            { name: "حصن المسلم (68) دعاء رؤية الهلال", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-068.mp3" },
+            { name: "حصن المسلم (69) الدعاء عند إفطار الصائم", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-069.mp3" },
+            { name: "حصن المسلم (70) الدعاء قبل الطعام", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-070.mp3" },
+            { name: "حصن المسلم (71) الدعاء عند الفراغ من الطعام", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-071.mp3" },
+            { name: "حصن المسلم (72) دعاء الضيف لصاحب الطعام", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-072.mp3" },
+            { name: "حصن المسلم (73) الدعاء لمن سقاه أو إذا أراد ذلك", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-073.mp3" },
+            { name: "حصن المسلم (74) الدعاء إذا أفطر عند أهل بيت", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-074.mp3" },
+            { name: "حصن المسلم (75) دعاء الصائم إذا حضر الطعام ولم يفطر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-075.mp3" },
+            { name: "حصن المسلم (76) ما يقول الصائم إذا سابه أحد", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-076.mp3" },
+            { name: "حصن المسلم (77) الدعاء عند رؤية باكورة الثمر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-077.mp3" },
+            { name: "حصن المسلم (78) دعاء العطاس", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-078.mp3" },
+            { name: "حصن المسلم (79) ما يقال للكافر إذا عطس فحمد الله", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-079.mp3" },
+            { name: "حصن المسلم (80) الدعاء للمتزوج", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-080.mp3" },
+            { name: "حصن المسلم (81) دعاء المتزوج و شراء الدابة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-081.mp3" },
+            { name: "حصن المسلم (82) الدعاء قبل إتيان الزوجة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-082.mp3" },
+            { name: "حصن المسلم (83) دعاء الغضب", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-083.mp3" },
+            { name: "حصن المسلم (84) دعاء من رأى مبتلى", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-084.mp3" },
+            { name: "حصن المسلم (85) ما يقال في المجلس", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-085.mp3" },
+            { name: "حصن المسلم (86) كفارة المجلس", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-086.mp3" },
+            { name: "حصن المسلم (87) الدعاء لمن قال غفر الله لك", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-087.mp3" },
+            { name: "حصن المسلم (88) الدعاء لمن صنع إليك معروفا", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-088.mp3" },
+            { name: "حصن المسلم (89) ما يعصم الله به من الدجال", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-089.mp3" },
+            { name: "حصن المسلم (90) الدعاء لمن قال إني أحبك في الله", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-090.mp3" },
+            { name: "حصن المسلم (91) الدعاء لمن عرض عليك ماله", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-091.mp3" },
+            { name: "حصن المسلم (92) الدعاء لمن أقرض عند القضاء", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-092.mp3" },
+            { name: "حصن المسلم (93) دعاء الخوف من الشرك", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-093.mp3" },
+            { name: "حصن المسلم (94) الدعاء لمن قال بارك الله فيك", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-094.mp3" },
+            { name: "حصن المسلم (95) دعاء كراهية الطيرة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-095.mp3" },
+            { name: "حصن المسلم (96) دعاء الركوب", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-096.mp3" },
+            { name: "حصن المسلم (97) دعاء السفر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-097.mp3" },
+            { name: "حصن المسلم (98) دعاء دخول القرية أو البلدة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-098.mp3" },
+            { name: "حصن المسلم (99) دعاء دخول السوق", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-099.mp3" },
+            { name: "حصن المسلم (100) الدعاء إذا تعس المركوب", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-100.mp3" },
+            { name: "حصن المسلم (101) دعاء المسافر للمقيم", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-101.mp3" },
+            { name: "حصن المسلم (102) دعاء المقيم للمسافر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-102.mp3" },
+            { name: "حصن المسلم (103) التكبير و التسبيح في سير السفر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-103.mp3" },
+            { name: "حصن المسلم (104) دعاء المسافر إذا أسحر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-104.mp3" },
+            { name: "حصن المسلم (105) الدعاء إذا نزل مترلا في سفر أو غيره", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-105.mp3" },
+            { name: "حصن المسلم (106) ذكر الرجوع من السفر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-106.mp3" },
+            { name: "حصن المسلم (107) ما يقول من أتاه أمر يسره أو يكرهه", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-107.mp3" },
+            { name: "حصن المسلم (108) فضل الصلاة على النبي صلى الله عليه و سلم", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-108.mp3" },
+            { name: "حصن المسلم (109) إفشاء السلام", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-109.mp3" },
+            { name: "حصن المسلم (110) كيف يرد السلام على الكافر إذا سلم", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-110.mp3" },
+            { name: "حصن المسلم (111) دعاء صياح الديك ونهيق الحمار", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-111.mp3" },
+            { name: "حصن المسلم (112) دعاء نباح الكلاب بالليل", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-112.mp3" },
+            { name: "حصن المسلم (113) الدعاء لمن سببته", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-113.mp3" },
+            { name: "حصن المسلم (114) ما يقول المسلم إذا مدح المسلم", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-114.mp3" },
+            { name: "حصن المسلم (115) ما يقول المسلم إذا زكي", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-115.mp3" },
+            { name: "حصن المسلم (116) كيف يلبي المحرم في الحج أو العمرة ؟", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-116.mp3" },
+            { name: "حصن المسلم (117) التكبير إذا أتى الركن الأسود", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-117.mp3" },
+            { name: "حصن المسلم (118) الدعاء بين الركن اليماني والحجر الأسود", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-118.mp3" },
+            { name: "حصن المسلم (119) دعاء الوقوف على الصفا والمروة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-119.mp3" },
+            { name: "حصن المسلم (120) الدعاء يوم عرفة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-120.mp3" },
+            { name: "حصن المسلم (121) الذكر عند المشعر الحرام", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-121.mp3" },
+            { name: "حصن المسلم (122) التكبير عند رمي الجمار مع كل حصاة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-122.mp3" },
+            { name: "حصن المسلم (123) دعاء التعجب والأمر السار", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-123.mp3" },
+            { name: "حصن المسلم (124) ما يفعل من أتاه أمر يسره", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-124.mp3" },
+            { name: "حصن المسلم (125) ما يقول من أحس وجعا في جسده", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-125.mp3" },
+            { name: "حصن المسلم (126) دعاء من خشي أن يصيب شيئا بعينه", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-126.mp3" },
+            { name: "حصن المسلم (127) ما يقال عند الفزع", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-127.mp3" },
+            { name: "حصن المسلم (128) ما يقول عند الذبح أو النحر", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-128.mp3" },
+            { name: "حصن المسلم (129) ما يقول لرد كيد مردة الشياطين", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-129.mp3" },
+            { name: "حصن المسلم (130) الاستغفار و التوبة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-130.mp3" },
+            { name: "حصن المسلم (131) فضل التسبيح و التحميد، و التهليل، و التكبير", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-131.mp3" },
+            { name: "حصن المسلم (132) كيف كان النبي يسبح؟", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-132.mp3" },
+            { name: "حصن المسلم (133) من أنواع الخير والآداب الجامعة", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-133.mp3" },
+            { name: "حصن المسلم - قراءة حمد بن محمد الدريهم", url: "https://archive.org/download/Hesn_Al_Moslem_uP_bY_mUSLEm/Hesn_uP_bY_mUSLEm-134.mp3" }
+          ]
+        }
+      ]
+    };
+
+    // ===== مشغل الدروس =====
+    const LessonPlayer = {
+      audioPlayer: null,
+      videoPlayer: null,
+      nowPlaying: null,
+      playingIndicator: null,
+      bufferingLoader: null,
+      sleepTimer: null,
+      sleepTimerMinutes: 0,
+      sleepTimerSeconds: 0,
+      sleepTimerInterval: null,
+      waitMode: false,
+      currentLessonIndex: -1,
+      currentContainerId: null,
+      currentMediaUrl: "",
+      isVideoMode: false,
+
+      init() {
+        this.audioPlayer = document.getElementById('audioPlayer');
+        this.videoPlayer = document.getElementById('videoPlayer');
+        this.nowPlaying = document.getElementById('currentLesson');
+        this.playingIndicator = document.getElementById('playingIndicator');
+        this.bufferingLoader = document.getElementById('bufferingLoader');
+        this.renderLessons();
+        this.setupEventListeners();
+      },
+
+      renderLessons() {
+        const container = document.getElementById('stationsContainer');
+        container.innerHTML = '';
+        lessonsData.series.forEach(serie => {
+          const serieElement = document.createElement('div');
+          serieElement.className = 'lessons-container';
+          serieElement.id = `lessonsContainer${serie.id}`;
+          let optionsHTML = '<option value="">اختر ذكراً...</option>';
+          serie.lessons.forEach(lesson => {
+            optionsHTML += `<option value="${lesson.url}">${lesson.name}</option>`;
+          });
+          serieElement.innerHTML = `
+            <img src="${serie.image}" alt="${serie.title}" class="station-image">
+            <div class="lessons-title" style="color: ${serie.color}">${serie.title}</div>
+            <select class="lessons-dropdown" id="lessonsDropdown${serie.id}">
+              ${optionsHTML}
+            </select>
+            <div class="lesson-buttons">
+              <button class="play-lesson-btn" onclick="LessonPlayer.playSelectedLesson(${serie.id})">
+                <i class="fas fa-play"></i>
+                تشغيل
+              </button>
+              <button class="play-lesson-btn stop-btn" onclick="LessonPlayer.stopLesson()">
+                <i class="fas fa-stop"></i>
+              </button>
+            </div>
+            <div class="progress-bar"></div>
+          `;
+          container.appendChild(serieElement);
+        });
+      },
+
+      setupEventListeners() {
+        // مستمعات الأحداث لمشغل الصوت
+        this.audioPlayer.addEventListener('pause', () => {
+          if (!this.isVideoMode) {
+            this.playingIndicator.style.display = 'none';
+          }
+        });
+        this.audioPlayer.addEventListener('play', () => {
+          if (!this.isVideoMode) {
+            this.playingIndicator.style.display = 'block';
+          }
+        });
+        this.audioPlayer.addEventListener('ended', () => {
+          if (!this.isVideoMode) {
+            this.handleLessonEnd();
+          }
+        });
+
+        // مستمعات الأحداث لمشغل الفيديو
+        this.videoPlayer.addEventListener('pause', () => {
+          if (this.isVideoMode) {
+            this.playingIndicator.style.display = 'none';
+          }
+        });
+        this.videoPlayer.addEventListener('play', () => {
+          if (this.isVideoMode) {
+            this.playingIndicator.style.display = 'block';
+          }
+        });
+        this.videoPlayer.addEventListener('ended', () => {
+          if (this.isVideoMode) {
+            this.handleLessonEnd();
+          }
+        });
+
+        // مستمعات الأحداث للقوائم المنسدلة
+        document.querySelectorAll('.lessons-dropdown').forEach(dropdown => {
+          dropdown.addEventListener('change', (e) => {
+            const containerId = e.target.id.replace('lessonsDropdown', '');
+            if (e.target.value) {
+              this.playSelectedLesson(parseInt(containerId));
+            }
+          });
+        });
+      },
+
+      playSelectedLesson(containerId) {
+        const lessonsDropdown = document.getElementById(`lessonsDropdown${containerId}`);
+        const lessonsContainer = document.getElementById(`lessonsContainer${containerId}`);
+        const selectedOption = lessonsDropdown.options[lessonsDropdown.selectedIndex];
+        const lessonUrl = selectedOption.value;
+        const lessonName = selectedOption.text;
+        
+        if (!lessonUrl) {
+          this.showMessage('الرجاء اختيار ذكر أولاً');
+          return;
+        }
+        
+        this.currentLessonIndex = lessonsDropdown.selectedIndex;
+        this.currentContainerId = containerId;
+        this.currentMediaUrl = lessonUrl;
+        this.nowPlaying.textContent = `جاري تشغيل: ${lessonName}`;
+        this.bufferingLoader.style.display = 'inline-block';
+        this.playingIndicator.style.display = 'none';
+        
+        // إزالة الكلاس النشط من جميع الحاويات
+        document.querySelectorAll('.lessons-container').forEach(container => {
+          container.classList.remove('active');
+        });
+        lessonsContainer.classList.add('active');
+        
+        // إظهار أزرار التبديل بين الصوت والفيديو
+        document.getElementById('mediaTypeToggle').style.display = 'flex';
+        
+        // تشغيل الوسائط حسب الوضع الحالي
+        if (this.isVideoMode) {
+          this.playVideo();
+        } else {
+          this.playAudio();
+        }
+      },
+
+      playAudio() {
+        this.isVideoMode = false;
+        this.audioPlayer.style.display = 'block';
+        this.videoPlayer.style.display = 'none';
+        this.videoPlayer.pause();
+        this.videoPlayer.src = '';
+        
+        this.audioPlayer.src = this.currentMediaUrl;
+        this.audioPlayer.play().then(() => {
+          this.bufferingLoader.style.display = 'none';
+          this.playingIndicator.style.display = 'block';
+        }).catch(error => {
+          console.error('خطأ في تشغيل الصوت:', error);
+          // إذا فشل تشغيل الصوت، حاول تشغيل الفيديو تلقائياً
+          this.showMessage('لا يمكن تشغيل الصوت، سيتم التحويل إلى وضع الفيديو');
+          setTimeout(() => {
+            this.switchToVideo();
+          }, 1000);
+        });
+      },
+
+      playVideo() {
+        this.isVideoMode = true;
+        this.videoPlayer.style.display = 'block';
+        this.audioPlayer.style.display = 'none';
+        this.audioPlayer.pause();
+        this.audioPlayer.src = '';
+        
+        this.videoPlayer.src = this.currentMediaUrl;
+        this.videoPlayer.play().then(() => {
+          this.bufferingLoader.style.display = 'none';
+          this.playingIndicator.style.display = 'block';
+        }).catch(error => {
+          console.error('خطأ في تشغيل الفيديو:', error);
+          this.nowPlaying.textContent = `خطأ في تشغيل الفيديو`;
+          this.bufferingLoader.style.display = 'none';
+          document.querySelectorAll('.lessons-container').forEach(container => {
+            container.classList.remove('active');
+          });
+        });
+      },
+
+      stopLesson() {
+        this.audioPlayer.pause();
+        this.videoPlayer.pause();
+        this.audioPlayer.src = "";
+        this.videoPlayer.src = "";
+        this.nowPlaying.textContent = 'اختر ذكراً للاستماع';
+        this.playingIndicator.style.display = 'none';
+        this.bufferingLoader.style.display = 'none';
+        document.querySelectorAll('.lessons-container').forEach(container => {
+          container.classList.remove('active');
+        });
+        document.querySelectorAll('.lessons-dropdown').forEach(dropdown => {
+          dropdown.value = '';
+        });
+        document.getElementById('mediaTypeToggle').style.display = 'none';
+        
+        if (this.waitMode) {
+          this.waitMode = false;
+          document.getElementById('waitBtn').classList.remove('active');
+        }
+      },
+
+      handleLessonEnd() {
+        this.playingIndicator.style.display = 'none';
+        if (this.waitMode && this.currentContainerId !== null) {
+          const dropdown = document.getElementById(`lessonsDropdown${this.currentContainerId}`);
+          if (this.currentLessonIndex < dropdown.options.length - 1) {
+            this.currentLessonIndex++;
+            dropdown.selectedIndex = this.currentLessonIndex;
+            this.playSelectedLesson(this.currentContainerId);
+            return;
+          }
+        }
+        this.nowPlaying.textContent = 'انتهى الذكر';
+        document.querySelectorAll('.lessons-container').forEach(container => {
+          container.classList.remove('active');
+        });
+        if (this.waitMode) {
+          this.waitMode = false;
+          document.getElementById('waitBtn').classList.remove('active');
+        }
+      },
+
+      toggleSleepTimer() {
+        if (this.sleepTimerInterval) {
+          this.cancelSleepTimer();
+        } else {
+          document.getElementById('sleepTimerModal').style.display = 'flex';
+          this.setupTimerOptions();
+        }
+      },
+
+      setupTimerOptions() {
+        const timerOptions = document.querySelectorAll('.timer-option');
+        timerOptions.forEach(option => {
+          option.onclick = () => {
+            timerOptions.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+          };
+        });
+      },
+
+      setSleepTimer() {
+        const selectedOption = document.querySelector('.timer-option.selected');
+        if (!selectedOption) {
+          this.showMessage('الرجاء اختيار وقت للمؤقت');
+          return;
+        }
+        const minutes = parseInt(selectedOption.dataset.minutes);
+        if (this.sleepTimerInterval) clearInterval(this.sleepTimerInterval);
+        this.sleepTimerMinutes = minutes;
+        this.sleepTimerSeconds = 0;
+        document.getElementById('sleepTimerBtn').classList.add('active');
+        document.getElementById('timerStatus').style.display = 'block';
+        this.updateTimerDisplay();
+        this.sleepTimerInterval = setInterval(() => {
+          this.sleepTimerSeconds--;
+          if (this.sleepTimerSeconds < 0) {
+            this.sleepTimerMinutes--;
+            this.sleepTimerSeconds = 59;
+          }
+          this.updateTimerDisplay();
+          if (this.sleepTimerMinutes <= 0 && this.sleepTimerSeconds <= 0) {
+            this.stopLesson();
+            this.nowPlaying.textContent = 'تم إيقاف التشغيل حسب مؤقت النوم';
+            this.cancelSleepTimer();
+          }
+        }, 1000);
+        this.closeSleepTimerModal();
+      },
+
+      cancelSleepTimer() {
+        if (this.sleepTimerInterval) {
+          clearInterval(this.sleepTimerInterval);
+          this.sleepTimerInterval = null;
+        }
+        document.getElementById('sleepTimerBtn').classList.remove('active');
+        document.getElementById('timerStatus').style.display = 'none';
+      },
+
+      updateTimerDisplay() {
+        const minutes = this.sleepTimerMinutes.toString().padStart(2, '0');
+        const seconds = this.sleepTimerSeconds.toString().padStart(2, '0');
+        document.getElementById('timerCountdown').textContent = `${minutes}:${seconds}`;
+      },
+
+      closeSleepTimerModal() {
+        document.getElementById('sleepTimerModal').style.display = 'none';
+      },
+
+      toggleWait() {
+        if (this.waitMode) {
+          this.waitMode = false;
+          document.getElementById('waitBtn').classList.remove('active');
+          this.nowPlaying.textContent = this.nowPlaying.textContent.replace(' (وضع AutoPlay مفعل)', '');
+        } else {
+          if (this.currentLessonIndex === -1) {
+            this.showMessage('الرجاء تشغيل ذكر أولاً');
+            return;
+          }
+          document.getElementById('waitModal').style.display = 'flex';
+        }
+      },
+
+      enableWaitMode() {
+        this.waitMode = true;
+        document.getElementById('waitBtn').classList.add('active');
+        this.nowPlaying.textContent += ' (وضع AutoPlay مفعل)';
+        this.closeWaitModal();
+      },
+
+      closeWaitModal() {
+        document.getElementById('waitModal').style.display = 'none';
+      },
+
+      showMessage(message) {
+        alert(message);
+      }
+    };
+
+    // ===== دوال التبديل بين الصوت والفيديو =====
+    function switchToAudio() {
+      LessonPlayer.isVideoMode = false;
+      document.getElementById('audioBtn').classList.add('active');
+      document.getElementById('videoBtn').classList.remove('active');
+      if (LessonPlayer.currentMediaUrl) {
+        LessonPlayer.playAudio();
+      }
+    }
+
+    function switchToVideo() {
+      LessonPlayer.isVideoMode = true;
+      document.getElementById('videoBtn').classList.add('active');
+      document.getElementById('audioBtn').classList.remove('active');
+      if (LessonPlayer.currentMediaUrl) {
+        LessonPlayer.playVideo();
+      }
+    }
+
+    // ===== دوال عامة =====
+    function goBack() {
+      window.location.href = 'index.html';
+    }
+
+    function shareApp() {
+      const shareData = {
+        title: 'حصن المسلم',
+        text: 'استمع إلى أذكار حصن المسلم - صفحة اللهم لك الحمد',
+        url: window.location.href
+      };
+      if (navigator.share) {
+        navigator.share(shareData).catch(console.error);
+      } else {
+        navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`).then(() => {
+          alert('تم نسخ الرابط إلى الحافظة!');
+        }).catch(() => {
+          alert('فشل النسخ، يرجى نسخ الرابط يدوياً');
+        });
+      }
+    }
+
+    function reportBrokenLink() {
+      const phoneNumber = '+201092116092';
+      const message = 'يوجد رابط معطل في تطبيق حصن المسلم، يرجى التحقق';
+      const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // ===== دوال واجهة المستخدم =====
+    function toggleSleepTimer() { LessonPlayer.toggleSleepTimer(); }
+    function setSleepTimer() { LessonPlayer.setSleepTimer(); }
+    function closeSleepTimerModal() { LessonPlayer.closeSleepTimerModal(); }
+    function toggleWait() { LessonPlayer.toggleWait(); }
+    function enableWaitMode() { LessonPlayer.enableWaitMode(); }
+    function closeWaitModal() { LessonPlayer.closeWaitModal(); }
+
+    // ===== تهيئة التطبيق =====
+    document.addEventListener('DOMContentLoaded', () => {
+      LessonPlayer.init();
+    });
+  </script>
+</body>
+</html>
