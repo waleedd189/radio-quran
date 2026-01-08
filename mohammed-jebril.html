@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>مصحف الشيخ محمد جبريل</title>
+  
+  <!-- نفس الخطوط من الصفحة الرئيسية -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== نفس الألوان والتصميم من الصفحة الرئيسية ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Cairo', 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #111, #333);
+      color: #fff;
+      text-align: center;
+      padding: 30px 10px;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+      overflow-x: hidden;
+    }
+    
+    /* ===== العنوان الرئيسي (نفس الصفحة الرئيسية) ===== */
+    h1 {
+      font-family: 'Amiri', serif;
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 5px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, #4CAF50, #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    h1::before {
+      content: "﴿";
+      color: #4CAF50;
+      margin-left: 10px;
+    }
+    
+    h1::after {
+      content: "﴾";
+      color: #4CAF50;
+      margin-right: 10px;
+    }
+    
+    /* ===== العنوان الفرعي (نفس الصفحة الرئيسية) ===== */
+    .subtitle { 
+      font-size: 1.1em;
+      margin-bottom: 15px;
+      color: #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .subtitle a {
+      color: inherit;
+      text-decoration: none;
+      background: linear-gradient(45deg, #4CAF50, #81C784);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: transform 0.3s ease;
+      font-weight: 600;
+    }
+
+    .subtitle a:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
+    }
+    
+    /* ===== العنوان الثان ===== */
+    .second-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.8em;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, #FF9800, #FFC107);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .second-title::before {
+      content: "﴿";
+      color: #FF9800;
+      margin-left: 10px;
+    }
+    
+    .second-title::after {
+      content: "﴾";
+      color: #FF9800;
+      margin-right: 10px;
+    }
+    
+    /* ===== الأقسام الرئيسية ===== */
+    .sections-container {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      max-width: 1200px;
+      margin: 20px auto;
+    }
+    
+    .section-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.5em;
+      font-weight: 700;
+      margin: 15px 0;
+      padding: 10px;
+      background: rgba(76, 175, 80, 0.1);
+      border-radius: 10px;
+      border-right: 4px solid #4CAF50;
+      text-align: right;
+      color: #4CAF50;
+    }
+    
+    /* ===== زرار التحكم ===== */
+    .controls-container {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+    }
+    
+    .back-btn {
+      background: #2196F3;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .back-btn:hover {
+      background: #0b7dda;
+    }
+    
+    .share-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .share-btn:hover {
+      background: #45a049;
+    }
+    
+    /* ===== زر مؤقت النوم ===== */
+    .sleep-timer-btn {
+      background: #9C27B0;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .sleep-timer-btn:hover {
+      background: #7B1FA2;
+    }
+    
+    .sleep-timer-btn.active {
+      background: #7B1FA2;
+      box-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
+    }
+    
+    /* ===== مشغل الصوت ===== */
+    .player-container {
+      background: rgba(34, 34, 34, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+    
+    .now-playing {
+      font-size: 1.1em;
+      color: #4CAF50;
+      margin-bottom: 15px;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .playing-indicator {
+      width: 12px;
+      height: 12px;
+      background: #4CAF50;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    .loader {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #fff;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+    
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* ===== قائمة السور ===== */
+    .sura-grid, .tilawa-grid, .dua-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      max-width: 1200px;
+      margin: 15px auto;
+    }
+    
+    .sura-card, .tilawa-card, .dua-card {
+      background: #222;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      cursor: pointer;
+      text-align: center;
+    }
+    
+    .sura-card:hover, .tilawa-card:hover, .dua-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(76, 175, 80, 0.3);
+      border-color: rgba(76, 175, 80, 0.5);
+    }
+    
+    .sura-card.active, .tilawa-card.active, .dua-card.active {
+      border-color: #4CAF50;
+      background: rgba(76, 175, 80, 0.1);
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.4);
+    }
+    
+    .card-number {
+      font-size: 0.9em;
+      color: #4CAF50;
+      font-weight: 600;
+    }
+    
+    .card-name {
+      font-size: 1.1em;
+      margin: 8px 0;
+      font-family: 'Amiri', serif;
+    }
+    
+    .card-description {
+      font-size: 0.8em;
+      color: #aaa;
+      margin-top: 5px;
+    }
+    
+    .progress-bar {
+      margin-top: 10px;
+      height: 3px;
+      width: 100%;
+      background: #555;
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    
+    .sura-card.active .progress-bar::before,
+    .tilawa-card.active .progress-bar::before,
+    .dua-card.active .progress-bar::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 30%;
+      background: #4caf50;
+      animation: move 2s linear infinite;
+    }
+    
+    @keyframes move {
+      from { left: -30%; }
+      to { left: 100%; }
+    }
+    
+    /* ===== التوقير (نفس الصفحة الرئيسية) ===== */
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    
+    .footer-text {
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 20px;
+    }
+    
+    /* ===== زر الواتساب في نهاية الصفحة (نفس الصفحة الرئيسية) ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: none;
+      text-decoration: none;
+    }
+    
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+    }
+    
+    .whatsapp-float svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+    
+    .whatsapp-tooltip {
+      position: absolute;
+      right: 70px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85em;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .whatsapp-tooltip::after {
+      content: '';
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 6px solid transparent;
+      border-left-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .whatsapp-float:hover .whatsapp-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* ===== نافذة مؤقت النوم ===== */
+    .sleep-timer-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .sleep-timer-content {
+      background: #333;
+      border-radius: 15px;
+      padding: 25px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(156, 39, 176, 0.3);
+    }
+    
+    .sleep-timer-title {
+      font-size: 1.3em;
+      margin-bottom: 20px;
+      color: #9C27B0;
+      font-weight: 600;
+    }
+    
+    .timer-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .timer-option {
+      background: #444;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1em;
+    }
+    
+    .timer-option:hover {
+      background: #555;
+      transform: translateY(-2px);
+    }
+    
+    .timer-option.selected {
+      background: #9C27B0;
+      box-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
+    }
+    
+    .timer-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    
+    .timer-cancel, .timer-confirm {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+    
+    .timer-cancel {
+      background: #555;
+    }
+    
+    .timer-cancel:hover {
+      background: #666;
+    }
+    
+    .timer-confirm {
+      background: #9C27B0;
+    }
+    
+    .timer-confirm:hover {
+      background: #7B1FA2;
+    }
+    
+    .timer-status {
+      margin-top: 15px;
+      padding: 10px;
+      background: rgba(156, 39, 176, 0.1);
+      border-radius: 8px;
+      color: #9C27B0;
+      font-size: 0.9em;
+      display: none;
+    }
+    
+    /* ===== للهواتف ===== */
+    @media (max-width: 768px) {
+      h1 { font-size: 2em; }
+      .second-title { font-size: 1.5em; }
+      .subtitle { font-size: 1em; }
+      .sura-grid, .tilawa-grid, .dua-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+      .sura-card, .tilawa-card, .dua-card { padding: 12px; }
+      .card-name { font-size: 1em; }
+      .controls-container { 
+        top: 10px; 
+        left: 10px;
+        gap: 5px;
+      }
+      .back-btn, .share-btn, .sleep-timer-btn { 
+        font-size: 0.8em; 
+        padding: 6px 12px;
+      }
+      .whatsapp-float { 
+        width: 50px; 
+        height: 50px; 
+        bottom: 15px; 
+        right: 15px; 
+      }
+      .whatsapp-float svg { 
+        width: 26px; 
+        height: 26px; 
+      }
+      .whatsapp-tooltip { 
+        right: 60px; 
+        font-size: 0.8em; 
+      }
+      .timer-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== زرار التحكم (الرجوع + المشاركة + مؤقت النوم) ===== -->
+  <div class="controls-container">
+    <button class="back-btn" onclick="goBack()">← رجوع</button>
+    <button class="share-btn" onclick="shareApp()">
+      <span>📤</span>
+      <span>مشاركة</span>
+    </button>
+    <button class="sleep-timer-btn" id="sleepTimerBtn" onclick="toggleSleepTimer()">
+      <span>⏱️</span>
+      <span>مؤقت النوم</span>
+    </button>
+  </div>
+  
+  <!-- ===== العنوان الرئيسي ===== -->
+  <h1>
+    <span>راديو قرآن</span>
+  </h1>
+  
+  <!-- ===== العنوان الفرعي ===== -->
+  <div class="subtitle">
+    <span>صفحة</span>
+    <a href="https://www.facebook.com/lakel7amd" target="_blank">اللهم لك الحمد</a>
+  </div>
+  
+  <!-- ===== العنوان الثان ===== -->
+  <h2 class="second-title">
+    <span>مصحف الشيخ محمد جبريل</span>
+  </h2>
+  
+  <!-- ===== مشغل الصوت ===== -->
+  <div class="player-container">
+    <div class="now-playing" id="nowPlaying">
+      <div class="playing-indicator" id="playingIndicator" style="display: none;"></div>
+      <div class="loader" id="bufferingLoader" style="display: none;"></div>
+      <span id="currentTrack">اختر تلاوة للاستماع</span>
+    </div>
+    
+    <audio id="audioPlayer" controls style="width: 100%;"></audio>
+    
+    <div class="timer-status" id="timerStatus">
+      مؤقت النوم مفعل: <span id="timerCountdown">--:--</span>
+    </div>
+  </div>
+  
+  <!-- ===== الأقسام الرئيسية ===== -->
+  <div class="sections-container">
+    
+    <!-- قسم المصحف المرتل -->
+    <div>
+      <h3 class="section-title">المصحف المرتل</h3>
+      <div class="sura-grid" id="suraGrid">
+        <!-- السور ستضاف هنا بواسطة JavaScript -->
+      </div>
+    </div>
+    
+    <!-- قسم التلاوات -->
+    <div>
+      <h3 class="section-title">تلاوات من جامع عمرو بن العاص</h3>
+      <div class="tilawa-grid" id="tilawaGrid">
+        <!-- التلاوات ستضاف هنا بواسطة JavaScript -->
+      </div>
+    </div>
+    
+    <!-- قسم الأدعية -->
+    <div>
+      <h3 class="section-title">أدعية من جامع عمرو بن العاص</h3>
+      <div class="dua-grid" id="duaGrid">
+        <!-- الأدعية ستضاف هنا بواسطة JavaScript -->
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- ===== التوقير ===== -->
+  <footer>
+    <div class="footer-text">راديو قرآن - صفحة اللهم لك الحمد</div>
+  </footer>
+
+  <!-- ===== زر الواتساب في نهاية الصفحة ===== -->
+  <button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn">
+    <div class="whatsapp-tooltip" id="whatsappTooltip">الإبلاغ عن رابط معطل</div>
+    <svg viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.520.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
+    </svg>
+  </button>
+  
+  <!-- ===== نافذة مؤقت النوم ===== -->
+  <div class="sleep-timer-modal" id="sleepTimerModal">
+    <div class="sleep-timer-content">
+      <div class="sleep-timer-title">مؤقت النوم</div>
+      <div class="timer-options">
+        <button class="timer-option" data-minutes="5">5 دقائق</button>
+        <button class="timer-option" data-minutes="10">10 دقائق</button>
+        <button class="timer-option" data-minutes="15">15 دقيقة</button>
+        <button class="timer-option" data-minutes="30">30 دقيقة</button>
+        <button class="timer-option" data-minutes="45">45 دقيقة</button>
+        <button class="timer-option" data-minutes="60">60 دقيقة</button>
+      </div>
+      <div class="timer-actions">
+        <button class="timer-cancel" onclick="closeSleepTimerModal()">إلغاء</button>
+        <button class="timer-confirm" onclick="setSleepTimer()">تأكيد</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // بيانات المصحف المرتل للشيخ محمد جبريل
+    const suras = [
+      { num: '001', name: { ar: 'الفاتحة', en: 'Al-Fatihah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/001.Al-Fatihah.mp3' },
+      { num: '002', name: { ar: 'البقرة', en: 'Al-Baqarah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/002.Al-Baqarah.mp3' },
+      { num: '003', name: { ar: 'آل عمران', en: 'Al-Imran' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/003.Al-Imran.mp3' },
+      { num: '004', name: { ar: 'النساء', en: 'An-Nisa' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/004.An-Nisa.mp3' },
+      { num: '005', name: { ar: 'المائدة', en: 'Al-Maidah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/005.Al-Maidah.mp3' },
+      { num: '006', name: { ar: 'الأنعام', en: 'Al-Anam' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/006.Al-Anam.mp3' },
+      { num: '007', name: { ar: 'الأعراف', en: 'Al-Araf' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/007.Al-Araf.mp3' },
+      { num: '008', name: { ar: 'الأنفال', en: 'Al-Anfal' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/008.Al-Anfal.mp3' },
+      { num: '009', name: { ar: 'التوبة', en: 'At-Taubah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/009.At-Taubah.mp3' },
+      { num: '010', name: { ar: 'يونس', en: 'Yunus' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/010.Yunus.mp3' },
+      { num: '011', name: { ar: 'هود', en: 'Hood' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/011.Hood.mp3' },
+      { num: '012', name: { ar: 'يوسف', en: 'Yusuf' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/012.Yusuf.mp3' },
+      { num: '013', name: { ar: 'الرعد', en: 'Ar-Rad' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/013.Ar-Rad.mp3' },
+      { num: '014', name: { ar: 'إبراهيم', en: 'Ibrahim' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/014.Ibrahim.mp3' },
+      { num: '015', name: { ar: 'الحجر', en: 'Al-Hijr' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/015.Al-Hijr.mp3' },
+      { num: '016', name: { ar: 'النحل', en: 'An-Nahl' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/016.An-Nahl.mp3' },
+      { num: '017', name: { ar: 'الإسراء', en: 'Al-Isra' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/017.Al-Isra.mp3' },
+      { num: '018', name: { ar: 'الكهف', en: 'Al-Kahf' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/018.Al-Kahf.mp3' },
+      { num: '019', name: { ar: 'مريم', en: 'Maryam' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/019.Maryam.mp3' },
+      { num: '020', name: { ar: 'طه', en: 'TaHa' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/020.TaHa.mp3' },
+      { num: '021', name: { ar: 'الأنبياء', en: 'Al-Anbiya' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/021.Al-Anbiya.mp3' },
+      { num: '022', name: { ar: 'الحج', en: 'Al-Hajj' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/022.Al-Hajj.mp3' },
+      { num: '023', name: { ar: 'المؤمنون', en: 'Al-Muminun' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/023.Al-Muminun.mp3' },
+      { num: '024', name: { ar: 'النور', en: 'An-Nur' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/024.An-Nur.mp3' },
+      { num: '025', name: { ar: 'الفرقان', en: 'Al-Furqan' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/025.Al-Furqan.mp3' },
+      { num: '026', name: { ar: 'الشعراء', en: 'Ash-Shuara' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/026.Ash-Shuara.mp3' },
+      { num: '027', name: { ar: 'النمل', en: 'An-Naml' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/027.An-Naml.mp3' },
+      { num: '028', name: { ar: 'القصص', en: 'Al-Qasas' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/028.Al-Qasas.mp3' },
+      { num: '029', name: { ar: 'العنكبوت', en: 'Al-Ankabut' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/029.Al-Ankabut.mp3' },
+      { num: '030', name: { ar: 'الروم', en: 'Ar_room' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/030.Ar_room.mp3' },
+      { num: '031', name: { ar: 'لقمان', en: 'Luqman' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/031.Luqman.mp3' },
+      { num: '032', name: { ar: 'السجدة', en: 'As_sajdah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/032.As_sajdah.mp3' },
+      { num: '033', name: { ar: 'الأحزاب', en: 'Al_ahzab' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/033.Al_ahzab.mp3' },
+      { num: '034', name: { ar: 'سبأ', en: 'Saba' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/034.Saba.mp3' },
+      { num: '035', name: { ar: 'فاطر', en: 'Fatir' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/035.Fatir.mp3' },
+      { num: '036', name: { ar: 'يس', en: 'Ya_sin' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/036.Ya_sin.mp3' },
+      { num: '037', name: { ar: 'الصافات', en: 'As-Saffat' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/037.As-Saffat.mp3' },
+      { num: '038', name: { ar: 'ص', en: 'Sad' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/038.Sad.mp3' },
+      { num: '039', name: { ar: 'الزمر', en: 'Az-Zumar' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/039.Az-Zumar.mp3' },
+      { num: '040', name: { ar: 'غافر', en: 'Ghafir' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/040.Ghafir.mp3' },
+      { num: '041', name: { ar: 'فصلت', en: 'Fussilat' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/041.Fussilat.mp3' },
+      { num: '042', name: { ar: 'الشورى', en: 'Ash-Shura' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/042.Ash-Shura.mp3' },
+      { num: '043', name: { ar: 'الزخرف', en: 'Az-Zukhruf' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/043.Az-Zukhruf.mp3' },
+      { num: '044', name: { ar: 'الدخان', en: 'Ad-Dukhan' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/044.Ad-Dukhan.mp3' },
+      { num: '045', name: { ar: 'الجاثية', en: 'Al-Jathiya' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/045.Al-Jathiya.mp3' },
+      { num: '046', name: { ar: 'الأحقاف', en: 'Al-Ahqaf' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/046.Al-Ahqaf.mp3' },
+      { num: '047', name: { ar: 'محمد', en: 'Muhammad' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/047.Muhammad.mp3' },
+      { num: '048', name: { ar: 'الفتح', en: 'Al-Fath' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/048.Al-Fath.mp3' },
+      { num: '049', name: { ar: 'الحجرات', en: 'Al-Hujurat' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/049.Al-Hujurat.mp3' },
+      { num: '050', name: { ar: 'ق', en: 'Qaf' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/050.Qaf.mp3' },
+      { num: '051', name: { ar: 'الذاريات', en: 'Az-Zariyat' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/051.Az-Zariyat.mp3' },
+      { num: '052', name: { ar: 'الطور', en: 'At-Tur' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/052.At-Tur.mp3' },
+      { num: '053', name: { ar: 'النجم', en: 'An-Najm' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/053.An-Najm.mp3' },
+      { num: '054', name: { ar: 'القمر', en: 'Al-Qamar' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/054.Al-Qamar.mp3' },
+      { num: '055', name: { ar: 'الرحمن', en: 'Ar-Rahman' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/055.Ar-Rahman.mp3' },
+      { num: '056', name: { ar: 'الواقعة', en: 'Al-Waqiah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/056.Al-Waqiah.mp3' },
+      { num: '057', name: { ar: 'الحديد', en: 'Al-Hadid' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/057.Al-Hadid.mp3' },
+      { num: '058', name: { ar: 'المجادلة', en: 'Al-Mujadilah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/058.Al-Mujadilah.mp3' },
+      { num: '059', name: { ar: 'الحشر', en: 'Al-Hashr' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/059.Al-Hashr.mp3' },
+      { num: '060', name: { ar: 'الممتحنة', en: 'Al-Mumtahinah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/060.Al-Mumtahinah.mp3' },
+      { num: '061', name: { ar: 'الصف', en: 'As-Saff' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/061.As-Saff.mp3' },
+      { num: '062', name: { ar: 'الجمعة', en: 'Al-Jumuah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/062.Al-Jumuah.mp3' },
+      { num: '063', name: { ar: 'المنافقون', en: 'Al-Munafiqun' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/063.Al-Munafiqun.mp3' },
+      { num: '064', name: { ar: 'التغابن', en: 'At-Taghabun' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/064.At-Taghabun.mp3' },
+      { num: '065', name: { ar: 'الطلاق', en: 'At-Talaq' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/065.At-Talaq.mp3' },
+      { num: '066', name: { ar: 'التحريم', en: 'At-Tahrim' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/066.At-Tahrim.mp3' },
+      { num: '067', name: { ar: 'الملك', en: 'Al-Mulk' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/067.Al-Mulk.mp3' },
+      { num: '068', name: { ar: 'القلم', en: 'Al-Qalam' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/068.Al-Qalam.mp3' },
+      { num: '069', name: { ar: 'الحاقة', en: 'Al-Haqqah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/069.Al-Haqqah.mp3' },
+      { num: '070', name: { ar: 'المعارج', en: 'Al-Maarij' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/070.Al-Maarij.mp3' },
+      { num: '071', name: { ar: 'نوح', en: 'Nooh' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/071.Nooh.mp3' },
+      { num: '072', name: { ar: 'الجن', en: 'Al-Jinn' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/072.Al-Jinn.mp3' },
+      { num: '073', name: { ar: 'المزمل', en: 'Al-Muzzammil' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/073.Al-Muzzammil.mp3' },
+      { num: '074', name: { ar: 'المدثر', en: 'Al-Muddaththir' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/074.Al-Muddaththir.mp3' },
+      { num: '075', name: { ar: 'القيامة', en: 'Al-Qiyamah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/075.Al-Qiyamah.mp3' },
+      { num: '076', name: { ar: 'الإنسان', en: 'Al-Insan' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/076.Al-Insan.mp3' },
+      { num: '077', name: { ar: 'المرسلات', en: 'Al-Mursalat' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/077.Al-Mursalat.mp3' },
+      { num: '078', name: { ar: 'النبأ', en: 'An-Naba' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/078.An-Naba.mp3' },
+      { num: '079', name: { ar: 'النازعات', en: 'An-Naziat' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/079.An-Naziat.mp3' },
+      { num: '080', name: { ar: 'عبس', en: 'Abasa' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/080.Abasa.mp3' },
+      { num: '081', name: { ar: 'التكوير', en: 'At-Takwir' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/081.At-Takwir.mp3' },
+      { num: '082', name: { ar: 'الانفطار', en: 'Al-Infitar' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/082.Al-Infitar.mp3' },
+      { num: '083', name: { ar: 'المطففين', en: 'Al-Mutaffifin' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/083.Al-Mutaffifin.mp3' },
+      { num: '084', name: { ar: 'الانشقاق', en: 'Al-Inshiqaq' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/084.Al-Inshiqaq.mp3' },
+      { num: '085', name: { ar: 'البروج', en: 'Al-Buruj' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/085.Al-Buruj.mp3' },
+      { num: '086', name: { ar: 'الطارق', en: 'At-Tariq' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/086.At-Tariq.mp3' },
+      { num: '087', name: { ar: 'الأعلى', en: 'Al-Ala' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/087.Al-Ala.mp3' },
+      { num: '088', name: { ar: 'الغاشية', en: 'Al-Ghashiyah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/088.Al-Ghashiyah.mp3' },
+      { num: '089', name: { ar: 'الفجر', en: 'Al-Fajr' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/089.Al-Fajr.mp3' },
+      { num: '090', name: { ar: 'البلد', en: 'Al-Balad' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/090.Al-Balad.mp3' },
+      { num: '091', name: { ar: 'الشمس', en: 'Ash-Shams' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/091.Ash-Shams.mp3' },
+      { num: '092', name: { ar: 'الليل', en: 'Al-Lail' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/092.Al-Lail.mp3' },
+      { num: '093', name: { ar: 'الضحى', en: 'Ad-Duha' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/093.Ad-Duha.mp3' },
+      { num: '094', name: { ar: 'الشرح', en: 'Ash-Sharh' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/094.Ash-Sharh.mp3' },
+      { num: '095', name: { ar: 'التين', en: 'At-Tin' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/095.At-Tin.mp3' },
+      { num: '096', name: { ar: 'العلق', en: 'Al-Alaq' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/096.Al-Alaq.mp3' },
+      { num: '097', name: { ar: 'القدر', en: 'Al-Qadr' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/097.Al-Qadr.mp3' },
+      { num: '098', name: { ar: 'البينة', en: 'Al-Baiyinah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/098.Al-Baiyinah.mp3' },
+      { num: '099', name: { ar: 'الزلزلة', en: 'Az-Zalzalah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/099.Az-Zalzalah.mp3' },
+      { num: '100', name: { ar: 'العاديات', en: 'Al-Adiyat' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/100.Al-Adiyat.mp3' },
+      { num: '101', name: { ar: 'القارعة', en: 'Al-Qariah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/101.Al-Qariah.mp3' },
+      { num: '102', name: { ar: 'التكاثر', en: 'At-Takathur' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/102.At-Takathur.mp3' },
+      { num: '103', name: { ar: 'العصر', en: 'Al-Asr' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/103.Al-Asr.mp3' },
+      { num: '104', name: { ar: 'الهمزة', en: 'Al-Humazah' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/104.Al-Humazah.mp3' },
+      { num: '105', name: { ar: 'الفيل', en: 'Al-Fil' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/105.Al-Fil.mp3' },
+      { num: '106', name: { ar: 'قريش', en: 'Quraish' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/106.Quraish.mp3' },
+      { num: '107', name: { ar: 'الماعون', en: 'Al-Maun' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/107.Al-Maun.mp3' },
+      { num: '108', name: { ar: 'الكوثر', en: 'Al-Kauthar' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/108.Al-Kauthar.mp3' },
+      { num: '109', name: { ar: 'الكافرون', en: 'Al-Kafirun' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/109.Al-Kafirun.mp3' },
+      { num: '110', name: { ar: 'النصر', en: 'An-Nasr' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/110.An-Nasr.mp3' },
+      { num: '111', name: { ar: 'المسد', en: 'Al-Masad' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/111.Al-Masad.mp3' },
+      { num: '112', name: { ar: 'الإخلاص', en: 'Al-Ikhlas' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/112.Al-Ikhlas.mp3' },
+      { num: '113', name: { ar: 'الفلق', en: 'Al-Falaq' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/113.Al-Falaq.mp3' },
+      { num: '114', name: { ar: 'الناس', en: 'An-Nas' }, url: 'https://archive.org/download/Mohammad_Jebril-256KBPS_up-by-muslem/114.An-Nas.mp3' }
+    ];
+
+    // بيانات تلاوات جامع عمرو بن العاص
+    const tilawat = [
+      { id: 'tilawa1', name: 'الأنبياء', description: 'الشيخ محمد جبريل من جامع عمرو بن العاص', url: 'https://archive.org/download/Islamic_Tape-830_uP_bY_mUSLEm/001_muslem.ettounsi.mp3' },
+      { id: 'tilawa2', name: 'سورة الحج', description: 'الشيخ محمد جبريل من جامع عمرو بن العاص', url: 'https://archive.org/download/Islamic_Tape-830_uP_bY_mUSLEm/002_muslem.ettounsi.mp3' },
+      { id: 'tilawa3', name: 'النمل', description: 'الشيخ محمد جبريل من مسجد عمرو بن العاص', url: 'https://archive.org/download/Islamic_Tape-830_uP_bY_mUSLEm/003_muslem.ettounsi.mp3' },
+      { id: 'tilawa4', name: 'الشورى', description: 'الشيخ محمد جبريل من جامع عمرو بن العاص', url: 'https://archive.org/download/Islamic_Tape-830_uP_bY_mUSLEm/004_muslem.ettounsi.mp3' },
+      { id: 'tilawa5', name: 'الدخان', description: 'الشيخ محمد جبريل من جامع عمرو بن العاص', url: 'https://archive.org/download/Islamic_Tape-830_uP_bY_mUSLEm/005_muslem.ettounsi.mp3' },
+      { id: 'tilawa6', name: 'الحاقة', description: 'القارئ محمد جبريل من جامع عمرو بن العاص', url: 'https://archive.org/download/Islamic_Tape-830_uP_bY_mUSLEm/006_muslem.ettounsi.mp3' },
+      { id: 'tilawa7', name: 'ليلة ٣ رمضان ١٤٢٦', description: 'الشيخ محمد جبريل (تسجيل كامل)', url: 'https://archive.org/download/Islamic_Tape-830_uP_bY_mUSLEm/007_muslem.ettounsi.mp3' },
+      { id: 'tilawa8', name: 'ليلة ٢٧ رمضان ١٤٢٦', description: 'الشيخ محمد جبريل (تسجيل كامل)', url: 'https://archive.org/download/Islamic_Tape-830_uP_bY_mUSLEm/008_muslem.ettounsi.mp3' },
+      { id: 'tilawa9', name: 'ليلة ٢٩ رمضان ١٤٢٦', description: 'الشيخ محمد جبريل (تسجيل كامل)', url: 'https://archive.org/download/Islamic_Tape-830_uP_bY_mUSLEm/009_muslem.ettounsi.mp3' },
+      { id: 'tilawa10', name: 'الأذان', description: 'للشيخ محمد جبريل من جامع عمرو بن العاص', url: 'https://archive.org/download/Islamic_Tape-830_uP_bY_mUSLEm/012_muslem.ettounsi.mp3' }
+    ];
+
+    // بيانات أدعية جامع عمرو بن العاص
+    const ad3iya = [
+      { id: 'dua1', name: 'دعاء ليلة 27 رمضان 1434هـ', description: 'ليلة القدر للشيخ محمد جبريل', url: 'https://archive.org/download/Islamic_Tape-830_uP_bY_mUSLEm/010_muslem.ettounsi.mp3' },
+      { id: 'dua2', name: 'الدعاء المشهور ليلة القدر', description: 'للشيخ محمد جبريل (كامل)', url: 'https://archive.org/download/Islamic_Tape-830_uP_bY_mUSLEm/011_muslem.ettounsi.mp3' },
+      { id: 'dua3', name: 'دعاء ليلة 27 رمضان 1427 هـ', description: 'من مسجد عمرو بن العاص', url: 'https://archive.org/download/Islamic_Tape-845_uP_bY_mUSLEm/001_muslem.ettounsi.mp3' },
+      { id: 'dua4', name: 'دعاء القنوت ليلة 2 رمضان 1427 هـ', description: 'من مسجد الجالية الإسلامية بأمريكا', url: 'https://archive.org/download/Islamic_Tape-845_uP_bY_mUSLEm/002_muslem.ettounsi.mp3' },
+      { id: 'dua5', name: 'دعاء صلاة الكسوف 1427 هـ', description: 'من مسجد عمرو بن العاص', url: 'https://archive.org/download/Islamic_Tape-845_uP_bY_mUSLEm/003_muslem.ettounsi.mp3' },
+      { id: 'dua6', name: 'دعاء ليلة 27 رمضان 1426 هـ', description: 'من مسجد عمرو بن العاص', url: 'https://archive.org/download/Islamic_Tape-845_uP_bY_mUSLEm/004_muslem.ettounsi.mp3' }
+    ];
+
+    const player = document.getElementById('audioPlayer');
+    const nowPlaying = document.getElementById('currentTrack');
+    const playingIndicator = document.getElementById('playingIndicator');
+    const bufferingLoader = document.getElementById('bufferingLoader');
+    const suraGrid = document.getElementById('suraGrid');
+    const tilawaGrid = document.getElementById('tilawaGrid');
+    const duaGrid = document.getElementById('duaGrid');
+    
+    let currentCard = null;
+    let currentType = ''; // 'sura', 'tilawa', 'dua'
+    let currentSuraIndex = -1;
+    
+    // متغيرات مؤقت النوم
+    let sleepTimer = null;
+    let sleepTimerMinutes = 0;
+    let sleepTimerSeconds = 0;
+    let sleepTimerInterval = null;
+    const sleepTimerBtn = document.getElementById('sleepTimerBtn');
+    const sleepTimerModal = document.getElementById('sleepTimerModal');
+    const timerStatus = document.getElementById('timerStatus');
+    const timerCountdown = document.getElementById('timerCountdown');
+    let selectedMinutes = 0;
+
+    // تحميل المحتوى في الصفحة
+    function loadContent() {
+      // تحميل سور المصحف
+      loadSuras();
+      
+      // تحميل التلاوات
+      loadTilawat();
+      
+      // تحميل الأدعية
+      loadAd3iya();
+    }
+
+    // تحميل سور المصحف
+    function loadSuras() {
+      suras.forEach((sura, index) => {
+        const card = document.createElement('div');
+        card.className = 'sura-card';
+        card.dataset.index = index;
+        card.dataset.type = 'sura';
+        
+        card.innerHTML = `
+          <div class="card-number">سورة ${sura.num}</div>
+          <div class="card-name">${sura.name.ar}</div>
+          <div class="card-description">عدد الآيات: ${getVerseCount(sura.num)}</div>
+          <div class="progress-bar"></div>
+        `;
+        
+        card.addEventListener('click', () => playTrack(sura, card, 'sura'));
+        suraGrid.appendChild(card);
+      });
+    }
+
+    // تحميل التلاوات
+    function loadTilawat() {
+      tilawat.forEach((tilawa, index) => {
+        const card = document.createElement('div');
+        card.className = 'tilawa-card';
+        card.dataset.index = index;
+        card.dataset.type = 'tilawa';
+        
+        card.innerHTML = `
+          <div class="card-number">${index + 1}</div>
+          <div class="card-name">${tilawa.name}</div>
+          <div class="card-description">${tilawa.description}</div>
+          <div class="progress-bar"></div>
+        `;
+        
+        card.addEventListener('click', () => playTrack(tilawa, card, 'tilawa'));
+        tilawaGrid.appendChild(card);
+      });
+    }
+
+    // تحميل الأدعية
+    function loadAd3iya() {
+      ad3iya.forEach((dua, index) => {
+        const card = document.createElement('div');
+        card.className = 'dua-card';
+        card.dataset.index = index;
+        card.dataset.type = 'dua';
+        
+        card.innerHTML = `
+          <div class="card-number">${index + 1}</div>
+          <div class="card-name">${dua.name}</div>
+          <div class="card-description">${dua.description}</div>
+          <div class="progress-bar"></div>
+        `;
+        
+        card.addEventListener('click', () => playTrack(dua, card, 'dua'));
+        duaGrid.appendChild(card);
+      });
+    }
+
+    // دالة للحصول على عدد آيات السورة
+    function getVerseCount(suraNum) {
+      const verseCounts = {
+        '001': 7, '002': 286, '003': 200, '004': 176, '005': 120, '006': 165, '007': 206,
+        '008': 75, '009': 129, '010': 109, '011': 123, '012': 111, '013': 43, '014': 52,
+        '015': 99, '016': 128, '017': 111, '018': 110, '019': 98, '020': 135, '021': 112,
+        '022': 78, '023': 118, '024': 64, '025': 77, '026': 227, '027': 93, '028': 88,
+        '029': 69, '030': 60, '031': 34, '032': 30, '033': 73, '034': 54, '035': 45,
+        '036': 83, '037': 182, '038': 88, '039': 75, '040': 85, '041': 54, '042': 53,
+        '043': 89, '044': 59, '045': 37, '046': 35, '047': 38, '048': 29, '049': 18,
+        '050': 45, '051': 60, '052': 49, '053': 62, '054': 55, '055': 78, '056': 96,
+        '057': 29, '058': 22, '059': 24, '060': 13, '061': 14, '062': 11, '063': 11,
+        '064': 18, '065': 12, '066': 12, '067': 30, '068': 52, '069': 52, '070': 44,
+        '071': 28, '072': 28, '073': 20, '074': 56, '075': 40, '076': 31, '077': 50,
+        '078': 40, '079': 46, '080': 42, '081': 29, '082': 19, '083': 36, '084': 25,
+        '085': 22, '086': 17, '087': 19, '088': 26, '089': 30, '090': 20, '091': 15,
+        '092': 21, '093': 11, '094': 8, '095': 8, '096': 19, '097': 5, '098': 8,
+        '099': 8, '100': 11, '101': 11, '102': 8, '103': 3, '104': 9, '105': 5,
+        '106': 4, '107': 7, '108': 3, '109': 6, '110': 3, '111': 5, '112': 4,
+        '113': 5, '114': 6
+      };
+      
+      return verseCounts[suraNum] || '?';
+    }
+
+    // تشغيل أي نوع من الملفات
+    function playTrack(track, cardElement, type) {
+      // إزالة التفعيل من العنصر الحالي
+      if (currentCard) {
+        currentCard.classList.remove('active');
+      }
+      
+      // تفعيل العنصر الجديد
+      cardElement.classList.add('active');
+      currentCard = cardElement;
+      currentType = type;
+      
+      // إذا كانت سورة، تحديث الفهرس
+      if (type === 'sura') {
+        currentSuraIndex = parseInt(cardElement.dataset.index);
+      }
+
+      // تحديث المشغل
+      player.src = track.url;
+      
+      // تحديد نص العرض حسب النوع
+      let displayText = '';
+      if (type === 'sura') {
+        displayText = `جاري تشغيل: سورة ${track.name.ar}`;
+      } else {
+        displayText = `جاري تشغيل: ${track.name}`;
+      }
+      
+      nowPlaying.textContent = displayText;
+      bufferingLoader.style.display = 'inline-block';
+      playingIndicator.style.display = 'none';
+      
+      player.play().then(() => {
+        bufferingLoader.style.display = 'none';
+        playingIndicator.style.display = 'block';
+      }).catch(error => {
+        console.error('خطأ في التشغيل:', error);
+        nowPlaying.textContent = `خطأ في التشغيل`;
+        bufferingLoader.style.display = 'none';
+      });
+    }
+
+    // الرجوع لصفحة الراديو
+    function goBack() {
+      window.location.href = 'https://waleedd189.github.io/radio-quran/';
+    }
+
+    // دالة المشاركة
+    function shareApp() {
+      const shareData = {
+        title: 'مصحف الشيخ محمد جبريل',
+        text: 'استمع إلى مصحف الشيخ محمد جبريل مع تلاوات وأدعية من جامع عمرو بن العاص - صفحة اللهم لك الحمد',
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData)
+          .catch(console.error);
+      } else {
+        // Fallback: copy to clipboard
+        const textToCopy = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          alert('تم نسخ الرابط إلى الحافظة!');
+        }).catch(() => {
+          alert('فشل النسخ، يرجى نسخ الرابط يدوياً');
+        });
+      }
+    }
+
+    // دالة الإبلاغ عن رابط معطل
+    function reportBrokenLink() {
+      const phoneNumber = '+201092116092';
+      const message = 'يوجد رابط معطل في صفحة مصحف الشيخ محمد جبريل، يرجى التحقق';
+      const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
+      
+      window.open(whatsappUrl, '_blank');
+      
+      return false;
+    }
+
+    // ===== دوال مؤقت النوم =====
+    
+    // فتح نافذة مؤقت النوم
+    function toggleSleepTimer() {
+      if (sleepTimerInterval) {
+        // إذا كان المؤقت مفعل، قم بإيقافه
+        cancelSleepTimer();
+      } else {
+        // إذا لم يكن المؤقت مفعل، افتح النافذة
+        sleepTimerModal.style.display = 'flex';
+        
+        // إضافة مستمعي الأحداث لأزرار الوقت
+        const timerOptions = document.querySelectorAll('.timer-option');
+        timerOptions.forEach(option => {
+          option.addEventListener('click', function() {
+            // إزالة التحديد من جميع الأزرار
+            timerOptions.forEach(opt => opt.classList.remove('selected'));
+            // تحديد الزر المضغوط عليه
+            this.classList.add('selected');
+            // حفظ الوقت المحدد
+            selectedMinutes = parseInt(this.getAttribute('data-minutes'));
+          });
+        });
+      }
+    }
+    
+    // إغلاق نافذة مؤقت النوم
+    function closeSleepTimerModal() {
+      sleepTimerModal.style.display = 'none';
+    }
+    
+    // ضبط مؤقت النوم
+    function setSleepTimer() {
+      if (selectedMinutes === 0) {
+        alert('الرجاء اختيار وقت للمؤقت');
+        return;
+      }
+      
+      // إيقاف أي مؤقت نشط
+      if (sleepTimerInterval) {
+        clearInterval(sleepTimerInterval);
+      }
+      
+      // ضبط الوقت المتبقي
+      sleepTimerMinutes = selectedMinutes;
+      sleepTimerSeconds = 0;
+      
+      // تحديث واجهة المستخدم
+      sleepTimerBtn.classList.add('active');
+      timerStatus.style.display = 'block';
+      updateTimerDisplay();
+      
+      // بدء العد التنازلي
+      sleepTimerInterval = setInterval(() => {
+        sleepTimerSeconds--;
+        
+        if (sleepTimerSeconds < 0) {
+          sleepTimerMinutes--;
+          sleepTimerSeconds = 59;
+        }
+        
+        updateTimerDisplay();
+        
+        // التحقق من انتهاء الوقت
+        if (sleepTimerMinutes <= 0 && sleepTimerSeconds <= 0) {
+          // إيقاف الصوت
+          player.pause();
+          
+          // إيقاف المؤقت
+          clearInterval(sleepTimerInterval);
+          sleepTimerInterval = null;
+          
+          // تحديث واجهة المستخدم
+          sleepTimerBtn.classList.remove('active');
+          timerStatus.style.display = 'none';
+          
+          // إظهار رسالة للمستخدم
+          nowPlaying.textContent = 'تم إيقاف التشغيل حسب مؤقت النوم';
+        }
+      }, 1000);
+      
+      // إغلاق النافذة
+      closeSleepTimerModal();
+    }
+    
+    // إلغاء مؤقت النوم
+    function cancelSleepTimer() {
+      if (sleepTimerInterval) {
+        clearInterval(sleepTimerInterval);
+        sleepTimerInterval = null;
+      }
+      
+      sleepTimerBtn.classList.remove('active');
+      timerStatus.style.display = 'none';
+      selectedMinutes = 0;
+    }
+    
+    // تحديث عرض المؤقت
+    function updateTimerDisplay() {
+      const minutes = sleepTimerMinutes.toString().padStart(2, '0');
+      const seconds = sleepTimerSeconds.toString().padStart(2, '0');
+      timerCountdown.textContent = `${minutes}:${seconds}`;
+    }
+
+    // أحداث المشغل
+    player.addEventListener('pause', () => {
+      playingIndicator.style.display = 'none';
+    });
+
+    player.addEventListener('play', () => {
+      playingIndicator.style.display = 'block';
+    });
+
+    // إضافة خاصية التشغيل التلقائي للسور فقط
+    player.addEventListener('ended', () => {
+      playingIndicator.style.display = 'none';
+      
+      // إذا كانت سورة، التشغيل التلقائي للسورة التالية
+      if (currentType === 'sura' && currentSuraIndex >= 0 && currentSuraIndex < suras.length - 1) {
+        const nextIndex = currentSuraIndex + 1;
+        const nextSura = suras[nextIndex];
+        const nextCard = suraGrid.children[nextIndex];
+        
+        // تشغيل السورة التالية
+        nowPlaying.textContent = `جاري الانتقال لسورة: ${nextSura.name.ar}`;
+        playTrack(nextSura, nextCard, 'sura');
+      } else {
+        // إذا كانت تلاوة أو دعاء أو سورة أخيرة
+        nowPlaying.textContent = 'انتهى التشغيل';
+      }
+    });
+
+    // عند تحميل الصفحة
+    window.addEventListener('DOMContentLoaded', loadContent);
+  </script>
+</body>
+</html>
