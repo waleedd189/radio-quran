@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-<title>راديو قرآن v6.1</title>
+<title>راديو قرآن v6.2</title>
 <!-- Meta Tags للـ SEO -->
 <meta name="description" content="راديو قرآن - استمع إلى القرآن الكريم، الأذكار من حصن المسلم، الدروس الدينية، والتفسير. تطبيق إسلامي متكامل.">
 <meta name="keywords" content="قرآن, راديو, أذكار, دروس إسلامية, تفسير, مصحف, تلاوة, رقية">
@@ -764,7 +764,7 @@ body.light-mode .fab { background: #fff; color: #333; border: 1px solid #ddd; }
 }
 
 /* عناصر التحكم */
-.azkar-select, .ruqyah-select { 
+.azkar-select, .ruqyah-select, .recitations-select { 
   width: 100%; 
   padding: 10px; 
   border-radius: 8px; 
@@ -777,8 +777,8 @@ body.light-mode .fab { background: #fff; color: #333; border: 1px solid #ddd; }
   margin-bottom: 10px;
   transition: var(--transition);
 }
-body.light-mode .azkar-select, body.light-mode .ruqyah-select { background: #fff; color: #333; border-color: #aaa; }
-.azkar-select:hover, .ruqyah-select:hover { border-color: #81C784; }
+body.light-mode .azkar-select, body.light-mode .ruqyah-select, body.light-mode .recitations-select { background: #fff; color: #333; border-color: #aaa; }
+.azkar-select:hover, .ruqyah-select:hover, .recitations-select:hover { border-color: #81C784; }
 
 .favorite-btn { 
   background: #9C27B0; 
@@ -1101,7 +1101,7 @@ body.light-mode .volume-slider { background: #ddd; }
 </div>
 
 <!-- الأقسام -->
-<h2 class="section-header" id="section1Title">الأذكار - الرقية</h2>
+<h2 class="section-header" id="section1Title">تلاوات مختارة - الأذكار - الرقية</h2>
 <div class="grid" id="section1-stations"></div>
 
 <h2 class="section-header" id="section2Title">القاهرة - نابلس - السعودية</h2>
@@ -1172,6 +1172,7 @@ const translations = {
     timePlaying: "وقت التشغيل:",
     azkarSelectDefault: "اختر أذكار...",
     ruqyahSelectDefault: "اختر رقية...",
+    recitationsSelectDefault: "اختر تلاوة...", // جديد
     playButton: "تشغيل",
     stopButton: "إيقاف",
     listenToTafsir: "استماع للتفسير",
@@ -1183,7 +1184,7 @@ const translations = {
     sleepTimerText: "تفعيل المؤقت",
     sleepTimerStopText: "إيقاف",
     shareText: "مشاركة",
-    section1Title: "الأذكار - الرقية",
+    section1Title: "تلاوات مختارة - الأذكار - الرقية", // محدث
     section2Title: "القاهرة - نابلس - السعودية",
     section3Title: "باقي الإذاعات",
     section4Title: "دروس وعبر",
@@ -1208,6 +1209,7 @@ const translations = {
     timePlaying: "Playing:",
     azkarSelectDefault: "Select Azkar...",
     ruqyahSelectDefault: "Select Ruqyah...",
+    recitationsSelectDefault: "Select Recitation...", // جديد
     playButton: "Play",
     stopButton: "Stop",
     listenToTafsir: "Listen to Tafsir",
@@ -1219,7 +1221,7 @@ const translations = {
     sleepTimerText: "Start Timer",
     sleepTimerStopText: "Stop Timer",
     shareText: "Share",
-    section1Title: "Azkar - Ruqyah",
+    section1Title: "Selected Recitations - Azkar - Ruqyah", // محدث
     section2Title: "Cairo - Nablus - Saudi",
     section3Title: "Other Stations",
     section4Title: "Lessons",
@@ -1242,11 +1244,20 @@ let timeInterval = null;
 let sleepTimer = null;
 let currentSurah = null;
 let currentAdhkarType = 'sabah';
-let isNightMode = true; // الوضع الافتراضي ليلي
-let isRepeatingVerse = false; // خاصية تكرار الآية
+let isNightMode = true;
+let isRepeatingVerse = false;
 const whatsappNumber = "01092116092";
 
 const section1Stations = [
+  { 
+    // البطاقة الجديدة: تلاوات مختارة
+    name: {ar: "تلاوات مختارة", en: "Selected Recitations"}, 
+    img: "https://i.postimg.cc/c48r2QX2/tlawat-mkhtart.jpg", 
+    type: "selected-recitations", // نوع جديد
+    recordings: [
+      { name: {ar: "هود وأخواتها - مشاري راشد", en: "Hud and its sisters - Mishary Rashid"}, url: "https://archive.org/download/waleed_d189_yahoo_201312/%D9%87%D9%88%D8%AF%20-%20%D9%88%D8%A3%D8%AE%D9%88%D8%A7%D8%AA%D9%87%D8%A7.mp3" }
+    ]
+  },
   { 
     name: {ar: "إذاعة الأذكار", en: "Azkar Radio"}, 
     img: "https://i.postimg.cc/d3p8GFvm/adhkar-alywm-wallylh.jpg", 
@@ -1430,7 +1441,7 @@ const adhkarData = {
     { title: "أواخر سورة البقرة", text: "آمَنَ الرَّسُولُ بِمَا أُنْزِلَ إِلَيْهِ مِنْ رَبِّهِ وَالْمُؤْمِنُونَ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِنْ رُسُلِهِ وَقَالُوا سَمِعْنَا وَأَطَعْنَا غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ", count: 1 },
     { title: "سورة الإخلاص", text: "قُلْ هُوَ اللَّهُ أَحَدٌ * اللَّهُ الصَّمَدُ * لَمْ يَلِدْ وَلَمْ يُولَدْ * وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ", count: 3 },
     { title: "سورة الفلق", text: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ * مِنْ شَرِّ مَا خَلَقَ * وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ * وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ * وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ", count: 3 },
-    { title: "سورة الناس", text: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ * مَلِكِ النَّاسِ * إِلَهُ النَّاسِ * مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ * الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ * مِنَ الْجِنَّةِ وَالنَّاسِ", count: 3 },
+    { title: "سورة الناس", text: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ * مَلِكِ النَّاسِ * إِلَهِ النَّاسِ * مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ * الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ * مِنَ الْجِنَّةِ وَالنَّاسِ", count: 3 },
     { title: "أذكار المساء", text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذِهِ اللَّيْلَةِ وَخَيْرَ مَا بَعْدَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ", count: 1 },
     { title: "كلمات الله التامات", text: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ", count: 3 },
     { title: "من قالها موقناً بها حين يمسى دخل الجنة", text: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ", count: 1 },
@@ -1624,7 +1635,6 @@ async function loadSurah(number) {
 }
 
 function toggleRepeatVerse(url, btnElement) {
-  // إيقاف أي تكرار سابق
   isRepeatingVerse = false;
   document.querySelectorAll('.repeat-btn').forEach(b => b.classList.remove('active'));
 
@@ -1632,7 +1642,7 @@ function toggleRepeatVerse(url, btnElement) {
     btnElement.classList.add('active');
     isRepeatingVerse = true;
     globalPlayer.loop = true;
-    playAyah(url, null); // تشغيل الآية إذا لم تكن تعمل
+    playAyah(url, null); 
     showToast('🔁 تم تفعيل تكرار الآية');
   } else {
     globalPlayer.loop = false;
@@ -1678,7 +1688,6 @@ function goToSpecificVerse() {
 }
 
 function playAyah(url, textElement) {
-  // إذا كنا في وضع تكرار آية معينة، نلغي التكرار الجديد
   if (isRepeatingVerse && textElement) {
     isRepeatingVerse = false;
     globalPlayer.loop = false;
@@ -1792,7 +1801,7 @@ function setLanguage(lang) {
   
   updateHijriDate();
   initializeStations();
-  document.title = translations[lang].quranRadio + ' v6.1';
+  document.title = translations[lang].quranRadio + ' v6.2';
 }
 
 function toggleLanguage() { 
@@ -1823,7 +1832,6 @@ function createStationCard(station) {
   card.className = 'card';
   const name = station.name[currentLanguage];
   
-  // تحسين المنطق للبحث في المفضلات
   const isFavorite = favorites.some(fav => fav.url === (station.url || station.completeQuranUrl || station.lessonsUrl || station.recordings?.[0]?.url));
   
   const favBtn = `<button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${station.name.ar}', '${station.name.en}', '${station.img}', '${station.url || station.lessonsUrl || station.completeQuranUrl || ''}')" aria-label="${isFavorite ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}">
@@ -1832,7 +1840,15 @@ function createStationCard(station) {
 
   let buttons = '';
 
-  if (station.type === 'azkar') {
+  if (station.type === 'selected-recitations') { // النوع الجديد
+    buttons = `
+      <select class="recitations-select" onchange="playSelectedRecitation(this)" aria-label="اختر تلاوة">
+        <option value="">${translations[currentLanguage].recitationsSelectDefault}</option>
+        ${station.recordings.map(rec => `<option value="${rec.url}">${rec.name[currentLanguage]}</option>`).join('')}
+      </select>
+      <button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>
+    `;
+  } else if (station.type === 'azkar') {
     buttons = `
       <select class="azkar-select" onchange="playAzkar(this)" aria-label="اختر ذكر">
         <option value="">${translations[currentLanguage].azkarSelectDefault}</option>
@@ -1950,6 +1966,16 @@ function playRuqyah(el) {
   if(url) { const card = el.closest('.card'); const ruqyahName = el.options[el.selectedIndex].text; playRadio(url, `رقية - ${ruqyahName}`, card); }
 }
 
+// دالة التشغيل للتلاوات المختارة (الجديدة)
+function playSelectedRecitation(el) {
+  const url = el.value;
+  if(url) { 
+    const card = el.closest('.card'); 
+    const recitationName = el.options[el.selectedIndex].text; 
+    playRadio(url, recitationName, card); 
+  }
+}
+
 function stopRadio() {
   globalPlayer.pause(); globalPlayer.src = ""; document.getElementById('globalAudioPlayerContainer').style.display = 'none';
   nowPlayingSpan.textContent = translations[currentLanguage].initialStationText; playingIndicator.style.display = 'none'; bufferingLoader.style.display = 'none';
@@ -1995,7 +2021,6 @@ function stopTimeCounter() { clearInterval(timeInterval); timeDisplay.textConten
 
 // === وظائف المفضلة ===
 function toggleFavorite(nameAr, nameEn, img, url) {
-  // استخدام الرابط كمعرف فريد لتجنب التكرار عند تغيير اللغة
   const idx = favorites.findIndex(f => f.url === url);
   
   if(idx === -1) {
@@ -2019,7 +2044,6 @@ function updateFavoritesSection() {
     const card = document.createElement('div'); card.className = 'card'; card.style.animationDelay = `${index * 0.05}s`;
     const favBtn = `<button class="favorite-btn active" onclick="toggleFavorite('${fav.nameAr}','${fav.nameEn}','${fav.img}','${fav.url}')" aria-label="إزالة من المفضلة"><i class="fas fa-heart"></i></button>`;
     
-    // محاولة تخمين نوع المحطة لعرض الأزرار المناسبة
     let buttons = `
       <button onclick="playRadio('${fav.url}', '${fav.name[currentLanguage]}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button>
       <button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>
