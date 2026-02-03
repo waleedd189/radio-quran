@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>الأذكار - راديو قرآن</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF9800;
+            --primary-dark: #F57C00;
+            --secondary: #4CAF50;
+            --bg-gradient: linear-gradient(135deg, #111 0%, #222 100%);
+            --card-bg: #222;
+            --text: #fff;
+            --gold: #FFD700;
+            --border-color: #444;
+            --text-font-size: 1.4em;
+        }
+
+        body.light-mode {
+            --bg-gradient: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            --card-bg: #fff;
+            --text: #333;
+            --border-color: #ddd;
+            --primary: #EF6C00;
+        }
+        body.light-mode .controls, body.light-mode .search-container { background: rgba(255,255,255,0.98); border-color: #ddd; }
+        body.light-mode .top-bar { background: rgba(255,255,255,0.95); }
+        body.light-mode select, body.light-mode input, body.light-mode .go-input { background: #fff; color: #333; border-color: #ccc; }
+        body.light-mode .dhikr-text, body.light-mode .tasbih-count { color: #000; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text);
+            margin: 0;
+            padding: 160px 10px 90px 10px;
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* الشريط العلوي */
+        .top-bar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #333;
+            min-height: 50px;
+        }
+
+        .btn-fab {
+            background: #333; color: white; border: none;
+            padding: 6px 12px; border-radius: 20px;
+            cursor: pointer; font-family: 'Cairo'; font-size: 0.85em;
+            display: flex; align-items: center; gap: 5px; transition: 0.2s;
+        }
+        body.light-mode .btn-fab { background: #eee; color: #333; border: 1px solid #ccc; }
+        .btn-fab:hover { transform: scale(1.05); }
+        .btn-active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .back-btn { background: var(--secondary); color: white; border-radius: 5px; text-decoration: none; padding: 6px 15px; font-weight: bold; display: flex; align-items: center; gap: 5px;}
+
+        /* مربع التحكم */
+        .controls {
+            position: fixed; top: 55px; left: 0; width: 100%;
+            background: rgba(17, 17, 17, 0.98);
+            padding: 10px;
+            z-index: 950;
+            border-bottom: 1px solid #444;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        select {
+            padding: 8px;
+            border-radius: 6px;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            font-family: 'Cairo';
+            font-size: 0.9em;
+            cursor: pointer;
+            max-width: 200px;
+            flex: 1 1 150px;
+        }
+
+        /* شريط البحث */
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 15px auto;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border-radius: 25px;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            font-family: 'Cairo';
+            font-size: 1em;
+        }
+        .search-icon {
+            position: absolute; right: 15px; top: 50%;
+            transform: translateY(-50%); color: #888;
+        }
+
+        .extra-actions { display: flex; gap: 10px; margin-bottom: 15px; justify-content: center; flex-wrap: wrap; }
+
+        /* بطاقة الذكر */
+        .dhikr-card {
+            background: var(--card-bg);
+            margin-bottom: 20px;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+            animation: fadeIn 0.5s;
+            position: relative;
+            transition: transform 0.1s;
+        }
+        .dhikr-card.completed {
+            background: rgba(76, 175, 80, 0.15);
+            border: 2px solid rgba(76, 175, 80, 0.4);
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .dhikr-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .dhikr-title { color: var(--gold); font-weight: bold; font-family: 'Cairo'; font-size: 1.1em; }
+
+        .dhikr-text {
+            font-family: 'Amiri', serif;
+            font-size: var(--text-font-size);
+            line-height: 1.8;
+            margin: 15px 0;
+            text-align: justify;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s;
+        }
+        .dhikr-text:active { transform: scale(0.98); }
+
+        .progress-container {
+            width: 100%; background: rgba(255,255,255,0.1);
+            height: 8px; border-radius: 4px; margin-top: 10px; overflow: hidden;
+        }
+        .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
+
+        .dhikr-counter-area {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0,0,0,0.3); padding: 12px 20px;
+            border-radius: 25px; border: 1px solid var(--border-color); margin-top: 5px;
+        }
+        .counter-value { font-family: 'Cairo'; font-size: 1.1em; font-weight: bold; color: var(--primary); }
+
+        .reset-btn {
+            background: var(--danger-color); color: white; border: none;
+            width: 35px; height: 35px; border-radius: 50%;
+            display: none; align-items: center; justify-content: center; cursor: pointer;
+        }
+        .dhikr-card.completed .reset-btn { display: flex; }
+
+        /* واجهة السبحة التقليدية (جديدة) */
+        .tasbih-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+        }
+        .tasbih-circle {
+            width: 250px; height: 250px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(255, 152, 0, 0.4);
+            cursor: pointer;
+            transition: transform 0.1s;
+            position: relative;
+        }
+        .tasbih-circle:active { transform: scale(0.95); }
+        .tasbih-count { font-size: 5em; font-weight: bold; color: white; font-family: 'Amiri'; }
+        
+        .tasbih-controls {
+            margin-top: 30px;
+            display: flex; gap: 15px;
+            align-items: center;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 20px;
+        }
+        .tasbih-input {
+            width: 60px;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            text-align: center;
+            font-family: 'Cairo';
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .toast {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.8); color: white; padding: 10px 20px;
+            border-radius: 20px; z-index: 3000; opacity: 0;
+            transition: opacity 0.3s; pointer-events: none;
+        }
+        .toast.show { opacity: 1; }
+
+        @media (max-width: 600px) {
+            .tasbih-circle { width: 200px; height: 200px; }
+            .tasbih-count { font-size: 4em; }
+            .top-bar { justify-content: space-between; padding: 8px 5px; }
+            .controls { padding: 5px; top: 50px; }
+            body { padding-top: 200px; }
+            .btn-fab span { display: none; } 
+        }
+    </style>
+</head>
+<body>
+
+<!-- الشريط العلوي -->
+<div class="top-bar">
+    <a href="https://waleedd189.github.io/radio-quran/" class="back-btn">
+        <i class="fas fa-home"></i> <span data-ar="الرئيسية" data-en="Home">الرئيسية</span>
+    </a>
+    
+    <button class="btn-fab" onclick="changeLang()">
+        <i class="fas fa-language"></i> <span id="langText">English</span>
+    </button>
+    <button class="btn-fab" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+    <button class="btn-fab" id="soundBtn" onclick="toggleSound()">
+        <i class="fas fa-volume-mute"></i> <span data-ar="صوت" data-en="Sound">صوت</span>
+    </button>
+    <button class="btn-fab" onclick="changeFontSize(1)">
+        <i class="fas fa-plus"></i>
+    </button>
+    <button class="btn-fab" onclick="changeFontSize(-1)">
+        <i class="fas fa-minus"></i>
+    </button>
+</div>
+
+<!-- مربع التحكم -->
+<div class="controls">
+    <!-- زر التبديل بين الأذكار والسبحة (جديد) -->
+    <button class="btn-fab" id="modeToggle" onclick="toggleMode()" style="background: var(--secondary); color: white;">
+        <i class="fas fa-th-large"></i> <span data-ar="الأذكار" data-en="Azkar">الأذكار</span>
+    </button>
+
+    <select id="categorySelect" onchange="loadAdhkar()">
+        <option value="sabah" data-ar="أذكار الصباح" data-en="Morning Azkar">أذكار الصباح</option>
+        <option value="masaa" data-ar="أذكار المساء" data-en="Evening Azkar">أذكار المساء</option>
+        <option value="nom" data-ar="أذكار النوم" data-en="Sleeping Azkar">أذكار النوم</option>
+        <option value="post" data-ar="أدعية بعد الصلاة" data-en="Post-Prayer">أدعية بعد الصلاة</option>
+        <option value="istighfar" data-ar="استغفار" data-en="Istighfar">استغفار</option>
+        <option value="salawat" data-ar="الصلاة على النبي" data-en="Salawat">الصلاة على النبي</option>
+    </select>
+    
+    <button class="btn-fab" onclick="resetAllCounters()" style="background: #f44336; color: white;">
+        <i class="fas fa-trash"></i> <span data-ar="تصفير الكل" data-en="Reset All">تصفير الكل</span>
+    </button>
+</div>
+
+<h1 style="text-align:center; font-family:'Amiri'; margin: 10px 0; color: var(--primary);" data-ar="الذكر والعبادة" data-en="Remembrance & Worship">الذكر والعبادة</h1>
+
+<!-- قسم الأذكار -->
+<div id="azkarSection">
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن ذكر..." onkeyup="searchAdhkar()">
+        <i class="fas fa-search search-icon"></i>
+    </div>
+    <div class="extra-actions">
+        <button class="btn-fab" onclick="randomDhikr()" style="background: var(--secondary); color: white; width: auto; padding: 10px 20px;">
+            <i class="fas fa-random"></i> <span data-ar="ذكر عشوائي" data-en="Random Dhikr">ذكر عشوائي</span>
+        </button>
+    </div>
+    <div id="content">
+        <div class="loading" data-ar="جاري تحميل الأذكار..." data-en="Loading Azkar...">جاري تحميل الأذكار...</div>
+    </div>
+</div>
+
+<!-- قسم السبحة التقليدية (جديد) -->
+<div id="tasbihSection" class="tasbih-container">
+    <div class="tasbih-circle" onclick="clickTasbih()">
+        <span class="tasbih-count" id="tasbihCountDisplay">0</span>
+    </div>
+    
+    <div class="tasbih-controls">
+        <label style="color:#ccc;" data-ar="الهدف:" data-en="Goal:">الهدف:</label>
+        <input type="number" id="tasbihTarget" class="tasbih-input" value="33" onchange="saveTasbihSettings()">
+        <button class="btn-fab" onclick="resetTasbih()" style="background: #f44336; color: white;">
+            <i class="fas fa-redo"></i>
+        </button>
+    </div>
+    <p style="margin-top: 20px; color: #888; font-family: 'Cairo';" data-ar="اضغط على الدائرة للعد" data-en="Tap circle to count">اضغط على الدائرة للعد</p>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script>
+    // === إعدادات الصوت ===
+    let audioContext = null;
+    let soundEnabled = false;
+
+    function initAudio() {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+    }
+
+    function playClickSound() {
+        if (!soundEnabled || !audioContext) return;
+        if (audioContext.state === 'suspended') audioContext.resume();
+
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.type = 'sine';
+        oscillator.frequency.value = 800;
+        
+        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
+
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 0.05);
+    }
+
+    function toggleSound() {
+        initAudio();
+        soundEnabled = !soundEnabled;
+        const btn = document.getElementById('soundBtn');
+        if (soundEnabled) {
+            btn.classList.add('btn-active');
+            btn.innerHTML = '<i class="fas fa-volume-up"></i> <span data-ar="صوت مفعل" data-en="Sound On">صوت مفعل</span>';
+            showToast('🔊 تم تفعيل صوت السبحة');
+        } else {
+            btn.classList.remove('btn-active');
+            btn.innerHTML = '<i class="fas fa-volume-mute"></i> <span data-ar="صوت" data-en="Sound">صوت</span>';
+            showToast('🔇 تم كتم الصوت');
+        }
+    }
+
+    // === متغيرات عامة ===
+    const translations = {
+        ar: {
+            home: "الرئيسية", title: "الذكر والعبادة",
+            completed: "تمت المهمة! الله يبارك فيك", reset: "إعادة تعيين",
+            random: "ذكر عشوائي", sound: "صوت", modeAzkar: "الأذكار", modeTasbih: "السبحة"
+        },
+        en: {
+            home: "Home", title: "Remembrance & Worship",
+            completed: "Task Completed! God bless you", reset: "Reset",
+            random: "Random Dhikr", sound: "Sound", modeAzkar: "Azkar", modeTasbih: "Tasbih"
+        }
+    };
+    let currentLang = 'ar';
+    let currentFontSize = 1.4;
+    let isTasbihMode = false;
+
+    const adhkarData = {
+        sabah: [
+            { title: "آية الكرسي", text: "اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ...", count: 1 },
+            { title: "المعوذات", text: "قُلْ هُوَ اللَّهُ أَحَدٌ...", count: 3 },
+            { title: "أذكار الصباح الكبرى", text: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ...", count: 1 },
+            { title: "لا إله إلا الله وحده", text: "اللّهُـمَّ أَنْتَ رَبِّـي لا إلهَ إلاّ أَنْتَ...", count: 1 },
+            { title: "يا حي يا قيوم", text: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ...", count: 3 },
+            { title: "سبحان الله", text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", count: 100 }
+        ],
+        masaa: [
+            { title: "أواخر سورة البقرة", text: "آمَنَ الرَّسُولُ بِمَا أُنْزِلَ إِلَيْهِ...", count: 1 },
+            { title: "أذكار المساء الكبرى", text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ...", count: 1 },
+            { title: "أعوذ بكلمات الله", text: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ", count: 3 },
+            { title: "حسبي الله", text: "حَسْبِـيَ اللّهُ لا إلهَ إلاّ هُوَ...", count: 7 }
+        ],
+        nom: [
+            { title: "آية الكرسي", text: "اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ...", count: 1 },
+            { title: "تخفيف الظلام", text: "بِاسْمِكَ اللُّهُمَّ أَحْيَا وَأَمُوتُ", count: 1 },
+            { title: "إياك نعبد", text: "اللَّهُمَّ إِنِّي أَسْلَمْتُ وَجْهِي إِلَيْكَ...", count: 1 }
+        ],
+        post: [
+            { title: "الاستغفار", text: "أَسْتَغْفِرُ اللَّهَ", count: 3 },
+            { title: "اللهم أنت السلام", text: "اللَّهُمَّ أَنْتَ السَّلاَمُ...", count: 1 },
+            { title: "لا إله إلا الله وحده", text: "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ...", count: 1 }
+        ],
+        istighfar: [
+            { title: "الاستغفار العام", text: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ...", count: 100 }
+        ],
+        salawat: [
+            { title: "الصلاة الإبراهيمية", text: "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ...", count: 10 }
+        ]
+    };
+
+    window.onload = () => {
+        loadSettings();
+        loadTasbihSettings();
+        loadAdhkar();
+    };
+
+    // === منطق التبديل بين الأذكار والسبحة ===
+    function toggleMode() {
+        isTasbihMode = !isTasbihMode;
+        const azkarDiv = document.getElementById('azkarSection');
+        const tasbihDiv = document.getElementById('tasbihSection');
+        const toggleBtn = document.getElementById('modeToggle');
+        
+        if(isTasbihMode) {
+            azkarDiv.style.display = 'none';
+            tasbihDiv.style.display = 'flex';
+            toggleBtn.innerHTML = '<i class="fas fa-list"></i> <span data-ar="الأذكار" data-en="Azkar">الأذكار</span>';
+            toggleBtn.classList.add('btn-active');
+            showToast('📿 تم تفعيل وضع السبحة');
+        } else {
+            azkarDiv.style.display = 'block';
+            tasbihDiv.style.display = 'none';
+            toggleBtn.innerHTML = '<i class="fas fa-th-large"></i> <span data-ar="السبحة" data-en="Tasbih">السبحة</span>';
+            toggleBtn.classList.remove('btn-active');
+        }
+    }
+
+    // === منطق السبحة البسيطة ===
+    let tasbihCount = 0;
+    let tasbihTarget = 33;
+
+    function loadTasbihSettings() {
+        const saved = JSON.parse(localStorage.getItem('simpleTasbihSettings'));
+        if(saved) {
+            tasbihCount = saved.count || 0;
+            tasbihTarget = saved.target || 33;
+            document.getElementById('tasbihTarget').value = tasbihTarget;
+        }
+        updateTasbihUI();
+    }
+
+    function saveTasbihSettings() {
+        tasbihTarget = parseInt(document.getElementById('tasbihTarget').value) || 33;
+        localStorage.setItem('simpleTasbihSettings', JSON.stringify({ count: tasbihCount, target: tasbihTarget }));
+    }
+
+    function clickTasbih() {
+        initAudio();
+        playClickSound();
+        if(navigator.vibrate) navigator.vibrate(30);
+
+        tasbihCount++;
+        
+        if(tasbihCount > tasbihTarget) {
+            tasbihCount = 1; // إعادة للبداية عند تجاوز الهدف
+        }
+
+        saveTasbihSettings();
+        updateTasbihUI();
+    }
+
+    function resetTasbih() {
+        tasbihCount = 0;
+        saveTasbihSettings();
+        updateTasbihUI();
+        showToast('🔄 تم تصفير السبحة');
+    }
+
+    function updateTasbihUI() {
+        document.getElementById('tasbihCountDisplay').textContent = tasbihCount;
+        if(tasbihCount === tasbihTarget) {
+            document.querySelector('.tasbih-circle').style.background = 'var(--secondary)';
+            showToast('✅ اكتمل العدد!');
+        } else {
+            document.querySelector('.tasbih-circle').style.background = 'linear-gradient(135deg, var(--primary), var(--primary-dark))';
+        }
+    }
+
+    // === منطق الأذكار ===
+    function loadAdhkar() {
+        const category = document.getElementById('categorySelect').value;
+        const contentDiv = document.getElementById('content');
+        const list = adhkarData[category];
+        
+        localStorage.setItem('lastAdhkarCat', category);
+        if(!list) return;
+
+        let html = '';
+        const storedCounts = JSON.parse(localStorage.getItem('adhkarCounts')) || {};
+
+        list.forEach((item, index) => {
+            const id = `${category}-${index}`;
+            const currentCount = storedCounts[id] || 0;
+            const isCompleted = currentCount >= item.count;
+            const progress = (currentCount / item.count) * 100;
+
+            html += `
+            <div class="dhikr-card ${isCompleted ? 'completed' : ''}" id="dhikr-box-${index+1}">
+                <div class="dhikr-header">
+                    <div class="dhikr-title">${item.title}</div>
+                    <button class="btn-action ${isCompleted ? 'btn-saved' : 'btn-save'}" onclick="saveBookmark(${index+1})" title="${translations[currentLang].save}">
+                        <i class="${isCompleted ? 'fas' : 'far'} fa-bookmark"></i>
+                    </button>
+                </div>
+                <div class="dhikr-text" style="font-size: ${currentFontSize}em" onclick="incrementCounter('${id}', ${item.count}, this)">
+                    ${item.text}
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: ${progress}%"></div>
+                </div>
+                <div class="dhikr-counter-area">
+                    <span class="counter-value">${currentCount} / ${item.count}</span>
+                    <button class="reset-btn" onclick="resetCounter('${id}', ${item.count})">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+            </div>
+            `;
+        });
+
+        contentDiv.innerHTML = html;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function incrementCounter(id, target, textElement) {
+        initAudio();
+        playClickSound();
+        if(navigator.vibrate) navigator.vibrate(30);
+
+        let counts = JSON.parse(localStorage.getItem('adhkarCounts')) || {};
+        if (!counts[id]) counts[id] = 0;
+
+        if (counts[id] < target) {
+            counts[id]++;
+            localStorage.setItem('adhkarCounts', JSON.stringify(counts));
+            updateCounterUI(id, counts[id], target);
+            
+            if (counts[id] >= target) {
+                document.querySelector(`[onclick*="${id}"]`).closest('.dhikr-card').classList.add('completed');
+                showToast('✅ ' + translations[currentLang].completed);
+            }
+        }
+    }
+
+    // إصلاح دالة إعادة التعيين لتعمل بالتأكيد
+    function resetCounter(id, target) {
+        let counts = JSON.parse(localStorage.getItem('adhkarCounts')) || {};
+        counts[id] = 0;
+        localStorage.setItem('adhkarCounts', JSON.stringify(counts));
+        
+        // نقوم بإعادة تحميل القائمة بالكامل لضمان تحديث الواجهة
+        loadAdhkar();
+        showToast('🔄 تم إعادة تعيين العداد');
+    }
+
+    function resetAllCounters() {
+        if(confirm(currentLang === 'ar' ? 'هل أنت متأكد من تصفير جميع العدادات؟' : 'Are you sure you want to reset all counters?')) {
+            localStorage.removeItem('adhkarCounts');
+            loadAdhkar();
+            resetTasbih();
+            showToast('🗑️ تم تصفير العدادات');
+        }
+    }
+
+    function updateCounterUI(id, current, target) {
+        const card = document.querySelector(`[onclick*="${id}"]`).closest('.dhikr-card');
+        if(card) {
+            card.querySelector('.counter-value').textContent = `${current} / ${target}`;
+            const progress = (current / target) * 100;
+            card.querySelector('.progress-bar').style.width = `${progress}%`;
+        }
+    }
+
+    // === البحث والعشوائية ===
+    function searchAdhkar() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const cards = document.querySelectorAll('.dhikr-card');
+        cards.forEach(card => {
+            const text = card.querySelector('.dhikr-text').textContent.toLowerCase();
+            const title = card.querySelector('.dhikr-title').textContent.toLowerCase();
+            if(text.includes(query) || title.includes(query)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function randomDhikr() {
+        const category = document.getElementById('categorySelect').value;
+        const list = adhkarData[category];
+        if(!list) return;
+
+        const randomIndex = Math.floor(Math.random() * list.length) + 1;
+        const el = document.getElementById(`dhikr-box-${randomIndex}`);
+        if (el) {
+            if(el.style.display === 'none') {
+                document.getElementById('searchInput').value = '';
+                document.querySelectorAll('.dhikr-card').forEach(c => c.style.display = 'block');
+            }
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.style.transform = 'scale(1.02)';
+            setTimeout(() => el.style.transform = 'scale(1)', 300);
+            showToast(`🎲 ${translations[currentLang].random}: ${list[randomIndex-1].title}`);
+        }
+    }
+
+    // === الإعدادات العامة ===
+    function changeFontSize(delta) {
+        currentFontSize += (delta * 0.1);
+        if(currentFontSize < 1.0) currentFontSize = 1.0;
+        if(currentFontSize > 2.5) currentFontSize = 2.5;
+        document.documentElement.style.setProperty('--text-font-size', currentFontSize + 'em');
+        document.querySelectorAll('.dhikr-text').forEach(el => el.style.fontSize = currentFontSize + 'em');
+        saveSettings();
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('light-mode');
+        const isLight = document.body.classList.contains('light-mode');
+        document.getElementById('themeIcon').className = isLight ? 'fas fa-sun' : 'fas fa-moon';
+        saveSettings();
+    }
+
+    function changeLang() {
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        document.documentElement.setAttribute('lang', currentLang);
+        document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+        document.getElementById('langText').textContent = currentLang === 'ar' ? 'English' : 'العربية';
+        
+        document.querySelectorAll('[data-ar]').forEach(el => {
+            el.textContent = el.getAttribute(`data-${currentLang}`);
+        });
+        loadAdhkar();
+        saveSettings();
+    }
+
+    function saveBookmark(num) {
+        const cat = document.getElementById('categorySelect').value;
+        const current = localStorage.getItem('adhkarBookmark');
+        const key = `${cat}-${num}`;
+        
+        if(current === key) {
+            localStorage.removeItem('adhkarBookmark');
+            showToast('❌ تم إلغاء الحفظ');
+        } else {
+            localStorage.setItem('adhkarBookmark', key);
+            showToast('✅ تم الحفظ');
+        }
+        loadAdhkar();
+    }
+
+    function saveSettings() {
+        const settings = {
+            fontSize: currentFontSize,
+            theme: document.body.classList.contains('light-mode') ? 'light' : 'dark',
+            lang: currentLang
+        };
+        localStorage.setItem('adhkarSettings', JSON.stringify(settings));
+    }
+
+    function loadSettings() {
+        const settings = JSON.parse(localStorage.getItem('adhkarSettings'));
+        if(settings) {
+            currentFontSize = settings.fontSize || 1.4;
+            document.documentElement.style.setProperty('--text-font-size', currentFontSize + 'em');
+            
+            if(settings.theme === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('themeIcon').className = 'fas fa-sun';
+            }
+            
+            if(settings.lang) {
+                currentLang = settings.lang;
+                if(currentLang === 'en') changeLang(); 
+            }
+        }
+        
+        const lastCat = localStorage.getItem('lastAdhkarCat');
+        if(lastCat) {
+            document.getElementById('categorySelect').value = lastCat;
+        }
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+</script>
+
+</body>
+</html>
