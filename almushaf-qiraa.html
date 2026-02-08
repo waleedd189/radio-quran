@@ -39,7 +39,7 @@
             background: var(--bg-gradient);
             color: var(--text);
             margin: 0;
-            padding: 220px 10px 90px 10px;
+            padding: 220px 10px 90px 10px; /* المسافة الافتراضية للشاشات الكبيرة */
             min-height: 100vh;
             transition: var(--transition);
         }
@@ -359,42 +359,58 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* تحسينات للهواتف الصغيرة */
+        /* ================== التعديل الجديد للموبايل ================== */
         @media (max-width: 600px) {
+            /* تقليل حجم الشريط العلوي */
             .top-bar { 
                 justify-content: space-between; 
-                padding: 8px 5px; 
-                flex-wrap: wrap;
+                padding: 5px; 
+                min-height: 50px;
             }
+
+            /* تحويل شريط التحكم لشبكة (Grid) لتقليل الارتفاع */
             .controls { 
-                padding: 8px; 
-                top: 50px;
-                flex-direction: column;
-                align-items: stretch;
+                top: 55px;
+                padding: 8px;
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* عمودين */
+                gap: 8px;
             }
+
+            /* جعل حقل البحث يمتد بعرض الشريط بالكامل */
             .go-group { 
-                flex: 1 1 100%; 
-                flex-direction: column;
+                grid-column: span 2; 
+                flex-direction: row; /* عودة الاتجاه الأفقي للزر وحقل الإدخال */
+                width: 100%;
             }
+
+            /* ضبط تنسيق القوائم داخل الشبكة */
             select, .go-input { 
                 width: 100%; 
                 padding: 8px; 
+                margin-bottom: 0; /* إلغاء الهوامش السفلية */
                 font-size: 0.9em; 
-                margin-bottom: 5px;
             }
+
+            /* تقليل المساحة الفارغة في أعلى الصفحة لأن الأشرطة أصبحت مضغوطة */
             body { 
-                padding-top: 260px; 
+                padding-top: 190px; /* كانت 260px */
             }
+
+            /* إخفاء النصوص داخل الأزرار الصغيرة لعدم الزحمة */
             .btn-fab span { 
                 display: none; 
             }
+
             .ayah-text {
                 font-size: calc(var(--ayah-font-size) * 0.9);
             }
+            
             .audio-player-fixed {
                 flex-direction: column;
                 padding: 15px;
             }
+            
             .scroll-indicator {
                 top: auto;
                 bottom: 120px;
