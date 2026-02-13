@@ -1,911 +1,843 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تفسير الشعراوي - راديو قرآن</title>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'Cairo', 'Arial', sans-serif;
-      background: linear-gradient(to bottom right, #111, #333);
-      color: #fff;
-      text-align: center;
-      overflow-x: hidden;
-      min-height: 100vh;
-      position: relative;
-    }
-    
-    .header {
-      margin-bottom: 20px;
-      padding: 20px;
-    }
-    
-    .title {
-      font-family: 'Amiri', serif;
-      font-size: 3em;
-      font-weight: 700;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-      background: linear-gradient(45deg, #4CAF50, #81C784);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    
-    .title::before {
-      content: "﴿";
-      color: #4CAF50;
-      margin-left: 10px;
-    }
-    
-    .title::after {
-      content: "﴾";
-      color: #4CAF50;
-      margin-right: 10px;
-    }
-    
-    .hijri-date {
-      margin: 15px 0;
-      font-size: 1.1em;
-      color: #aaffaa;
-      text-shadow: 0 0 5px rgba(170, 255, 170, 0.7);
-      font-family: 'Amiri', serif;
-    }
-    
-    .back-link {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: rgba(76, 175, 80, 0.2);
-      color: #4CAF50;
-      text-decoration: none;
-      border-radius: 25px;
-      border: 1px solid #4CAF50;
-      transition: all 0.3s ease;
-    }
-    
-    .back-link:hover {
-      background: rgba(76, 175, 80, 0.3);
-      transform: translateY(-2px);
-    }
-    
-    .sharawy-image {
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
-      border-radius: 15px;
-      margin: 20px 0;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    
-    .surah-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      max-width: 1200px;
-      margin: 30px auto;
-      padding: 0 20px;
-    }
-    
-    .surah-card {
-      background: #222;
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 0 10px #000;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-      position: relative;
-    }
-    
-    .surah-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
-      border-color: rgba(76, 175, 80, 0.5);
-    }
-    
-    .surah-icon {
-      width: 120px;
-      height: 60px;
-      background: linear-gradient(45deg, #4CAF50, #81C784);
-      border-radius: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      font-size: 1.1em;
-      color: white;
-      font-weight: bold;
-      text-align: center;
-      padding: 10px;
-      box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
-      position: relative;
-      overflow: hidden;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    .surah-icon::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-      transform: rotate(45deg);
-      transition: all 0.5s;
-    }
-    
-    .surah-icon:hover::before {
-      animation: shine 0.5s ease-in-out;
-    }
-    
-    @keyframes shine {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-    }
-    
-    .tafsir-dropdown {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(76, 175, 80, 0.3);
-      border-radius: 8px;
-      padding: 10px;
-      color: white;
-      font-size: 0.9em;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
-    
-    .tafsir-dropdown:focus {
-      outline: none;
-      border-color: #4CAF50;
-      background: rgba(255, 255, 255, 0.15);
-    }
-    
-    .controls {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    
-    .control-btn {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.8em;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      flex: 1;
-    }
-    
-    .control-btn:hover {
-      background-color: #45a049;
-      transform: translateY(-1px);
-    }
-    
-    .stop-btn {
-      background-color: #f44336 !important;
-    }
-    
-    .stop-btn:hover {
-      background-color: #da190b !important;
-    }
-    
-    .download-btn {
-      background-color: #2196F3 !important;
-    }
-    
-    .download-btn:hover {
-      background-color: #0b7dda !important;
-    }
-    
-    .audio-player {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(34, 34, 34, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 15px;
-      border-top: 1px solid rgba(76, 175, 80, 0.3);
-      z-index: 1000;
-      transform: translateY(100%);
-      transition: transform 0.3s ease;
-    }
-    
-    .audio-player.active {
-      transform: translateY(0);
-    }
-    
-    .now-playing {
-      color: #4CAF50;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-    
-    .audio-player audio {
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto;
-      display: block;
-    }
-    
-    .whatsapp-float {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      background: #25D366;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      z-index: 1001;
-      border: none;
-      text-decoration: none;
-    }
-    
-    .whatsapp-float:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
-    }
-    
-    .whatsapp-float svg {
-      width: 32px;
-      height: 32px;
-      fill: white;
-    }
-    
-    .whatsapp-tooltip {
-      position: absolute;
-      right: 70px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.8);
-      color: white;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 0.85em;
-      white-space: nowrap;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      pointer-events: none;
-    }
-    
-    .whatsapp-tooltip::after {
-      content: '';
-      position: absolute;
-      left: 100%;
-      top: 50%;
-      transform: translateY(-50%);
-      border: 6px solid transparent;
-      border-left-color: rgba(0, 0, 0, 0.8);
-    }
-    
-    .whatsapp-float:hover .whatsapp-tooltip {
-      opacity: 1;
-      visibility: visible;
-    }
-    
-    .footer-space {
-      height: 150px;
-    }
-    
-    /* الشريط المتحرك */
-    .news-ticker {
-      background: rgba(76, 175, 80, 0.1);
-      border: 1px solid rgba(76, 175, 80, 0.3);
-      border-radius: 25px;
-      padding: 10px 0;
-      margin: 20px auto;
-      max-width: 800px;
-      overflow: hidden;
-      position: relative;
-    }
-    
-    .news-ticker-content {
-      display: inline-block;
-      white-space: nowrap;
-      animation: ticker 15s linear infinite;
-      color: #4CAF50;
-      font-weight: 600;
-      padding: 0 100%;
-    }
-    
-    @keyframes ticker {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-    
-    /* التوقيع */
-    .signature {
-      text-align: center;
-      margin: 30px 0;
-      padding: 20px;
-      background: rgba(34, 34, 34, 0.5);
-      border-radius: 15px;
-      border: 1px solid rgba(76, 175, 80, 0.2);
-    }
-    
-    .signature-text {
-      font-family: 'Amiri', serif;
-      font-size: 1.1em;
-      color: #ccc;
-      line-height: 1.8;
-    }
-    
-    .signature-highlight {
-      color: #4CAF50;
-      font-weight: 600;
-    }
-    
-    /* تقويم الصلاة المصغر */
-    .prayer-times-mini {
-      background: rgba(34, 34, 34, 0.8);
-      border-radius: 30px;
-      padding: 12px 20px;
-      margin: 15px auto;
-      max-width: 600px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(76, 175, 80, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-    
-    .prayer-times-title-mini {
-      font-family: 'Amiri', serif;
-      font-size: 1em;
-      color: #4CAF50;
-      margin-bottom: 0;
-      flex: 1 1 100%;
-      text-align: center;
-    }
-    
-    .prayer-times-container {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-      flex: 2;
-    }
-    
-    .prayer-times-grid-mini {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    
-    .prayer-time-item-mini {
-      background: rgba(76, 175, 80, 0.1);
-      border-radius: 20px;
-      padding: 8px 12px;
-      border: 1px solid rgba(76, 175, 80, 0.2);
-      text-align: center;
-      min-width: 80px;
-    }
-    
-    .prayer-name-mini {
-      font-size: 0.7em;
-      color: #ccc;
-      margin-bottom: 2px;
-    }
-    
-    .prayer-time-mini {
-      font-size: 0.8em;
-      font-weight: 600;
-      color: #4CAF50;
-    }
-    
-    .next-prayer-info-mini {
-      background: rgba(76, 175, 80, 0.2);
-      border-radius: 20px;
-      padding: 10px 15px;
-      border: 1px solid rgba(76, 175, 80, 0.4);
-      text-align: center;
-      min-width: 150px;
-    }
-    
-    .next-prayer-text-mini {
-      font-size: 0.8em;
-      color: #ccc;
-      margin-bottom: 2px;
-    }
-    
-    .next-prayer-countdown-mini {
-      font-size: 0.9em;
-      font-weight: 600;
-      color: #4CAF50;
-    }
-    
-    @media (max-width: 768px) {
-      .title {
-        font-size: 2.5em;
-      }
-      
-      .surah-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-      }
-      
-      .controls {
-        flex-direction: column;
-      }
-      
-      .control-btn {
-        margin-bottom: 5px;
-      }
-      
-      .whatsapp-float {
-        width: 50px;
-        height: 50px;
-        bottom: 15px;
-        right: 15px;
-      }
-      
-      .whatsapp-float svg {
-        width: 26px;
-        height: 26px;
-      }
-      
-      .whatsapp-tooltip {
-        right: 60px;
-        font-size: 0.8em;
-      }
-      
-      .news-ticker-content {
-        animation-duration: 12s;
-      }
-      
-      .prayer-times-mini {
-        flex-direction: column;
-        gap: 10px;
-        padding: 15px;
-      }
-      
-      .prayer-times-container {
-        justify-content: center;
-      }
-      
-      .prayer-times-grid-mini {
-        justify-content: center;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>الأحاديث النبوية - راديو قرآن</title>
+<meta name="description" content="الأحاديث النبوية الشريفة - صحيح البخاري، صحيح مسلم، سنن أبي داود، سنن الترمذي، سنن النسائي، سنن ابن ماجه">
+<meta name="theme-color" content="#4CAF50">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQWhhZGl0aCIsInNob3J0X25hbWUiOiJBaGFkaXRoIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwidGhlbWVfY29sb3IiOiIjNENBRTUwIn0=">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --primary-color: #4CAF50;
+  --primary-dark: #2E7D32;
+  --secondary-color: #FF9800;
+  --info-color: #2196F3;
+  --gold: #FFD700;
+  --dark-bg: #111;
+  --card-bg: #222;
+  --text-color: #fff;
+  --border-radius: 15px;
+  --transition: all 0.2s ease-in-out;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --hadith-font-size: 1.4em;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  margin: 0;
+  font-family: 'Cairo', 'Arial', sans-serif;
+  background: linear-gradient(135deg, #111 0%, #222 50%, #333 100%);
+  color: var(--text-color);
+  text-align: center;
+  padding: 100px 10px 30px;
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.light-mode {
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 50%, #d6d6d6 100%);
+  color: #333;
+}
+
+/* Header */
+h1 {
+  font-family: 'Amiri', serif;
+  font-size: clamp(1.5em, 3vw, 2.2em);
+  margin-bottom: 15px;
+  background: linear-gradient(45deg, var(--primary-color), #81C784);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+h1 i { font-size: 1.2em; color: var(--gold); -webkit-text-fill-color: var(--gold); }
+
+/* Top Navigation */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(17, 17, 17, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  border-bottom: 2px solid var(--primary-color);
+}
+body.light-mode .top-nav { background: rgba(255,255,255,0.95); border-bottom-color: var(--primary-color); }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-link {
+  background: var(--primary-color);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-family: 'Cairo';
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+  font-size: 0.9em;
+}
+
+.back-link:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+/* Control Buttons */
+.control-btn {
+  background: rgba(255,255,255,0.1);
+  border: 2px solid #555;
+  color: #ccc;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 1em;
+}
+body.light-mode .control-btn { background: rgba(0,0,0,0.05); border-color: #ccc; color: #555; }
+.control-btn:hover { border-color: var(--primary-color); color: var(--primary-color); transform: scale(1.1); }
+.control-btn.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+
+/* Search */
+.search-container {
+  max-width: 600px;
+  margin: 20px auto;
+  position: relative;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 15px 50px 15px 20px;
+  border-radius: 25px;
+  border: 2px solid var(--primary-color);
+  background: var(--card-bg);
+  color: white;
+  font-family: 'Cairo';
+  font-size: 1em;
+  transition: var(--transition);
+}
+body.light-mode #searchInput { background: #fff; color: #333; }
+#searchInput:focus { outline: none; border-color: #81C784; box-shadow: 0 0 15px rgba(76, 175, 80, 0.3); }
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-color);
+  font-size: 1.2em;
+}
+
+/* Book selector */
+.book-selector {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px auto;
+  max-width: 900px;
+  padding: 0 10px;
+}
+
+.book-btn {
+  background: var(--card-bg);
+  border: 2px solid #444;
+  color: #ccc;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Cairo';
+  font-weight: bold;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+body.light-mode .book-btn { background: #fff; color: #555; border-color: #ddd; }
+.book-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
+.book-btn.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+.book-btn .count { font-size: 0.75em; opacity: 0.7; }
+
+/* Hadith container */
+.hadith-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 10px;
+}
+
+.hadith-card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  transition: var(--transition);
+  text-align: right;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+body.light-mode .hadith-card { background: #fff; border-color: #ddd; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hadith-card:hover { border-color: var(--primary-color); box-shadow: 0 5px 20px rgba(76, 175, 80, 0.2); }
+
+.hadith-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+body.light-mode .hadith-header { border-bottom-color: #eee; }
+
+.hadith-number {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-family: 'Amiri';
+  flex-shrink: 0;
+}
+
+.hadith-source {
+  color: var(--gold);
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.hadith-text {
+  font-family: 'Amiri', serif;
+  font-size: var(--hadith-font-size);
+  line-height: 2;
+  color: #eee;
+  margin-bottom: 15px;
+  transition: font-size 0.3s ease;
+}
+body.light-mode .hadith-text { color: #333; }
+
+.hadith-narrator {
+  color: var(--info-color);
+  font-size: 0.9em;
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(33, 150, 243, 0.1);
+  border-radius: 10px;
+  border-right: 3px solid var(--info-color);
+}
+body.light-mode .hadith-narrator { background: #e3f2fd; }
+
+.hadith-grade {
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 0.85em;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.grade-sahih { background: rgba(76, 175, 80, 0.2); color: #81C784; border: 1px solid #81C784; }
+.grade-hasan { background: rgba(255, 152, 0, 0.2); color: #FFB74D; border: 1px solid #FFB74D; }
+.grade-daif { background: rgba(244, 67, 54, 0.2); color: #EF5350; border: 1px solid #EF5350; }
+
+/* Load more */
+.load-more-container {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.load-more-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 25px;
+  font-family: 'Cairo';
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.load-more-btn:hover { background: var(--primary-dark); transform: translateY(-2px); }
+.load-more-btn:disabled { background: #666; cursor: not-allowed; transform: none; }
+
+/* Loading */
+.loading-spinner {
+  text-align: center;
+  padding: 40px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(76, 175, 80, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Stats */
+.stats-bar {
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: var(--border-radius);
+  padding: 15px;
+  margin: 20px auto;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--primary-color);
+  font-family: 'Amiri';
+}
+
+.stat-label {
+  font-size: 0.8em;
+  color: #888;
+}
+
+/* Font Size Indicator */
+.font-size-indicator {
+  background: rgba(76, 175, 80, 0.2);
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 0.75em;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(0,0,0,0.9);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 10px;
+  z-index: 10000;
+  font-family: 'Cairo';
+  font-weight: bold;
+  border-left: 4px solid var(--primary-color);
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.3s;
+}
+body.light-mode .toast { background: rgba(0,0,0,0.85); }
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* Footer */
+footer {
+  margin-top: 40px;
+  padding: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  color: #888;
+  font-size: 0.9em;
+}
+body.light-mode footer { border-top-color: #ddd; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  body { padding: 100px 10px 30px; }
+  
+  .top-nav { padding: 10px; flex-wrap: wrap; gap: 10px; }
+  
+  .nav-right { order: 1; }
+  .nav-left { order: 2; width: 100%; justify-content: center; }
+  
+  .back-link { padding: 8px 15px; font-size: 0.85em; }
+  .control-btn { width: 38px; height: 38px; font-size: 0.9em; }
+  
+  .book-btn { padding: 8px 15px; font-size: 0.9em; }
+  .hadith-text { line-height: 1.8; }
+  .stats-bar { gap: 15px; }
+}
+
+@media (max-width: 480px) {
+  .book-selector { flex-direction: column; align-items: center; }
+  .book-btn { width: 100%; max-width: 300px; justify-content: center; }
+  
+  .hadith-header { flex-direction: column-reverse; gap: 10px; text-align: center; }
+  .hadith-number { margin: 0 auto; }
+}
+</style>
 </head>
 <body>
-  <div class="header">
-    <h1 class="title">تفسير الشعراوي</h1>
-    <div class="hijri-date" id="hijriDate">جاري تحميل التاريخ الهجري...</div>
-    <a href="../index.html" class="back-link">← رجوع للصفحة الرئيسية</a>
-  </div>
-  
-  <!-- تقويم الصلاة المصغر -->
-  <div class="prayer-times-mini">
-    <div class="prayer-times-title-mini" id="prayerTimesTitleMini">مواقيت الصلاة</div>
-    <div class="prayer-times-container">
-      <div class="prayer-times-grid-mini" id="prayerTimesGridMini">
-        <div class="prayer-time-item-mini">
-          <div class="prayer-name-mini">الفجر</div>
-          <div class="prayer-time-mini" id="fajrTimeMini">--:--</div>
-        </div>
-        <div class="prayer-time-item-mini">
-          <div class="prayer-name-mini">الظهر</div>
-          <div class="prayer-time-mini" id="dhuhrTimeMini">--:--</div>
-        </div>
-        <div class="prayer-time-item-mini">
-          <div class="prayer-name-mini">العصر</div>
-          <div class="prayer-time-mini" id="asrTimeMini">--:--</div>
-        </div>
-        <div class="prayer-time-item-mini">
-          <div class="prayer-name-mini">المغرب</div>
-          <div class="prayer-time-mini" id="maghribTimeMini">--:--</div>
-        </div>
-        <div class="prayer-time-item-mini">
-          <div class="prayer-name-mini">العشاء</div>
-          <div class="prayer-time-mini" id="ishaTimeMini">--:--</div>
-        </div>
-      </div>
-      <div class="next-prayer-info-mini">
-        <div class="next-prayer-text-mini" id="nextPrayerTextMini">الصلاة القادمة:</div>
-        <div class="next-prayer-countdown-mini" id="nextPrayerCountdownMini">--:--:--</div>
-      </div>
-    </div>
-  </div>
-  
-  <img src="https://archive.org/download/20250929_20250929_2020/%D8%A7%D9%84%D8%B4%D8%B9%D8%B1%D8%A7%D9%88%D9%89.jpg" 
-       alt="الشيخ الشعراوي" 
-       class="sharawy-image">
-  
-  <div class="surah-grid" id="surahGrid">
-    <!-- سيتم ملؤها ديناميكيًا -->
-  </div>
-  
-  <!-- الشريط المتحرك -->
-  <div class="news-ticker">
-    <div class="news-ticker-content" id="newsTicker">
-      راديو قرآن صفحة اللهم لك الحمد - تفسير الشعراوى - تم اضافة سور ( الفاتحة - البقرة - آل عمران - النساء - المائدة ) وجارى أضافة باقى السور ان شاء الله - لا تنسونا بصالح الدعاء - هذا العمل صدقى جارية على جميع موتى المسلمين
-    </div>
-  </div>
-  
-  <!-- التوقيع -->
-  <div class="signature">
-    <div class="signature-text">
-      راديو قرآن - صفحة اللهم لك الحمد - <span class="signature-highlight">تفسير الشعراوي</span>
-    </div>
-  </div>
-  
-  <div class="footer-space"></div>
-  
-  <div class="audio-player" id="audioPlayer">
-    <div class="now-playing" id="nowPlaying">اختر تفسيرًا للاستماع</div>
-    <audio controls id="player"></audio>
-  </div>
 
-  <button class="whatsapp-float" onclick="reportBrokenLink(); return false;" id="whatsappBtn">
-    <div class="whatsapp-tooltip">للإبلاغ عن رابط لا يعمل</div>
-    <svg viewBox="0 0 24 24">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.488"/>
-    </svg>
+<!-- شريط التنقل العلوي -->
+<div class="top-nav">
+  <div class="nav-right">
+    <a href="https://waleedd189.github.io/radio-quran/" class="back-link">
+      <i class="fas fa-home"></i> الرئيسية
+    </a>
+  </div>
+  
+  <div class="nav-left">
+    <!-- تكبير الخط -->
+    <button class="control-btn" onclick="increaseFontSize()" title="تكبير الخط">
+      <i class="fas fa-plus"></i>
+    </button>
+    
+    <!-- مؤشر حجم الخط -->
+    <span class="font-size-indicator" id="fontSizeIndicator">100%</span>
+    
+    <!-- تصغير الخط -->
+    <button class="control-btn" onclick="decreaseFontSize()" title="تصغير الخط">
+      <i class="fas fa-minus"></i>
+    </button>
+    
+    <!-- تغيير الثيم -->
+    <button class="control-btn" onclick="toggleNightMode()" id="themeBtn" title="تغيير الثيم">
+      <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+    
+    <!-- مشاركة -->
+    <button class="control-btn" onclick="sharePage()" title="مشاركة">
+      <i class="fas fa-share-alt"></i>
+    </button>
+  </div>
+</div>
+
+<!-- العنوان -->
+<h1><i class="fas fa-book-quran"></i> الأحاديث النبوية الشريفة</h1>
+
+<!-- إحصائيات -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-value" id="totalHadith">0</div>
+    <div class="stat-label">حديث</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value" id="currentBook">الكل</div>
+    <div class="stat-label">الكتاب الحالي</div>
+  </div>
+</div>
+
+<!-- البحث -->
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="ابحث في الأحاديث..." onkeyup="searchHadith(this.value)">
+  <i class="fas fa-search search-icon"></i>
+</div>
+
+<!-- اختيار الكتاب -->
+<div class="book-selector" id="bookSelector">
+  <button class="book-btn active" onclick="loadBook('all')">
+    <i class="fas fa-books"></i> الكل
   </button>
+  <button class="book-btn" onclick="loadBook('bukhari')">
+    <i class="fas fa-book"></i> صحيح البخاري
+    <span class="count">7,564</span>
+  </button>
+  <button class="book-btn" onclick="loadBook('muslim')">
+    <i class="fas fa-book"></i> صحيح مسلم
+    <span class="count">7,390</span>
+  </button>
+  <button class="book-btn" onclick="loadBook('tirmidhi')">
+    <i class="fas fa-book"></i> سنن الترمذي
+    <span class="count">3,945</span>
+  </button>
+  <button class="book-btn" onclick="loadBook('abudawud')">
+    <i class="fas fa-book"></i> سنن أبي داود
+    <span class="count">4,590</span>
+  </button>
+  <button class="book-btn" onclick="loadBook('nasai')">
+    <i class="fas fa-book"></i> سنن النسائي
+    <span class="count">5,758</span>
+  </button>
+  <button class="book-btn" onclick="loadBook('ibnmajah')">
+    <i class="fas fa-book"></i> سنن ابن ماجه
+    <span class="count">4,341</span>
+  </button>
+  <button class="book-btn" onclick="loadBook('malik')">
+    <i class="fas fa-book"></i> موطأ مالك
+    <span class="count">1,720</span>
+  </button>
+  <button class="book-btn" onclick="loadBook('nawawi')">
+    <i class="fas fa-book"></i> الأربعون النووية
+    <span class="count">42</span>
+  </button>
+</div>
 
-  <script>
-    // بيانات السور والتفسير مع جميع الروابط
-    const surahs = [
-      {
-        id: 'intro',
-        name: 'مقدمات',
-        icon: 'مقدمات',
-        tafsir: [
-          { name: 'مقدمة 1', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro1.mp3' },
-          { name: 'مقدمة 2', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro2.mp3' },
-          { name: 'مقدمة 3', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro3.mp3' },
-          { name: 'مقدمة 4', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-Introm-Up-By-mUSLEm/000_Intro4.mp3' }
-        ]
-      },
-      {
-        id: 'alfatiha',
-        name: 'الفاتحة',
-        icon: 'الفاتحة',
-        tafsir: [
-          { name: 'سورة الفاتحة 001', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_001.mp3' },
-          { name: 'سورة الفاتحة 002', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_002.mp3' },
-          { name: 'سورة الفاتحة 003', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_003.mp3' },
-          { name: 'سورة الفاتحة 004', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/001_Al-Fatihah_004.mp3' }
-        ]
-      },
-      {
-        id: 'albaqara',
-        name: 'البقرة',
-        icon: 'البقرة',
-        tafsir: [
-          { name: 'سورة البقرة (001-001)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah001_001.mp3' },
-          { name: 'سورة البقرة (001-002)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah001_002.mp3' },
-          { name: 'سورة البقرة (003-005)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah003_005.mp3' },
-          { name: 'سورة البقرة (006-016)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah006_016.mp3' },
-          { name: 'سورة البقرة (017-019)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-1a2-Up-By-mUSLEm/002_Al-Baqarah017_019.mp3' }
-        ]
-      },
-      {
-        id: 'alimran',
-        name: 'آل عمران',
-        icon: 'عمران',
-        tafsir: [
-          { name: 'سورة آل عمران (001-007)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran001_007.mp3' },
-          { name: 'سورة آل عمران (007-013)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran007_013.mp3' },
-          { name: 'سورة آل عمران (013-014)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran013_014.mp3' },
-          { name: 'سورة آل عمران (014-016)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran014_016.mp3' },
-          { name: 'سورة آل عمران (016-018)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/003_Al-Imran016_018.mp3' }
-        ]
-      },
-      {
-        id: 'annisa',
-        name: 'النساء',
-        icon: 'النساء',
-        tafsir: [
-          { name: 'سورة النساء (001-003)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/004_An-Nisa001_003.mp3' },
-          { name: 'سورة النساء (003-007)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/004_An-Nisa003_007.mp3' },
-          { name: 'سورة النساء (007-012)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/004_An-Nisa007_012.mp3' },
-          { name: 'سورة النساء (012-014)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/004_An-Nisa012_014.mp3' },
-          { name: 'سورة النساء (014-016)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/004_An-Nisa014_016.mp3' }
-        ]
-      },
-      {
-        id: 'almaidah',
-        name: 'المائدة',
-        icon: 'المائدة',
-        tafsir: [
-          { name: 'سورة المائدة (001-001)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/005_Al-Maidah001_001.mp3' },
-          { name: 'سورة المائدة (001-002)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/005_Al-Maidah001_002.mp3' },
-          { name: 'سورة المائدة (002-003)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/005_Al-Maidah002_003.mp3' },
-          { name: 'سورة المائدة (003-004)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/005_Al-Maidah003_004.mp3' },
-          { name: 'سورة المائدة (004-005)', url: 'https://archive.org/download/Khwater.El-Sharawy.Fi.Tafsir.EL-Qouran-3a5-Up-By-mUSLEm/005_Al-Maidah004_005.mp3' }
-        ]
-      }
-    ];
+<!-- container الأحاديث -->
+<div class="hadith-container" id="hadithContainer">
+  <div class="loading-spinner">
+    <div class="spinner"></div>
+    <div>جاري تحميل الأحاديث...</div>
+  </div>
+</div>
 
-    let currentAudio = null;
-    let currentPlayer = null;
-    let prayerTimes = {};
-    let nextPrayerInterval = null;
+<!-- زر تحميل المزيد -->
+<div class="load-more-container">
+  <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()" style="display:none;">
+    <i class="fas fa-arrow-down"></i> تحميل المزيد
+  </button>
+</div>
 
-    // حساب التاريخ الهجري
-    function updateHijriDate() {
-      const today = new Date();
-      const hijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      }).format(today);
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<footer>
+  <div>راديو قرآن - الأحاديث النبوية الشريفة</div>
+  <div style="margin-top:10px; color:#666;">جميع الأحاديث من مصادر موثوقة</div>
+</footer>
+
+<script>
+// متغيرات عامة
+let currentBook = 'all';
+let currentPage = 1;
+let hadithPerPage = 20;
+let allHadiths = [];
+let filteredHadiths = [];
+let isLoading = false;
+let currentFontSize = 100;
+let isNightMode = true;
+
+// أسماء الكتب
+const bookNames = {
+  'bukhari': 'صحيح البخاري',
+  'muslim': 'صحيح مسلم',
+  'tirmidhi': 'سنن الترمذي',
+  'abudawud': 'سنن أبي داود',
+  'nasai': 'سنن النسائي',
+  'ibnmajah': 'سنن ابن ماجه',
+  'malik': 'موطأ مالك',
+  'nawawi': 'الأربعون النووية',
+  'qudsi': 'الأحاديث القدسية',
+  'ahmad': 'مسند أحمد'
+};
+
+// روابط API
+const apiUrls = {
+  'bukhari': 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-bukhari.min.json',
+  'muslim': 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-muslim.min.json',
+  'tirmidhi': 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-tirmidhi.min.json',
+  'abudawud': 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-abudawud.min.json',
+  'nasai': 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-nasai.min.json',
+  'ibnmajah': 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-ibnmajah.min.json',
+  'malik': 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-malik.min.json',
+  'nawawi': 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-nawawi.min.json'
+};
+
+// === وظائف حجم الخط ===
+function increaseFontSize() {
+  if (currentFontSize < 150) {
+    currentFontSize += 10;
+    updateFontSize();
+    showToast('🔤 تم تكبير الخط: ' + currentFontSize + '%');
+  } else {
+    showToast('⚠️ الحد الأقصى لحجم الخط');
+  }
+}
+
+function decreaseFontSize() {
+  if (currentFontSize > 60) {
+    currentFontSize -= 10;
+    updateFontSize();
+    showToast('🔤 تم تصغير الخط: ' + currentFontSize + '%');
+  } else {
+    showToast('⚠️ الحد الأدنى لحجم الخط');
+  }
+}
+
+function updateFontSize() {
+  document.documentElement.style.setProperty('--hadith-font-size', (1.4 * currentFontSize / 100) + 'em');
+  document.getElementById('fontSizeIndicator').textContent = currentFontSize + '%';
+  localStorage.setItem('hadithFontSize', currentFontSize);
+}
+
+// === وظائف الثيم ===
+function toggleNightMode() {
+  isNightMode = !isNightMode;
+  document.body.classList.toggle('light-mode');
+  const icon = document.getElementById('themeIcon');
+  
+  if (isNightMode) {
+    icon.classList.remove('fa-sun');
+    icon.classList.add('fa-moon');
+    showToast('🌙 تم تفعيل الوضع الليلي');
+  } else {
+    icon.classList.remove('fa-moon');
+    icon.classList.add('fa-sun');
+    showToast('☀️ تم تفعيل الوضع النهاري');
+  }
+  
+  localStorage.setItem('hadithNightMode', isNightMode);
+}
+
+function loadThemeSettings() {
+  const savedFontSize = localStorage.getItem('hadithFontSize');
+  const savedNightMode = localStorage.getItem('hadithNightMode');
+  
+  if (savedFontSize) {
+    currentFontSize = parseInt(savedFontSize);
+    updateFontSize();
+  }
+  
+  if (savedNightMode === 'false') {
+    isNightMode = false;
+    document.body.classList.add('light-mode');
+    document.getElementById('themeIcon').classList.remove('fa-moon');
+    document.getElementById('themeIcon').classList.add('fa-sun');
+  }
+}
+
+// === تحميل كتاب ===
+async function loadBook(bookId) {
+  if (isLoading) return;
+  
+  // تحديث الأزرار
+  document.querySelectorAll('.book-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.closest('.book-btn').classList.add('active');
+  
+  currentBook = bookId;
+  currentPage = 1;
+  allHadiths = [];
+  filteredHadiths = [];
+  
+  document.getElementById('currentBook').textContent = bookId === 'all' ? 'الكل' : bookNames[bookId];
+  
+  const container = document.getElementById('hadithContainer');
+  container.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><div>جاري تحميل الأحاديث...</div></div>';
+  document.getElementById('loadMoreBtn').style.display = 'none';
+  
+  try {
+    if (bookId === 'all') {
+      await loadSampleFromAllBooks();
+    } else {
+      await loadSingleBook(bookId);
+    }
+  } catch (error) {
+    console.error('Error loading hadith:', error);
+    container.innerHTML = '<div style="text-align:center; padding:40px; color:#f44336;"><i class="fas fa-exclamation-triangle" style="font-size:2em; margin-bottom:15px;"></i><div>حدث خطأ في تحميل الأحاديث</div><button onclick="loadBook(\''+bookId+'\')" style="margin-top:15px; background:#4CAF50; color:white; border:none; padding:10px 20px; border-radius:8px;">إعادة المحاولة</button></div>';
+  }
+}
+
+// تحميل كتاب واحد
+async function loadSingleBook(bookId) {
+  isLoading = true;
+  const url = apiUrls[bookId];
+  
+  if (!url) {
+    showToast('⚠️ هذا الكتاب غير متاح حالياً');
+    isLoading = false;
+    return;
+  }
+  
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    if (data && data.hadiths) {
+      allHadiths = data.hadiths.map((h, index) => ({
+        id: h.hadithnumber || index + 1,
+        book: bookId,
+        bookName: bookNames[bookId],
+        text: h.text,
+        narrator: h.grades && h.grades[0] ? h.grades[0].name : '',
+        grade: h.grades && h.grades[0] ? h.grades[0].grade : ''
+      }));
       
-      document.getElementById('hijriDate').textContent = hijriDate;
-    }
-
-    // إنشاء كروت السور
-    function createSurahCards() {
-      const grid = document.getElementById('surahGrid');
-      grid.innerHTML = '';
-
-      surahs.forEach(surah => {
-        const card = document.createElement('div');
-        card.className = 'surah-card';
-        card.innerHTML = `
-          <div class="surah-icon">${surah.icon}</div>
-          <select class="tafsir-dropdown" onchange="playTafsir('${surah.id}', this.value, this)">
-            <option value="">اختر جزء التفسير</option>
-            ${surah.tafsir.map(part => `<option value="${part.url}">${part.name}</option>`).join('')}
-          </select>
-          <div class="controls">
-            <button class="control-btn play-btn" onclick="playSelectedTafsir('${surah.id}')">تشغيل</button>
-            <button class="control-btn stop-btn" onclick="stopAudio()">إيقاف</button>
-            <button class="control-btn download-btn" onclick="downloadTafsir('${surah.id}')">تحميل</button>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    // تشغيل التفسير
-    function playTafsir(surahId, url, selectElement) {
-      if (!url) return;
-
-      const surah = surahs.find(s => s.id === surahId);
-      const selectedOption = selectElement.options[selectElement.selectedIndex];
-      const partName = selectedOption.textContent;
-
-      const player = document.getElementById('player');
-      const nowPlaying = document.getElementById('nowPlaying');
-      const audioPlayer = document.getElementById('audioPlayer');
-
-      if (currentAudio) {
-        currentAudio.pause();
-      }
-
-      player.src = url;
-      nowPlaying.textContent = `سورة ${surah.name} - ${partName}`;
-      audioPlayer.classList.add('active');
-
-      player.play().catch(error => {
-        console.error('فشل التشغيل:', error);
-        nowPlaying.textContent = 'فشل التشغيل';
-      });
-
-      currentAudio = player;
-      currentPlayer = audioPlayer;
-    }
-
-    // تشغيل التفسير المحدد
-    function playSelectedTafsir(surahId) {
-      const card = document.querySelector(`[onchange*="${surahId}"]`).closest('.surah-card');
-      const select = card.querySelector('.tafsir-dropdown');
-      playTafsir(surahId, select.value, select);
-    }
-
-    // إيقاف الصوت
-    function stopAudio() {
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.src = '';
-        document.getElementById('nowPlaying').textContent = 'اختر تفسيرًا للاستماع';
-        document.getElementById('audioPlayer').classList.remove('active');
-        currentAudio = null;
-      }
-    }
-
-    // تحميل التفسير
-    function downloadTafsir(surahId) {
-      const card = document.querySelector(`[onchange*="${surahId}"]`).closest('.surah-card');
-      const select = card.querySelector('.tafsir-dropdown');
-      const url = select.value;
+      filteredHadiths = [...allHadiths];
+      document.getElementById('totalHadith').textContent = allHadiths.length.toLocaleString();
       
-      if (url) {
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = url.split('/').pop();
-        a.click();
-      }
+      renderHadiths();
     }
+  } catch (error) {
+    throw error;
+  } finally {
+    isLoading = false;
+  }
+}
 
-    // الحصول على الموقع الجغرافي
-    async function getUserLocation() {
-      return new Promise((resolve, reject) => {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            position => {
-              resolve({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude
-              });
-            },
-            error => {
-              console.error('Location error:', error);
-              resolve({
-                latitude: 30.0444,
-                longitude: 31.2357
-              });
-            }
-          );
-        } else {
-          resolve({
-            latitude: 30.0444,
-            longitude: 31.2357
-          });
-        }
-      });
-    }
-
-    // جلب مواقيت الصلاة
-    async function fetchPrayerTimes() {
+// تحميل عينة من كل الكتب
+async function loadSampleFromAllBooks() {
+  isLoading = true;
+  const container = document.getElementById('hadithContainer');
+  container.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><div>جاري تحميل عينة من الكتب...</div></div>';
+  
+  try {
+    const promises = Object.keys(apiUrls).slice(0, 5).map(async (bookId) => {
       try {
-        const location = await getUserLocation();
-        const timestamp = Math.floor(Date.now() / 1000);
-        
-        const response = await fetch(
-          `https://api.aladhan.com/v1/timings/${timestamp}?latitude=${location.latitude}&longitude=${location.longitude}&method=5&adjustment=0`
-        );
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch prayer times');
-        }
-        
+        const response = await fetch(apiUrls[bookId]);
         const data = await response.json();
-        prayerTimes = data.data;
-        
-        updatePrayerTimesDisplayMini();
-        startNextPrayerCountdownMini();
-        
-      } catch (error) {
-        console.error('Error fetching prayer times:', error);
-      }
-    }
-
-    // تحديث عرض مواقيت الصلاة المصغرة
-    function updatePrayerTimesDisplayMini() {
-      if (!prayerTimes || !prayerTimes.timings) return;
-      
-      document.getElementById('fajrTimeMini').textContent = formatTime(prayerTimes.timings.Fajr);
-      document.getElementById('dhuhrTimeMini').textContent = formatTime(prayerTimes.timings.Dhuhr);
-      document.getElementById('asrTimeMini').textContent = formatTime(prayerTimes.timings.Asr);
-      document.getElementById('maghribTimeMini').textContent = formatTime(prayerTimes.timings.Maghrib);
-      document.getElementById('ishaTimeMini').textContent = formatTime(prayerTimes.timings.Isha);
-    }
-
-    // تنسيق الوقت
-    function formatTime(timeString) {
-      const [hours, minutes] = timeString.split(':');
-      const date = new Date();
-      date.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-      
-      return date.toLocaleTimeString('ar-EG', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-      });
-    }
-
-    // بدء العد التنازلي للصلاة التالية (نسخة مصغرة)
-    function startNextPrayerCountdownMini() {
-      if (nextPrayerInterval) {
-        clearInterval(nextPrayerInterval);
-      }
-
-      nextPrayerInterval = setInterval(() => {
-        const nextPrayer = getNextPrayer();
-        if (!nextPrayer) return;
-
-        const now = new Date();
-        const currentTimeInMinutes = now.getHours() * 60 + now.getMinutes();
-        const currentSeconds = now.getSeconds();
-        
-        let timeDiffMinutes = nextPrayer.timeInMinutes - currentTimeInMinutes;
-        
-        if (timeDiffMinutes <= 0) {
-          timeDiffMinutes += 24 * 60;
+        if (data && data.hadiths) {
+          return data.hadiths.slice(0, 5).map((h, index) => ({
+            id: h.hadithnumber || index + 1,
+            book: bookId,
+            bookName: bookNames[bookId],
+            text: h.text,
+            narrator: h.grades && h.grades[0] ? h.grades[0].name : '',
+            grade: h.grades && h.grades[0] ? h.grades[0].grade : ''
+          }));
         }
-
-        const totalSecondsRemaining = (timeDiffMinutes * 60) - currentSeconds;
-        
-        const hours = Math.floor(totalSecondsRemaining / 3600);
-        const minutes = Math.floor((totalSecondsRemaining % 3600) / 60);
-        const seconds = totalSecondsRemaining % 60;
-
-        document.getElementById('nextPrayerTextMini').textContent = `الصلاة القادمة: ${nextPrayer.name}`;
-        document.getElementById('nextPrayerCountdownMini').textContent = 
-          `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-        if (totalSecondsRemaining <= 0) {
-          fetchPrayerTimes();
-        }
-      }, 1000);
-    }
-
-    // الحصول على الصلاة التالية
-    function getNextPrayer() {
-      if (!prayerTimes || !prayerTimes.timings) return null;
-
-      const now = new Date();
-      const currentTimeInMinutes = now.getHours() * 60 + now.getMinutes();
-      
-      const prayers = [
-        { name: 'الفجر', time: prayerTimes.timings.Fajr, elementId: 'fajrTimeMini' },
-        { name: 'الظهر', time: prayerTimes.timings.Dhuhr, elementId: 'dhuhrTimeMini' },
-        { name: 'العصر', time: prayerTimes.timings.Asr, elementId: 'asrTimeMini' },
-        { name: 'المغرب', time: prayerTimes.timings.Maghrib, elementId: 'maghribTimeMini' },
-        { name: 'العشاء', time: prayerTimes.timings.Isha, elementId: 'ishaTimeMini' }
-      ];
-      
-      for (let prayer of prayers) {
-        const [hours, minutes] = prayer.time.split(':');
-        const prayerTimeInMinutes = parseInt(hours) * 60 + parseInt(minutes);
-        
-        if (prayerTimeInMinutes > currentTimeInMinutes) {
-          return { ...prayer, timeInMinutes: prayerTimeInMinutes };
-        }
+        return [];
+      } catch {
+        return [];
       }
-      
-      const [fajrHours, fajrMinutes] = prayers[0].time.split(':');
-      return { 
-        ...prayers[0], 
-        timeInMinutes: parseInt(fajrHours) * 60 + parseInt(fajrMinutes) + 24 * 60 
-      };
-    }
-
-    // الإبلاغ عن رابط معطل
-    function reportBrokenLink() {
-      const phoneNumber = '+201092116092';
-      const message = 'يوجد رابط معطل في صفحة تفسير الشعراوي، يرجى التحقق';
-      const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
-      
-      window.open(whatsappUrl, '_blank');
-      return false;
-    }
-
-    // تهيئة الصفحة
-    document.addEventListener('DOMContentLoaded', () => {
-      updateHijriDate();
-      createSurahCards();
-      fetchPrayerTimes();
     });
-  </script>
+    
+    const results = await Promise.all(promises);
+    allHadiths = results.flat();
+    filteredHadiths = [...allHadiths];
+    
+    document.getElementById('totalHadith').textContent = allHadiths.length;
+    renderHadiths();
+    
+  } catch (error) {
+    console.error('Error:', error);
+    container.innerHTML = '<div style="text-align:center; padding:40px; color:#f44336;"><i class="fas fa-exclamation-triangle" style="font-size:2em; margin-bottom:15px;"></i><div>حدث خطأ في تحميل الأحاديث</div></div>';
+  } finally {
+    isLoading = false;
+  }
+}
+
+// عرض الأحاديث
+function renderHadiths() {
+  const container = document.getElementById('hadithContainer');
+  const start = 0;
+  const end = currentPage * hadithPerPage;
+  const hadithsToShow = filteredHadiths.slice(start, end);
+  
+  if (hadithsToShow.length === 0) {
+    container.innerHTML = '<div style="text-align:center; padding:40px; color:#888;"><i class="fas fa-search" style="font-size:2em; margin-bottom:15px;"></i><div>لا توجد نتائج</div></div>';
+    return;
+  }
+  
+  let html = '';
+  hadithsToShow.forEach((hadith, index) => {
+    const gradeClass = hadith.grade?.toLowerCase().includes('صحيح') ? 'grade-sahih' : 
+                       hadith.grade?.toLowerCase().includes('حسن') ? 'grade-hasan' : 
+                       hadith.grade?.toLowerCase().includes('ضعيف') ? 'grade-daif' : '';
+    
+    html += `
+      <div class="hadith-card" style="animation-delay: ${(index % 10) * 0.05}s">
+        <div class="hadith-header">
+          <div class="hadith-source">${hadith.bookName}</div>
+          <div class="hadith-number">${hadith.id}</div>
+        </div>
+        <div class="hadith-text">${hadith.text}</div>
+        ${hadith.narrator ? `<div class="hadith-narrator"><i class="fas fa-user-tie"></i> ${hadith.narrator}</div>` : ''}
+        ${hadith.grade ? `<span class="hadith-grade ${gradeClass}">${hadith.grade}</span>` : ''}
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+  
+  // إظهار/إخفاء زر تحميل المزيد
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  if (end < filteredHadiths.length) {
+    loadMoreBtn.style.display = 'inline-flex';
+  } else {
+    loadMoreBtn.style.display = 'none';
+  }
+}
+
+// تحميل المزيد
+function loadMore() {
+  currentPage++;
+  renderHadiths();
+  showToast('✅ تم تحميل المزيد من الأحاديث');
+}
+
+// البحث
+function searchHadith(query) {
+  query = query.trim().toLowerCase();
+  
+  if (!query) {
+    filteredHadiths = [...allHadiths];
+  } else {
+    filteredHadiths = allHadiths.filter(h => 
+      h.text.toLowerCase().includes(query) ||
+      h.bookName.toLowerCase().includes(query)
+    );
+  }
+  
+  currentPage = 1;
+  renderHadiths();
+}
+
+// مشاركة
+function sharePage() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'الأحاديث النبوية - راديو قرآن',
+      text: 'موقع الأحاديث النبوية الشريفة - صحيح البخاري ومسلم والسنن',
+      url: location.href
+    }).then(() => showToast('✅ تمت المشاركة')).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(location.href)
+      .then(() => showToast('📋 تم نسخ الرابط'))
+      .catch(() => showToast('⚠️ تعذر النسخ'));
+  }
+}
+
+// Toast
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// تحميل عند فتح الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+  loadThemeSettings();
+  loadSampleFromAllBooks();
+});
+</script>
 </body>
 </html>
