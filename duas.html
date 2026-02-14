@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>الأدعية القرآنية والنبوية</title>
+<!-- Meta Tags للـ SEO -->
+<meta name="description" content="مجموعة من الأدعية القرآنية والنبوية وأدعية الأنبياء ودعاء ختم القرآن">
+<meta name="keywords" content="أدعية, دعاء, القرآن, النبي, الأنبياء, أذكار">
+<meta name="theme-color" content="#4CAF50">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* الأساسيات */
+:root {
+  --primary-color: #4CAF50;
+  --primary-dark: #2E7D32;
+  --secondary-color: #FF9800;
+  --secondary-dark: #EF6C00;
+  --danger-color: #f44336;
+  --info-color: #2196F3;
+  --purple-color: #9C27B0;
+  --purple-dark: #7B1FA2;
+  --dark-bg: #111;
+  --card-bg: #222;
+  --text-color: #fff;
+  --text-secondary: #aaa;
+  --border-radius: 15px;
+  --transition: all 0.2s ease-in-out;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --font-size-base: 1.5em;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Cairo', 'Arial', sans-serif;
+  background: linear-gradient(135deg, #111 0%, #222 50%, #333 100%);
+  color: var(--text-color);
+  text-align: center;
+  padding: 100px 10px 30px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  overflow-x: hidden;
+  min-height: 100vh;
+  transition: background 0.3s;
+}
+
+body.light-mode {
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 50%, #d6d6d6 100%);
+  color: #333;
+}
+
+body.light-mode .dua-card { background: #fff; border: 1px solid #ddd; }
+body.light-mode .dua-text { color: #222; background: #f9f9f9; }
+body.light-mode .tabs-container { background: rgba(255,255,255,0.98); border: 1px solid #ddd; }
+body.light-mode .tab-btn { background: #fff; color: #555; border-color: #ddd; }
+body.light-mode h1 { background: linear-gradient(45deg, #2E7D32, #4CAF50); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+body.light-mode .section-title { color: #2E7D32; }
+
+/* Header */
+h1 {
+  font-family: 'Amiri', serif;
+  font-size: clamp(1.8em, 3.5vw, 2.5em);
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  background: linear-gradient(45deg, var(--primary-color), #81C784);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  line-height: 1.4;
+}
+
+h1::before { content: "🤲"; font-size: 0.8em; -webkit-text-fill-color: initial; }
+h1::after { content: "🤲"; font-size: 0.8em; -webkit-text-fill-color: initial; }
+
+.subtitle {
+  font-size: clamp(0.8em, 2vw, 1em); 
+  margin: 10px auto 30px; 
+  color: #aaffaa;
+  text-shadow: 0 0 5px rgba(170, 255, 170, 0.7); 
+  animation: pulseGlow 2s infinite alternate;
+  padding: 6px 12px; 
+  border-radius: var(--border-radius); 
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3); 
+  display: inline-block;
+  max-width: 95%;
+}
+
+@keyframes pulseGlow {
+  from { box-shadow: 0 0 5px rgba(76, 175, 80, 0.3); }
+  to { box-shadow: 0 0 15px rgba(76, 175, 80, 0.5); }
+}
+
+/* الأزرار العائمة */
+.floating-buttons {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 95%;
+}
+
+.fab {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  font-family: 'Cairo';
+  font-weight: bold;
+}
+body.light-mode .fab { background: #fff; color: #333; border: 1px solid #ddd; }
+
+.fab:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+.fab:active { transform: scale(0.95); }
+
+.fab.home-btn { background: var(--primary-color); }
+.fab.home-btn:hover { background: var(--primary-dark); }
+
+.fab.font-btn { background: var(--secondary-color); }
+.fab.font-btn:hover { background: var(--secondary-dark); }
+
+/* Tabs Container */
+.tabs-container {
+  max-width: 900px;
+  margin: 0 auto 20px;
+  background: rgba(34, 34, 34, 0.98);
+  border-radius: var(--border-radius);
+  padding: 15px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.tabs-header {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.tab-btn {
+  flex: 1;
+  min-width: 150px;
+  padding: 12px 15px;
+  border: 2px solid #555;
+  background: var(--card-bg);
+  color: #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Cairo';
+  font-weight: bold;
+  font-size: 0.95em;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+body.light-mode .tab-btn { background: #fff; color: #555; border-color: #ddd; }
+
+.tab-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
+.tab-btn.active { 
+  background: var(--primary-color); 
+  color: white; 
+  border-color: var(--primary-color); 
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+}
+
+.tab-btn i { font-size: 1.1em; }
+
+/* Section Title */
+.section-title {
+  font-family: 'Amiri', serif;
+  font-size: 1.5em;
+  color: #FFD700;
+  margin: 20px 0 15px;
+  padding: 10px 20px;
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: 10px;
+  border-right: 4px solid #FFD700;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title i { color: #FFD700; }
+
+/* Duas Container */
+.duas-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.dua-card {
+  background: rgba(34, 34, 34, 0.8);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 2px dashed rgba(76, 175, 80, 0.3);
+  transition: var(--transition);
+  position: relative;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dua-card:nth-child(1) { animation-delay: 0.05s; }
+.dua-card:nth-child(2) { animation-delay: 0.1s; }
+.dua-card:nth-child(3) { animation-delay: 0.15s; }
+.dua-card:nth-child(4) { animation-delay: 0.2s; }
+.dua-card:nth-child(5) { animation-delay: 0.25s; }
+
+.dua-card:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+}
+
+.dua-card.copied {
+  border-color: var(--secondary-color);
+  background: rgba(255, 152, 0, 0.1);
+}
+
+.dua-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.dua-number {
+  min-width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Amiri';
+  font-weight: bold;
+  font-size: 1.1em;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.dua-source {
+  font-size: 0.85em;
+  color: var(--secondary-color);
+  font-weight: bold;
+}
+
+.dua-text {
+  font-family: 'Amiri', serif;
+  font-size: var(--font-size-base);
+  line-height: 1.9;
+  color: #eee;
+  text-align: justify;
+  padding: 15px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+  border-right: 3px solid var(--primary-color);
+  margin-bottom: 15px;
+  transition: font-size 0.3s ease;
+}
+
+.dua-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  background: var(--info-color);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Cairo';
+  font-weight: bold;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: var(--transition);
+}
+
+.action-btn:hover {
+  transform: scale(1.05);
+}
+
+.action-btn.copy-btn { background: var(--info-color); }
+.action-btn.copy-btn:hover { background: #1976D2; }
+
+.action-btn.share-btn { background: var(--secondary-color); }
+.action-btn.share-btn:hover { background: var(--secondary-dark); }
+
+.action-btn.copied { background: var(--primary-color); }
+
+/* Loading State */
+.loading-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #888;
+}
+
+.loading-state i {
+  font-size: 3em;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(0,0,0,0.95);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 10px;
+  z-index: 10000;
+  font-family: 'Cairo';
+  font-weight: bold;
+  border-left: 4px solid var(--primary-color);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* Stats Badge */
+.stats-badge {
+  background: var(--secondary-color);
+  color: white;
+  padding: 3px 10px;
+  border-radius: 15px;
+  font-size: 0.8em;
+  margin-right: 5px;
+}
+
+/* Font Size Controls */
+.font-controls {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.font-size-display {
+  background: rgba(0,0,0,0.3);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.9em;
+  min-width: 45px;
+  text-align: center;
+}
+
+/* Footer */
+footer {
+  margin-top: 40px;
+  font-size: 0.9em;
+  color: #aaa;
+  padding: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body { padding: 120px 5px 20px; }
+  
+  h1 {
+    font-size: 1.4em;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  h1::before, h1::after { display: none; }
+  
+  .floating-buttons { top: 10px; width: 98%; gap: 5px; }
+  .fab { padding: 6px 10px; font-size: 0.75em; }
+  .fab span { display: none; }
+  .fab i { font-size: 1.1em; }
+  
+  .tabs-header { flex-direction: column; }
+  .tab-btn { min-width: 100%; font-size: 0.9em; padding: 10px; }
+  
+  .dua-text { font-size: 1.2em !important; padding: 12px; }
+  .dua-card { padding: 15px; }
+  
+  .dua-footer { justify-content: center; }
+  
+  .font-size-display { display: none; }
+}
+
+@media (max-width: 480px) {
+  .dua-header { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .dua-number { width: 35px; height: 35px; font-size: 1em; }
+  .action-btn { padding: 6px 12px; font-size: 0.85em; }
+}
+</style>
+</head>
+<body>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<!-- الأزرار العائمة -->
+<div class="floating-buttons">
+  <button class="fab home-btn" onclick="goHome()" aria-label="الصفحة الرئيسية">
+    <i class="fas fa-home"></i>
+    <span>الرئيسية</span>
+  </button>
+  
+  <div class="font-controls">
+    <button class="fab font-btn" onclick="decreaseFontSize()" aria-label="تصغير الخط">
+      <i class="fas fa-minus"></i>
+    </button>
+    <span class="font-size-display" id="fontSizeDisplay">100%</span>
+    <button class="fab font-btn" onclick="increaseFontSize()" aria-label="تكبير الخط">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+  
+  <button class="fab" onclick="toggleNightMode()" aria-label="تغيير الوضع">
+    <i class="fas fa-adjust" id="themeIcon"></i>
+    <span id="modeText">نهاري</span>
+  </button>
+  
+  <button class="fab" onclick="sharePage()" aria-label="مشاركة الصفحة">
+    <i class="fas fa-share-alt"></i>
+    <span>مشاركة</span>
+  </button>
+</div>
+
+<!-- العنوان -->
+<h1>الأدعية القرآنية والنبوية</h1>
+<div class="subtitle">مجموعة مختارة من أجمع الأدعية وأكثرها بركة 📿</div>
+
+<!-- Tabs Container -->
+<div class="tabs-container">
+  <div class="tabs-header">
+    <button class="tab-btn active" onclick="showCategory('prophetic_duas')" data-category="prophetic_duas">
+      <i class="fas fa-moon"></i>
+      <span>الأدعية النبوية</span>
+      <span class="stats-badge" id="prophetic-count">0</span>
+    </button>
+    <button class="tab-btn" onclick="showCategory('quran_duas')" data-category="quran_duas">
+      <i class="fas fa-quran"></i>
+      <span>أدعية القرآن</span>
+      <span class="stats-badge" id="quran-count">0</span>
+    </button>
+    <button class="tab-btn" onclick="showCategory('prophets_duas')" data-category="prophets_duas">
+      <i class="fas fa-user-tie"></i>
+      <span>أدعية الأنبياء</span>
+      <span class="stats-badge" id="prophets-count">0</span>
+    </button>
+    <button class="tab-btn" onclick="showCategory('quran_completion_duas')" data-category="quran_completion_duas">
+      <i class="fas fa-book-open"></i>
+      <span>دعاء الختم</span>
+      <span class="stats-badge" id="completion-count">0</span>
+    </button>
+  </div>
+</div>
+
+<!-- Duas Container -->
+<div class="duas-container" id="duasContainer">
+  <div class="loading-state">
+    <i class="fas fa-spinner"></i>
+    <div>جاري تحميل الأدعية...</div>
+  </div>
+</div>
+
+<footer>
+  <div>🤲 اللهم تقبل منا الدعاء 🤲</div>
+  <div style="margin-top:10px; font-size:0.85em; color:#888;">جميع الأدعية من القرآن الكريم والسنة النبوية الشريفة</div>
+</footer>
+
+<script>
+// === المتغيرات العامة ===
+let duasData = null;
+let currentCategory = 'prophetic_duas';
+let isNightMode = true;
+let currentFontSize = 100; // نسبة حجم الخط
+const minFontSize = 70;
+const maxFontSize = 150;
+const fontSizeStep = 10;
+
+// === الترجمات ===
+const categoryTitles = {
+  prophetic_duas: 'الأدعية النبوية الشريفة',
+  quran_duas: 'أدعية من القرآن الكريم',
+  prophets_duas: 'أدعية الأنبياء عليهم السلام',
+  quran_completion_duas: 'دعاء ختم القرآن الكريم'
+};
+
+const categoryIcons = {
+  prophetic_duas: 'fa-moon',
+  quran_duas: 'fa-quran',
+  prophets_duas: 'fa-user-tie',
+  quran_completion_duas: 'fa-book-open'
+};
+
+// === وظائف المساعدة ===
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => { toast.classList.remove('show'); }, 3000);
+}
+
+// === وظائف حجم الخط ===
+function updateFontSizeDisplay() {
+  document.getElementById('fontSizeDisplay').textContent = currentFontSize + '%';
+}
+
+function applyFontSize() {
+  const baseSize = 1.5; // الحجم الأساسي بـ em
+  const newSize = baseSize * (currentFontSize / 100);
+  document.documentElement.style.setProperty('--font-size-base', newSize + 'em');
+  
+  // تطبيق على جميع عناصر الدعاء مباشرة
+  document.querySelectorAll('.dua-text').forEach(el => {
+    el.style.fontSize = newSize + 'em';
+  });
+  
+  updateFontSizeDisplay();
+  saveFontSize();
+}
+
+function increaseFontSize() {
+  if (currentFontSize < maxFontSize) {
+    currentFontSize += fontSizeStep;
+    applyFontSize();
+    showToast('🔤 تم تكبير الخط: ' + currentFontSize + '%');
+  } else {
+    showToast('⚠️ هذا هو أكبر حجم للخط');
+  }
+}
+
+function decreaseFontSize() {
+  if (currentFontSize > minFontSize) {
+    currentFontSize -= fontSizeStep;
+    applyFontSize();
+    showToast('🔤 تم تصغير الخط: ' + currentFontSize + '%');
+  } else {
+    showToast('⚠️ هذا هو أصغر حجم للخط');
+  }
+}
+
+function saveFontSize() {
+  localStorage.setItem('duasFontSize', currentFontSize);
+}
+
+function loadFontSize() {
+  const saved = localStorage.getItem('duasFontSize');
+  if (saved) {
+    currentFontSize = parseInt(saved);
+    applyFontSize();
+  }
+}
+
+// === الرجوع للصفحة الرئيسية ===
+function goHome() {
+  window.location.href = 'https://waleedd189.github.io/radio-quran/';
+}
+
+// === جلب الأدعية من API ===
+async function fetchDuas() {
+  try {
+    const response = await fetch('https://quran.yousefheiba.com/api/duas');
+    const data = await response.json();
+    duasData = data;
+    updateCounts();
+    showCategory('prophetic_duas');
+    loadFontSize();
+    showToast('✅ تم تحميل الأدعية بنجاح');
+  } catch (error) {
+    console.error('Error fetching duas:', error);
+    document.getElementById('duasContainer').innerHTML = `
+      <div class="loading-state">
+        <i class="fas fa-exclamation-triangle" style="color:#f44336;"></i>
+        <div>حدث خطأ في تحميل الأدعية</div>
+        <button onclick="fetchDuas()" style="margin-top:15px; background:var(--primary-color); color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-family:'Cairo';">
+          <i class="fas fa-redo"></i> إعادة المحاولة
+        </button>
+      </div>
+    `;
+    showToast('⚠️ تعذر تحميل الأدعية');
+  }
+}
+
+// === تحديث العدادات ===
+function updateCounts() {
+  if (!duasData) return;
+  document.getElementById('prophetic-count').textContent = duasData.prophetic_duas?.length || 0;
+  document.getElementById('quran-count').textContent = duasData.quran_duas?.length || 0;
+  document.getElementById('prophets-count').textContent = duasData.prophets_duas?.length || 0;
+  document.getElementById('completion-count').textContent = duasData.quran_completion_duas?.length || 0;
+}
+
+// === عرض فئة الأدعية ===
+function showCategory(category) {
+  if (!duasData || !duasData[category]) return;
+  
+  currentCategory = category;
+  
+  // تحديث التابات
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.dataset.category === category) {
+      btn.classList.add('active');
+    }
+  });
+  
+  const container = document.getElementById('duasContainer');
+  const duas = duasData[category];
+  
+  // حساب حجم الخط الحالي
+  const baseSize = 1.5 * (currentFontSize / 100);
+  
+  let html = `<div class="section-title"><i class="fas ${categoryIcons[category]}"></i> ${categoryTitles[category]}</div>`;
+  
+  duas.forEach((dua, index) => {
+    html += `
+    <div class="dua-card" data-index="${index}">
+      <div class="dua-header">
+        <div class="dua-number">${index + 1}</div>
+        ${dua.count ? `<div class="dua-source"><i class="fas fa-redo"></i> يُكرر ${dua.count} مرة</div>` : ''}
+      </div>
+      <div class="dua-text" style="font-size: ${baseSize}em;">${dua.text}</div>
+      <div class="dua-footer">
+        <button class="action-btn copy-btn" onclick="event.stopPropagation(); copyDua(${index})">
+          <i class="fas fa-copy"></i> نسخ
+        </button>
+        <button class="action-btn share-btn" onclick="event.stopPropagation(); shareDua(${index})">
+          <i class="fas fa-share-alt"></i> مشاركة
+        </button>
+      </div>
+    </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+  
+  // التمرير لأعلى الصفحة
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// === نسخ دعاء ===
+function copyDua(index) {
+  if (!duasData || !duasData[currentCategory]) return;
+  
+  const dua = duasData[currentCategory][index];
+  const textToCopy = dua.text;
+  
+  navigator.clipboard.writeText(textToCopy).then(() => {
+    showToast('📋 تم نسخ الدعاء بنجاح');
+  }).catch(err => {
+    // Fallback for older browsers
+    const tempInput = document.createElement('textarea');
+    tempInput.value = textToCopy;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    showToast('📋 تم نسخ الدعاء بنجاح');
+  });
+}
+
+// === مشاركة دعاء ===
+function shareDua(index) {
+  if (!duasData || !duasData[currentCategory]) return;
+  
+  const dua = duasData[currentCategory][index];
+  const categoryTitle = categoryTitles[currentCategory];
+  const shareText = `${dua.text}\n\n📚 ${categoryTitle}`;
+  
+  if (navigator.share) {
+    navigator.share({
+      title: categoryTitle,
+      text: shareText,
+      url: window.location.href
+    }).then(() => {
+      showToast('✅ تمت المشاركة بنجاح');
+    }).catch(err => {
+      // المستخدم ألغى المشاركة
+      console.log('مشاركة ملغاة');
+    });
+  } else {
+    // fallback: نسخ الرابط
+    navigator.clipboard.writeText(shareText).then(() => {
+      showToast('📋 تم نسخ الدعاء للمشاركة');
+    }).catch(err => {
+      const tempInput = document.createElement('textarea');
+      tempInput.value = shareText;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      showToast('📋 تم نسخ الدعاء للمشاركة');
+    });
+  }
+}
+
+// === الوضع الليلي ===
+function toggleNightMode() {
+  isNightMode = !isNightMode;
+  const body = document.body;
+  const icon = document.getElementById('themeIcon');
+  const modeText = document.getElementById('modeText');
+  
+  if (isNightMode) {
+    body.classList.remove('light-mode');
+    icon.classList.remove('fa-sun');
+    icon.classList.add('fa-moon');
+    modeText.textContent = 'نهاري';
+    showToast('🌙 تم تفعيل الوضع الليلي');
+  } else {
+    body.classList.add('light-mode');
+    icon.classList.remove('fa-moon');
+    icon.classList.add('fa-sun');
+    modeText.textContent = 'ليلي';
+    showToast('☀️ تم تفعيل الوضع النهاري');
+  }
+  
+  // حفظ التفضيل
+  localStorage.setItem('duasNightMode', isNightMode);
+}
+
+function loadNightMode() {
+  const saved = localStorage.getItem('duasNightMode');
+  if (saved !== null) {
+    isNightMode = saved === 'true';
+    if (!isNightMode) {
+      document.body.classList.add('light-mode');
+      document.getElementById('themeIcon').classList.remove('fa-moon');
+      document.getElementById('themeIcon').classList.add('fa-sun');
+      document.getElementById('modeText').textContent = 'ليلي';
+    }
+  }
+}
+
+// === مشاركة الصفحة ===
+function sharePage() {
+  const pageUrl = 'https://waleedd189.github.io/radio-quran/duas.html';
+  const pageTitle = 'الأدعية القرآنية والنبوية';
+  const pageText = 'مجموعة مختارة من أجمل الأدعية القرآنية والنبوية وأدعية الأنبياء ودعاء ختم القرآن';
+  
+  if (navigator.share) {
+    navigator.share({
+      title: pageTitle,
+      text: pageText,
+      url: pageUrl
+    }).then(() => {
+      showToast('✅ تمت المشاركة بنجاح');
+    }).catch(err => console.log('مشاركة ملغاة'));
+  } else {
+    navigator.clipboard.writeText(pageUrl).then(() => {
+      showToast('📋 تم نسخ رابط الصفحة');
+    });
+  }
+}
+
+// === تهيئة الصفحة ===
+document.addEventListener('DOMContentLoaded', () => {
+  loadNightMode();
+  fetchDuas();
+  updateFontSizeDisplay();
+  
+  // التعامل مع الضغط على Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      // أي إجراء إغلاق إذا لزم الأمر
+    }
+  });
+});
+</script>
+</body>
+</html>
