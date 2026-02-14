@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>مشغل تسجيلات الشيخ السيد سعيد</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Cairo', 'Arial', sans-serif;
+      background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px 15px;
+      overflow-x: hidden;
+    }
+    
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border-radius: 40px;
+      padding: 25px;
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* ===== رأس الصفحة ===== */
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+      position: relative;
+    }
+    
+    h1 {
+      font-family: 'Amiri', serif;
+      font-size: 2.4rem;
+      background: linear-gradient(135deg, #f5e7c8, #d4af37);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 5px;
+      letter-spacing: 1px;
+    }
+    
+    .subtitle {
+      color: #a0aec0;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .subtitle i {
+      color: #d4af37;
+    }
+    
+    .count-badge {
+      background: #2d3748;
+      padding: 5px 15px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      border: 1px solid #d4af37;
+      color: #f5e7c8;
+    }
+    
+    /* ===== أزرار التحكم ===== */
+    .controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    
+    .control-btn {
+      background: #2d3748;
+      border: 1px solid #4a5568;
+      color: white;
+      padding: 10px 22px;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    .control-btn i {
+      font-size: 1rem;
+    }
+    
+    .control-btn:hover {
+      background: #4a5568;
+      border-color: #d4af37;
+      transform: translateY(-2px);
+    }
+    
+    .control-btn.back {
+      background: #991b1b;
+      border-color: #b91c1c;
+    }
+    
+    .control-btn.back:hover {
+      background: #b91c1c;
+    }
+    
+    .control-btn.whatsapp {
+      background: #075e54;
+      border-color: #128c7e;
+    }
+    
+    .control-btn.whatsapp:hover {
+      background: #128c7e;
+    }
+    
+    /* ===== مشغل الصوت الرئيسي ===== */
+    .player-main {
+      background: #1e293b;
+      border-radius: 60px;
+      padding: 20px 25px;
+      margin-bottom: 30px;
+      border: 1px solid #d4af37;
+      box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.2);
+    }
+    
+    .now-playing {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+    
+    .playing-indicator {
+      width: 14px;
+      height: 14px;
+      background: #4ade80;
+      border-radius: 50%;
+      display: none;
+    }
+    
+    .playing-indicator.active {
+      display: block;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    .current-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #f5e7c8;
+      flex: 1;
+    }
+    
+    .loader {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #d4af37;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: none;
+      animation: rotation 1s linear infinite;
+    }
+    
+    .loader.active {
+      display: inline-block;
+    }
+    
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    audio {
+      width: 100%;
+      height: 50px;
+      border-radius: 30px;
+      outline: none;
+    }
+    
+    audio::-webkit-media-controls-panel {
+      background: #2d3748;
+    }
+    
+    /* ===== شريط البحث والتصفية ===== */
+    .search-section {
+      margin: 25px 0 20px;
+    }
+    
+    .search-box {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+    
+    .search-input {
+      flex: 2;
+      min-width: 250px;
+      background: #1e293b;
+      border: 1px solid #4a5568;
+      border-radius: 50px;
+      padding: 14px 22px;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+    }
+    
+    .category-filter {
+      flex: 1;
+      min-width: 180px;
+      background: #1e293b;
+      border: 1px solid #4a5568;
+      border-radius: 50px;
+      padding: 14px 22px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    
+    .category-filter option {
+      background: #1e293b;
+    }
+    
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      color: #a0aec0;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+    
+    /* ===== قائمة التسجيلات ===== */
+    .recordings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 15px;
+      max-height: 600px;
+      overflow-y: auto;
+      padding: 10px 5px;
+      border-radius: 20px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .recordings-grid::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .recordings-grid::-webkit-scrollbar-track {
+      background: #1e293b;
+      border-radius: 10px;
+    }
+    
+    .recordings-grid::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 10px;
+    }
+    
+    .recording-card {
+      background: #1e293b;
+      border-radius: 20px;
+      padding: 18px 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    .recording-card:hover {
+      transform: translateY(-4px);
+      border-color: #d4af37;
+      box-shadow: 0 10px 20px -5px rgba(212, 175, 55, 0.3);
+      background: #2d3748;
+    }
+    
+    .recording-card.active {
+      border-color: #d4af37;
+      background: #2d3748;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .card-id {
+      background: #d4af37;
+      color: #0f172a;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+    }
+    
+    .card-category {
+      background: #4a5568;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #f5e7c8;
+    }
+    
+    .card-name {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      line-height: 1.5;
+      color: #f5e7c8;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+    }
+    
+    .play-icon {
+      color: #d4af37;
+      font-size: 0.9rem;
+    }
+    
+    .recording-card.active .play-icon {
+      color: #4ade80;
+    }
+    
+    /* ===== التذييل ===== */
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #718096;
+      font-size: 0.9rem;
+    }
+    
+    .footer a {
+      color: #d4af37;
+      text-decoration: none;
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* ===== للهواتف ===== */
+    @media (max-width: 640px) {
+      h1 { font-size: 1.8rem; }
+      .container { padding: 15px; }
+      .player-main { padding: 15px; }
+      .current-title { font-size: 1rem; }
+      .recordings-grid { grid-template-columns: 1fr; }
+      .search-box { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- ===== رأس الصفحة ===== -->
+  <div class="header">
+    <h1>🎙️ تسجيلات الشيخ السيد سعيد</h1>
+    <div class="subtitle">
+      <i class="fas fa-quran"></i>
+      <span>باقة من التلاوات الخاشعة والنادرة</span>
+      <i class="fas fa-star"></i>
+    </div>
+    <div class="count-badge" id="totalCount">432 تسجيل</div>
+  </div>
+  
+  <!-- ===== أزرار التحكم ===== -->
+  <div class="controls">
+    <button class="control-btn back" onclick="goBack()">
+      <i class="fas fa-arrow-right"></i> رجوع للصفحة الرئيسية
+    </button>
+    <button class="control-btn whatsapp" onclick="reportBrokenLink()">
+      <i class="fab fa-whatsapp"></i> الإبلاغ عن رابط معطل
+    </button>
+  </div>
+  
+  <!-- ===== مشغل الصوت الرئيسي ===== -->
+  <div class="player-main">
+    <div class="now-playing">
+      <span class="playing-indicator" id="playingIndicator"></span>
+      <span class="loader" id="bufferingLoader"></span>
+      <span class="current-title" id="currentSura">اختر تسجيلاً للاستماع</span>
+    </div>
+    <audio id="audioPlayer" controls></audio>
+  </div>
+  
+  <!-- ===== شريط البحث والتصفية ===== -->
+  <div class="search-section">
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" placeholder="🔍 ابحث عن تسجيل... (اكتب اسم السورة أو المكان)" />
+      <select class="category-filter" id="categoryFilter">
+        <option value="all">📁 جميع التصنيفات</option>
+      </select>
+    </div>
+    <div class="stats">
+      <span id="visibleCount">432</span> <span>تسجيل ظاهر</span>
+      <span>🟡 اضغط على أي تسجيل لتشغيله</span>
+    </div>
+  </div>
+  
+  <!-- ===== قائمة التسجيلات ===== -->
+  <div class="recordings-grid" id="recordingsGrid"></div>
+  
+  <!-- ===== التذييل ===== -->
+  <div class="footer">
+    <p>🔹 جميع التسجيلات من أرشيف <a href="https://archive.org" target="_blank">Archive.org</a> 🔹</p>
+    <p>✨ رفع بواسطة: مُسلم التونسي ✨</p>
+  </div>
+  
+</div>
+
+<script>
+  // ==================== بيانات التسجيلات (432 تسجيل) ====================
+  const recordings = [
+    { id: '001', name: 'آخر آل عمران الشعيره', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/001-_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '002', name: 'آخر الأنبياء-إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/002--_up_by_muslem.mp3', category: 'الأنبياء' },
+    { id: '003', name: 'آخر الزمر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/003-_up_by_muslem.mp3', category: 'الزمر' },
+    { id: '004', name: 'آخر القصص و الحاقة و النازعات 1998', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/004-1998_up_by_muslem.mp3', category: 'القصص' },
+    { id: '005', name: 'آخر القصص-إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/005--_up_by_muslem.mp3', category: 'القصص' },
+    { id: '006', name: 'آخر يس إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/006-_up_by_muslem.mp3', category: 'يس' },
+    { id: '007', name: 'آخر يس عزاء من بحر البقر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/007-_up_by_muslem.mp3', category: 'يس' },
+    { id: '008', name: 'آخر يس والقصار قديمة من منية النصر 1982', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/008-1982_up_by_muslem.mp3', category: 'يس' },
+    { id: '009', name: 'آخر يوسف و الفتح', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/009-_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '010', name: 'آخر الأنبياء المعصرة بلقاس 26-12-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/010-26-12-2006_up_by_muslem.mp3', category: 'الأنبياء' },
+    { id: '011', name: 'آخر الأنبياء والنازعات - عزبة عوض بيه 27-5-2003', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/011-27-5-2003_up_by_muslem.mp3', category: 'الأنبياء' },
+    { id: '012', name: 'آخر البقرة كفر الصالحات', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/012-_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '013', name: 'آخر الحشر والفجر - عزبة 2003', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/013-62003_up_by_muslem.mp3', category: 'الحشر' },
+    { id: '014', name: 'آخر الفتح والقصار - المحمدية دقهلية', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/014-_up_by_muslem.mp3', category: 'الفتح' },
+    { id: '015', name: 'آخر القصص وقصار السور - ميت الكرما 11-1-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/015-11-1-2006_up_by_muslem.mp3', category: 'القصص' },
+    { id: '016', name: 'آخر الكهف ومريم - الجوابر 31-8-1998', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/016-31-8-1998_up_by_muslem.mp3', category: 'الكهف' },
+    { id: '017', name: 'آخر ق - ميت عزون 4-1-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/017-4-1-2006_up_by_muslem.mp3', category: 'ق' },
+    { id: '018', name: 'آل عمران 171-185', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/018-171-185_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '019', name: 'آل عمران 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/019-2_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '020', name: 'آل عمران 93-101', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/020-93-101_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '021', name: 'آل عمران الحج المؤمنون', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/021-_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '022', name: 'آل عمران العصر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/022-_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '023', name: 'آل عمران والنساء', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/023-_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '024', name: 'آل عمران - وسطه ثم أواخره', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/024--_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '025', name: 'آل عمران - إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/025--_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '026', name: 'أخر الحجر 1989', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/026-1989_up_by_muslem.mp3', category: 'الحجر' },
+    { id: '027', name: 'أخر الكهف و مريم', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/027-_up_by_muslem.mp3', category: 'الكهف' },
+    { id: '028', name: 'أخر النحل و الإسراء - جراح أجا 18-2-2005', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/028-18-2-2005_up_by_muslem.mp3', category: 'النحل' },
+    { id: '029', name: 'إبراهيم 23-34 - لبنان', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/029-23-34-_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '030', name: 'إبراهيم 31-41 إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/030-31-41_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '031', name: 'إبراهيم 35-41 والقدر - لبنان 2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/031-35-41-2006_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '032', name: 'إبراهيم - الزمرونية كفر شكر 18-12-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/032--18-12-2004_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '033', name: 'إبراهيم + خطبة جميلة - ديرب الخضر 31-3-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/033-31-3-2004_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '034', name: 'إبراهيم - عزاء جدة الحاج حسن 1992', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/034--1992_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '035', name: 'إبراهيم 1 إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/035-1_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '036', name: 'إبراهيم 19-8-2009', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/036-19-8-2009_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '037', name: 'إبراهيم 1992', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/037-1992_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '038', name: 'إبراهيم 2 إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/038-2_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '039', name: 'إبراهيم 23-52', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/039-23-52_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '040', name: 'إبراهيم النصر لبنان', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/040-_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '041', name: 'إبراهيم - عزبة الحاج خليل فارسكور 25-1-2000', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/041-25-1-2000_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '042', name: 'إبراهيم من الأقطم 25-5-2008', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/042-25-5-2008_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '043', name: 'إبراهيم من عزاء بصان الحجر 1992', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/043-1992_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '044', name: 'إبراهيم والقصار بحضور أبو الوفا الصعيدي', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/044-_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '045', name: 'إبراهيم وخطبة في ديرب الخضر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/045-_up_by_muslem.mp3', category: 'إبراهيم' },
+    { id: '046', name: 'إبراهيم', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/046-_uP_bY_mUSLEm.mp3', category: 'إبراهيم' },
+    { id: '047', name: 'آخر البقرة و آل عمران - منية محلة دمنة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/047-_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '048', name: 'آخر البقرة تسجيل قديم', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/048-_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '049', name: 'آخر الحج والمؤمنون والقصار - الجمالية دقهلية', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/049-_up_by_muslem.mp3', category: 'الحج' },
+    { id: '050', name: 'آخر الحشر وقصار السور - برمبال الجديدة 5-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/050-5-2006_up_by_muslem.mp3', category: 'الحشر' },
+    { id: '051', name: 'آخر القصص الرحمن النصر 29-8-2007 - بصان الحجر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/051-29-8-2007_up_by_muslem.mp3', category: 'القصص' },
+    { id: '052', name: 'آخر القمر وأول الرحمن تلاوة جمعة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/052-_up_by_muslem.mp3', category: 'القمر' },
+    { id: '053', name: 'آخر النحل و الإسراء', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/053-_up_by_muslem.mp3', category: 'النحل' },
+    { id: '054', name: 'آخر النحل و النازعات وقريش - ميت الكرما 29-2-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/054-29-2-2004_up_by_muslem.mp3', category: 'النحل' },
+    { id: '055', name: 'آخر النحل والإسراء - ميت سلسيل 10-10-2001', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/055-10-10-2001_up_by_muslem.mp3', category: 'النحل' },
+    { id: '056', name: 'آخر الحشر وقصار السور - برمبال الجديدة 5-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/056-5-2006_up_by_muslem.mp3', category: 'الحشر' },
+    { id: '057', name: 'آخر القصص والنصر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/057-_up_by_muslem.mp3', category: 'القصص' },
+    { id: '058', name: 'آخر الكهف ومريم - الجوابر 8 رمضان 8-7-1994', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/058-88-7-1994_up_by_muslem.mp3', category: 'الكهف' },
+    { id: '059', name: 'آل عمران - أواسطه - جلسات خاصة في شبابه', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/059---_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '060', name: 'آل عمران 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/060-1_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '061', name: 'آل عمران 29-11-2009', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/061-29-11-2009_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '062', name: 'آل عمران الزمر والحاقة في شبابه', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/062-_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '063', name: 'آل عمران النساء 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/063-1_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '064', name: 'آل عمران النساء 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/064-2_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '065', name: 'آل عمران إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/065-_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '066', name: 'آل عمران ش 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/066-1_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '067', name: 'آل عمران ش 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/067-2_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '068', name: 'آل عمران - طنامل أجا 21-3-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/068-21-3-2011_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '069', name: 'آل عمران عزاء 2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/069-2004_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '070', name: 'آل عمران من مدينة السنبلاوين', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/070-_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '071', name: 'آل عمران نوب طريف 22-5-1995', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/071-22-5-1995_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '072', name: 'آل عمران والرحمن فيديو', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/072-_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '073', name: 'آل عمران وقصار السور', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/073-_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '074', name: 'آل عمران - من تسجيلات الاستوديو', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/074--_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '075', name: 'الأحزاب 21-27', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/075-21-27_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '076', name: 'الأحزاب - احتفال الإذاعة مسجد رمضان 25-2-2009', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/076-25-2-2009_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '077', name: 'الأحزاب جلسة خاصة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/077-_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '078', name: 'الأحزاب والنازعات والقدر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/078-_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '079', name: 'الأنبياء والحاقة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/079-_up_by_muslem.mp3', category: 'الأنبياء' },
+    { id: '080', name: 'الأنبياء', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/080-_uP_bY_mUSLEm.mp3', category: 'الأنبياء' },
+    { id: '081', name: 'الأنعام 2005', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/081-2005_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '082', name: 'الأنعام 72-90', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/082-72-90_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '083', name: 'الأنعام الجوابر 1993', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/083-1993_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '084', name: 'الأنعام - دكرنس دقهلية', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/084--_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '085', name: 'الأنعام و الكوثر و الفاتحة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/085-6_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '086', name: 'الإسراء 1-30', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/086-1-30_up_by_muslem.mp3', category: 'الإسراء' },
+    { id: '087', name: 'الإنسان والنازعات والعلق - باسوس 24-7-2009', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/087-24-7-2009_up_by_muslem.mp3', category: 'الإنسان' },
+    { id: '088', name: 'الأحزاب - 1 - جلسات خاصة في شباب الشيخ', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/088--1-_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '089', name: 'الأحزاب - 2 - جلسات خاصة في شباب الشيخ', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/089--2-_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '090', name: 'الأحزاب 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/090-1_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '091', name: 'الأحزاب 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/091-2_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '092', name: 'الأحزاب 40-48 والعلق - إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/092-40-48-_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '093', name: 'الأحزاب ذكرى الشيخ حمدي الزامل', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/093-_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '094', name: 'الأحزاب و القصار بيروت 2001', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/094-2001_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '095', name: 'الأحزاب والقصار', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/095-_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '096', name: 'الأحزاب والنازعات الدوداتي 11-7-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/096-11-7-2006_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '097', name: 'الأحزاب-النازعات-القدر-الفاتحة-أول بقرة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/097-----_up_by_muslem.mp3', category: 'الأحزاب' },
+    { id: '098', name: 'الإسراء الحجرات - نادرة في شبابه', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/098--_up_by_muslem.mp3', category: 'الإسراء' },
+    { id: '099', name: 'الإسراء ش 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/099-1_up_by_muslem.mp3', category: 'الإسراء' },
+    { id: '100', name: 'الإسراء ش 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/100-2_up_by_muslem.mp3', category: 'الإسراء' },
+    { id: '101', name: 'الإسراء منية النصر 13-10-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/101-13-10-2011_up_by_muslem.mp3', category: 'الإسراء' },
+    { id: '102', name: 'الأعلى', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/102-_uP_bY_mUSLEm.mp3', category: 'قصار السور' },
+    { id: '103', name: 'الأنبياء 1993', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/103-1993_up_by_muslem.mp3', category: 'الأنبياء' },
+    { id: '104', name: 'الأنبياء 76-91', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/104-76-91_up_by_muslem.mp3', category: 'الأنبياء' },
+    { id: '105', name: 'الأنبياء مختلفة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/105-_up_by_muslem.mp3', category: 'الأنبياء' },
+    { id: '106', name: 'الأنبياء و القدر إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/106-_up_by_muslem.mp3', category: 'الأنبياء' },
+    { id: '107', name: 'الأنبياء والزمر وغافر 1990 من بلد الشيخ', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/107-1990_up_by_muslem.mp3', category: 'الأنبياء' },
+    { id: '108', name: 'الأنعام بصان الحجر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/108-_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '109', name: 'الأنعام - رائعة النسيمية', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/109--_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '110', name: 'الأنعام 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/110-1_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '111', name: 'الأنعام 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/111-2_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '112', name: 'الأنعام 26-6-2011 عصر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/112-26-6-2011_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '113', name: 'الأنعام 3', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/113-3_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '114', name: 'الأنعام 4', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/114-4_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '115', name: 'الأنعام المنصورة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/115-_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '116', name: 'الأنعام - قرية الجوابر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/116-_up_by_muslem.mp3', category: 'الأنعام' },
+    { id: '117', name: 'الانفطار', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/117-_uP_bY_mUSLEm.mp3', category: 'قصار السور' },
+    { id: '118', name: 'البروج والطارق والفاتحة وأول البقرة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/118-_up_by_muslem.mp3', category: 'قصار السور' },
+    { id: '119', name: 'البروج', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/119-_uP_bY_mUSLEm.mp3', category: 'قصار السور' },
+    { id: '120', name: 'البقرة ش 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/120-1_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '121', name: 'البقرة - مختلفة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/121--_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '122', name: 'البقرة 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/122-1_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '123', name: 'البقرة 124-131', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/123-124-131_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '124', name: 'البقرة 188-209', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/124-188-209_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '125', name: 'البقرة 189-209', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/125-189-209_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '126', name: 'البقرة 1997', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/126-1997_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '127', name: 'البقرة 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/127-2_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '128', name: 'البقرة 201-207 والقدر - إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/128-201-207-_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '129', name: 'البقرة 272-285', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/129-272-285_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '130', name: 'البقرة 4', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/130-4_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '131', name: 'البقرة آل عمران عزاء', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/131-_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '132', name: 'البقرة اللطايفة الجوابر دقهلية 1994', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/132-1994_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '133', name: 'البقرة رائعة الدمياط - تلك الرسل', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/133--_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '134', name: 'البقرة - عزبة عوض بصبيحة 1999', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/134-1999_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '135', name: 'البقرة ش 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/135-1_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '136', name: 'البقرة عزاء جد أستاذ أحمد حجى بالجوابر 1993', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/136-1993_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '137', name: 'البقرة عزبة الفتح 2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/137-2004_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '138', name: 'البقرة في عزاء عمدة الجوابر 1-12-2003', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/138-1-12-2003_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '139', name: 'البقرة فيديو', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/139-_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '140', name: 'البقرة قديمة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/140-_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '141', name: 'البقرة من عزاء محمد إسماعيل ضيف الله 29-8-2007', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/141-29-8-2007_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '142', name: 'البقرة و القمر و الرحمن و النازعات', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/142-_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '143', name: 'البقرة وآل عمران نوب طريف 22-5-1995', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/143-22-5-1995_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '144', name: 'البقرة يسئلونك عن الأهلة - علي علي عزاء', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/144--_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '145', name: 'البقرة - يسألونك عن الأهلة مأتم', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/145--_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '146', name: 'البقرة المنزلة 2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/146-2006_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '147', name: 'البقرة عزاء عمدة الجوابر 1-12-2003', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/147-1-12-2003_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '148', name: 'البقرة وآخر الأنبياء وقصار السور - منية النصر 1-10-2000', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/148-1-10-2000_up_by_muslem.mp3', category: 'البقرة' },
+    { id: '149', name: 'البلد', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/149-_uP_bY_mUSLEm.mp3', category: 'قصار السور' },
+    { id: '150', name: 'التحريم كاملة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/150-_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '151', name: 'التحريم 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/151-1_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '152', name: 'التحريم 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/152-2_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '153', name: 'التحريم 3', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/153-3_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '154', name: 'التحريم 4', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/154-4_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '155', name: 'التحريم عزاء ميت مرجا سلسيل 2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/155-2006_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '156', name: 'التحريم كاملة ورائعة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/156-_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '157', name: 'التحريم والحاقة والقصار - بصان الحجر 1992', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/157-1992_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '158', name: 'التحريم والحاقة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/158-_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '159', name: 'التحريم والمزمل - ميت سلسيل 2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/159-2006_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '160', name: 'التحريم والمزمل ميت مرجا سلسيل 4-7-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/160-4-7-2006_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '161', name: 'التحريم والملك ش 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/161-1_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '162', name: 'التحريم والملك ش 3', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/162-3_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '163', name: 'الجوابر 1994', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/163-1994_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '164', name: 'الحاقة - التحريم', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/164--_up_by_muslem.mp3', category: 'الحاقة' },
+    { id: '165', name: 'الحاقة - تسجيل قديم - رائع', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/165---_up_by_muslem.mp3', category: 'الحاقة' },
+    { id: '166', name: 'الحاقة 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/166-1_up_by_muslem.mp3', category: 'الحاقة' },
+    { id: '167', name: 'الحاقة 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/167-2_up_by_muslem.mp3', category: 'الحاقة' },
+    { id: '168', name: 'الحاقة 3', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/168-3_up_by_muslem.mp3', category: 'الحاقة' },
+    { id: '169', name: 'الحاقة و أواخر الأنبياء و القمر و الرحمن', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/169-_up_by_muslem.mp3', category: 'الحاقة' },
+    { id: '170', name: 'الحاقة عزاء 2006 ميت مرجا سلسيل دقهلية', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/170-2006_up_by_muslem.mp3', category: 'الحاقة' },
+    { id: '171', name: 'الحج و المؤمنون - لبنان', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/171--_up_by_muslem.mp3', category: 'الحج' },
+    { id: '172', name: 'الحج والمؤمنون', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/172-_up_by_muslem.mp3', category: 'الحج' },
+    { id: '173', name: 'الحج - منشية عاصم 2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/173--2004_up_by_muslem.mp3', category: 'الحج' },
+    { id: '174', name: 'الحجر النحل بحضور الشيخ الشحات 1984', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/174-1984_up_by_muslem.mp3', category: 'الحجر' },
+    { id: '175', name: 'الحجر والنحل قديم', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/175-_up_by_muslem.mp3', category: 'الحجر' },
+    { id: '176', name: 'الحجر والنحل قديمة جدا', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/176-_up_by_muslem.mp3', category: 'الحجر' },
+    { id: '177', name: 'الحجر والنحل من كفر البطيخ دمياط', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/177-_up_by_muslem.mp3', category: 'الحجر' },
+    { id: '178', name: 'الحجر والنحل والنصر والفاتحة - الجوابر 1991', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/178--1991_up_by_muslem.mp3', category: 'الحجر' },
+    { id: '179', name: 'الحجر والنحل', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/179-_up_by_muslem.mp3', category: 'الحجر' },
+    { id: '180', name: 'الحجرات - ق', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/180--_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '181', name: 'الحجرات 7-17', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/181-7-17_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '182', name: 'الحجرات استديو', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/182-_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '183', name: 'الحجرات رائعة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/183-_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '184', name: 'الحجرات روعة الروائع', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/184-_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '185', name: 'الحجرات ق', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/185-_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '186', name: 'الحجرات قديمة وروعة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/186-_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '187', name: 'الحجرات كاملة ستديو', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/187-_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '188', name: 'الحجرات كاملة ورائعة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/188-_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '189', name: 'الحجرات و ق من تسجيلات المحافل', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/189-_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '190', name: 'الحجرات و ق', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/190-_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '191', name: 'الحجرات وق 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/191-1_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '192', name: 'الحجرات وق 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/192-2_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '193', name: 'الحجرات وق قديمة وروعة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/193-_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '194', name: 'الحجرات وق منية النصر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/194-_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '195', name: 'الحجرات وق والحاقة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/195-_up_by_muslem.mp3', category: 'الحجرات' },
+    { id: '196', name: 'الحشر 18-24', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/196-18-24_up_by_muslem.mp3', category: 'الحشر' },
+    { id: '197', name: 'الحشر الفجر الهمزة الفاتحة - عزبة الإمام 12-7-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/197-12-7-2006_up_by_muslem.mp3', category: 'الحشر' },
+    { id: '198', name: 'الحشر و النازعات', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/198-_up_by_muslem.mp3', category: 'الحشر' },
+    { id: '199', name: 'الحشر و قصار السور - استوديو - في شبابه', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/199---_up_by_muslem.mp3', category: 'الحشر' },
+    { id: '200', name: 'الحشر والقصار المحمودية 2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/200-2006_up_by_muslem.mp3', category: 'الحشر' },
+    { id: '201', name: 'الحشر والقصار', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/201-_up_by_muslem.mp3', category: 'الحشر' },
+    { id: '202', name: 'الحشر والقيامة ميت غمر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/202-_up_by_muslem.mp3', category: 'الحشر' },
+    { id: '203', name: 'الحشر والنازعات', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/203-_up_by_muslem.mp3', category: 'الحشر' },
+    { id: '204', name: 'الرحمن 1-27', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/204-1-27_up_by_muslem.mp3', category: 'الرحمن' },
+    { id: '205', name: 'الرحمن 1982 نادرة جدا', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/205-1982_up_by_muslem.mp3', category: 'الرحمن' },
+    { id: '206', name: 'الرحمن النازعات القدر كفر علام 3 رمضان 2002', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/206-32002-1_up_by_muslem.mp3', category: 'الرحمن' },
+    { id: '207', name: 'الرحمن بواسطة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/207-_up_by_muslem.mp3', category: 'الرحمن' },
+    { id: '208', name: 'الرحمن و قصار السور', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/208-_up_by_muslem.mp3', category: 'الرحمن' },
+    { id: '209', name: 'الرحمن والقصار - ميت طريف دقهلية 25-5-2003', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/209-25-5-2003_up_by_muslem.mp3', category: 'الرحمن' },
+    { id: '210', name: 'الرعد 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/210-1_up_by_muslem.mp3', category: 'الرعد' },
+    { id: '211', name: 'الرعد 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/211-2_up_by_muslem.mp3', category: 'الرعد' },
+    { id: '212', name: 'الرعد إبراهيم', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/212-_up_by_muslem.mp3', category: 'الرعد' },
+    { id: '213', name: 'الروم 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/213-1_up_by_muslem.mp3', category: 'الروم' },
+    { id: '214', name: 'الروم 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/214-2_up_by_muslem.mp3', category: 'الروم' },
+    { id: '215', name: 'الزمر غافر عزاء ببلدة السلطان', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/215-_up_by_muslem.mp3', category: 'الزمر' },
+    { id: '216', name: 'الزمر-الحاقة-القصار-1997-مصر الجديدة-المنزلة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/216----1997--_up_by_muslem.mp3', category: 'الزمر' },
+    { id: '217', name: 'السجدة 14-30 والبينة والتكاثر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/217-14-30_up_by_muslem.mp3', category: 'السجدة' },
+    { id: '218', name: 'السجدة كاملة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/218-_up_by_muslem.mp3', category: 'السجدة' },
+    { id: '219', name: 'السجدة و القصار', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/219-_up_by_muslem.mp3', category: 'السجدة' },
+    { id: '220', name: 'السجدة وقصار السور', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/220-_up_by_muslem.mp3', category: 'السجدة' },
+    { id: '221', name: 'الشمس', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/221-_uP_bY_mUSLEm.mp3', category: 'قصار السور' },
+    { id: '222', name: 'الضحى كاملة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/222--_up_by_muslem.mp3', category: 'قصار السور' },
+    { id: '223', name: 'الطارق', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/223-_uP_bY_mUSLEm.mp3', category: 'قصار السور' },
+    { id: '224', name: 'العصر - قصاصين الأزهار 25-6-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/224-225-6-2011_up_by_muslem.mp3', category: 'قصار السور' },
+    { id: '225', name: 'الغاشية والفجر والبلد والشمس والضحى والليل', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/225--_up_by_muslem.mp3', category: 'قصار السور' },
+    { id: '226', name: 'الغاشية', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/226-_uP_bY_mUSLEm.mp3', category: 'قصار السور' },
+    { id: '227', name: 'الفاتحة نادرة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/227-_up_by_muslem.mp3', category: 'الفاتحة' },
+    { id: '228', name: 'الفتح 27-29', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/228-27-29_up_by_muslem.mp3', category: 'الفتح' },
+    { id: '229', name: 'الفتح و القصار عزاء والدة الشيخ الطنطاوي', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/229-_up_by_muslem.mp3', category: 'الفتح' },
+    { id: '230', name: 'الفتح والنازعات والنصر - المحمدية دقهلية', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/230--_up_by_muslem.mp3', category: 'الفتح' },
+    { id: '231', name: 'الفجر البلد القدر الإخلاص - عزبة الأربعمائة 21-11-2001', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/231-21-11-2001_up_by_muslem.mp3', category: 'الفجر' },
+    { id: '232', name: 'الفجر البلد قريش - عزبة الأربعمائة 21-11-2001', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/232-21-11-2001_up_by_muslem.mp3', category: 'الفجر' },
+    { id: '233', name: 'الفجر و القصار', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/233-_up_by_muslem.mp3', category: 'الفجر' },
+    { id: '234', name: 'الفجر والضحى والإنشراح والتين والعلق - كفر الصالحات', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/234-_up_by_muslem.mp3', category: 'الفجر' },
+    { id: '235', name: 'الفجر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/235-_uP_bY_mUSLEm.mp3', category: 'الفجر' },
+    { id: '236', name: 'الفرقان الأقطم ميت مرجا سلسيل 23-11-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/236-23-11-2004_up_by_muslem.mp3', category: 'الفرقان' },
+    { id: '237', name: 'الفرقان 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/237-2_up_by_muslem.mp3', category: 'الفرقان' },
+    { id: '238', name: 'الفرقان 21-45', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/238-21-45_up_by_muslem.mp3', category: 'الفرقان' },
+    { id: '239', name: 'الفرقان الأقطم ميت مرجا سلسيل 23-11-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/239-23-11-2004_up_by_muslem.mp3', category: 'الفرقان' },
+    { id: '240', name: 'الفرقان بصان الحجر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/240-_up_by_muslem.mp3', category: 'الفرقان' },
+    { id: '241', name: 'الفرقان 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/241-1_uP_bY_mUSLEm.mp3', category: 'الفرقان' },
+    { id: '242', name: 'القدر من إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/242-_up_by_muslem.mp3', category: 'قصار السور' },
+    { id: '243', name: 'القصار من عزاء والدة همام السعيد', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/243-_up_by_muslem.mp3', category: 'قصار السور' },
+    { id: '244', name: 'القصص 1-13', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/244-1-13_up_by_muslem.mp3', category: 'القصص' },
+    { id: '245', name: 'القصص 1-34', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/245-1-34_up_by_muslem.mp3', category: 'القصص' },
+    { id: '246', name: 'القصص 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/246-1_up_by_muslem.mp3', category: 'القصص' },
+    { id: '247', name: 'القصص 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/247-2_up_by_muslem.mp3', category: 'القصص' },
+    { id: '248', name: 'القصص 3', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/248-3_up_by_muslem.mp3', category: 'القصص' },
+    { id: '249', name: 'القصص 4', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/249-4_up_by_muslem.mp3', category: 'القصص' },
+    { id: '250', name: 'القصص الجوابر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/250-_up_by_muslem.mp3', category: 'القصص' },
+    { id: '251', name: 'القصص المنصورة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/251-_up_by_muslem.mp3', category: 'القصص' },
+    { id: '252', name: 'القصص بيلا 10-2-2007', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/252-10-2-2007_up_by_muslem.mp3', category: 'القصص' },
+    { id: '253', name: 'القصص تسجيل قديم', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/253-_up_by_muslem.mp3', category: 'القصص' },
+    { id: '254', name: 'القصص رائعة - اللطايفة 9-2-1997', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/254-9-2-1997_up_by_muslem.mp3', category: 'القصص' },
+    { id: '255', name: 'القصص كفر علام 3 رمضان 2002', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/255-32002_up_by_muslem.mp3', category: 'القصص' },
+    { id: '256', name: 'القصص كوبري ستة شرقية 13-4-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/256-13-4-2004_up_by_muslem.mp3', category: 'القصص' },
+    { id: '257', name: 'القصص نبروه دقهلية 11-11-2003', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/257-11-11-2003_up_by_muslem.mp3', category: 'القصص' },
+    { id: '258', name: 'القصص والقصار باكستان', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/258-_up_by_muslem.mp3', category: 'القصص' },
+    { id: '259', name: 'القصص والنازعات وقريش والإخلاص - ميت الكرما 2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/259--2006_up_by_muslem.mp3', category: 'القصص' },
+    { id: '260', name: 'القصص-1997', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/260--1997_uP_bY_mUSLEm.mp3', category: 'القصص' },
+    { id: '261', name: 'القصص-البروج-الطارق-القريش-النصر-الإخلاص جراح أجا 18-2-2005', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/261------18-2-2005_up_by_muslem.mp3', category: 'القصص' },
+    { id: '262', name: 'القمر والرحمن والنازعات ميت طريف دقهلية 2003', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/262-2003_up_by_muslem.mp3', category: 'القمر' },
+    { id: '263', name: 'القمر والرحمن والنازعات والقدر - كفر علام 2002', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/263--2002_up_by_muslem.mp3', category: 'القمر' },
+    { id: '264', name: 'القمر والرحمن والنازعات', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/264-_up_by_muslem.mp3', category: 'القمر' },
+    { id: '265', name: 'القيامة والفجر والبلد والشمس والتكاثر والتوحيد والفلق والناس - الجوابر 1992', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/265--1992_up_by_muslem.mp3', category: 'القيامة' },
+    { id: '266', name: 'القيامة والفجر والبلد والقدر والحمد وأول البقرة - النسايمة 2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/266--2004_up_by_muslem.mp3', category: 'القيامة' },
+    { id: '267', name: 'القيامة والفجر والبلد والهمزة وقريش والتوحيد 2003', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/267-2003_up_by_muslem.mp3', category: 'القيامة' },
+    { id: '268', name: 'القيامة والفجر والضحى والإنشراح والتين والعلق كفر الصالحات', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/268-_up_by_muslem.mp3', category: 'القيامة' },
+    { id: '269', name: 'القيامة الفجر الهمزة 2003', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/269-2003_up_by_muslem.mp3', category: 'القيامة' },
+    { id: '270', name: 'القيامة وقصار السور من النسايمة مركز المنزلة 31-10-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/270-31-10-2004_up_by_muslem.mp3', category: 'القيامة' },
+    { id: '271', name: 'الكهف والقدر إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/271-_up_by_muslem.mp3', category: 'الكهف' },
+    { id: '272', name: 'الكهف ومريم بصان الحجر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/272-_up_by_muslem.mp3', category: 'الكهف' },
+    { id: '273', name: 'الكهف ومريم منية النصر 9-1-2012', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/273-9-1-2012_up_by_muslem.mp3', category: 'الكهف' },
+    { id: '274', name: 'الكهف ومريم ميت غمر 11-10-2003', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/274-11-10-2003_up_by_muslem.mp3', category: 'الكهف' },
+    { id: '275', name: 'الكهف ومريم والختام آخر الزمر والنازعات عزاء 12-4-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/275-12-4-2011_up_by_muslem.mp3', category: 'الكهف' },
+    { id: '276', name: 'الكهف', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/276-_uP_bY_mUSLEm.mp3', category: 'الكهف' },
+    { id: '277', name: 'الليل', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/277-_uP_bY_mUSLEm.mp3', category: 'قصار السور' },
+    { id: '278', name: 'المؤمنون إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/278-_up_by_muslem.mp3', category: 'المؤمنون' },
+    { id: '279', name: 'المائدة 20-40', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/279-20-40_up_by_muslem.mp3', category: 'المائدة' },
+    { id: '280', name: 'المائدة النازعات والقدر المنزلة 1994', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/280-1994_up_by_muslem.mp3', category: 'المائدة' },
+    { id: '281', name: 'المائدة مسجلة من عزاء', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/281-_up_by_muslem.mp3', category: 'المائدة' },
+    { id: '282', name: 'المائدة المنزلة 1994', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/282-1994_up_by_muslem.mp3', category: 'المائدة' },
+    { id: '283', name: 'المائدة ميت الكرما دقهلية', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/283-_up_by_muslem.mp3', category: 'المائدة' },
+    { id: '284', name: 'المائدة وق والنصر المقدمة والتعليق الشيخ نشأت - ميت مرجا 2-8-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/284--2-8-2006_up_by_muslem.mp3', category: 'المائدة' },
+    { id: '285', name: 'المزمل الضحى الشرح التين النصر الإخلاص 2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/285-2004_up_by_muslem.mp3', category: 'المزمل' },
+    { id: '286', name: 'المزمل والتين والعلق 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/286-1_up_by_muslem.mp3', category: 'المزمل' },
+    { id: '287', name: 'المزمل والتين والعلق 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/287-2_up_by_muslem.mp3', category: 'المزمل' },
+    { id: '288', name: 'المزمل والقيامة 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/288-1_up_by_muslem.mp3', category: 'المزمل' },
+    { id: '289', name: 'المزمل والقيامة 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/289-2_up_by_muslem.mp3', category: 'المزمل' },
+    { id: '290', name: 'المزمل 1 إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/290-1_up_by_muslem.mp3', category: 'المزمل' },
+    { id: '291', name: 'المزمل 2 إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/291-2_up_by_muslem.mp3', category: 'المزمل' },
+    { id: '292', name: 'المنصورة 5-5-2012', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/292-5-5-2012_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '293', name: 'النازعات رائعة جدا ميت محمود', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/293-_up_by_muslem.mp3', category: 'النازعات' },
+    { id: '294', name: 'النازعات ميت محمود', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/294-_up_by_muslem.mp3', category: 'النازعات' },
+    { id: '295', name: 'النازعات والقدر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/295-_up_by_muslem.mp3', category: 'النازعات' },
+    { id: '296', name: 'النبأ والفاتحة ومن أوائل سورة البقرة - بلقاس', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/296-_up_by_muslem.mp3', category: 'النبأ' },
+    { id: '297', name: 'النبأ-النازعات-قريش-الإخلاص-الفاتحة-البقرة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/297------_uP_bY_mUSLEm.mp3', category: 'النبأ' },
+    { id: '298', name: 'النجم 56-62 والقمر 1-15', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/298-56-621-15_up_by_muslem.mp3', category: 'النجم' },
+    { id: '299', name: 'النجم القمر الرحمن', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/299-_up_by_muslem.mp3', category: 'النجم' },
+    { id: '300', name: 'النجم والقمر والرحمن والمزمل', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/300-_up_by_muslem.mp3', category: 'النجم' },
+    { id: '301', name: 'النحل 1-31 استوديو', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/301-1-31_up_by_muslem.mp3', category: 'النحل' },
+    { id: '302', name: 'النحل النبأ-قريش-الإخلاص إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/302---_up_by_muslem.mp3', category: 'النحل' },
+    { id: '303', name: 'النحل عزاء المنيلاوي', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/303-_up_by_muslem.mp3', category: 'النحل' },
+    { id: '304', name: 'النحل والإسراء جراح أجا 18-2-2005', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/304-18-2-2005_up_by_muslem.mp3', category: 'النحل' },
+    { id: '305', name: 'النحل والإسراء 1993', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/305-1993_up_by_muslem.mp3', category: 'النحل' },
+    { id: '306', name: 'النحل والرحمن', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/306-_up_by_muslem.mp3', category: 'النحل' },
+    { id: '307', name: 'النساء 2003', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/307-2003_up_by_muslem.mp3', category: 'النساء' },
+    { id: '308', name: 'النساء 69-100 رائعة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/308-69-100_up_by_muslem.mp3', category: 'النساء' },
+    { id: '309', name: 'النساء 69-100', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/309-69-100_up_by_muslem.mp3', category: 'النساء' },
+    { id: '310', name: 'النساء 69-87', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/310-69-87_up_by_muslem.mp3', category: 'النساء' },
+    { id: '311', name: 'النساء بصان الحجر 1989', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/311-1989_up_by_muslem.mp3', category: 'النساء' },
+    { id: '312', name: 'النساء من عزاء بصان الحجر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/312-_up_by_muslem.mp3', category: 'النساء' },
+    { id: '313', name: 'النساء من ميت مرجا سلسيل 2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/313-2006_up_by_muslem.mp3', category: 'النساء' },
+    { id: '314', name: 'النساء و الأنعام', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/314-_up_by_muslem.mp3', category: 'النساء' },
+    { id: '315', name: 'النساء', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/315-_uP_bY_mUSLEm.mp3', category: 'النساء' },
+    { id: '316', name: 'أواخر آل عمران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/316-_up_by_muslem.mp3', category: 'آل عمران' },
+    { id: '317', name: 'تلاوة مباركة من لبنان 2001', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/317-2001_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '318', name: 'ختام رائع', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/318-_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '319', name: 'ختام أبو حجى 10-11-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/319-10-11-2011_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '320', name: 'ختام أبو رزق', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/320-_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '321', name: 'ختام الحسينية خاص 28-6-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/321-28-6-2011_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '322', name: 'ختام الزقازيق يس والفجر وقريش والإخلاص', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/322-_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '323', name: 'ختام تمي الأمديد 8-5-2012', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/323-8-5-2012_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '324', name: 'ختام دكرنس 2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/324-2011_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '325', name: 'ختام رائع جدا ثالث يوم العيد', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/325-_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '326', name: 'ختام قصاصين الأزهار أولاد صقر - شرقية', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/326--_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '327', name: 'ختام محلة دمنة 13-9-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/327-13-9-2011_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '328', name: 'ختام منية النصر 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/328-2_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '329', name: 'ختام منية النصر 8-9-2012', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/329-8-9-2012_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '330', name: 'ختام منية النصر 9-1-2012', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/330-9-1-2012_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '331', name: 'ختام منية النصر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/331-_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '332', name: 'ختام ميت بدر خميس', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/332-_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '333', name: 'ختام ميت طاهر 23-6-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/333-23-6-2011_up_by_muslem.mp3', category: 'ختامات' },
+    { id: '334', name: 'دكرنس عشاء', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/334-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '335', name: 'ربع الختام قصاصين الأزهار 25-6-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/335-25-6-2011_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '336', name: 'ربع العصر من عزاء الدكتور عبدالسلام - قصاصين الأزهار', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/336-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '337', name: 'ربع العصر الأول', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/337-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '338', name: 'ربع المغرب 31-12-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/338-31-12-2011_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '339', name: 'ربع المغرب أبو حجى 10-11-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/339-10-11-2011_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '340', name: 'ربع المغرب عزاء الدكتور عبدالسلام - قصاصين الأزهار 2010', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/340-2010_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '341', name: 'ربع المغرب قصاصين الأزهار 25-6-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/341-25-6-2011_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '342', name: 'سورة التحريم', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/342-_up_by_muslem.mp3', category: 'التحريم' },
+    { id: '343', name: 'عزاء الجزء الثالث', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/343-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '344', name: 'عزاء الربع الأول', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/344-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '345', name: 'عزاء الربع الثاني', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/345-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '346', name: 'عزاء الشيخ سعيد علي جمعة - بنايوس شرقية', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/346-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '347', name: 'عزاء الشيخ عبد الرؤوف المنيلاوي 29-4-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/347-29-4-2004_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '348', name: 'عزاء شقيقة الشيخ السيد متولي آية الدين روعة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/348-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '349', name: 'عزاء والدة الشيخ إسماعيل طنطاوي - أول صقر 30-12-2009', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/349-30-12-2009_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '350', name: 'عزاء والدة الشيخ محمد عبدالوهاب الطنطاوي', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/350-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '351', name: 'عشاء الدراكسة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/351-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '352', name: 'عشاء مريم', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/352-_up_by_muslem.mp3', category: 'مريم' },
+    { id: '353', name: 'عشاء ميت طاهر 23-6-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/353-23-6-2011_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '354', name: 'عصر المحمودية 31-12-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/354-31-12-2011_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '355', name: 'عصر شربين 16-5-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/355-16-5-2011_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '356', name: 'عصر قصاصين الأزهار 25-6-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/356-25-6-2011_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '357', name: 'فاطر 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/357-1_up_by_muslem.mp3', category: 'فاطر' },
+    { id: '358', name: 'فاطر 15-41', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/358-15-41_up_by_muslem.mp3', category: 'فاطر' },
+    { id: '359', name: 'في جلسات خاصة في شباب الشيخ', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/359-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '360', name: 'ق 1-18', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/360-1-18_up_by_muslem.mp3', category: 'ق' },
+    { id: '361', name: 'ق 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/361-1_up_by_muslem.mp3', category: 'ق' },
+    { id: '362', name: 'ق والنازعات والقصار - ميت عزون 4-1-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/362-4-1-2006_up_by_muslem.mp3', category: 'ق' },
+    { id: '363', name: 'ق والنازعات والقصار', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/363-_up_by_muslem.mp3', category: 'ق' },
+    { id: '364', name: 'ق كاملة استوديو', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/364--_up_by_muslem.mp3', category: 'ق' },
+    { id: '365', name: 'قرية مصطفى', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/365-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '366', name: 'قريش روعة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/366-_up_by_muslem.mp3', category: 'قصار السور' },
+    { id: '367', name: 'قصار السور الزقازيق', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/367-_up_by_muslem.mp3', category: 'قصار السور' },
+    { id: '368', name: 'قصار السور', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/368-_up_by_muslem.mp3', category: 'قصار السور' },
+    { id: '369', name: 'لقمان 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/369-1_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '370', name: 'لقمان 8-22', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/370-8-22_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '371', name: 'لقمان ج 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/371-1_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '372', name: 'لقمان ج 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/372-2_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '373', name: 'لقمان مأتم 1992 رواااائع', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/373-1992_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '374', name: 'لقمان من إيران', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/374-_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '375', name: 'لقمان منية النصر دقهلية 3-9-2009', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/375-3-9-2009_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '376', name: 'لقمان ميت سلسيل الحاج شحاتة الجمل 30-7-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/376-30-7-2006_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '377', name: 'لقمان وقصار السور - عزبة الكنت 29-12-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/377-29-12-2004_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '378', name: 'لقمان والسجدة والبينة والتكاثر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/378--_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '379', name: 'لقمان والنازعات والفلق بيلا 10-2-2007', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/379-10-2-2007_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '380', name: 'لقمان والنازعات وقريش - بيلا 10-2-2007', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/380--10-2-2007_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '381', name: 'لقمان وقصار السور 28-10-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/381-28-10-2004_up_by_muslem.mp3', category: 'لقمان' },
+    { id: '382', name: 'ليلة عزاء بالرياض دقهلية 29-9-2010 ج1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/382-29-9-20101_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '383', name: 'ليلة عزاء بالرياض دقهلية 29-9-2010 ج2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/383-29-9-20102_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '384', name: 'مريم 1-44', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/384-1-44_up_by_muslem.mp3', category: 'مريم' },
+    { id: '385', name: 'مريم - هلا ميت غمر 11-10-2003', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/385-11-10-2003_up_by_muslem.mp3', category: 'مريم' },
+    { id: '386', name: 'مريم و الفجر و قصار السور', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/386-_up_by_muslem.mp3', category: 'مريم' },
+    { id: '387', name: 'مريم', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/387-_uP_bY_mUSLEm.mp3', category: 'مريم' },
+    { id: '388', name: 'مغرب قصاصين الأزهار 25-6-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/388-25-6-2011_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '389', name: 'مقطع من الفرقان 23-11-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/389-23-11-2004_up_by_muslem.mp3', category: 'الفرقان' },
+    { id: '390', name: 'منية النصر 9-1-2012', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/390-9-1-2012_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '391', name: 'ميت بدر خميس 27-5-2011', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/391-27-5-2011_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '392', name: 'مأتم والدة الطنطاوي', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/392-_up_by_muslem.mp3', category: 'متفرقات' },
+    { id: '393', name: 'يس - المزمل - القيامة', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/393---_up_by_muslem.mp3', category: 'يس' },
+    { id: '394', name: 'يس 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/394-1_up_by_muslem.mp3', category: 'يس' },
+    { id: '395', name: 'يس 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/395-2_up_by_muslem.mp3', category: 'يس' },
+    { id: '396', name: 'يس 29-1-2008', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/396-29-1-2008_up_by_muslem.mp3', category: 'يس' },
+    { id: '397', name: 'يس 68-83 بحر البقر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/397-68-83_up_by_muslem.mp3', category: 'يس' },
+    { id: '398', name: 'يس الفجر نبروه 28-3-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/398-28-3-2004_up_by_muslem.mp3', category: 'يس' },
+    { id: '399', name: 'يس و النازعات من منزل أبو زياد', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/399-_up_by_muslem.mp3', category: 'يس' },
+    { id: '400', name: 'يس والمزمل', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/400-_up_by_muslem.mp3', category: 'يس' },
+    { id: '401', name: 'يوسف النظارة 29-12-2007', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/401-29-12-2007_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '402', name: 'يوسف 1 الجوابر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/402-1_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '403', name: 'يوسف 3 الجوابر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/403-3_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '404', name: 'يوسف - الرياض', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/404--_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '405', name: 'يوسف - ناقص', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/405--_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '406', name: 'يوسف 1-34', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/406-1-34_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '407', name: 'يوسف 1', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/407-1_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '408', name: 'يوسف 1988', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/408-1988_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '409', name: 'يوسف 2 الجوابر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/409-2_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '410', name: 'يوسف 2', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/410-2_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '411', name: 'يوسف 2005', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/411-2005_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '412', name: 'يوسف 29-11-2009', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/412-29-11-2009_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '413', name: 'يوسف 3', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/413-3_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '414', name: 'يوسف 4 الجوابر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/414-4_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '415', name: 'يوسف استوديو', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/415-_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '416', name: 'يوسف الدوداني 11-7-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/416-11-7-2006_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '417', name: 'يوسف المحمودية دقهلية 12-7-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/417-12-7-2006_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '418', name: 'يوسف المنصورة 5-5-2012', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/418-5-5-2012_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '419', name: 'يوسف تسجيل قديم - ميزانية ميت عاصم 1982', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/419-1982_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '420', name: 'يوسف سعود شرقية', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/420-_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '421', name: 'يوسف شربين', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/421-_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '422', name: 'يوسف قرية مصطفى 19-12-2010', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/422-19-12-2010_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '423', name: 'يوسف من الروائع', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/423-_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '424', name: 'يوسف من العزاء بعزبة الإمام المحمودية 12-7-2006', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/424-12-7-2006_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '425', name: 'يوسف منية النصر 8-9-2012', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/425-8-9-2012_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '426', name: 'يوسف ميت طاهر 2002', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/426-2002_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '427', name: 'يوسف ميت طاهر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/427-_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '428', name: 'يوسف و الحج والنازعات و الفجر والتكاثر', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/428-_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '429', name: 'يوسف وآخر الحج وقصار السور - منشية ميت عاصم 1-2-2004', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/429-1-2-2004_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '430', name: 'يوسف وآخر الحشر والقصار - السفيه 28-12-2005', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/430-28-12-2005_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '431', name: 'يوسف والفتح', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/431-_up_by_muslem.mp3', category: 'يوسف' },
+    { id: '432', name: 'يوسف وق ميت طاهر 2002', url: 'https://archive.org/download/Sayed_Saiid_uP_bY_mUSLEm/432-2002_up_by_muslem.mp3', category: 'يوسف' }
+  ];
+
+  // ==================== عناصر الصفحة ====================
+  const player = document.getElementById('audioPlayer');
+  const currentSuraSpan = document.getElementById('currentSura');
+  const playingIndicator = document.getElementById('playingIndicator');
+  const bufferingLoader = document.getElementById('bufferingLoader');
+  const recordingsGrid = document.getElementById('recordingsGrid');
+  const searchInput = document.getElementById('searchInput');
+  const categoryFilter = document.getElementById('categoryFilter');
+  const visibleCountSpan = document.getElementById('visibleCount');
+  const totalCountSpan = document.getElementById('totalCount');
+  
+  let currentActiveCard = null;
+  let currentIndex = -1;
+
+  // ==================== تجهيز خيارات التصنيفات ====================
+  const categories = [...new Set(recordings.map(r => r.category))].sort();
+  categories.forEach(cat => {
+    const option = document.createElement('option');
+    option.value = cat;
+    option.textContent = `${cat} (${recordings.filter(r => r.category === cat).length})`;
+    categoryFilter.appendChild(option);
+  });
+
+  // ==================== عرض التسجيلات ====================
+  function displayRecordings(filteredRecordings) {
+    recordingsGrid.innerHTML = '';
+    
+    if (filteredRecordings.length === 0) {
+      recordingsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px;">❌ لا توجد تسجيلات تطابق البحث</div>';
+      visibleCountSpan.textContent = '0';
+      return;
+    }
+    
+    filteredRecordings.forEach((rec, index) => {
+      const card = document.createElement('div');
+      card.className = 'recording-card';
+      card.dataset.index = recordings.indexOf(rec); // الاحتفاظ بالفهرس الأصلي
+      
+      card.innerHTML = `
+        <div class="card-header">
+          <span class="card-id">${rec.id}</span>
+          <span class="card-category">${rec.category}</span>
+        </div>
+        <div class="card-name">${rec.name}</div>
+        <div class="card-footer">
+          <span class="play-icon"><i class="fas fa-play"></i> استماع</span>
+        </div>
+      `;
+      
+      card.addEventListener('click', () => playRecording(rec, card));
+      recordingsGrid.appendChild(card);
+    });
+    
+    visibleCountSpan.textContent = filteredRecordings.length;
+  }
+
+  // ==================== تشغيل التسجيل ====================
+  function playRecording(rec, cardElement) {
+    // إزالة التفعيل من السابق
+    if (currentActiveCard) {
+      currentActiveCard.classList.remove('active');
+    }
+    
+    // تفعيل البطاقة الجديدة
+    cardElement.classList.add('active');
+    currentActiveCard = cardElement;
+    currentIndex = recordings.indexOf(rec);
+    
+    // تحديث المشغل
+    player.src = rec.url;
+    currentSuraSpan.textContent = `🎵 جاري التحميل: ${rec.name}`;
+    bufferingLoader.classList.add('active');
+    playingIndicator.classList.remove('active');
+    
+    player.play()
+      .then(() => {
+        currentSuraSpan.textContent = `🔊 الآن: ${rec.name}`;
+        bufferingLoader.classList.remove('active');
+        playingIndicator.classList.add('active');
+      })
+      .catch(error => {
+        console.error('خطأ في التشغيل:', error);
+        currentSuraSpan.textContent = `❌ خطأ في تشغيل ${rec.name}`;
+        bufferingLoader.classList.remove('active');
+      });
+  }
+
+  // ==================== التصفية والبحث ====================
+  function filterRecordings() {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    const selectedCategory = categoryFilter.value;
+    
+    const filtered = recordings.filter(rec => {
+      const matchesSearch = searchTerm === '' || 
+        rec.name.toLowerCase().includes(searchTerm) ||
+        rec.category.toLowerCase().includes(searchTerm) ||
+        rec.id.includes(searchTerm);
+      
+      const matchesCategory = selectedCategory === 'all' || rec.category === selectedCategory;
+      
+      return matchesSearch && matchesCategory;
+    });
+    
+    displayRecordings(filtered);
+  }
+
+  // ==================== أحداث المشغل ====================
+  player.addEventListener('pause', () => {
+    playingIndicator.classList.remove('active');
+  });
+
+  player.addEventListener('play', () => {
+    playingIndicator.classList.add('active');
+  });
+
+  player.addEventListener('ended', () => {
+    playingIndicator.classList.remove('active');
+    
+    // تشغيل التالي إذا وجد
+    if (currentIndex >= 0 && currentIndex < recordings.length - 1) {
+      const nextIndex = currentIndex + 1;
+      const nextRec = recordings[nextIndex];
+      const cards = document.querySelectorAll('.recording-card');
+      // البحث عن البطاقة المقابلة (قد تكون غير معروضة بسبب الفلتر)
+      // سنستخدم البحث المباشر في القائمة الكاملة
+      const nextCard = Array.from(cards).find(card => 
+        parseInt(card.dataset.index) === nextIndex
+      );
+      
+      if (nextCard) {
+        playRecording(nextRec, nextCard);
+      } else {
+        // إذا كانت البطاقة غير معروضة، نلغي التفعيل
+        if (currentActiveCard) {
+          currentActiveCard.classList.remove('active');
+          currentActiveCard = null;
+        }
+        currentSuraSpan.textContent = 'اختر تسجيلاً للاستماع';
+      }
+    } else {
+      if (currentActiveCard) {
+        currentActiveCard.classList.remove('active');
+        currentActiveCard = null;
+      }
+      currentSuraSpan.textContent = 'اختر تسجيلاً للاستماع';
+    }
+  });
+
+  player.addEventListener('waiting', () => {
+    bufferingLoader.classList.add('active');
+  });
+
+  player.addEventListener('canplay', () => {
+    bufferingLoader.classList.remove('active');
+  });
+
+  player.addEventListener('error', () => {
+    bufferingLoader.classList.remove('active');
+    playingIndicator.classList.remove('active');
+    currentSuraSpan.textContent = '❌ فشل تحميل التسجيل';
+  });
+
+  // ==================== دوال إضافية ====================
+  function goBack() {
+    window.location.href = 'index.html'; // غير حسب اسم صفحتك الرئيسية
+  }
+
+  function reportBrokenLink() {
+    const phoneNumber = '+201092116092'; // ضع الرقم المناسب
+    const message = 'يوجد رابط معطل في مشغل تسجيلات الشيخ السيد سعيد، يرجى التحقق';
+    const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  }
+
+  // ==================== أحداث البحث ====================
+  searchInput.addEventListener('input', filterRecordings);
+  categoryFilter.addEventListener('change', filterRecordings);
+
+  // ==================== العرض الأولي ====================
+  displayRecordings(recordings);
+  totalCountSpan.textContent = `${recordings.length} تسجيل`;
+
+  // ==================== حفظ حالة التشغيل (اختياري) ====================
+  // يمكن إضافة localStorage هنا إذا أردت
+</script>
+
+</body>
+</html>
