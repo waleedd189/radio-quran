@@ -157,7 +157,6 @@
             color: white;
         }
 
-        /* تصميم جديد للـ selects - سطرين كل سطر فيه عنصرين */
         .selects-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -220,7 +219,6 @@
             font-size: 0.85em;
         }
 
-        /* باقي التنسيقات كما هي */
         .ayah-container {
             background: var(--card-bg);
             margin-bottom: 15px;
@@ -316,6 +314,19 @@
             border-radius: 8px;
         }
 
+        /* تنسيق فاصل نهاية الجزء */
+        .juz-separator {
+            text-align: center;
+            padding: 10px;
+            margin: 20px 0;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+            color: #000;
+            font-weight: bold;
+            font-family: 'Cairo';
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
         .loading-spinner {
             width: 40px;
             height: 40px;
@@ -371,111 +382,14 @@
             border-right: 3px solid var(--primary);
         }
 
-        /* تحسينات للموبايل */
         @media (max-width: 480px) {
-            .main-content {
-                padding-top: 200px;
-            }
-
-            .top-bar {
-                padding: 5px 3px;
-                gap: 3px;
-            }
-
-            .btn-fab {
-                padding: 4px 6px;
-                font-size: 0.75em;
-            }
-
-            .btn-fab i {
-                font-size: 0.9em;
-            }
-
-            .info-panel {
-                gap: 8px;
-                padding: 4px 10px;
-                font-size: 0.8em;
-            }
-
-            .info-item {
-                gap: 3px;
-            }
-
-            .controls {
-                top: 85px;
-                padding: 8px;
-            }
-
-            .mode-btn {
-                padding: 4px 15px;
-                font-size: 0.8em;
-            }
-
-            .selects-grid {
-                gap: 5px;
-            }
-
-            select {
-                padding: 6px 8px;
-                font-size: 0.8em;
-                padding-left: 25px;
-                background-size: 12px;
-            }
-
-            .go-input, .go-btn {
-                padding: 6px 10px;
-                font-size: 0.8em;
-            }
-
-            .ayah-actions {
-                gap: 5px;
-            }
-
-            .btn-action {
-                width: 35px;
-                height: 35px;
-                font-size: 14px;
-            }
-
-            .ayah-number {
-                width: 28px;
-                height: 28px;
-                line-height: 28px;
-                font-size: 0.8em;
-            }
-
-            .ayah-text {
-                font-size: calc(var(--ayah-font-size) * 0.85);
-            }
-
-            .basmalah {
-                font-size: 1.5em;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .main-content {
-                padding-top: 210px;
-            }
-
-            .btn-fab {
-                padding: 3px 5px;
-            }
-
-            .info-item span {
-                font-size: 0.75em;
-            }
-
-            select {
-                font-size: 0.75em;
-                padding: 5px 6px;
-            }
-
-            .btn-action {
-                width: 32px;
-                height: 32px;
-                font-size: 13px;
-            }
+            .main-content { padding-top: 200px; }
+            .top-bar { padding: 5px 3px; gap: 3px; }
+            .btn-fab { padding: 4px 6px; font-size: 0.75em; }
+            .info-panel { gap: 8px; padding: 4px 10px; font-size: 0.8em; }
+            .controls { top: 85px; padding: 8px; }
+            .mode-btn { padding: 4px 15px; font-size: 0.8em; }
+            .ayah-text { font-size: calc(var(--ayah-font-size) * 0.85); }
         }
     </style>
 </head>
@@ -485,7 +399,6 @@
     <a href="https://waleedd189.github.io/radio-quran/" class="btn-fab" style="background: var(--primary);">
         <i class="fas fa-home"></i> <span>الرئيسية</span>
     </a>
-    
     <button class="btn-fab" onclick="changeLang()">
         <i class="fas fa-language"></i> <span id="langText">English</span>
     </button>
@@ -568,7 +481,6 @@
 
 <div class="main-content">
     <h1 style="text-align:center; font-family:'Amiri'; margin: 10px 0; font-size: 1.5em;">المصحف الشريف</h1>
-
     <div id="content">
         <div class="loading-container">
             <div class="loading-spinner"></div>
@@ -595,49 +507,6 @@
 
 <div id="toast" class="toast"></div>
 
-<style>
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.95);
-        z-index: 2000;
-        align-items: center;
-        justify-content: center;
-        padding: 15px;
-    }
-    .modal-content {
-        background: var(--card-bg);
-        padding: 20px;
-        border-radius: 12px;
-        max-width: 500px;
-        width: 100%;
-        max-height: 80vh;
-        overflow-y: auto;
-        border: 2px solid #2196F3;
-    }
-    .tafsir-text {
-        font-family: 'Amiri', serif;
-        font-size: 1.2em;
-        line-height: 1.7;
-        color: var(--text);
-        margin: 15px 0;
-    }
-    .close-modal {
-        background: #f44336;
-        color: white;
-        border: none;
-        padding: 10px;
-        border-radius: 6px;
-        width: 100%;
-        cursor: pointer;
-        font-family: 'Cairo';
-        font-weight: bold;
-    }
-</style>
-
 <script>
     const surahNames = [
         "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
@@ -661,13 +530,13 @@
     let currentFontSize = 1.6;
     let isPlaying = false;
     let isLoading = false;
-    const cache = new Map();
+    let scrollObserver;
 
     document.addEventListener('DOMContentLoaded', () => {
         loadSettings();
         initSelects();
         checkLastPosition();
-        document.getElementById('playerContainer').style.display = 'none';
+        initScrollObserver();
     });
 
     function initSelects() {
@@ -688,53 +557,51 @@
         }
     }
 
+    function initScrollObserver() {
+        scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const juz = entry.target.dataset.juz;
+                    const hizb = entry.target.dataset.hizb;
+                    if(juz) document.getElementById('currentJuzInfo').textContent = `الجزء ${juz}`;
+                    if(hizb) document.getElementById('currentHizbInfo').textContent = `الحزب ${hizb}`;
+                }
+            });
+        }, { threshold: 0.1 });
+    }
+
     function setMode(mode) {
         currentMode = mode;
         document.getElementById('modeSurah').classList.toggle('active', mode === 'surah');
         document.getElementById('modeJuz').classList.toggle('active', mode === 'juz');
-        
         document.getElementById('surahWrapper').style.display = mode === 'surah' ? 'block' : 'none';
         document.getElementById('juzWrapper').style.display = mode === 'juz' ? 'block' : 'none';
-        
-        loadContent();
     }
 
     async function loadContent() {
         if (isLoading) return;
-        
         let url, contentId;
-        
         if (currentMode === 'surah') {
             contentId = document.getElementById('surahSelect').value;
-            if (!contentId) {
-                showToast('⚠️ اختر سورة');
-                return;
-            }
+            if (!contentId) return showToast('⚠️ اختر سورة');
             currentSurah = parseInt(contentId);
             url = `https://api.alquran.cloud/v1/surah/${contentId}/ar.uthmani`;
         } else {
             contentId = document.getElementById('juzSelect').value;
-            if (!contentId) {
-                showToast('⚠️ اختر جزء');
-                return;
-            }
+            if (!contentId) return showToast('⚠️ اختر جزء');
             currentJuz = parseInt(contentId);
             url = `https://api.alquran.cloud/v1/juz/${contentId}/ar.uthmani`;
         }
         
         const contentDiv = document.getElementById('content');
         contentDiv.innerHTML = '<div class="loading-container"><div class="loading-spinner"></div><div>جاري التحميل...</div></div>';
-
         isLoading = true;
         try {
             const response = await fetch(url);
             const data = await response.json();
-            
-            if (data.code === 200) {
-                renderContent(data.data.ayahs, contentId);
-            }
+            if (data.code === 200) renderContent(data.data.ayahs, contentId);
         } catch (error) {
-            contentDiv.innerHTML = '<div class="loading-container" style="color:red;">حدث خطأ</div>';
+            contentDiv.innerHTML = '<div class="loading-container" style="color:red;">حدث خطأ في الاتصال</div>';
         } finally {
             isLoading = false;
         }
@@ -742,28 +609,24 @@
 
     function renderContent(ayahs, contentId) {
         let html = '';
-        
         if (currentMode === 'surah') {
             document.getElementById('currentSurahName').textContent = surahNames[contentId - 1];
             html += `<div class="section-header">سورة ${surahNames[contentId - 1]}</div>`;
-            if (contentId != 1 && contentId != 9) {
-                html += '<div class="basmalah">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>';
-            }
+            if (contentId != 1 && contentId != 9) html += '<div class="basmalah">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>';
         } else {
             document.getElementById('currentSurahName').textContent = `الجزء ${contentId}`;
             html += `<div class="section-header">الجزء ${contentId}</div>`;
         }
 
-        ayahs.forEach((ayah) => {
+        ayahs.forEach((ayah, index) => {
             const ayahNum = ayah.numberInSurah;
             const globalNum = ayah.number;
-            const juz = Math.floor((globalNum - 1) / 500) + 1;
-            const hizb = Math.floor((globalNum - 1) / 250) + 1;
+            const juz = ayah.juz;
+            const hizb = ayah.hizbQuarter ? Math.ceil(ayah.hizbQuarter / 4) : Math.floor((globalNum - 1) / 250) + 1;
             
             let text = ayah.text;
             text = text.replace(/۝/g, '<span class="sujud-mark">۝</span>');
             text = text.replace(/[ۚۖۗۙۛۜ]/g, '<span class="waqf-mark">$&</span>');
-
             const audioUrl = `https://cdn.islamic.network/quran/audio/128/${currentReciter}/${globalNum}.mp3`;
 
             html += `
@@ -776,14 +639,24 @@
                     <button class="btn-action btn-tafsir" onclick="openTafsir(${globalNum})"><i class="fas fa-book-open"></i></button>
                 </div>
             </div>`;
+
+            // إضافة فاصل عند نهاية الجزء (إذا كانت الآية التالية تنتمي لجزء مختلف)
+            if (index < ayahs.length - 1) {
+                const nextAyah = ayahs[index + 1];
+                if (nextAyah.juz !== ayah.juz) {
+                    html += `<div class="juz-separator">🔚 نهاية الجزء ${ayah.juz} | 📖 بداية الجزء ${nextAyah.juz}</div>`;
+                }
+            }
         });
 
-        document.getElementById('content').innerHTML = html;
+        const contentDiv = document.getElementById('content');
+        contentDiv.innerHTML = html;
         
+        // تفعيل المراقب لتحديث رقم الجزء تلقائياً عند السكرول
+        document.querySelectorAll('.ayah-container').forEach(el => scrollObserver.observe(el));
+
         if (ayahs.length > 0) {
-            const first = ayahs[0];
-            document.getElementById('currentJuzInfo').textContent = `الجزء ${Math.floor((first.number - 1) / 500) + 1}`;
-            document.getElementById('currentHizbInfo').textContent = `الحزب ${Math.floor((first.number - 1) / 250) + 1}`;
+            document.getElementById('currentJuzInfo').textContent = `الجزء ${ayahs[0].juz}`;
         }
     }
 
@@ -795,11 +668,8 @@
             isPlaying = true;
             document.getElementById('playerContainer').style.display = 'flex';
             document.getElementById('currentAyahLabel').innerHTML = `<i class="fas fa-play-circle"></i><span>${currentMode === 'surah' ? surahNames[currentSurah-1] : 'الجزء '+currentJuz} : ${ayahNum}</span>`;
-            
             const el = document.getElementById(`ayah-${ayahNum}`);
             if (el) {
-                document.getElementById('currentJuzInfo').textContent = `الجزء ${el.dataset.juz}`;
-                document.getElementById('currentHizbInfo').textContent = `الحزب ${el.dataset.hizb}`;
                 document.querySelectorAll('.ayah-container').forEach(e => e.classList.remove('currently-playing'));
                 el.classList.add('currently-playing');
             }
@@ -829,23 +699,21 @@
             const data = await res.json();
             document.getElementById('tafsirTextDisplay').innerText = data.code === 200 ? data.data.text : 'لا يوجد تفسير';
         } catch {
-            document.getElementById('tafsirTextDisplay').innerText = 'حدث خطأ';
+            document.getElementById('tafsirTextDisplay').innerText = 'حدث خطأ في تحميل التفسير';
         }
     }
 
-    function closeTafsir() {
-        document.getElementById('tafsirModal').style.display = 'none';
-    }
+    function closeTafsir() { document.getElementById('tafsirModal').style.display = 'none'; }
 
     function goToAyah() {
         const num = parseInt(document.getElementById('goInput').value);
-        if (!num) return showToast('⚠️ أدخل رقماً');
+        if (!num) return showToast('⚠️ أدخل رقم الآية');
         const el = document.getElementById(`ayah-${num}`);
         if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-            el.classList.add('ayah-highlight');
-            setTimeout(() => el.classList.remove('ayah-highlight'), 2000);
-        } else showToast('⚠️ الآية غير موجودة');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.style.boxShadow = "0 0 15px var(--primary)";
+            setTimeout(() => el.style.boxShadow = "none", 3000);
+        } else showToast('⚠️ الآية غير موجودة في هذا العرض');
     }
 
     function checkLastPosition() {
@@ -858,8 +726,8 @@
                     else document.getElementById('juzSelect').value = last.id;
                     loadContent().then(() => setTimeout(() => {
                         const el = document.getElementById(`ayah-${last.ayah}`);
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }, 500));
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 800));
                 }
             }, 1000);
         }
@@ -872,14 +740,11 @@
         document.getElementById('surahSelect').value = b.surah;
         loadContent().then(() => setTimeout(() => {
             const el = document.getElementById(`ayah-${b.ayah}`);
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 500));
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 800));
     }
 
-    function changeReciter() {
-        currentReciter = document.getElementById('reciterSelect').value;
-        saveSettings();
-    }
+    function changeReciter() { currentReciter = document.getElementById('reciterSelect').value; saveSettings(); }
 
     function changeFontSize(d) {
         currentFontSize = Math.min(2.5, Math.max(1.0, currentFontSize + d * 0.1));
@@ -893,9 +758,7 @@
         saveSettings();
     }
 
-    function changeLang() {
-        // للتبسيط
-    }
+    function changeLang() { /* Reserved for future use */ }
 
     function saveSettings() {
         localStorage.setItem('settings', JSON.stringify({
