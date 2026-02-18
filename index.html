@@ -1366,18 +1366,33 @@ function toggleLanguage() {
 // === وظائف التاريخ والوقت ===
 function updateHijriDate() {
   const today = new Date();
-  const hijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-  }).format(today);
-  document.getElementById('hijriDate').textContent = hijriDate;
-}
-
-function updateCurrentTime() {
-  const now = new Date();
-  const timeString = now.toLocaleTimeString('ar-SA', { 
-    hour: '2-digit', minute: '2-digit', second: '2-digit'
+  
+  // أيام الأسبوع بالعربية
+  const arabicDays = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+  const dayName = arabicDays[today.getDay()];
+  
+  // تصحيح التاريخ الهجري بطرح يوم واحد (لأن الحساب متقدم بيوم)
+  const correctedDate = new Date(today);
+  correctedDate.setDate(correctedDate.getDate() - 1);
+  
+  // استخراج أجزاء التاريخ الهجري
+  const hijriParts = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }).formatToParts(correctedDate);
+  
+  let day = '', month = '', year = '';
+  hijriParts.forEach(part => {
+    if (part.type === 'day') day = part.value;
+    if (part.type === 'month') month = part.value;
+    if (part.type === 'year') year = part.value;
   });
-  if (currentTimeDisplay) { currentTimeDisplay.textContent = timeString; }
+  
+  // تنسيق التاريخ النهائي
+  const hijriDate = `${dayName}، ${day} ${month} ${year} هـ`;
+  
+  document.getElementById('hijriDate').textContent = hijriDate;
 }
 
 // === وظائف مساعدة ===
