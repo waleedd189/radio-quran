@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 <title>راديو قرآن - أوفلاين</title>
-<!-- Meta Tags للـ SEO -->
+<!-- Meta Tags -->
 <meta name="description" content="راديو قرآن - استمع إلى القرآن الكريم، الأذكار من حصن المسلم، الدروس الدينية، والتفسير. تطبيق إسلامي متكامل.">
 <meta name="keywords" content="قرآن, راديو, أذكار, دروس إسلامية, تفسير, مصحف, تلاوة, رقية">
 <meta name="author" content="راديو قرآن">
@@ -34,11 +34,7 @@
   --shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   margin: 0;
@@ -67,13 +63,10 @@ body.light-mode h1, body.light-mode .section-header { background: linear-gradien
 html[lang="en"] body { font-family: 'Roboto', 'Arial', sans-serif; }
 
 /* تحسينات للوصولية */
-button:focus, select:focus, input:focus {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
-}
+button:focus, select:focus, input:focus { outline: 2px solid var(--primary-color); outline-offset: 2px; }
 
 /* ========================================
-   شريط علوي - عداد رمضان والتاريخ الهجري
+   شريط علوي - الإمساكية والتاريخ الهجري
 ======================================== */
 .top-bar {
   display: flex;
@@ -86,104 +79,94 @@ button:focus, select:focus, input:focus {
 }
 
 /* ========================================
-   العد التنازلي لرمضان - على اليسار
+   إمساكية رمضان (مواقيت الصلاة) - حجم كبير
 ======================================== */
-.ramadan-countdown {
+.imsakiyah-widget {
   background: rgba(34, 34, 34, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 15px;
-  padding: 12px 18px;
+  padding: 15px 22px; /* تكبير البادنغ */
   border: 2px solid rgba(76, 175, 80, 0.4);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
   display: inline-flex;
   align-items: center;
-  gap: 15px;
+  gap: 20px; /* تكبير المسافة */
   direction: rtl;
   animation: fadeInDown 0.5s ease-out;
 }
 
-/* حاوية العد التنازلي - على اليسار */
-.countdown-wrapper {
-  text-align: left;
-}
-
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-body.light-mode .ramadan-countdown {
+body.light-mode .imsakiyah-widget {
   background: rgba(255, 255, 255, 0.95);
   border-color: var(--primary-color);
 }
 
-.ramadan-countdown-title {
+.imsakiyah-header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 5px;
 }
 
-.ramadan-countdown-title .moon {
-  font-size: 20px;
+.imsakiyah-header .moon {
+  font-size: 32px; /* تكبير حجم القمر */
   animation: moonGlow 2s infinite alternate;
+}
+
+.imsakiyah-date {
+  font-size: 1.1em; /* تكبير خط التاريخ */
+  color: #FFD700;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  white-space: nowrap;
+}
+
+.imsakiyah-times-grid {
+  display: flex;
+  gap: 10px; /* تكبير المسافة بين الصلوات */
+}
+
+.prayer-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(145deg, var(--primary-dark), var(--primary-color));
+  padding: 10px 14px; /* تكبير حجم البوكس */
+  border-radius: 12px;
+  min-width: 55px; /* تكبير العرض */
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.prayer-box:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(76, 175, 80, 0.5);
+}
+
+.prayer-box .p-name {
+  font-size: 12px; /* تكبير حجم خط اسم الصلاة */
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+}
+
+.prayer-box .p-time {
+  font-size: 18px; /* تكبير حجم خط الوقت بشكل ملحوظ */
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode .prayer-box {
+  background: linear-gradient(145deg, #2E7D32, #4CAF50);
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes moonGlow {
   from { filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.5)); }
   to { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.9)); }
-}
-
-.ramadan-countdown-title span {
-  font-size: 0.75em;
-  color: #FFD700;
-  font-weight: bold;
-  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-}
-
-.ramadan-countdown-timer {
-  display: flex;
-  gap: 8px;
-}
-
-.countdown-time-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: linear-gradient(145deg, var(--primary-dark), var(--primary-color));
-  padding: 6px 10px;
-  border-radius: 10px;
-  min-width: 42px;
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-  transition: transform 0.2s ease;
-}
-
-.countdown-time-box:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 18px rgba(76, 175, 80, 0.5);
-}
-
-.countdown-time-box .num {
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  line-height: 1;
-}
-
-.countdown-time-box .lbl {
-  font-size: 9px;
-  color: rgba(255, 255, 255, 0.9);
-  margin-top: 2px;
-}
-
-body.light-mode .countdown-time-box {
-  background: linear-gradient(145deg, #2E7D32, #4CAF50);
 }
 
 /* ========================================
@@ -205,12 +188,6 @@ body.light-mode .hijri-date-box {
   border-color: var(--primary-color);
 }
 
-.hijri-date-box .hijri-label {
-  font-size: 0.7em;
-  color: #aaffaa;
-  margin-bottom: 5px;
-}
-
 .hijri-date-box .hijri-text {
   font-family: 'Amiri', serif;
   font-size: 0.9em;
@@ -219,15 +196,7 @@ body.light-mode .hijri-date-box {
   line-height: 1.5;
 }
 
-.hijri-date-box .hijri-day {
-  font-family: 'Amiri', serif;
-  font-size: 0.85em;
-  color: #aaffaa;
-}
-
-.hijri-wrapper {
-  text-align: right;
-}
+.hijri-wrapper { text-align: right; }
 
 /* Header */
 h1 {
@@ -244,7 +213,6 @@ h1 {
   line-height: 1.4;
 }
 
-/* العنوان الرئيسي - راديو قرآن */
 .main-title {
   font-size: 1.5em;
   background: linear-gradient(45deg, var(--primary-color), #81C784);
@@ -272,10 +240,7 @@ h1 a {
   display: inline-block;
 }
 
-h1 a:hover { 
-  transform: scale(1.05); 
-  filter: brightness(1.2); 
-}
+h1 a:hover { transform: scale(1.05); filter: brightness(1.2); }
 
 .animated-charity-text {
   font-size: clamp(0.8em, 2vw, 1em); 
@@ -506,15 +471,9 @@ body.light-mode .footer-text { color: #666; }
   direction: ltr;
 }
 
-.clock-display i {
-  margin-left: 8px;
-  color: var(--primary-color);
-}
+.clock-display i { margin-left: 8px; color: var(--primary-color); }
 
-body.light-mode .clock-display {
-  color: #2E7D32;
-  background: transparent;
-}
+body.light-mode .clock-display { color: #2E7D32; background: transparent; }
 
 .time-display { font-size: 0.9em; color: #ccc; margin-top: 10px; font-family: 'Cairo'; background: rgba(0,0,0,0.3); padding: 8px 15px; border-radius: 20px; display: inline-block; }
 body.light-mode .time-display { color: #333; background: #e0e0e0; }
@@ -554,29 +513,9 @@ body.light-mode .time-display { color: #333; background: #e0e0e0; }
   to { transform: scale(1); opacity: 1; }
 }
 
-.daily-dua-box .dua-icon {
-  font-size: 3em;
-  margin-bottom: 20px;
-  animation: pulse 2s infinite;
-}
-
-.daily-dua-box .dua-text {
-  font-family: 'Amiri', serif;
-  font-size: 1.5em;
-  color: #FFD700;
-  line-height: 2;
-  margin-bottom: 25px;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-}
-
-.daily-dua-box .dua-source {
-  font-family: 'Cairo', sans-serif;
-  font-size: 0.9em;
-  color: #81C784;
-  margin-bottom: 25px;
-  font-style: italic;
-}
-
+.daily-dua-box .dua-icon { font-size: 3em; margin-bottom: 20px; animation: pulse 2s infinite; }
+.daily-dua-box .dua-text { font-family: 'Amiri', serif; font-size: 1.5em; color: #FFD700; line-height: 2; margin-bottom: 25px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+.daily-dua-box .dua-source { font-family: 'Cairo', sans-serif; font-size: 0.9em; color: #81C784; margin-bottom: 25px; font-style: italic; }
 .daily-dua-close {
   background: linear-gradient(145deg, var(--primary-dark), var(--primary-color));
   color: white;
@@ -591,19 +530,10 @@ body.light-mode .time-display { color: #333; background: #e0e0e0; }
   box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
 }
 
-.daily-dua-close:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(76, 175, 80, 0.6);
-}
+.daily-dua-close:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(76, 175, 80, 0.6); }
 
-body.light-mode .daily-dua-box {
-  background: linear-gradient(145deg, #fff, #f5f5f5);
-  box-shadow: 0 20px 60px rgba(76, 175, 80, 0.3);
-}
-
-body.light-mode .daily-dua-box .dua-text {
-  color: #2E7D32;
-}
+body.light-mode .daily-dua-box { background: linear-gradient(145deg, #fff, #f5f5f5); box-shadow: 0 20px 60px rgba(76, 175, 80, 0.3); }
+body.light-mode .daily-dua-box .dua-text { color: #2E7D32; }
 
 /* الشريط المتحرك */
 .news-ticker { 
@@ -769,42 +699,31 @@ body.light-mode .volume-slider { background: #ddd; }
     gap: 8px;
   }
   
-  .countdown-wrapper,
-  .hijri-wrapper {
-    text-align: center;
+  .imsakiyah-widget {
+    justify-content: center;
+    padding: 10px 12px;
+    gap: 10px;
   }
   
-  .ramadan-countdown {
-    justify-content: center;
-    padding: 8px 10px;
-    gap: 8px;
+  .imsakiyah-header { font-size: 0.9em; }
+  .imsakiyah-header .moon { font-size: 24px; }
+  
+  .imsakiyah-times-grid { gap: 6px; }
+  
+  .prayer-box {
+    padding: 6px 9px;
+    min-width: 48px;
   }
+  
+  .prayer-box .p-name { font-size: 10px; }
+  .prayer-box .p-time { font-size: 15px; }
   
   .hijri-date-box {
     text-align: center;
     padding: 8px 10px;
   }
   
-  .hijri-date-box .hijri-text {
-    font-size: 0.75em;
-  }
-  
-  .ramadan-countdown-title span {
-    font-size: 0.7em;
-  }
-  
-  .countdown-time-box {
-    min-width: 38px;
-    padding: 5px 8px;
-  }
-  
-  .countdown-time-box .num {
-    font-size: 16px;
-  }
-  
-  .countdown-time-box .lbl {
-    font-size: 8px;
-  }
+  .hijri-date-box .hijri-text { font-size: 0.75em; }
   
   .main-buttons-row,
   .secondary-buttons-row {
@@ -838,14 +757,6 @@ body.light-mode .volume-slider { background: #ddd; }
   .action-main-btn { padding: 10px 8px; font-size: 0.85em; min-height: 50px; }
   
   .whatsapp-float { width: 55px; height: 55px; bottom: 20px; right: 20px; }
-  
-  .hijri-date {
-    top: auto;
-    bottom: 160px;
-    right: 50%;
-    transform: translateX(50%);
-    font-size: 0.8em;
-  }
 }
 
 @media (max-width: 480px) {
@@ -897,33 +808,18 @@ body.light-mode .volume-slider { background: #ddd; }
 <div class="toast" id="toast"></div>
 
 <!-- ========================================
-     شريط علوي - عداد رمضان والتاريخ الهجري
+     شريط علوي - إمساكية رمضان والتاريخ
 ======================================== -->
 <div class="top-bar">
-  <!-- عداد رمضان - على اليسار -->
+  <!-- إمساكية رمضان - على اليسار -->
   <div class="countdown-wrapper">
-    <div class="ramadan-countdown" id="ramadanCountdown">
-      <div class="ramadan-countdown-title">
+    <div class="imsakiyah-widget" id="imsakiyahWidget">
+      <div class="imsakiyah-header">
         <span class="moon">🌙</span>
-        <span id="ramadanLabel">رمضان</span>
+        <span class="imsakiyah-date" id="ramadanDate">جاري التحميل...</span>
       </div>
-      <div class="ramadan-countdown-timer">
-        <div class="countdown-time-box">
-          <div class="num" id="countdownDays">00</div>
-          <div class="lbl" id="daysLabel">يوم</div>
-        </div>
-        <div class="countdown-time-box">
-          <div class="num" id="countdownHours">00</div>
-          <div class="lbl">ساعة</div>
-        </div>
-        <div class="countdown-time-box">
-          <div class="num" id="countdownMinutes">00</div>
-          <div class="lbl">دقيقة</div>
-        </div>
-        <div class="countdown-time-box">
-          <div class="num" id="countdownSeconds">00</div>
-          <div class="lbl">ثانية</div>
-        </div>
+      <div class="imsakiyah-times-grid" id="imsakiyahTimes">
+        <!-- سيتم ملؤها بواسطة الجافاسكريبت -->
       </div>
     </div>
   </div>
@@ -962,13 +858,11 @@ body.light-mode .volume-slider { background: #ddd; }
 <div class="main-actions-wrapper">
   <!-- الصف الأول: المصحف + الأذكار -->
   <div class="main-buttons-row">
-    <!-- زر المصحف -->
     <button class="action-main-btn btn-quran" onclick="window.location.href='https://waleedd189.github.io/radio-quran/almushaf-qiraa.html'" aria-label="فتح المصحف">
       <i class="fas fa-quran" style="font-size:1.3em"></i> 
       <span>المصحف</span>
     </button>
     
-    <!-- زر الأذكار -->
     <button class="action-main-btn btn-adhkar" onclick="window.location.href='https://waleedd189.github.io/radio-quran/adhkar.html'" aria-label="فتح الأذكار">
       <i class="fas fa-hands-praying" style="font-size:1.3em"></i> 
       <span>الأذكار</span>
@@ -977,13 +871,11 @@ body.light-mode .volume-slider { background: #ddd; }
 
   <!-- الصف الثاني: الأدعية + الأحاديث -->
   <div class="secondary-buttons-row">
-    <!-- زر الأدعية -->
     <button class="action-main-btn btn-duas" onclick="window.location.href='https://waleedd189.github.io/radio-quran/duas.html'" aria-label="فتح الأدعية">
       <i class="fas fa-praying-hands" style="font-size:1.3em"></i> 
       <span>الأدعية</span>
     </button>
     
-    <!-- زر الأحاديث -->
     <button class="action-main-btn btn-ahadith" onclick="window.location.href='https://waleedd189.github.io/radio-quran/ahadith-1.html'" aria-label="فتح كتب الأحاديث">
       <i class="fas fa-book-open" style="font-size:1.3em"></i> 
       <span>الأحاديث</span>
@@ -1033,7 +925,7 @@ body.light-mode .volume-slider { background: #ddd; }
 <!-- الشريط المتحرك -->
 <div class="news-ticker">
   <div class="news-ticker-content">
-    📻 مرحبًا بك في موقع راديو قرآن صفحة اللهم لك الحمد | تم إضافة المصحف والأذكار من حصن المسلم مع عداد ذكي | يمكنك الآن حفظ تقدمك في القراءة والأذكار | للإبلاغ عن رابط معطل: 01092116092
+    📻 مرحبًا بك في موقع راديو قرآن صفحة اللهم لك الحمد | تم إضافة إمساكية رمضان لمواقيت الصلاة والسحور | يمكنك الآن حفظ تقدمك في القراءة والأذكار | للإبلاغ عن رابط معطل: 01092116092
   </div>
 </div>
 
@@ -1108,161 +1000,176 @@ body.light-mode .volume-slider { background: #ddd; }
 // رسالة الدعاء اليومية
 // =============================================
 
-// أدعية احتياطية في حال الـ API لم يعمل
+// أدعية احتياطية
 const fallbackDuas = [
-  {
-    text: "اللهم إني أسألك العفو والعافية والمعافاة الدائمة في الدين والدنيا والآخرة",
-    source: "دعاء نبوي شريف"
-  },
-  {
-    text: "اللهم أصلح لي ديني الذي هو عصام أمري، وأصلح لي دنياي التي فيها معاشي، وأصلح لي آخرتي التي إليها معادي",
-    source: "صحيح مسلم"
-  },
-  {
-    text: "اللهم اغفر لي وارحمني وعافني واعف عني وارزقني وأهدني",
-    source: "سنن الترمذي"
-  },
-  {
-    text: "اللهم إني أعوذ بك من الهم والحزن، والعجز والكسل، والبخل والجبن، وضلع الدين وغلبة الرجال",
-    source: "صحيح البخاري"
-  }
+  { text: "اللهم إني أسألك العفو والعافية والمعافاة الدائمة في الدين والدنيا والآخرة", source: "دعاء نبوي شريف" },
+  { text: "اللهم أصلح لي ديني الذي هو عصام أمري، وأصلح لي دنياي التي فيها معاشي، وأصلح لي آخرتي التي إليها معادي", source: "صحيح مسلم" },
+  { text: "اللهم اغفر لي وارحمني وعافني واعف عني وارزقني وأهدني", source: "سنن الترمذي" },
+  { text: "اللهم إني أعوذ بك من الهم والحزن، والعجز والكسل، والبخل والجبن، وضلع الدين وغلبة الرجال", source: "صحيح البخاري" }
 ];
 
-// جلب دعاء من الـ API
 async function fetchDuaFromAPI() {
   try {
-    const response = await fetch('https://quran.yousefheiba.com/api/duas', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-    
-    if (!response.ok) {
-      throw new Error('فشل في الاتصال بالـ API');
-    }
-    
+    const response = await fetch('https://quran.yousefheiba.com/api/duas', { method: 'GET', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' } });
+    if (!response.ok) throw new Error('فشل في الاتصال');
     const data = await response.json();
-    
-    // اختيار دعاء عشوائي من الـ API
     if (data && data.length > 0) {
       const randomIndex = Math.floor(Math.random() * data.length);
       const dua = data[randomIndex];
-      
-      return {
-        text: dua.dua || dua.text || dua.content,
-        source: dua.source || dua.category || "دعاء من القرآن والسنة"
-      };
+      return { text: dua.dua || dua.text || dua.content, source: dua.source || dua.category || "دعاء من القرآن والسنة" };
     }
-    
     return null;
-  } catch (error) {
-    console.log('تعذر جلب الدعاء من الـ API، استخدام الأدعية المحلية');
-    return null;
-  }
+  } catch (error) { return null; }
 }
 
-// الحصول على دعاء (من الـ API أو المحلية)
 async function getDailyDua() {
-  // محاولة جلب من الـ API أولاً
   const apiDua = await fetchDuaFromAPI();
-  
-  if (apiDua) {
-    return apiDua;
-  }
-  
-  // لو الـ API فشل، استخدام الأدعية المحلية
-  const randomDua = fallbackDuas[Math.floor(Math.random() * fallbackDuas.length)];
-  return randomDua;
+  if (apiDua) return apiDua;
+  return fallbackDuas[Math.floor(Math.random() * fallbackDuas.length)];
 }
 
 async function showDailyDua() {
   const today = new Date().toDateString();
   const lastVisit = localStorage.getItem('lastDuaDate');
-  
-  // لو أول زيارة في اليوم
   if (lastVisit !== today) {
-    // الحصول على دعاء
     const dua = await getDailyDua();
-    
     document.getElementById('duaText').textContent = dua.text;
     document.getElementById('duaSource').textContent = dua.source;
-    
-    // إظهار الرسالة بعد ما شاشة التحميل تختفي
-    setTimeout(() => {
-      document.getElementById('dailyDuaOverlay').style.display = 'flex';
-    }, 1500);
-    
-    // حفظ تاريخ اليوم
+    setTimeout(() => { document.getElementById('dailyDuaOverlay').style.display = 'flex'; }, 1500);
     localStorage.setItem('lastDuaDate', today);
   }
 }
 
-function closeDailyDua() {
-  document.getElementById('dailyDuaOverlay').style.display = 'none';
-}
-
-// تشغيل رسالة الدعاء
+function closeDailyDua() { document.getElementById('dailyDuaOverlay').style.display = 'none'; }
 showDailyDua();
 
 // =============================================
-// العد التنازلي/التصاعدي لرمضان
+// إمساكية رمضان - مواقيت الصلاة
 // =============================================
 
-// إعدادات تاريخ رمضان (يمكنك تعديلها)
-const RAMADAN_START = {
-  year: 2026,      // السنة
-  month: 1,        // الشهر (0 = يناير، 1 = فبراير، 2 = مارس...)
-  day: 18,         // يوم بداية رمضان (18 فبراير 2026 الساعة 22:00 UTC = 00:00 بتوقيت مصر)
-  hour: 22         // الساعة 22:00 UTC (00:00 بتوقيت مصر)
-};
+// إحداثيات القاهرة (يمكن تغييرها لأي مدينة)
+const LATITUDE = 30.0444;
+const LONGITUDE = 31.2357;
+const TIMEZONE = 2; // توقيت القاهرة (GMT+2)
 
-// نهاية رمضان (30 يوم)
-const RAMADAN_END = {
-  year: 2025,
-  month: 2,        // مارس
-  day: 30          // يوم نهاية رمضان (تقريباً)
-};
-
-function updateRamadanCountdown() {
-  const ramadanStart = new Date(Date.UTC(
-    RAMADAN_START.year, 
-    RAMADAN_START.month, 
-    RAMADAN_START.day, 
-    RAMADAN_START.hour || 0, 
-    0, 
-    0
-  ));
-  const now = new Date();
-  
-  const daysEl = document.getElementById('countdownDays');
-  const hoursEl = document.getElementById('countdownHours');
-  const minutesEl = document.getElementById('countdownMinutes');
-  const secondsEl = document.getElementById('countdownSeconds');
-  const ramadanLabelEl = document.getElementById('ramadanLabel');
-  const daysLabelEl = document.getElementById('daysLabel');
-  
-  // العد التصاعدي من بداية رمضان
-  const timePassed = now.getTime() - ramadanStart.getTime();
-  
-  const days = Math.max(0, Math.floor(timePassed / (1000 * 60 * 60 * 24)));
-  const totalHours = Math.max(0, Math.floor(timePassed / (1000 * 60 * 60)));
-  const minutes = Math.max(0, Math.floor((timePassed / (1000 * 60)) % 60));
-  const seconds = Math.max(0, Math.floor((timePassed / 1000) % 60));
-  
-  ramadanLabelEl.textContent = 'رمضان';
-  daysLabelEl.textContent = 'يوم';
-  
-  daysEl.textContent = String(days).padStart(2, '0');
-  hoursEl.textContent = String(totalHours).padStart(2, '0');
-  minutesEl.textContent = String(minutes).padStart(2, '0');
-  secondsEl.textContent = String(seconds).padStart(2, '0');
+// حساب زاوية الشمس والوقت
+function getSunTime(date, angle) {
+    const rad = Math.PI / 180;
+    const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+    
+    // معادلة الزمن
+    const B = (360 / 365) * (dayOfYear - 81) * rad;
+    const EoT = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
+    
+    // انحراف الشمس
+    const decl = 23.45 * Math.sin(rad * (360 / 365) * (dayOfYear - 81));
+    
+    // وقت الظهر الشمسي
+    const Dhuhr = 12 + TIMEZONE - (LONGITUDE / 15) - (EoT / 60);
+    
+    // حساب الزاوية
+    const latRad = LATITUDE * rad;
+    const declRad = decl * rad;
+    
+    const cosHA = (Math.sin(-angle * rad) - Math.sin(latRad) * Math.sin(declRad)) / (Math.cos(latRad) * Math.cos(declRad));
+    if (cosHA > 1 || cosHA < -1) return { Dhuhr, T: 0 };
+    
+    const T = Math.acos(cosHA) / (15 * rad);
+    
+    return { Dhuhr, T };
 }
 
-// تشغيل العد
-updateRamadanCountdown();
-setInterval(updateRamadanCountdown, 1000);
+// تنسيق الوقت
+function formatTime(hours) {
+    if (hours == null || isNaN(hours)) return "--:--";
+    let h = Math.floor(hours);
+    let m = Math.floor((hours - h) * 60);
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+}
+
+// حساب المواقيت
+function calculatePrayerTimes(date) {
+    const fajrData = getSunTime(date, 19.5);
+    const Fajr = fajrData.Dhuhr - fajrData.T;
+    
+    const sunriseData = getSunTime(date, 0.833);
+    const Sunrise = sunriseData.Dhuhr - sunriseData.T;
+    
+    const Dhuhr = fajrData.Dhuhr + (1/60);
+    
+    const rad = Math.PI / 180;
+    const decl = 23.45 * Math.sin(rad * (360 / 365) * (Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)) - 81));
+    const asrAngle = Math.atan(1 / (1 + Math.abs(Math.tan((LATITUDE - decl) * rad)))) / rad;
+    const asrData = getSunTime(date, asrAngle);
+    const Asr = asrData.Dhuhr + asrData.T;
+    
+    const maghribData = getSunTime(date, 0.833);
+    const Maghrib = maghribData.Dhuhr + maghribData.T;
+    
+    const ishaData = getSunTime(date, 17.5);
+    const Isha = ishaData.Dhuhr + ishaData.T;
+    
+    return { Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha };
+}
+
+// تحديث الإمساكية
+function updateImsakiyah() {
+    const now = new Date();
+    const times = calculatePrayerTimes(now);
+    
+    const hijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    }).format(now);
+    
+    const ramadanDateEl = document.getElementById('ramadanDate');
+    const hijriParts = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+        month: 'numeric',
+        day: 'numeric'
+    }).formatToParts(now);
+    
+    let hijriMonth = 0;
+    let hijriDay = 0;
+    
+    hijriParts.forEach(part => {
+        if (part.type === 'month') hijriMonth = parseInt(part.value);
+        if (part.type === 'day') hijriDay = parseInt(part.value);
+    });
+    
+    if (hijriMonth === 9) {
+        ramadanDateEl.textContent = `${hijriDay} رمضان`;
+    } else if (hijriMonth === 8) {
+        const daysLeft = 30 - hijriDay;
+        ramadanDateEl.textContent = `باقي ${daysLeft} يوم`;
+    } else {
+        ramadanDateEl.textContent = hijriDate;
+    }
+    
+    const timesContainer = document.getElementById('imsakiyahTimes');
+    timesContainer.innerHTML = `
+        <div class="prayer-box">
+            <span class="p-name">الفجر</span>
+            <span class="p-time">${formatTime(times.Fajr)}</span>
+        </div>
+        <div class="prayer-box">
+            <span class="p-name">الظهر</span>
+            <span class="p-time">${formatTime(times.Dhuhr)}</span>
+        </div>
+        <div class="prayer-box">
+            <span class="p-name">العصر</span>
+            <span class="p-time">${formatTime(times.Asr)}</span>
+        </div>
+        <div class="prayer-box">
+            <span class="p-name">المغرب</span>
+            <span class="p-time">${formatTime(times.Maghrib)}</span>
+        </div>
+        <div class="prayer-box">
+            <span class="p-name">العشاء</span>
+            <span class="p-time">${formatTime(times.Isha)}</span>
+        </div>
+    `;
+}
 
 // =============================================
 // الساعة
@@ -1272,13 +1179,13 @@ function updateClock() {
   const hours = String(now.getHours()).padStart(2, '0');
   const minutes = String(now.getMinutes()).padStart(2, '0');
   const seconds = String(now.getSeconds()).padStart(2, '0');
-  
   document.getElementById('clockTime').textContent = `${hours}:${minutes}:${seconds}`;
 }
 
-// تشغيل الساعة
 updateClock();
 setInterval(updateClock, 1000);
+updateImsakiyah();
+setInterval(updateImsakiyah, 60000);
 
 // =============================================
 // كود راديو قرآن الأصلي
@@ -1390,7 +1297,7 @@ const section1Stations = [
       { name: {ar: "دعاء الذهاب إلى المسجد", en: "Prayer for going to mosque"}, url: "https://ia802305.us.archive.org/31/items/MsherrY-03_uP_bY_mUSLEm/004.mp3" },
       { name: {ar: "دعاء دخول المسجد", en: "Prayer for entering the mosque"}, url: "https://ia802305.us.archive.org/31/items/MsherrY-03_uP_bY_mUSLEm/005.mp3" },
       { name: {ar: "أذكار بعد السلام من الصلاة", en: "After prayer Azkar"}, url: "https://ia902305.us.archive.org/31/items/MsherrY-03_uP_bY_mUSLEm/006.mp3" },
-      { name: {ar: "دعاء الخروج من المسجد", en: "Prayer for leaving the mosque"}, url: "https://ia802305.us.archive.org/31/items/MsherrY-03_uP_bY_mUSLEm/007.mp3" },
+      { name: {ar: "دعاء الخروج من المسجد", en: "Prayer for leaving the mosque"}, url: "https://ia902305.us.archive.org/31/items/MsherrY-03_uP_bY_mUSLEm/007.mp3" },
       { name: {ar: "أذكار المساء", en: "Evening Azkar"}, url: "https://ia902305.us.archive.org/31/items/MsherrY-03_uP_bY_mUSLEm/009.mp3" },
       { name: {ar: "أذكار النوم", en: "Sleeping Azkar"}, url: "https://ia902305.us.archive.org/31/items/MsherrY-03_uP_bY_mUSLEm/010.mp3" }
     ]
@@ -1422,96 +1329,22 @@ const section2Stations = [
 ];
 
 const section3Stations = [
-  { 
-    name: {ar: "الشيخ الحصري", en: "Sheikh Al-Husary"}, 
-    img: "https://7nen.do.am/_ph/6/1/650079361.jpg", 
-    completeQuranUrl: "https://waleedd189.github.io/radio-quran/mahmoud-khalil.html" 
-  },
-  { 
-    name: {ar: "الشيخ عبدالباسط", en: "Sheikh Abdul Basit"}, 
-    img: "https://7nen.do.am/_ph/6/1/788498118.jpg", 
-    url: "https://qurango.net/radio/abdulbasit_abdulsamad.mp3" 
-  },
-  { 
-    name: {ar: "الشيخ محمود علي البنا", en: "Sheikh Mahmoud Ali Al-Banna"}, 
-    img: "https://7nen.do.am/_ph/6/1/592190149.jpg", 
-    url: "https://backup.qurango.net/radio/mahmoud_ali__albanna" 
-  },
-  { 
-    name: {ar: "الشيخ مصطفى إسماعيل", en: "Sheikh Mustafa Ismail"}, 
-    img: "https://7nen.do.am/_ph/6/1/49597189.jpg", 
-    url: "https://backup.qurango.net/radio/mustafa_ismail" 
-  },
-  { 
-    name: {ar: "الشيخ محمد صديق المنشاوي", en: "Sheikh Al-Minshawi"}, 
-    img: "https://i.postimg.cc/tJ0v8zZn/image.jpg", 
-    url: "https://server03.quran-uni.com:7036/;*.mp3", 
-    mushafUrl: "https://waleedd189.github.io/radio-quran/Al-Minshawi.html", 
-    ruwayaUrl: "https://waleedd189.github.io/radio-quran/Al-Minshawi.html" 
-  },
-  { 
-    name: {ar: "الشيخ أحمد العجمي", en: "Sheikh Ahmed Al-Ajmi"}, 
-    img: "https://7nen.do.am/_ph/6/1/979378293.jpg", 
-    url: "https://qurango.net/radio/ahmad_alajmy.mp3" 
-  },
-  { 
-    name: {ar: "الشيخ مشاري راشد", en: "Sheikh Mishary Rashid"}, 
-    img: "https://7nen.do.am/_ph/6/1/526518923.jpg", 
-    url: "https://qurango.net/radio/mishary_alafasi.mp3", 
-    completeQuranUrl: "https://waleedd189.github.io/radio-quran/mishari-rashid.html" 
-  },
-  { 
-    name: {ar: "الشيخ محمد جبريل", en: "Sheikh Muhammad Jibreel"}, 
-    img: "https://7nen.do.am/_ph/6/1/844452129.jpg", 
-    url: "https://a6.asurahosting.com:8470/radio.mp3",
-    completeQuranUrl: "https://waleedd189.github.io/radio-quran/mohammed-jebril.html",
-    mushafUrl: "https://waleedd189.github.io/radio-quran/mohammed-jebril.html",
-    duaaUrl: "https://waleedd189.github.io/radio-quran/mohammed-jebril.html#dua"
-  },
-  { 
-    name: {ar: "الشيخ محمد محمود الطبلاوي", en: "Sheikh Mohammed Mahmoud Al-Tablaway"}, 
-    img: "https://i.postimg.cc/s2b9FP4x/mhmd-mhmwd-altblawy.jpg", 
-    url: "https://backup.qurango.net/radio/mohammed_altblawy",
-    completeQuranUrl: "https://waleedd189.github.io/radio-quran/tablawi.html"
-  },
-  { 
-    name: {ar: "الشيخ إدريس أبكر", en: "Sheikh Idrees Abkar"}, 
-    img: "https://7nen.do.am/_ph/6/1/695351424.jpg", 
-    url: "https://backup.qurango.net/radio/idrees_abkr" 
-  },
-  { 
-    name: {ar: "الشيخ سعد الغامدي", en: "Sheikh Saad Al-Ghamdi"}, 
-    img: "https://7nen.do.am/_ph/6/1/613525566.jpg", 
-    url: "https://backup.qurango.net/radio/saad_alghamdi" 
-  },
-  { 
-    name: {ar: "الشيخ مصطفى اللاهوني", en: "Sheikh Mustafa Al-Lahouni"}, 
-    img: "https://7nen.do.am/_ph/6/1/586864154.jpg", 
-    url: "https://backup.qurango.net/radio/mustafa_allahoni" 
-  },
-  { 
-    name: {ar: "الشيخ فارس عباد", en: "Sheikh Fares Abbad"}, 
-    img: "https://tvquran.com/uploads/authors/images/%D9%81%D8%A7%D8%B1%D8%B3%20%D8%B9%D8%A8%D8%A7%D8%AF.jpg", 
-    url: "https://qurango.net/radio/fares_abbad.mp3", 
-    completeQuranUrl: "https://waleedd189.github.io/radio-quran/fares-abbad.html" 
-  },
-  { 
-    name: {ar: "الشيخ ماهر المعيقلي", en: "Sheikh Maher Al-Muaiqly"}, 
-    img: "https://i.postimg.cc/WzgpPS5k/image.png", 
-    url: "https://server03.quran-uni.com:7005/;*.mp3" 
-  },
-  { 
-    name: {ar: "الشيخ ناصر القطامي", en: "Sheikh Nasser Al-Qatami"}, 
-    img: "https://i.postimg.cc/ryhX50Xv/ناصر_القطامى.jpg", 
-    url: "https://qurango.net/radio/nasser_alqatami.mp3", 
-    completeQuranUrl: "https://waleedd189.github.io/radio-quran/nasser-al-qatami.html" 
-  },
-  {
-    name: {ar: "القارئ السيد سعيد", en: "Reader Sayed Saeed"},
-    img: "https://i.postimg.cc/rwbCPjcC/السيد_سعيد.webp",
-    url: "https://waleedd189.github.io/radio-quran/sayed-saeed2.html",
-    completeQuranUrl: "https://waleedd189.github.io/radio-quran/sayed-saeed2.html" 
-  }
+  { name: {ar: "الشيخ الحصري", en: "Sheikh Al-Husary"}, img: "https://7nen.do.am/_ph/6/1/650079361.jpg", completeQuranUrl: "https://waleedd189.github.io/radio-quran/mahmoud-khalil.html" },
+  { name: {ar: "الشيخ عبدالباسط", en: "Sheikh Abdul Basit"}, img: "https://7nen.do.am/_ph/6/1/788498118.jpg", url: "https://qurango.net/radio/abdulbasit_abdulsamad.mp3" },
+  { name: {ar: "الشيخ محمود علي البنا", en: "Sheikh Mahmoud Ali Al-Banna"}, img: "https://7nen.do.am/_ph/6/1/592190149.jpg", url: "https://backup.qurango.net/radio/mahmoud_ali__albanna" },
+  { name: {ar: "الشيخ مصطفى إسماعيل", en: "Sheikh Mustafa Ismail"}, img: "https://7nen.do.am/_ph/6/1/49597189.jpg", url: "https://backup.qurango.net/radio/mustafa_ismail" },
+  { name: {ar: "الشيخ محمد صديق المنشاوي", en: "Sheikh Al-Minshawi"}, img: "https://i.postimg.cc/tJ0v8zZn/image.jpg", url: "https://server03.quran-uni.com:7036/;*.mp3", mushafUrl: "https://waleedd189.github.io/radio-quran/Al-Minshawi.html", ruwayaUrl: "https://waleedd189.github.io/radio-quran/Al-Minshawi.html" },
+  { name: {ar: "الشيخ أحمد العجمي", en: "Sheikh Ahmed Al-Ajmi"}, img: "https://7nen.do.am/_ph/6/1/979378293.jpg", url: "https://qurango.net/radio/ahmad_alajmy.mp3" },
+  { name: {ar: "الشيخ مشاري راشد", en: "Sheikh Mishary Rashid"}, img: "https://7nen.do.am/_ph/6/1/526518923.jpg", url: "https://qurango.net/radio/mishary_alafasi.mp3", completeQuranUrl: "https://waleedd189.github.io/radio-quran/mishari-rashid.html" },
+  { name: {ar: "الشيخ محمد جبريل", en: "Sheikh Muhammad Jibreel"}, img: "https://7nen.do.am/_ph/6/1/844452129.jpg", url: "https://a6.asurahosting.com:8470/radio.mp3", completeQuranUrl: "https://waleedd189.github.io/radio-quran/mohammed-jebril.html", mushafUrl: "https://waleedd189.github.io/radio-quran/mohammed-jebril.html", duaaUrl: "https://waleedd189.github.io/radio-quran/mohammed-jebril.html#dua" },
+  { name: {ar: "الشيخ محمد محمود الطبلاوي", en: "Sheikh Mohammed Mahmoud Al-Tablaway"}, img: "https://i.postimg.cc/s2b9FP4x/mhmd-mhmwd-altblawy.jpg", url: "https://backup.qurango.net/radio/mohammed_altblawy", completeQuranUrl: "https://waleedd189.github.io/radio-quran/tablawi.html" },
+  { name: {ar: "الشيخ إدريس أبكر", en: "Sheikh Idrees Abkar"}, img: "https://7nen.do.am/_ph/6/1/695351424.jpg", url: "https://backup.qurango.net/radio/idrees_abkr" },
+  { name: {ar: "الشيخ سعد الغامدي", en: "Sheikh Saad Al-Ghamdi"}, img: "https://7nen.do.am/_ph/6/1/613525566.jpg", url: "https://backup.qurango.net/radio/saad_alghamdi" },
+  { name: {ar: "الشيخ مصطفى اللاهوني", en: "Sheikh Mustafa Al-Lahouni"}, img: "https://7nen.do.am/_ph/6/1/586864154.jpg", url: "https://backup.qurango.net/radio/mustafa_allahoni" },
+  { name: {ar: "الشيخ فارس عباد", en: "Sheikh Fares Abbad"}, img: "https://tvquran.com/uploads/authors/images/%D9%81%D8%A7%D8%B1%D8%B3%20%D8%B9%D8%A8%D8%A7%D8%AF.jpg", url: "https://qurango.net/radio/fares_abbad.mp3", completeQuranUrl: "https://waleedd189.github.io/radio-quran/fares-abbad.html" },
+  { name: {ar: "الشيخ ماهر المعيقلي", en: "Sheikh Maher Al-Muaiqly"}, img: "https://i.postimg.cc/WzgpPS5k/image.png", url: "https://server03.quran-uni.com:7005/;*.mp3" },
+  { name: {ar: "الشيخ ناصر القطامي", en: "Sheikh Nasser Al-Qatami"}, img: "https://i.postimg.cc/ryhX50Xv/ناصر_القطامى.jpg", url: "https://qurango.net/radio/nasser_alqatami.mp3", completeQuranUrl: "https://waleedd189.github.io/radio-quran/nasser-al-qatami.html" },
+  { name: {ar: "القارئ السيد سعيد", en: "Reader Sayed Saeed"}, img: "https://i.postimg.cc/rwbCPjcC/السيد_سعيد.webp", url: "https://waleedd189.github.io/radio-quran/sayed-saeed2.html", completeQuranUrl: "https://waleedd189.github.io/radio-quran/sayed-saeed2.html" }
 ];
 
 const section4Stations = [
@@ -1555,96 +1388,42 @@ function createStationCard(station) {
   
   const isFavorite = favorites.some(fav => fav.url === (station.url || station.completeQuranUrl || station.lessonsUrl || station.recordings?.[0]?.url));
   
-  const favBtn = `<button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${station.name.ar}', '${station.name.en}', '${station.img}', '${station.url || station.lessonsUrl || station.completeQuranUrl || ''}')" aria-label="${isFavorite ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}">
-    <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
-  </button>`;
+  const favBtn = `<button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${station.name.ar}', '${station.name.en}', '${station.img}', '${station.url || station.lessonsUrl || station.completeQuranUrl || ''}')" aria-label="${isFavorite ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}"><i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i></button>`;
 
   let buttons = '';
 
   if (station.type === 'selected-recitations') {
-    buttons = `
-      <select class="recitations-select" onchange="playSelectedRecitation(this)" aria-label="اختر تلاوة">
-        <option value="">${translations[currentLanguage].recitationsSelectDefault}</option>
-        ${station.recordings.map(rec => `<option value="${rec.url}">${rec.name[currentLanguage]}</option>`).join('')}
-      </select>
-      <button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>
-    `;
+    buttons = `<select class="recitations-select" onchange="playSelectedRecitation(this)" aria-label="اختر تلاوة"><option value="">${translations[currentLanguage].recitationsSelectDefault}</option>${station.recordings.map(rec => `<option value="${rec.url}">${rec.name[currentLanguage]}</option>`).join('')}</select><button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>`;
   } else if (station.type === 'azkar') {
-    buttons = `
-      <select class="azkar-select" onchange="playAzkar(this)" aria-label="اختر ذكر">
-        <option value="">${translations[currentLanguage].azkarSelectDefault}</option>
-        ${station.recordings.map(rec => `<option value="${rec.url}">${rec.name[currentLanguage]}</option>`).join('')}
-      </select>
-      <button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>
-    `;
+    buttons = `<select class="azkar-select" onchange="playAzkar(this)" aria-label="اختر ذكر"><option value="">${translations[currentLanguage].azkarSelectDefault}</option>${station.recordings.map(rec => `<option value="${rec.url}">${rec.name[currentLanguage]}</option>`).join('')}</select><button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>`;
   } else if (station.type === 'ruqyah') {
-    buttons = `
-      <select class="ruqyah-select" onchange="playRuqyah(this)" aria-label="اختر رقية">
-        <option value="">${translations[currentLanguage].ruqyahSelectDefault}</option>
-        ${station.recordings.map(rec => `<option value="${rec.url}">${rec.name[currentLanguage]}</option>`).join('')}
-      </select>
-      <button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>
-    `;
+    buttons = `<select class="ruqyah-select" onchange="playRuqyah(this)" aria-label="اختر رقية"><option value="">${translations[currentLanguage].ruqyahSelectDefault}</option>${station.recordings.map(rec => `<option value="${rec.url}">${rec.name[currentLanguage]}</option>`).join('')}</select><button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>`;
   } else if (station.name.ar.includes("الشعراوي")) {
     buttons = `<a href="${station.url}" target="_blank" class="button-link secondary-btn"><i class="fas fa-headphones"></i> ${translations[currentLanguage].listenToTafsir}</a>`;
   } else if (station.lessonsUrl) {
     buttons = `<a href="${station.lessonsUrl}" target="_blank" class="button-link secondary-btn"><i class="fas fa-graduation-cap"></i> ${translations[currentLanguage].listenToLessons}</a>`;
   } else if (station.name.ar.includes("محمد جبريل")) {
-    buttons = `
-      <button onclick="playRadio('${station.url}', '${name}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button>
-      <button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>
-      <a href="${station.completeQuranUrl}" target="_blank" class="button-link purple-btn"><i class="fas fa-book-quran"></i> ${translations[currentLanguage].listenToCompleteQuran}</a>
-      <a href="${station.duaaUrl}" target="_blank" class="button-link" style="background: var(--info-color);"><i class="fas fa-hands-praying"></i> أدعية الختم</a>
-    `;
+    buttons = `<button onclick="playRadio('${station.url}', '${name}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button><button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button><a href="${station.completeQuranUrl}" target="_blank" class="button-link purple-btn"><i class="fas fa-book-quran"></i> ${translations[currentLanguage].listenToCompleteQuran}</a><a href="${station.duaaUrl}" target="_blank" class="button-link" style="background: var(--info-color);"><i class="fas fa-hands-praying"></i> أدعية الختم</a>`;
   } else if (station.name.ar.includes("الطبلاوي")) {
-    buttons = `
-      <button onclick="playRadio('${station.url}', '${name}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button>
-      <button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>
-      <a href="${station.completeQuranUrl}" target="_blank" class="button-link purple-btn"><i class="fas fa-book-quran"></i> ${translations[currentLanguage].listenToCompleteQuran}</a>
-    `;
+    buttons = `<button onclick="playRadio('${station.url}', '${name}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button><button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button><a href="${station.completeQuranUrl}" target="_blank" class="button-link purple-btn"><i class="fas fa-book-quran"></i> ${translations[currentLanguage].listenToCompleteQuran}</a>`;
   } else if (station.completeQuranUrl) {
-    buttons = `
-      <button onclick="playRadio('${station.url}', '${name}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button>
-      <button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>
-      <a href="${station.completeQuranUrl}" target="_blank" class="button-link secondary-btn"><i class="fas fa-quran"></i> ${translations[currentLanguage].listenToCompleteQuran}</a>
-    `;
+    buttons = `<button onclick="playRadio('${station.url}', '${name}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button><button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button><a href="${station.completeQuranUrl}" target="_blank" class="button-link secondary-btn"><i class="fas fa-quran"></i> ${translations[currentLanguage].listenToCompleteQuran}</a>`;
   } else if (station.mushafUrl) {
-    buttons = `
-      <button onclick="playRadio('${station.url}', '${name}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button>
-      <button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>
-      <a href="${station.mushafUrl}" target="_blank" class="button-link secondary-btn"><i class="fas fa-book-quran"></i> ${translations[currentLanguage].mushafAlMinshawi}</a>
-      <a href="${station.ruwayaUrl}" target="_blank" class="button-link secondary-btn"><i class="fas fa-star"></i> ${translations[currentLanguage].ruwayaAlMinshawi}</a>
-    `;
+    buttons = `<button onclick="playRadio('${station.url}', '${name}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button><button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button><a href="${station.mushafUrl}" target="_blank" class="button-link secondary-btn"><i class="fas fa-book-quran"></i> ${translations[currentLanguage].mushafAlMinshawi}</a><a href="${station.ruwayaUrl}" target="_blank" class="button-link secondary-btn"><i class="fas fa-star"></i> ${translations[currentLanguage].ruwayaAlMinshawi}</a>`;
   } else {
-    buttons = `
-      <button onclick="playRadio('${station.url}', '${name}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button>
-      <button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>
-    `;
+    buttons = `<button onclick="playRadio('${station.url}', '${name}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button><button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>`;
   }
 
-  card.innerHTML = `
-    ${favBtn}
-    <img src="${station.img}" alt="${name}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x180/222/4CAF50?text=Quran+Radio'" />
-    <h2>${name}</h2>
-    <div class="card-buttons">${buttons}</div>
-    <div class="progress-bar"></div>
-  `;
+  card.innerHTML = `${favBtn}<img src="${station.img}" alt="${name}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x180/222/4CAF50?text=Quran+Radio'" /><h2>${name}</h2><div class="card-buttons">${buttons}</div><div class="progress-bar"></div>`;
   return card;
 }
 
 function initializeStations() {
-  section1Container.innerHTML = ''; 
-  section2Container.innerHTML = ''; 
-  section3Container.innerHTML = ''; 
-  section4Container.innerHTML = '';
-  
+  section1Container.innerHTML = ''; section2Container.innerHTML = ''; section3Container.innerHTML = ''; section4Container.innerHTML = '';
   allStations.forEach((station, index) => {
     const card = createStationCard(station);
     card.style.animationDelay = `${index * 0.05}s`;
-    if(section1Stations.includes(station)) { section1Container.appendChild(card); } 
-    else if(section2Stations.includes(station)) { section2Container.appendChild(card); } 
-    else if(section3Stations.includes(station)) { section3Container.appendChild(card); } 
-    else if(section4Stations.includes(station)) { section4Container.appendChild(card); }
+    if(section1Stations.includes(station)) { section1Container.appendChild(card); } else if(section2Stations.includes(station)) { section2Container.appendChild(card); } else if(section3Stations.includes(station)) { section3Container.appendChild(card); } else if(section4Stations.includes(station)) { section4Container.appendChild(card); }
   });
   updateFavoritesSection();
 }
@@ -1652,109 +1431,47 @@ function initializeStations() {
 // === وظائف الراديو ===
 function playRadio(url, stationName, elementToActivate) {
   if (!url) { showToast('⚠️ لا يوجد رابط تشغيل لهذه المحطة'); return; }
+  if (!navigator.onLine) { showToast('⚠️ لا يوجد اتصال بالإنترنت'); return; }
   
-  // كشف الاتصال بالإنترنت
-  if (!navigator.onLine) {
-    showToast('⚠️ لا يوجد اتصال بالإنترنت');
-    return;
-  }
-  
-  player.pause(); 
-  player.src = ""; 
-  playingIndicator.style.display = 'none'; 
-  bufferingLoader.style.display = 'inline-block';
+  player.pause(); player.src = ""; playingIndicator.style.display = 'none'; bufferingLoader.style.display = 'inline-block';
   document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
-  
-  if (elementToActivate && elementToActivate.closest('.card')) { 
-    elementToActivate.closest('.card').classList.add('active'); 
-  }
+  if (elementToActivate && elementToActivate.closest('.card')) { elementToActivate.closest('.card').classList.add('active'); }
   nowPlayingSpan.textContent = stationName;
 
   const globalPlayerContainer = document.getElementById('globalAudioPlayerContainer');
   const globalPlayerStationName = document.getElementById('globalPlayerStationName');
-  
   globalPlayer.src = url;
   globalPlayer.volume = volumeSlider.value / 100;
   globalVolumeSlider.value = volumeSlider.value;
   globalPlayerContainer.style.display = 'block';
   globalPlayerStationName.textContent = stationName;
 
-  globalPlayer.addEventListener('waiting', () => { 
-    playingIndicator.style.display = 'none'; 
-    bufferingLoader.style.display = 'inline-block'; 
-  });
-  globalPlayer.addEventListener('playing', () => { 
-    bufferingLoader.style.display = 'none'; 
-    playingIndicator.style.display = 'block'; 
-  });
-  globalPlayer.addEventListener('canplay', () => { 
-    bufferingLoader.style.display = 'none'; 
-    playingIndicator.style.display = 'block'; 
-  });
-  globalPlayer.addEventListener('play', () => { 
-    playStartTime = Date.now(); 
-    startTimeCounter(); 
-  });
-  globalPlayer.addEventListener('pause', () => { 
-    playingIndicator.style.display = 'none'; 
-  });
+  globalPlayer.addEventListener('waiting', () => { playingIndicator.style.display = 'none'; bufferingLoader.style.display = 'inline-block'; });
+  globalPlayer.addEventListener('playing', () => { bufferingLoader.style.display = 'none'; playingIndicator.style.display = 'block'; });
+  globalPlayer.addEventListener('canplay', () => { bufferingLoader.style.display = 'none'; playingIndicator.style.display = 'block'; });
+  globalPlayer.addEventListener('play', () => { playStartTime = Date.now(); startTimeCounter(); });
+  globalPlayer.addEventListener('pause', () => { playingIndicator.style.display = 'none'; });
 
-  globalPlayer.play()
-    .then(() => { 
-      playStartTime = Date.now(); 
-      startTimeCounter(); 
-      showToast(`▶️ جاري تشغيل: ${stationName}`); 
-    })
-    .catch(error => { 
-      console.error('Play error:', error); 
-      showToast('⚠️ تعذر تشغيل المحطة. الرجاء المحاولة مرة أخرى.'); 
-      bufferingLoader.style.display = 'none'; 
-    });
+  globalPlayer.play().then(() => { playStartTime = Date.now(); startTimeCounter(); showToast(`▶️ جاري تشغيل: ${stationName}`); }).catch(error => { console.error('Play error:', error); showToast('⚠️ تعذر تشغيل المحطة. الرجاء المحاولة مرة أخرى.'); bufferingLoader.style.display = 'none'; });
 }
 
-function playAzkar(el) {
-  const url = el.value;
-  if(url) { 
-    const card = el.closest('.card'); 
-    const azkarName = el.options[el.selectedIndex].text; 
-    playRadio(url, `أذكار - ${azkarName}`, card); 
-  }
-}
-
-function playRuqyah(el) {
-  const url = el.value;
-  if(url) { 
-    const card = el.closest('.card'); 
-    const ruqyahName = el.options[el.selectedIndex].text; 
-    playRadio(url, `رقية - ${ruqyahName}`, card); 
-  }
-}
-
-function playSelectedRecitation(el) {
-  const url = el.value;
-  if(url) { 
-    const card = el.closest('.card'); 
-    const recitationName = el.options[el.selectedIndex].text; 
-    playRadio(url, recitationName, card); 
-  }
-}
+function playAzkar(el) { const url = el.value; if(url) { const card = el.closest('.card'); const azkarName = el.options[el.selectedIndex].text; playRadio(url, `أذكار - ${azkarName}`, card); } }
+function playRuqyah(el) { const url = el.value; if(url) { const card = el.closest('.card'); const ruqyahName = el.options[el.selectedIndex].text; playRadio(url, `رقية - ${ruqyahName}`, card); } }
+function playSelectedRecitation(el) { const url = el.value; if(url) { const card = el.closest('.card'); const recitationName = el.options[el.selectedIndex].text; playRadio(url, recitationName, card); } }
 
 function stopRadio() {
-  globalPlayer.pause(); 
-  globalPlayer.src = ""; 
+  globalPlayer.pause(); globalPlayer.src = "";
   document.getElementById('globalAudioPlayerContainer').style.display = 'none';
-  nowPlayingSpan.textContent = translations[currentLanguage].initialStationText; 
-  playingIndicator.style.display = 'none'; 
-  bufferingLoader.style.display = 'none';
-  document.querySelectorAll('.card').forEach(card => card.classList.remove('active')); 
+  nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
+  playingIndicator.style.display = 'none'; bufferingLoader.style.display = 'none';
+  document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
   stopTimeCounter();
   showToast('⏹️ تم إيقاف التشغيل');
 }
 
 function toggleGlobalPlayer() {
   document.getElementById('globalAudioPlayerContainer').style.display = 'none';
-  globalPlayer.pause(); 
-  globalPlayer.src = "";
+  globalPlayer.pause(); globalPlayer.src = "";
   nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
   playingIndicator.style.display = 'none';
 }
@@ -1763,125 +1480,45 @@ function toggleGlobalPlayer() {
 function toggleSleepTimer() {
   const mins = parseInt(document.getElementById('sleepTimerSelect').value);
   const btn = document.getElementById('sleepTimerBtn');
-  
-  if(mins === 0) { 
-    if(sleepTimer) clearTimeout(sleepTimer); 
-    sleepTimer = null; 
-    btn.textContent = translations[currentLanguage].sleepTimerText; 
-    btn.classList.remove('active'); 
-    showToast('⏰ تم إيقاف مؤقت النوم'); 
-  } else {
+  if(mins === 0) { if(sleepTimer) clearTimeout(sleepTimer); sleepTimer = null; btn.textContent = translations[currentLanguage].sleepTimerText; btn.classList.remove('active'); showToast('⏰ تم إيقاف مؤقت النوم'); } else {
     if(sleepTimer) clearTimeout(sleepTimer);
-    btn.textContent = translations[currentLanguage].sleepTimerStopText; 
-    btn.classList.add('active');
-    sleepTimer = setTimeout(() => { 
-      stopRadio(); 
-      btn.textContent = translations[currentLanguage].sleepTimerText; 
-      btn.classList.remove('active'); 
-      document.getElementById('sleepTimerSelect').value='0'; 
-      showToast('⏰ تم إيقاف التشغيل بواسطة مؤقت النوم'); 
-    }, mins * 60000);
+    btn.textContent = translations[currentLanguage].sleepTimerStopText; btn.classList.add('active');
+    sleepTimer = setTimeout(() => { stopRadio(); btn.textContent = translations[currentLanguage].sleepTimerText; btn.classList.remove('active'); document.getElementById('sleepTimerSelect').value='0'; showToast('⏰ تم إيقاف التشغيل بواسطة مؤقت النوم'); }, mins * 60000);
     showToast(`⏰ تم ضبط مؤقت النوم لـ ${mins} دقيقة`);
   }
 }
 
-function startTimeCounter() { 
-  clearInterval(timeInterval); 
-  timeInterval = setInterval(() => { 
-    if(playStartTime) { 
-      const s = Math.floor((Date.now() - playStartTime)/1000); 
-      const m = Math.floor(s/60); 
-      const h = Math.floor(m/60);
-      if (h > 0) { 
-        timeDisplay.textContent = `${translations[currentLanguage].timePlaying} ${h}:${(m%60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`; 
-      } else { 
-        timeDisplay.textContent = `${translations[currentLanguage].timePlaying} ${m}:${(s%60).toString().padStart(2,'0')}`; 
-      }
-    } 
-  }, 1000); 
-}
-
-function stopTimeCounter() { 
-  clearInterval(timeInterval); 
-  timeDisplay.textContent = ''; 
-  playStartTime = null; 
-}
+function startTimeCounter() { clearInterval(timeInterval); timeInterval = setInterval(() => { if(playStartTime) { const s = Math.floor((Date.now() - playStartTime)/1000); const m = Math.floor(s/60); const h = Math.floor(m/60); if (h > 0) { timeDisplay.textContent = `${translations[currentLanguage].timePlaying} ${h}:${(m%60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`; } else { timeDisplay.textContent = `${translations[currentLanguage].timePlaying} ${m}:${(s%60).toString().padStart(2,'0')}`; } } }, 1000); }
+function stopTimeCounter() { clearInterval(timeInterval); timeDisplay.textContent = ''; playStartTime = null; }
 
 // === وظائف المفضلات ===
 function toggleFavorite(nameAr, nameEn, img, url) {
   const idx = favorites.findIndex(f => f.url === url);
-  
-  if(idx === -1) {
-    favorites.push({ nameAr, nameEn, img, url });
-    showToast('❤️ تمت الإضافة إلى المفضلة');
-  } else {
-    favorites.splice(idx, 1);
-    showToast('💔 تمت الإزالة من المفضلة');
-  }
-  
+  if(idx === -1) { favorites.push({ nameAr, nameEn, img, url }); showToast('❤️ تمت الإضافة إلى المفضلة'); } else { favorites.splice(idx, 1); showToast('💔 تمت الإزالة من المفضلة'); }
   localStorage.setItem('radioFavorites', JSON.stringify(favorites));
-  initializeStations(); 
-  updateFavoritesSection();
+  initializeStations(); updateFavoritesSection();
 }
 
 function updateFavoritesSection() {
-  if(favorites.length === 0) { 
-    favoritesSection.style.display = 'none'; 
-    return; 
-  }
-  
-  favoritesSection.style.display = 'block'; 
-  favoritesContainer.innerHTML = '';
-  
+  if(favorites.length === 0) { favoritesSection.style.display = 'none'; return; }
+  favoritesSection.style.display = 'block'; favoritesContainer.innerHTML = '';
   favorites.forEach((fav, index) => {
-    const card = document.createElement('div'); 
-    card.className = 'card'; 
-    card.style.animationDelay = `${index * 0.05}s`;
+    const card = document.createElement('div'); card.className = 'card'; card.style.animationDelay = `${index * 0.05}s`;
     const favBtn = `<button class="favorite-btn active" onclick="toggleFavorite('${fav.nameAr}','${fav.nameEn}','${fav.img}','${fav.url}')" aria-label="إزالة من المفضلة"><i class="fas fa-heart"></i></button>`;
-    
-    let buttons = `
-      <button onclick="playRadio('${fav.url}', '${fav.name[currentLanguage]}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button>
-      <button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>
-    `;
-
-    card.innerHTML = `
-      ${favBtn}
-      <img src="${fav.img}" alt="${fav.name[currentLanguage]}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x180/222/4CAF50?text=Quran+Radio'" />
-      <h2>${fav.name[currentLanguage]}</h2>
-      <div class="card-buttons">${buttons}</div>
-      <div class="progress-bar"></div>
-    `;
+    let buttons = `<button onclick="playRadio('${fav.url}', '${fav.name[currentLanguage]}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button><button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>`;
+    card.innerHTML = `${favBtn}<img src="${fav.img}" alt="${fav.name[currentLanguage]}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x180/222/4CAF50?text=Quran+Radio'" /><h2>${fav.name[currentLanguage]}</h2><div class="card-buttons">${buttons}</div><div class="progress-bar"></div>`;
     favoritesContainer.appendChild(card);
   });
 }
 
-function clearFavorites() { 
-  if(confirm(currentLanguage === 'ar' ? 'هل تريد مسح جميع المفضلات؟' : 'Do you want to clear all favorites?')) { 
-    favorites = []; 
-    localStorage.setItem('radioFavorites', JSON.stringify(favorites)); 
-    updateFavoritesSection(); 
-    initializeStations(); 
-    showToast('🗑️ تم مسح جميع المفضلات'); 
-  } 
-}
+function clearFavorites() { if(confirm(currentLanguage === 'ar' ? 'هل تريد مسح جميع المفضلات؟' : 'Do you want to clear all favorites?')) { favorites = []; localStorage.setItem('radioFavorites', JSON.stringify(favorites)); updateFavoritesSection(); initializeStations(); showToast('🗑️ تم مسح جميع المفضلات'); } }
 
 // === وظائف الوضع الليلي ===
 function toggleNightMode() {
   isNightMode = !isNightMode;
   const body = document.body;
   const icon = document.getElementById('themeIcon');
-  
-  if (isNightMode) {
-    body.classList.remove('light-mode');
-    icon.classList.remove('fa-sun');
-    icon.classList.add('fa-moon');
-    showToast('🌙 تم تفعيل الوضع الليلي');
-  } else {
-    body.classList.add('light-mode');
-    icon.classList.remove('fa-moon');
-    icon.classList.add('fa-sun');
-    showToast('☀️ تم تفعيل الوضع النهاري');
-  }
+  if (isNightMode) { body.classList.remove('light-mode'); icon.classList.remove('fa-sun'); icon.classList.add('fa-moon'); showToast('🌙 تم تفعيل الوضع الليلي'); } else { body.classList.add('light-mode'); icon.classList.remove('fa-moon'); icon.classList.add('fa-sun'); showToast('☀️ تم تفعيل الوضع النهاري'); }
 }
 
 // === وظائف اللغة ===
@@ -1889,7 +1526,6 @@ function setLanguage(lang) {
   currentLanguage = lang;
   htmlElement.setAttribute('lang', lang);
   htmlElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-  
   document.getElementById('quranRadioTitle').textContent = translations[lang].quranRadio;
   document.getElementById('subtitleText').textContent = translations[lang].subtitle;
   document.getElementById('facebookPageLink').textContent = translations[lang].facebookLinkText;
@@ -1904,46 +1540,24 @@ function setLanguage(lang) {
   document.getElementById('section3Title').textContent = translations[lang].section3Title;
   document.getElementById('section4Title').textContent = translations[lang].section4Title;
   document.getElementById('favoritesTitle').textContent = translations[lang].favoritesTitle;
-  
   updateHijriDate();
   initializeStations();
   document.title = translations[lang].quranRadio + ' - أوفلاين';
 }
 
-function toggleLanguage() { 
-  setLanguage(currentLanguage === 'ar' ? 'en' : 'ar'); 
-  showToast(currentLanguage === 'ar' ? '🌍 تم التغيير إلى العربية' : '🌍 Changed to English');
-}
+function toggleLanguage() { setLanguage(currentLanguage === 'ar' ? 'en' : 'ar'); showToast(currentLanguage === 'ar' ? '🌍 تم التغيير إلى العربية' : '🌍 Changed to English'); }
 
 // === وظائف التاريخ والوقت ===
 function updateHijriDate() {
   const today = new Date();
-  
-  // أيام الأسبوع بالعربية
   const arabicDays = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
   const dayName = arabicDays[today.getDay()];
-  
-  // تصحيح التاريخ الهجري بطرح يوم واحد (لأن الحساب متقدم بيوم)
   const correctedDate = new Date(today);
   correctedDate.setDate(correctedDate.getDate() - 1);
-  
-  // استخراج أجزاء التاريخ الهجري
-  const hijriParts = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  }).formatToParts(correctedDate);
-  
+  const hijriParts = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', { year: 'numeric', month: 'long', day: 'numeric' }).formatToParts(correctedDate);
   let day = '', month = '', year = '';
-  hijriParts.forEach(part => {
-    if (part.type === 'day') day = part.value;
-    if (part.type === 'month') month = part.value;
-    if (part.type === 'year') year = part.value;
-  });
-  
-  // تنسيق التاريخ في سطر واحد
+  hijriParts.forEach(part => { if (part.type === 'day') day = part.value; if (part.type === 'month') month = part.value; if (part.type === 'year') year = part.value; });
   const hijriDateText = `${dayName}، ${day} ${month} ${year} هـ`;
-  
   document.getElementById('hijriDateText').textContent = hijriDateText;
 }
 
@@ -1954,72 +1568,20 @@ function reportBrokenLink() {
   window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
 }
 
-function shareApp() { 
-  if(navigator.share) {
-    navigator.share({ 
-      title: translations[currentLanguage].quranRadio, 
-      text: 'تطبيق راديو قرآن - استمع إلى القرآن الكريم والأذكار والدروس الدينية', 
-      url: location.href 
-    })
-    .then(() => showToast('✅ تمت المشاركة بنجاح'))
-    .catch(error => console.log('مشاركة ملغاة:', error));
-  } else {
-    navigator.clipboard.writeText(location.href)
-      .then(() => showToast('📋 تم نسخ الرابط إلى الحافظة'))
-      .catch(err => {
-        const tempInput = document.createElement('input'); 
-        tempInput.value = location.href; 
-        document.body.appendChild(tempInput); 
-        tempInput.select(); 
-        document.execCommand('copy'); 
-        document.body.removeChild(tempInput); 
-        showToast('📋 تم نسخ الرابط إلى الحافظة');
-      });
-  }
-}
+function shareApp() { if(navigator.share) { navigator.share({ title: translations[currentLanguage].quranRadio, text: 'تطبيق راديو قرآن - استمع إلى القرآن الكريم والأذكار والدروس الدينية', url: location.href }).then(() => showToast('✅ تمت المشاركة بنجاح')).catch(error => console.log('مشاركة ملغاة:', error)); } else { navigator.clipboard.writeText(location.href).then(() => showToast('📋 تم نسخ الرابط إلى الحافظة')).catch(err => { const tempInput = document.createElement('input'); tempInput.value = location.href; document.body.appendChild(tempInput); tempInput.select(); document.execCommand('copy'); document.body.removeChild(tempInput); showToast('📋 تم نسخ الرابط إلى الحافظة'); }); } }
 
-function showToast(message) {
-  toast.textContent = message; 
-  toast.classList.add('show');
-  setTimeout(() => { toast.classList.remove('show'); }, 3000);
-}
+function showToast(message) { toast.textContent = message; toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); }, 3000); }
 
-function previousStation() {
-  if (currentStationIndex > 0) {
-    currentStationIndex--;
-    const station = allStations[currentStationIndex];
-    playRadio(station.url || station.recordings?.[0]?.url, station.name[currentLanguage], null);
-  }
-}
-
-function nextStation() {
-  if (currentStationIndex < allStations.length - 1) {
-    currentStationIndex++;
-    const station = allStations[currentStationIndex];
-    playRadio(station.url || station.recordings?.[0]?.url, station.name[currentLanguage], null);
-  }
-}
+function previousStation() { if (currentStationIndex > 0) { currentStationIndex--; const station = allStations[currentStationIndex]; playRadio(station.url || station.recordings?.[0]?.url, station.name[currentLanguage], null); } }
+function nextStation() { if (currentStationIndex < allStations.length - 1) { currentStationIndex++; const station = allStations[currentStationIndex]; playRadio(station.url || station.recordings?.[0]?.url, station.name[currentLanguage], null); } }
 
 // === تهيئة الصفحة ===
 document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => { 
-    loadingOverlay.style.opacity = '0'; 
-    setTimeout(() => { loadingOverlay.style.display = 'none'; }, 500); 
-  }, 1000);
-  
+  setTimeout(() => { loadingOverlay.style.opacity = '0'; setTimeout(() => { loadingOverlay.style.display = 'none'; }, 500); }, 1000);
   setLanguage('ar');
-  
-  volumeSlider.addEventListener('input', function() { 
-    globalPlayer.volume = this.value / 100; 
-    globalVolumeSlider.value = this.value; 
-  });
-  globalVolumeSlider.addEventListener('input', function() { 
-    globalPlayer.volume = this.value / 100; 
-    volumeSlider.value = this.value; 
-  });
-  
+  volumeSlider.addEventListener('input', function() { globalPlayer.volume = this.value / 100; globalVolumeSlider.value = this.value; });
+  globalVolumeSlider.addEventListener('input', function() { globalPlayer.volume = this.value / 100; volumeSlider.value = this.value; });
   setInterval(updateHijriDate, 60000);
-  
   showToast('🌙 مرحباً بك في راديو قرآن');
 });
 
@@ -2027,44 +1589,17 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('online', () => showToast('✅ تم استعادة الاتصال بالإنترنت'));
 window.addEventListener('offline', () => showToast('⚠️ لا يوجد اتصال بالإنترنت'));
 
-// === Service Worker للتخزين المؤقت (أوفلاين) ===
+// === Service Worker ===
 if ('serviceWorker' in navigator) {
   const swCode = `
 const CACHE_NAME = 'radio-quran-v1';
-
-self.addEventListener('install', e => {
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', e => {
-  e.waitUntil(self.clients.claim());
-});
-
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(res => {
-      return res || fetch(e.request).then(response => {
-        return caches.open(CACHE_NAME).then(cache => {
-          cache.put(e.request, response.clone());
-          return response;
-        });
-      }).catch(() => {
-        return caches.match(e.request);
-      });
-    })
-  );
-});
+self.addEventListener('install', e => { self.skipWaiting(); });
+self.addEventListener('activate', e => { e.waitUntil(self.clients.claim()); });
+self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(res => { return res || fetch(e.request).then(response => { return caches.open(CACHE_NAME).then(cache => { cache.put(e.request, response.clone()); return response; }); }).catch(() => { return caches.match(e.request); }); })); });
   `;
-  
   const blob = new Blob([swCode], { type: 'application/javascript' });
   const swUrl = URL.createObjectURL(blob);
-  
-  navigator.serviceWorker.register(swUrl)
-    .then(() => {
-      console.log('✅ الصفحة جاهزة للعمل أوفلاين');
-      setTimeout(() => showToast('📲 الصفحة جاهزة للعمل بدون إنترنت'), 2000);
-    })
-    .catch(err => console.log('ServiceWorker:', err));
+  navigator.serviceWorker.register(swUrl).then(() => { console.log('✅ الصفحة جاهزة للعمل أوفلاين'); setTimeout(() => showToast('📲 الصفحة جاهزة للعمل بدون إنترنت'), 2000); }).catch(err => console.log('ServiceWorker:', err));
 }
 </script>
 </body>
