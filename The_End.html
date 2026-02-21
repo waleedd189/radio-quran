@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="برنامج النهاية - الشيخ نبيل العوضي - رمضان 2026">
+    <title>برنامج النهاية - نبيل العوضي | رمضان 2026</title>
+    
+    <!-- الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ===== متغيرات التصميم (نظام الألوان المحافظ عليه) ===== */
+        :root {
+            --primary-color: #4CAF50;
+            --primary-dark: #2E7D32;
+            --secondary-color: #FF9800;
+            --accent-color: #FFD700; /* ذهبي */
+            --background-color: #111;
+            --surface-color: #1a1a1a;
+            --card-background: rgba(34, 34, 34, 0.9);
+            --text-color: #fff;
+            --text-secondary: #aaa;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* ===== الأساسيات ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== شريط التنقل العلوي ===== */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Cairo';
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .nav-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.2em;
+            color: var(--accent-color);
+        }
+
+        /* ===== قسم العنوان ===== */
+        .header-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, rgba(76, 175, 80, 0.1) 0%, transparent 100%);
+        }
+
+        .series-logo {
+            font-family: 'Amiri', serif;
+            font-size: 3em;
+            color: var(--primary-color);
+            text-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .series-subtitle {
+            font-size: 1.2em;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .ramadan-badge {
+            display: inline-block;
+            background: var(--accent-color);
+            color: #000;
+            padding: 5px 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* ===== مشغل الفيديو الرئيسي ===== */
+        .video-player-container {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            padding: 0 15px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border-color);
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16/9;
+        }
+
+        .current-episode-title {
+            padding: 15px 20px;
+            background: var(--surface-color);
+            border-top: 1px solid var(--border-color);
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .episode-name {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* ===== قسم قائمة الحلقات ===== */
+        .episodes-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 15px 100px;
+        }
+
+        .section-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-right: 10px;
+            border-right: 4px solid var(--primary-color);
+            color: #fff;
+        }
+
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .episode-card {
+            background: var(--card-background);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .episode-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.2);
+        }
+
+        .episode-card.active {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .card-thumb {
+            height: 160px;
+            background: linear-gradient(45deg, #222, #333);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .thumb-icon {
+            font-size: 3em;
+            color: var(--primary-color);
+            opacity: 0.8;
+            transition: all 0.3s;
+        }
+
+        .episode-card:hover .thumb-icon {
+            opacity: 1;
+            transform: scale(1.1);
+            color: var(--accent-color);
+        }
+
+        .episode-number {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            border: 1px solid var(--primary-color);
+        }
+
+        .card-info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .card-info h3 {
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        .card-info span {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+        }
+
+        /* ===== زر الواتساب ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        /* ===== التجاوب مع الشاشات ===== */
+        @media (max-width: 768px) {
+            .series-logo { font-size: 2em; }
+            .top-nav { padding: 10px 15px; }
+            .nav-title { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .episodes-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل -->
+    <nav class="top-nav">
+        <div class="nav-right">
+            <button class="nav-btn" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span>رجوع</span>
+            </button>
+            <button class="nav-btn" onclick="sharePage()">
+                <i class="fas fa-share-alt"></i>
+                <span>مشاركة</span>
+            </button>
+        </div>
+        <div class="nav-title">قناة اللهم لك الحمد</div>
+    </nav>
+
+    <!-- العنوان الرئيسي -->
+    <header class="header-section">
+        <div class="series-logo">النهاية</div>
+        <div class="series-subtitle">برنامج دعائي شيق للشيخ نبيل العوضي</div>
+        <div class="ramadan-badge">رمضان 2026</div>
+    </header>
+
+    <!-- مشغل الفيديو -->
+    <div class="video-player-container">
+        <div class="video-wrapper">
+            <video id="mainPlayer" controls controlsList="nodownload" poster="https://i.postimg.cc/1zWY6m7p/alnhayt.jpg">
+                <source src="" type="video/mp4" id="videoSource">
+                متصفحك لا يدعم تشغيل الفيديو.
+            </video>
+            <div class="current-episode-title">
+                <span id="currentTitle">اختر حلقة للمشاهدة</span>
+                <i class="fas fa-play-circle" style="color: var(--primary-color);"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- قائمة الحلقات -->
+    <section class="episodes-section">
+        <h2 class="section-title"><i class="fas fa-film"></i> جميع الحلقات</h2>
+        <div class="episodes-grid" id="episodesGrid">
+            <!-- سيتم إضافة الحلقات هنا بواسطة الجافاسكريبت -->
+        </div>
+    </section>
+
+    <!-- زر الواتساب -->
+    <button class="whatsapp-float" onclick="reportBroken()">
+        <i class="fab fa-whatsapp" style="font-size: 30px; color: white;"></i>
+    </button>
+
+    <script>
+        // بيانات الحلقات (تم تحويل الروابط التي أرسلتها)
+        // تأكد من أن الروابط تعمل على الأرشيف
+        const episodesData = [
+            {
+                id: 1,
+                title: "الحلقة الأولى",
+                description: "بداية الرحلة",
+                url: "https://archive.org/download/the-end-nabil-al-awadi-ramadan-2026/The%20End%20Ep.1.mp4"
+            },
+            {
+                id: 2,
+                title: "الحلقة الثانية",
+                description: "استمرار العرض",
+                url: "https://archive.org/download/the-end-nabil-al-awadi-ramadan-2026/The%20End%20Ep.2.mp4"
+            },
+            {
+                id: 3,
+                title: "الحلقة الثالثة",
+                description: "منتصف الطريق",
+                url: "https://archive.org/download/the-end-nabil-al-awadi-ramadan-2026/The%20End%20Ep.3.mp4"
+            }
+            // يمكنك إضافة المزيد من الحلقات هنا بنفس الشكل
+        ];
+
+        const mainPlayer = document.getElementById('mainPlayer');
+        const videoSource = document.getElementById('videoSource');
+        const currentTitle = document.getElementById('currentTitle');
+        const episodesGrid = document.getElementById('episodesGrid');
+
+        // دالة لإنشاء بطاقات الحلقات
+        function renderEpisodes() {
+            episodesGrid.innerHTML = '';
+
+            episodesData.forEach(episode => {
+                const card = document.createElement('div');
+                card.className = 'episode-card';
+                card.setAttribute('data-id', episode.id);
+                card.onclick = () => playEpisode(episode);
+
+                card.innerHTML = `
+                    <div class="card-thumb">
+                        <span class="episode-number">حلقة ${episode.id}</span>
+                        <i class="fas fa-play-circle thumb-icon"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>${episode.title}</h3>
+                        <span>${episode.description}</span>
+                    </div>
+                `;
+
+                episodesGrid.appendChild(card);
+            });
+        }
+
+        // دالة تشغيل الحلقة
+        function playEpisode(episode) {
+            // تحديث مصدر الفيديو
+            videoSource.src = episode.url;
+            
+            // تحديث العنوان
+            currentTitle.textContent = episode.title;
+            
+            // تحديث حالة البطاقات (تظليل الحلقة الحالية)
+            document.querySelectorAll('.episode-card').forEach(card => {
+                card.classList.remove('active');
+                if (parseInt(card.getAttribute('data-id')) === episode.id) {
+                    card.classList.add('active');
+                }
+            });
+
+            // تشغيل الفيديو
+            mainPlayer.load(); // مهم لتحديث المصدر
+            mainPlayer.play().catch(error => {
+                console.log("Autoplay prevented or error:", error);
+            });
+            
+            // التمرير للأعلى لمشاهدة الفيديو
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // وظائف الأزرار
+        function goBack() {
+            window.location.href = 'https://waleedd189.github.io/radio-quran/index.html';
+        }
+
+        function sharePage() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'برنامج النهاية - نبيل العوضي',
+                    text: 'مشاهدة برنامج النهاية للشيخ نبيل العوضي - رمضان 2026',
+                    url: window.location.href
+                });
+            } else {
+                // نسخ الرابط كحل بديل
+                navigator.clipboard.writeText(window.location.href);
+                alert('تم نسخ رابط الصفحة');
+            }
+        }
+
+        function reportBroken() {
+            const phone = '01092116092';
+            const msg = 'السلام عليكم، يوجد رابط معطل في صفحة برنامج النهاية.';
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // تهيئة الصفحة عند التحميل
+        window.onload = () => {
+            renderEpisodes();
+        };
+    </script>
+</body>
+</html>
