@@ -26,9 +26,7 @@ body.light-mode {
 --border-color: #ddd;
 --primary: #43A047;
 }
-* {
-box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 body {
 font-family: 'Cairo', sans-serif;
 background: var(--bg);
@@ -60,6 +58,7 @@ position: relative;
 z-index: 100;
 }
 .header h2, .header h3 { margin: 0; color: var(--primary); font-family: 'Amiri'; }
+.header-icons { display: flex; gap: 5px; }
 .header i { font-size: 1.3rem; cursor: pointer; color: var(--text); padding: 8px; border-radius: 50%; transition: 0.2s; }
 .header i:hover { background: rgba(76, 175, 80, 0.2); color: var(--primary); }
 .grid-container {
@@ -133,38 +132,12 @@ text-align: center;
 word-wrap: break-word;
 hyphens: auto;
 }
-#dhikrText::-webkit-scrollbar {
-width: 6px;
-}
-#dhikrText::-webkit-scrollbar-track {
-background: transparent;
-}
-#dhikrText::-webkit-scrollbar-thumb {
-background: var(--primary);
-border-radius: 3px;
-}
-#dhikrDesc {
-color: var(--primary);
-font-size: 0.75rem;
-min-height: 16px;
-font-weight: bold;
-margin-top: 5px;
-flex-shrink: 0;
-}
-#dhikrRef {
-color: var(--secondary);
-font-size: 0.7rem;
-min-height: 14px;
-margin-top: 3px;
-flex-shrink: 0;
-}
-.font-controls {
-display: flex;
-justify-content: center;
-gap: 10px;
-margin: 10px 0;
-flex-shrink: 0;
-}
+#dhikrText::-webkit-scrollbar { width: 6px; }
+#dhikrText::-webkit-scrollbar-track { background: transparent; }
+#dhikrText::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+#dhikrDesc { color: var(--primary); font-size: 0.75rem; min-height: 16px; font-weight: bold; margin-top: 5px; flex-shrink: 0; }
+#dhikrRef { color: var(--secondary); font-size: 0.7rem; min-height: 14px; margin-top: 3px; flex-shrink: 0; }
+.font-controls { display: flex; justify-content: center; gap: 10px; margin: 10px 0; flex-shrink: 0; }
 .f-btn {
 background: var(--primary);
 color: white;
@@ -188,12 +161,7 @@ flex-shrink: 0;
 }
 .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; border-radius: 6px; }
 .progress-bar.completed { background: var(--secondary); }
-.progress-text {
-margin-top: 8px;
-font-size: 0.85rem;
-opacity: 0.8;
-font-weight: bold;
-}
+.progress-text { margin-top: 8px; font-size: 0.85rem; opacity: 0.8; font-weight: bold; }
 .sebha-container {
 flex: 1;
 display: flex;
@@ -287,12 +255,7 @@ border: 1px solid var(--primary);
 }
 .toast.show { opacity: 1; }
 body.light-mode .toast { background: rgba(0,0,0,0.9); }
-.settings-container {
-flex: 1;
-padding: 20px;
-overflow-y: auto;
-padding-bottom: 100px;
-}
+.settings-container { flex: 1; padding: 20px; overflow-y: auto; padding-bottom: 100px; }
 .setting-item {
 background: var(--card-bg);
 border-radius: 15px;
@@ -334,10 +297,7 @@ transition: 0.3s;
 .cat-card span { font-size: 0.85rem; }
 .sebha-btn { width: 160px; height: 160px; font-size: 3rem; }
 .main-dhikr-card { min-height: 300px; padding: 15px; }
-#dhikrText {
-padding: 20px 8px;
-font-size: 18px;
-}
+#dhikrText { padding: 20px 8px; font-size: 18px; }
 }
 </style>
 </head>
@@ -346,7 +306,10 @@ font-size: 18px;
 <div class="header">
 <i class="fas fa-language" onclick="changeLang()" title="تغيير اللغة"></i>
 <h2 data-ar="أذكاري" data-en="My Azkar">أذكاري</h2>
+<div class="header-icons">
+<i class="fas fa-broadcast-tower" onclick="window.open('https://waleedd189.github.io/radio-quran/', '_blank')" title="راديو القرآن" style="color: var(--secondary);"></i>
 <i class="fas fa-cog" onclick="show('settingsPage')" title="الإعدادات"></i>
+</div>
 </div>
 <div class="grid-container" id="mainMenu"></div>
 </div>
@@ -479,7 +442,7 @@ const ADHKAR_DATA = [
 {id:29,category:"أذكار المساء",text:"بِسْمِ اللهِ الرَّحْمنِ الرَّحِيمِ\nقُلْ هُوَ ٱللَّهُ أَحَدٌ، ٱللَّهُ ٱلصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ.",description:"من قالها حين يصبح وحين يمسى كفته من كل شىء.",count:3,reference:"سورة الإخلاص"},
 {id:30,category:"أذكار المساء",text:"بِسْمِ اللهِ الرَّحْمنِ الرَّحِيمِ\nقُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.",description:"",count:3,reference:"سورة الفلق"},
 {id:31,category:"أذكار المساء",text:"بِسْمِ اللهِ الرَّحْمنِ الرَّحِيمِ\nقُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ، مَلِكِ ٱلنَّاسِ، إِلَٰهِ ٱلنَّاسِ، مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ، ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ، مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ.",description:"",count:3,reference:"سورة الناس"},
-{id:32,category:"أذكار المساء",text:"أَمْسَيْـنا وَأَمْسـى المـلكُ لله وَالحَمدُ لله ، لا إلهَ إلاّ اللّهُ وَحدَهُ لا شَريكَ لهُ، لهُ المُـلكُ ولهُ الحَمْـد، وهُوَ على كلّ شَيءٍ قدير ، رَبِّ أسْـأَلُـكَ خَـيرَ ما في هـذهِ اللَّـيْلَةِ وَخَـيرَ ما بَعْـدَهـا ، وَأَعـوذُ بِكَ مِنْ شَـرِّ ما في هـذهِ اللَّـيْلةِ وَشَرِّ ما بَعْـدَهـا ، رَبِّ أَعـوذُبِكَ مِنَ الْكَسَـلِ وَسـوءِ الْكِـبَر ، رَبِّ أَعـوذُ بِكَ مِنْ عَـذابٍ في النّـارِ وَعَـذابٍ في القَـبْر.",description:"",count:1,reference:"مسلم"},
+{id:32,category:"أذكار المساء",text:"أَمْسَيْـنا وَأَمْسـى المـلكُ لله وَالحَمدُ لله ، لا إلهَ إلاّ اللّهُ وَحدَهُ لا شَريكَ لهُ، لهُ المُـلكُ ولهُ الحَمْـد، وهُوَ على كلّ شَيءٍ قدير ، رَبِّ أسْـأَلُـكَ خَـيرَ ما في هـذهِ اللَّـيْلَةِ وَخَـيرَ ما بَعْـدَهـا ، وَأَعـوذُ بِكَ مِنْ شَـرِّ ما في هـذهِ اللَّـيْلَةِ وَشَرِّ ما بَعْـدَهـا ، رَبِّ أَعـوذُبِكَ مِنَ الْكَسَـلِ وَسـوءِ الْكِـبَر ، رَبِّ أَعـوذُ بِكَ مِنْ عَـذابٍ في النّـارِ وَعَـذابٍ في القَـبْر.",description:"",count:1,reference:"مسلم"},
 {id:33,category:"أذكار المساء",text:"أَعـوذُ بِكَلِمـاتِ اللّهِ التّـامّـاتِ مِنْ شَـرِّ ما خَلَـق.",description:"",count:3,reference:""},
 {id:34,category:"أذكار المساء",text:"اللّهـمَّ أَنْتَ رَبِّـي لا إلهَ إلاّ أَنْتَ ، خَلَقْتَنـي وَأَنا عَبْـدُك ، وَأَنا عَلـى عَهْـدِكَ وَوَعْـدِكَ ما اسْتَـطَعْـت ، أَعـوذُبِكَ مِنْ شَـرِّ ما صَنَـعْت ، أَبـوءُ لَـكَ بِنِعْـمَتِـكَ عَلَـيَّ وَأَبـوءُ بِذَنْـبي فَاغْفـِرْ لي فَإِنَّـهُ لا يَغْـفِرُ الذُّنـوبَ إِلاّ أَنْتَ .",description:"من قالها موقنا بها حين يمسى ومات من ليلته دخل الجنة وكذلك حين يصبح.",count:1,reference:"البخاري"},
 {id:35,category:"أذكار المساء",text:"اللّهُـمَّ إِنِّـي أَمسيتُ أُشْـهِدُك ، وَأُشْـهِدُ حَمَلَـةَ عَـرْشِـك ، وَمَلَائِكَتَكَ ، وَجَمـيعَ خَلْـقِك ، أَنَّـكَ أَنْـتَ اللهُ لا إلهَ إلاّ أَنْـتَ وَحْـدَكَ لا شَريكَ لَـك ، وَأَنَّ مُحَمّـداً عَبْـدُكَ وَرَسـولُـك.",description:"من قالها أعتقه الله من النار.",count:4,reference:"أبو داود"},
@@ -505,15 +468,15 @@ const ADHKAR_DATA = [
 {id:55,category:"أذكار النوم",text:"اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ.",description:"",count:3,reference:""},
 {id:56,category:"أذكار النوم",text:"اللَّهُمَّ بِاسْمِكَ أَحْيَا وَأَمُوتُ.",description:"",count:1,reference:""},
 {id:57,category:"أذكار النوم",text:"سُبْحَانَ اللَّهِ (ثلاثاً وثلاثين) وَالْحَمْدُ لِلَّهِ (ثلاثاً وثلاثين) وَاللَّهُ أَكْبَرُ (أربعاً وثلاثينَ).",description:"",count:1,reference:""},
-{id:58,category:"أذكار النوم",text:"اللَّهُمَّ رَبَّ السَّمَوَاتِ السَّبْعِ وَرَبَّ الأَرْضِ، وَرَبَّ الْعَرْشِ الْعَظِيمِ، رَبَّنَا وَرَبَّ كُلِّ شَيْءٍ، فَالِقَ الْحَبِّ وَالنَّوَى، وَمُنْزِلَ التَّوْرَاةِ وَالْإِنْجِيلِ، وَالْفُرْقَانِ، أَعُوذُ بِكَ مِنْ شَرِّ كُلِّ شَيْءٍ أَنْتَ آخِذٌ بِنَاصِيَتِهِ. اللَّهُمَّ أَنْتَ الأَوَّلُ فَلَيْسَ قَبْلَكَ شَيْءٌ، وَأَنْتَ الآخِرُ فَلَيسَ بَعْدَكَ شَيْءٌ، وَأَنْتَ الظَّاهِرُ فَلَيْسَ فَوْقَكَ شَيْءٌ، وَأَنْتَ الْبَاطِنُ فَلَيْسَ دُونَكَ شَيْءٌ، اقْضِ عَنَّا الدَّيْنَ وَأَغْنِنَا مِنَ الْفَقْرِ.",description:"",count:1,reference:""},
+{id:58,category:"أذكار النوم",text:"اللَّهُمَّ رَبَّ السَّمَوَاتِ السَّبْعِ وَرَبَّ الأَرْضِ، وَرَبَّ الْعَرْشِ الْعَظِيمِ، رَبَّنَا وَرَبَّ كُلِّ شَيءٍ، فَالِقَ الْحَبِّ وَالنَّوَى، وَمُنْزِلَ التَّوْرَاةِ وَالْإِنْجِيلِ، وَالْفُرْقَانِ، أَعُوذُ بِكَ مِنْ شَرِّ كُلِّ شَيءٍ أَنْتَ آخِذٌ بِنَاصِيَتِهِ. اللَّهُمَّ أَنْتَ الأَوَّلُ فَلَيْسَ قَبْلَكَ شَيءٌ، وَأَنْتَ الآخِرُ فَلَيسَ بَعْدَكَ شَيءٌ، وَأَنْتَ الظَّاهِرُ فَلَيْسَ فَوْقَكَ شَيءٌ، وَأَنْتَ الْبَاطِنُ فَلَيْسَ دُونَكَ شَيءٌ، اقْضِ عَنَّا الدَّيْنَ وَأَغْنِنَا مِنَ الْفَقْرِ.",description:"",count:1,reference:""},
 {id:59,category:"أذكار النوم",text:"الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا، وَكَفَانَا، وَآوَانَا، فَكَمْ مِمَّنْ لاَ كَافِيَ لَهُ وَلاَ مُؤْوِيَ.",description:"",count:1,reference:""},
-{id:60,category:"أذكار النوم",text:"اللَّهُمَّ عَالِمَ الغَيْبِ وَالشَّهَادَةِ فَاطِرَ السَّمَوَاتِ وَالْأَرْضِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطانِ وَشِرْكِهِ، وَأَنْ أَقْتَرِفَ عَلَى نَفْسِي سُوءاً، أَوْ أَجُرَّهُ إِلَى مُسْلِمٍ.",description:"",count:1,reference:""},
+{id:60,category:"أذكار النوم",text:"اللَّهُمَّ عَالِمَ الغَيْبِ وَالشَّهَادَةِ فَاطِرَ السَّمَوَاتِ وَالْأَرْضِ، رَبَّ كُلِّ شَيءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطانِ وَشِرْكِهِ، وَأَنْ أَقْتَرِفَ عَلَى نَفْسِي سُوءاً، أَوْ أَجُرَّهُ إِلَى مُسْلِمٍ.",description:"",count:1,reference:""},
 {id:61,category:"أذكار النوم",text:"اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَوَجَّهْتُ وَجْهِي إِلَيْكَ، وَأَلْجَأْتُ ظَهْرِي إِلَيْكَ، رَغْبَةً وَرَهْبَةً إِلَيْكَ، لاَ مَلْجَأَ وَلاَ مَنْجَا مِنْكَ إِلاَّ إِلَيْكَ، آمَنْتُ بِكِتَابِكَ الَّذِي أَنْزَلْتَ، وَبِنَبِيِّكَ الَّذِي أَرْسَلْتَ.",description:"",count:1,reference:""},
 {id:62,category:"أذكار الاستيقاظ",text:"الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ.",description:"",count:1,reference:""},
 {id:63,category:"أذكار الاستيقاظ",text:"لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلَا إِلَهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ الْعَلِيِّ الْعَظِيمِ، رَبِّ اغْفِرْ لِي.",description:"",count:1,reference:""},
 {id:64,category:"أذكار الصلاة",text:"وَجَّهْتُ وَجْهِيَ لِلَّذِي فَطَرَ السَّمَاوَاتِ وَالأَرْضَ حَنِيفاً وَمَا أَنَا مِنَ المُشْرِكِينَ، إِنَّ صَلاتِي وَنُسُكِي وَمَحْيَايَ وَمَمَاتِي للهِ رَبِّ العَالَمِينَ، لا شَرِيكَ لَهُ وَبِذَلِكَ أُمِرْتُ وَأَنَا مِنَ المُسْلِمِينَ.",description:"دعاء الاستفتاح",count:1,reference:""},
 {id:65,category:"أذكار الصلاة",text:"اللّهُ أَكْبَرُ كَبِيرًا، وَالْحَمْدُ لِلّهِ كَثِيرًا، وَسُبْحَانَ اللّهِ بُكْرَةً وَأَصِيلاً.",description:"دعاء الاستفتاح",count:1,reference:""},
-{id:66,category:"أذكار الصلاة",text:"سُبْحانَكَ اللّهُمَّ وَبِحَمْدِكَ وَتَبارَكَ اسْمُكَ وَتَعالى جَدُّكَ وَلا إِلهَ غَيْرُكَ.",description:"دعاء الاستفتاح",count:1,reference:""},
+{id:66,category:"أذكار الصلاة",text:"سُبْحَانَكَ اللّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ وَلا إِلهَ غَيْرُكَ.",description:"دعاء الاستفتاح",count:1,reference:""},
 {id:67,category:"أذكار الصلاة",text:"اللّهُمَّ باعِدْ بَيْني وَبَيْنَ خَطايايَ كَما باعَدْتَ بَيْنَ المَشْرِقِ وَالمَغْرِبِ، اللّهُمَّ نَقِّني مِنَ الخَطايا كَالثَّوْبِ الأَبْيَضِ مِنَ الدَّنَسِ، اللّهُمَّ اغْسِلْني مِنْ خَطايايَ بِالمَاءِ وَالثَّلْجِ وَالبَرَدِ.",description:"دعاء الاستفتاح",count:1,reference:""},
 {id:68,category:"أذكار الصلاة",text:"سُبْحَانَ رَبِّيَ الْعَظِيمِ.",description:"دعاء الركوع - يقولها 3 مرات",count:3,reference:""},
 {id:69,category:"أذكار الصلاة",text:"سُبْحَانَ رَبِّيَ الأَعْلَى.",description:"دعاء السجود - يقولها 3 مرات",count:3,reference:""},
@@ -531,7 +494,7 @@ const ADHKAR_DATA = [
 {id:81,category:"أذكار بعد الصلاة",text:"اللَّهُ أَكْبَرُ.",description:"33 مرة",count:33,reference:""},
 {id:82,category:"أذكار بعد الصلاة",text:"لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.",description:"تمام المئة بعد التسبيحات",count:1,reference:""},
 {id:83,category:"أذكار الآذان",text:"يَقُولُ مِثْلَ مَا يَقُولُ المُؤَذِّنُ إِلَّا فِي حَيَّعَلَى الصَّلاَةِ وَحَيَّعَلَى الفَلاَحِ فَيَقُولُ: لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ.",description:"",count:1,reference:""},
-{id:84,category:"أذكار الآذان",text:"اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ، وَالصَّلَاةِ الْقَائِمَةِ، آتِ مُحَمَّدًا الْوَسِيلَةَ وَالْفَضِيلَةَ، وَابْعَثْهُ مَقَامًا مَحْمُودًا الَّذِي وَعَدْتَهُ.",description:"",count:1,reference:""},
+{id:84,category:"أذكار الآذان",text:"اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ، وَالصَّلَاةِ التَّامَّةِ، آتِ مُحَمَّدًا الْوَسِيلَةَ وَالْفَضِيلَةَ، وَابْعَثْهُ مَقَامًا مَحْمُودًا الَّذِي وَعَدْتَهُ.",description:"",count:1,reference:""},
 {id:85,category:"أذكار المسجد",text:"اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ.",description:"عند دخول المسجد",count:1,reference:""},
 {id:86,category:"أذكار المسجد",text:"اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ.",description:"عند دخول المسجد",count:1,reference:""},
 {id:87,category:"أذكار المسجد",text:"اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ، وَبَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ فِي الْعَالَمِينَ إِنَّكَ حَمِيدٌ مَجِيدٌ.",description:"",count:1,reference:""},
@@ -562,7 +525,7 @@ const ADHKAR_DATA = [
 {id:112,category:"أذكار الرقية",text:"بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ\nقُلْ هُوَ اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُنْ لَهُ كُفُواً أَحَدٌ.",description:"سورة الإخلاص",count:3,reference:""},
 {id:113,category:"أذكار الرقية",text:"بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ\nقُلْ أَعُوذُ بِرَبِّ الْفَلَقِ، مِنْ شَرِّ مَا خَلَقَ، وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ، وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ.",description:"سورة الفلق",count:3,reference:""},
 {id:114,category:"أذكار الرقية",text:"بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ\nقُلْ أَعُوذُ بِرَبِّ النَّاسِ، مَلِكِ النَّاسِ، إِلَهِ النَّاسِ، مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ، الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ، مِنَ الْجِنَّةِ وَالنَّاسِ.",description:"سورة الناس",count:3,reference:""},
-{id:115,category:"أذكار الرقية",text:"بِسْمِ اللَّهِ أَرْقِيكَ، مِنْ كُلِّ شَيْءٍ يُؤْذِيكَ، مِنْ شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنِ حَاسِدٍ، اللَّهُ يَشْفِيكَ، بِسْمِ اللَّهِ أَرْقِيكَ.",description:"",count:3,reference:""},
+{id:115,category:"أذكار الرقية",text:"بِسْمِ اللَّهِ أَرْقِيكَ، مِنْ كُلِّ شَيْءٍ يُؤْذِيكَ، مِنْ شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنٍ حَاسِدٍ، اللَّهُ يَشْفِيكَ، بِسْمِ اللَّهِ أَرْقِيكَ.",description:"",count:3,reference:""},
 {id:116,category:"دخول الخلاء",text:"اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ.",description:"عند دخول الخلاء",count:1,reference:""},
 {id:117,category:"دخول الخلاء",text:"غُفْرَانَكَ.",description:"عند الخروج من الخلاء",count:1,reference:""},
 {id:118,category:"أذكار الضيف",text:"اللَّهُمَّ بَارِكْ لَهُمْ فِيمَا رَزَقْتَهُمْ، وَاغْفِرْ لَهُمْ وَارْحَمْهُمْ.",description:"دعاء لمن صنع طعاماً",count:1,reference:""},
@@ -576,239 +539,285 @@ let vibrateEnabled = true;
 let audioContext = null;
 let touchStartX = 0;
 let touchEndX = 0;
+let wakeLock = null;
+
+async function keepScreenAwake() {
+    try {
+        if ('wakeLock' in navigator) {
+            wakeLock = await navigator.wakeLock.request('screen');
+        }
+    } catch (err) {
+        console.error('خطأ في منع قفل الشاشة:', err);
+    }
+}
+
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        keepScreenAwake();
+    }
+});
+
 function initAudio() {
-if (!audioContext) {
-audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
 }
-}
+
 function playClickSound() {
-if (!soundEnabled || !audioContext) return;
-if (audioContext.state === 'suspended') audioContext.resume();
-const oscillator = audioContext.createOscillator();
-const gainNode = audioContext.createGain();
-oscillator.connect(gainNode);
-gainNode.connect(audioContext.destination);
-oscillator.type = 'sine';
-oscillator.frequency.value = 800;
-gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
-oscillator.start();
-oscillator.stop(audioContext.currentTime + 0.05);
+    if (!soundEnabled || !audioContext) return;
+    if (audioContext.state === 'suspended') audioContext.resume();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    oscillator.type = 'sine';
+    oscillator.frequency.value = 800;
+    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.05);
 }
+
 function vibrate(duration = 150) {
-if (vibrateEnabled && navigator.vibrate) {
-navigator.vibrate(duration);
+    if (vibrateEnabled && navigator.vibrate) {
+        navigator.vibrate(duration);
+    }
 }
-}
+
 function showToast(msg) {
-const t = document.getElementById('toast');
-t.textContent = msg;
-t.classList.add('show');
-setTimeout(() => t.classList.remove('show'), 2000);
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
 }
+
 function getCategories() {
-const cats = [...new Set(ADHKAR_DATA.map(d => d.category))];
-return cats;
+    const cats = [...new Set(ADHKAR_DATA.map(d => d.category))];
+    return cats;
 }
+
 function initMenu() {
-const menu = document.getElementById('mainMenu');
-const icons = {
-"أذكار الصباح": "fa-sun",
-"أذكار المساء": "fa-moon",
-"أذكار النوم": "fa-bed",
-"أذكار الاستيقاظ": "fa-clock",
-"دخول الخلاء": "fa-door-open",
-"أذكار الوضوء": "fa-droplet",
-"الخروج": "fa-home",
-"أذكار المسجد": "fa-mosque",
-"أذكار الآذان": "fa-bell",
-"أذكار الصلاة": "fa-hands-praying",
-"الركوع": "fa-person-praying",
-"السجود": "fa-person",
-"التشهد": "fa-book-open",
-"أذكار بعد الصلاة": "fa-hands",
-"أذكار الاستخارة": "fa-question-circle",
-"أذكار الطعام": "fa-utensils",
-"السلام": "fa-handshake",
-"أذكار السفر": "fa-plane",
-"أذكار الضيف": "fa-user-group",
-"أذكار المرض": "fa-stethoscope",
-"الموت": "fa-heart-crack",
-"أذكار الرقية": "fa-shield",
-"أذكار الاستغفار": "fa-heart",
-"أذكار التسبيح": "fa-star"
-};
-menu.innerHTML = "";
-const categories = getCategories();
-categories.forEach(cat => {
-menu.innerHTML += `<div class="cat-card" onclick="openCat('${cat}')"><i class="fas ${icons[cat] || 'fa-star'}"></i><span>${cat}</span></div>`;
-});
+    const menu = document.getElementById('mainMenu');
+    const icons = {
+        "أذكار الصباح": "fa-sun",
+        "أذكار المساء": "fa-moon",
+        "أذكار النوم": "fa-bed",
+        "أذكار الاستيقاظ": "fa-clock",
+        "دخول الخلاء": "fa-door-open",
+        "أذكار الوضوء": "fa-droplet",
+        "الخروج": "fa-home",
+        "أذكار المسجد": "fa-mosque",
+        "أذكار الآذان": "fa-bell",
+        "أذكار الصلاة": "fa-hands-praying",
+        "الركوع": "fa-person-praying",
+        "السجود": "fa-person",
+        "التشهد": "fa-book-open",
+        "أذكار بعد الصلاة": "fa-hands",
+        "أذكار الاستخارة": "fa-question-circle",
+        "أذكار الطعام": "fa-utensils",
+        "السلام": "fa-handshake",
+        "أذكار السفر": "fa-plane",
+        "أذكار الضيف": "fa-user-group",
+        "أذكار المرض": "fa-stethoscope",
+        "الموت": "fa-heart-crack",
+        "أذكار الرقية": "fa-shield",
+        "أذكار الاستغفار": "fa-heart",
+        "أذكار التسبيح": "fa-star"
+    };
+    menu.innerHTML = "";
+    const categories = getCategories();
+    categories.forEach(cat => {
+        menu.innerHTML += `<div class="cat-card" onclick="openCat('${cat}')"><i class="fas ${icons[cat] || 'fa-star'}"></i><span>${cat}</span></div>`;
+    });
 }
+
 function openCat(name) {
-currCat = name;
-currIdx = 0;
-currCount = 0;
-document.getElementById('catTitle').innerText = name;
-show('dhikrPage');
-renderDhikr();
+    currCat = name;
+    currIdx = 0;
+    currCount = 0;
+    document.getElementById('catTitle').innerText = name;
+    show('dhikrPage');
+    renderDhikr();
 }
+
 function getCategoryData(cat) {
-return ADHKAR_DATA.filter(d => d.category === cat);
+    return ADHKAR_DATA.filter(d => d.category === cat);
 }
+
 function renderDhikr() {
-const list = getCategoryData(currCat);
-if (!list || list.length === 0) return;
-const item = list[currIdx];
-document.getElementById('dhikrText').innerText = item.text;
-document.getElementById('dhikrTitle').innerText = item.reference || "";
-document.getElementById('dhikrDesc').innerText = item.description || "";
-document.getElementById('dhikrRef').innerText = "";
-document.getElementById('dhikrText').style.fontSize = fSize + "px";
-const progress = (currCount / item.count) * 100;
-const progressBar = document.getElementById('progressBar');
-progressBar.style.width = progress + "%";
-if (currCount >= item.count) {
-progressBar.classList.add('completed');
-} else {
-progressBar.classList.remove('completed');
+    const list = getCategoryData(currCat);
+    if (!list || list.length === 0) return;
+    const item = list[currIdx];
+    document.getElementById('dhikrText').innerText = item.text;
+    document.getElementById('dhikrTitle').innerText = item.reference || "";
+    document.getElementById('dhikrDesc').innerText = item.description || "";
+    document.getElementById('dhikrRef').innerText = "";
+    document.getElementById('dhikrText').style.fontSize = fSize + "px";
+    const progress = (currCount / item.count) * 100;
+    const progressBar = document.getElementById('progressBar');
+    progressBar.style.width = progress + "%";
+    if (currCount >= item.count) {
+        progressBar.classList.add('completed');
+    } else {
+        progressBar.classList.remove('completed');
+    }
+    document.getElementById('dhikrProgress').innerText = `${currCount}/${item.count}`;
+    document.getElementById('dhikrCounter').innerText = `${currIdx + 1}/${list.length}`;
+    document.getElementById('targetLabel').innerText = `الهدف: ${item.count}`;
 }
-document.getElementById('dhikrProgress').innerText = `${currCount}/${item.count}`;
-document.getElementById('dhikrCounter').innerText = `${currIdx + 1}/${list.length}`;
-document.getElementById('targetLabel').innerText = `الهدف: ${item.count}`;
-}
+
 function doCount() {
-initAudio();
-playClickSound();
-const list = getCategoryData(currCat);
-if (!list || list.length === 0) return;
-const limit = list[currIdx].count;
-if (currCount < limit) {
-currCount++;
-renderDhikr();
-if (currCount >= limit) {
-vibrate(200);
-setTimeout(() => {
-if (currIdx < list.length - 1) {
-currIdx++;
-currCount = 0;
-renderDhikr();
-} else {
-showToast('🎉 أتممت الأذكار!');
+    initAudio();
+    playClickSound();
+    const list = getCategoryData(currCat);
+    if (!list || list.length === 0) return;
+    const limit = list[currIdx].count;
+    if (currCount < limit) {
+        currCount++;
+        renderDhikr();
+        if (currCount >= limit) {
+            vibrate(200);
+            setTimeout(() => {
+                if (currIdx < list.length - 1) {
+                    currIdx++;
+                    currCount = 0;
+                    renderDhikr();
+                } else {
+                    showToast('🎉 أتممت الأذكار!');
+                }
+            }, 800);
+        }
+    }
 }
-}, 800);
-}
-}
-}
+
 function prevDhikr() {
-const list = getCategoryData(currCat);
-if (currIdx > 0) {
-currIdx--;
-currCount = 0;
-renderDhikr();
+    const list = getCategoryData(currCat);
+    if (currIdx > 0) {
+        currIdx--;
+        currCount = 0;
+        renderDhikr();
+    }
 }
-}
+
 function nextDhikr() {
-const list = getCategoryData(currCat);
-if (currIdx < list.length - 1) {
-currIdx++;
-currCount = 0;
-renderDhikr();
+    const list = getCategoryData(currCat);
+    if (currIdx < list.length - 1) {
+        currIdx++;
+        currCount = 0;
+        renderDhikr();
+    }
 }
-}
+
 function initSwipe() {
-const card = document.getElementById('dhikrCard');
-card.addEventListener('touchstart', (e) => {
-touchStartX = e.changedTouches[0].screenX;
-}, { passive: true });
-card.addEventListener('touchend', (e) => {
-touchEndX = e.changedTouches[0].screenX;
-handleSwipe();
-}, { passive: true });
+    const card = document.getElementById('dhikrCard');
+    card.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    card.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
 }
+
 function handleSwipe() {
-const swipeThreshold = 50;
-const diff = touchStartX - touchEndX;
-if (Math.abs(diff) > swipeThreshold) {
-if (diff > 0) {
-nextDhikr();
-} else {
-prevDhikr();
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+            nextDhikr();
+        } else {
+            prevDhikr();
+        }
+    }
 }
-}
-}
+
 function sebhaClick() {
-initAudio();
-playClickSound();
-sVal++;
-document.getElementById('sebhaCircle').innerText = sVal;
-if (sVal === sTarget || sVal % sTarget === 0) {
-vibrate(200);
+    initAudio();
+    playClickSound();
+    sVal++;
+    document.getElementById('sebhaCircle').innerText = sVal;
+    if (sVal === sTarget || sVal % sTarget === 0) {
+        vibrate(200);
+    }
 }
-}
+
 function resetSebha() {
-sVal = 0;
-document.getElementById('sebhaCircle').innerText = "0";
+    sVal = 0;
+    document.getElementById('sebhaCircle').innerText = "0";
 }
+
 function saveSebhaSettings() {
-sTarget = parseInt(document.getElementById('sebhaTarget').value) || 33;
+    sTarget = parseInt(document.getElementById('sebhaTarget').value) || 33;
 }
+
 function resize(delta) {
-fSize = Math.max(14, Math.min(32, fSize + delta));
-document.getElementById('dhikrText').style.fontSize = fSize + "px";
+    fSize = Math.max(14, Math.min(32, fSize + delta));
+    document.getElementById('dhikrText').style.fontSize = fSize + "px";
 }
+
 function show(pageId, el) {
-document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-document.getElementById(pageId).classList.add('active-page');
-document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-if (el) el.classList.add('active');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+    document.getElementById(pageId).classList.add('active-page');
+    document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+    if (el) el.classList.add('active');
 }
+
 function goToHome() {
-show('homePage', document.getElementById('homeTab'));
+    show('homePage', document.getElementById('homeTab'));
 }
+
 function changeLang() {
-currentLang = currentLang === 'ar' ? 'en' : 'ar';
-document.querySelectorAll('[data-ar]').forEach(el => {
-el.innerText = el.getAttribute(`data-${currentLang}`);
-});
+    currentLang = currentLang === 'ar' ? 'en' : 'ar';
+    document.querySelectorAll('[data-ar]').forEach(el => {
+        el.innerText = el.getAttribute(`data-${currentLang}`);
+    });
 }
+
 function toggleTheme() {
-document.body.classList.toggle('light-mode');
-document.getElementById('themeToggle').classList.toggle('active');
+    document.body.classList.toggle('light-mode');
+    document.getElementById('themeToggle').classList.toggle('active');
 }
+
 function toggleSound() {
-soundEnabled = !soundEnabled;
-document.getElementById('soundToggle').classList.toggle('active');
+    soundEnabled = !soundEnabled;
+    document.getElementById('soundToggle').classList.toggle('active');
 }
+
 function toggleVibrate() {
-vibrateEnabled = !vibrateEnabled;
-document.getElementById('vibrateToggle').classList.toggle('active');
+    vibrateEnabled = !vibrateEnabled;
+    document.getElementById('vibrateToggle').classList.toggle('active');
 }
+
 function resetAllData() {
-if (confirm('هل تريد مسح جميع البيانات؟')) {
-localStorage.clear();
-location.reload();
+    if (confirm('هل تريد مسح جميع البيانات؟')) {
+        localStorage.clear();
+        location.reload();
+    }
 }
-}
+
 document.addEventListener('DOMContentLoaded', () => {
-initMenu();
-initSwipe();
-if (localStorage.getItem('darkMode') === 'false') {
-document.body.classList.remove('light-mode');
-document.getElementById('themeToggle').classList.remove('active');
-}
-if (localStorage.getItem('soundEnabled') === 'true') {
-soundEnabled = true;
-document.getElementById('soundToggle').classList.add('active');
-}
-if (localStorage.getItem('vibrateEnabled') === 'false') {
-vibrateEnabled = false;
-document.getElementById('vibrateToggle').classList.remove('active');
-}
+    initMenu();
+    initSwipe();
+    keepScreenAwake();
+    
+    if (localStorage.getItem('darkMode') === 'false') {
+        document.body.classList.remove('light-mode');
+        document.getElementById('themeToggle').classList.remove('active');
+    }
+    if (localStorage.getItem('soundEnabled') === 'true') {
+        soundEnabled = true;
+        document.getElementById('soundToggle').classList.add('active');
+    }
+    if (localStorage.getItem('vibrateEnabled') === 'false') {
+        vibrateEnabled = false;
+        document.getElementById('vibrateToggle').classList.remove('active');
+    }
 });
+
 window.addEventListener('beforeunload', () => {
-localStorage.setItem('darkMode', !document.body.classList.contains('light-mode'));
-localStorage.setItem('soundEnabled', soundEnabled);
-localStorage.setItem('vibrateEnabled', vibrateEnabled);
+    localStorage.setItem('darkMode', !document.body.classList.contains('light-mode'));
+    localStorage.setItem('soundEnabled', soundEnabled);
+    localStorage.setItem('vibrateEnabled', vibrateEnabled);
 });
 </script>
 </body>
