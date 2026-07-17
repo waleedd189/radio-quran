@@ -825,7 +825,7 @@ body.light-mode .volume-slider { background: #ddd; }
     </button>
     
     <!-- زر الأحاديث -->
-    <button class="action-main-btn btn-ahadith" onclick="window.location.href='https://waleedd189.github.io/radio-quran/ahadith-1.html'" aria-label="فتح كتب الأحاديث">
+    <button class="action-main-btn btn-ahadith" onclick="window.location.href='https://waleedd189.github.io/radio-quran/ahadith.html'" aria-label="فتح كتب الأحاديث">
       <i class="fas fa-book-open" style="font-size:1.3em"></i> 
       <span>الأحاديث</span>
     </button>
@@ -1302,8 +1302,8 @@ const section3Stations = [
   {
     name: {ar: "القارئ السيد سعيد", en: "Reader Sayed Saeed"},
     img: "https://i.postimg.cc/rwbCPjcC/%D8%A7%D9%84%D8%B3%D9%8A%D8%AF_%D8%B3%D8%B9%D9%8A%D8%AF.webp",
-    url: "https://waleedd189.github.io/radio-quran/sayed-saeed2.html",
-    completeQuranUrl: "https://waleedd189.github.io/radio-quran/sayed-saeed2.html" 
+    url: "https://waleedd189.github.io/radio-quran/sayed-saeed.html",
+    completeQuranUrl: "https://waleedd189.github.io/radio-quran/sayed-saeed.html"
   }
 ];
 
@@ -1452,6 +1452,13 @@ function playRadio(url, stationName, elementToActivate) {
     return;
   }
   
+  // تحديث الفهرس الحالي
+  const foundIndex = allStations.findIndex(s => (s.url === url || s.recordings?.some(r => r.url === url)));
+  if (foundIndex !== -1) {
+    currentStationIndex = foundIndex;
+  }
+  updateNavButtons();
+
   player.pause(); 
   player.src = ""; 
   playingIndicator.style.display = 'none'; 
@@ -1541,6 +1548,8 @@ function stopRadio() {
   bufferingLoader.style.display = 'none';
   document.querySelectorAll('.card').forEach(card => card.classList.remove('active')); 
   stopTimeCounter();
+  currentStationIndex = -1;
+  updateNavButtons();
   showToast('⏹️ تم إيقاف التشغيل');
 }
 
@@ -1778,6 +1787,11 @@ function showToast(message) {
   setTimeout(() => { toast.classList.remove('show'); }, 3000);
 }
 
+function updateNavButtons() {
+  prevBtn.disabled = currentStationIndex <= 0;
+  nextBtn.disabled = currentStationIndex === -1 || currentStationIndex >= allStations.length - 1;
+}
+
 function previousStation() {
   if (currentStationIndex > 0) {
     currentStationIndex--;
@@ -1787,7 +1801,7 @@ function previousStation() {
 }
 
 function nextStation() {
-  if (currentStationIndex < allStations.length - 1) {
+  if (currentStationIndex >= 0 && currentStationIndex < allStations.length - 1) {
     currentStationIndex++;
     const station = allStations[currentStationIndex];
     playRadio(station.url || station.recordings?.[0]?.url, station.name[currentLanguage], null);
