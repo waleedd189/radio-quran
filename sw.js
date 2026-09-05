@@ -1,16 +1,30 @@
 // Service Worker - راديو قرآن
-// خزن هذا الملف بجانب صفحة index.html في نفس المجلد على استضافتك (GitHub Pages)
-// ملاحظة: رقم الإصدار هنا (v2) تم رفعه عمدًا لإبطال أي كاش قديم مخزن عند المستخدمين
-const CACHE_NAME = 'radio-quran-v2';
+// يُسجَّل من ملف حقيقي (sw.js) حتى يعمل الأوفلاين بشكل موثوق على GitHub Pages.
+// ملاحظة: رقم الإصدار (v3) مرفوع لإبطال أي كاش قديم (ومنه تسجيل الـ blob السابق).
+const CACHE_NAME = 'radio-quran-v3';
+
+// ملفات أساسية تُخزَّن مسبقًا عند التثبيت (أيقونات + هوية التطبيق)
+const PRECACHE_URLS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/apple-touch-icon.png',
+  './icons/favicon-32.png'
+];
 
 self.addEventListener('install', (e) => {
-  self.skipWaiting();
+  e.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(PRECACHE_URLS).catch(() => {}))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     Promise.all([
-      // حذف أي كاش قديم من إصدارات سابقة (يمنع تكرار مشكلة "الصفحة القديمة عالقة")
       caches.keys().then((keys) =>
         Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))
       ),
@@ -20,39 +34,44 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  if (e.request.method !== 'GET') return;
+  const req = e.request;
+  if (req.method !== 'GET') return;
 
-  const isPageRequest = e.request.mode === 'navigate' || e.request.destination === 'document';
+  // لا نتدخل في طلبات خارج نطاق الموقع (أصوات/صور خارجية) — تُمرَّر للشبكة مباشرة
+  const url = new URL(req.url);
+  if (url.origin !== self.location.origin) {
+    return;
+  }
+
+  const isPageRequest = req.mode === 'navigate' || req.destination === 'document';
 
   if (isPageRequest) {
-    // إستراتيجية Network First لصفحة الـ HTML نفسها:
-    // نحاول نجيب أحدث نسخة من الشبكة أولًا دايمًا، ونستخدم الكاش فقط لو مفيش إنترنت
+    // Network First لصفحات HTML: أحدث نسخة من الشبكة، والكاش فقط عند انقطاع الإنترنت
     e.respondWith(
-      fetch(e.request)
+      fetch(req)
         .then((response) => {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(e.request, responseClone));
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
           return response;
         })
-        .catch(() => caches.match(e.request))
+        .catch(() => caches.match(req).then((r) => r || caches.match('./index.html')))
     );
     return;
   }
 
-  // إستراتيجية Cache First لباقي الملفات (صور، أصوات، خطوط...) عشان تشتغل أوفلاين وبسرعة
+  // Cache First لباقي الملفات المحلية (أيقونات، خطوط، ستايل)
   e.respondWith(
-    caches.match(e.request).then((cachedResponse) => {
-      const networkFetch = fetch(e.request)
+    caches.match(req).then((cached) => {
+      const network = fetch(req)
         .then((response) => {
           if (response && response.status === 200) {
-            const responseClone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(e.request, responseClone));
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
           }
           return response;
         })
-        .catch(() => cachedResponse);
-
-      return cachedResponse || networkFetch;
+        .catch(() => cached);
+      return cached || network;
     })
   );
 });

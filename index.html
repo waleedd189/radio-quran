@@ -9,7 +9,17 @@
 <meta name="keywords" content="قرآن, راديو, أذكار, دروس إسلامية, تفسير, مصحف, تلاوة, رقية">
 <meta name="author" content="راديو قرآن">
 <meta name="theme-color" content="#4CAF50">
-<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUmFkaW8gUXVyYW4iLCJzaG9ydF9uYW1lIjoiUXVyYW4gUmFkaW8iLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJ0aGVtZV9jb2xvciI6IiM0Q0FGNTAiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzExMSIsImljb25zIjpbXSwibm90aWZpY2F0aW9ucyI6eyJpY29uIjoiaWNvbi5wbmciLCJ2aWJyYXRlIjoxLCJzb3VuZCI6MX19">
+<link rel="manifest" href="manifest.json">
+<!-- PWA icons -->
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<!-- iOS standalone -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="راديو قرآن">
+<meta name="mobile-web-app-capable" content="yes">
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <!-- Icons -->
@@ -1977,42 +1987,15 @@ window.addEventListener('offline', () => showToast('⚠️ لا يوجد اتص�
 
 // === Service Worker للتخزين المؤقت (أوفلاين) ===
 if ('serviceWorker' in navigator) {
-  const swCode = `
-const CACHE_NAME = 'radio-quran-v1';
-
-self.addEventListener('install', e => {
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', e => {
-  e.waitUntil(self.clients.claim());
-});
-
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(res => {
-      return res || fetch(e.request).then(response => {
-        return caches.open(CACHE_NAME).then(cache => {
-          cache.put(e.request, response.clone());
-          return response;
-        });
-      }).catch(() => {
-        return caches.match(e.request);
-      });
-    })
-  );
-});
-  `;
-  
-  const blob = new Blob([swCode], { type: 'application/javascript' });
-  const swUrl = URL.createObjectURL(blob);
-  
-  navigator.serviceWorker.register(swUrl)
-    .then(() => {
-      console.log('✅ الصفحة جاهزة للعمل أوفلاين');
-      setTimeout(() => showToast('📲 الصفحة جاهزة للعمل بدون إنترنت'), 2000);
-    })
-    .catch(err => console.log('ServiceWorker:', err));
+  // تسجيل ملف Service Worker حقيقي (يعمل أوفلاين بشكل موثوق على GitHub Pages)
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => {
+        console.log('✅ الصفحة جاهزة للعمل أوفلاين');
+        setTimeout(() => showToast('📲 التطبيق جاهز للعمل بدون إنترنت'), 2000);
+      })
+      .catch(err => console.log('ServiceWorker:', err));
+  });
 }
 </script>
 </body>

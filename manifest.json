@@ -1,0 +1,33 @@
+{
+  "name": "راديو قرآن - Radio Quran",
+  "short_name": "راديو قرآن",
+  "description": "استمع إلى إذاعات القرآن الكريم والمصاحف والأذكار والأحاديث والدروس — يعمل بدون إنترنت.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#4CAF50",
+  "background_color": "#111111",
+  "categories": ["education", "lifestyle", "music"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
