@@ -590,7 +590,7 @@
       <span id="currentLesson">اختر درساً للاستماع</span>
     </div>
     
-    <div class="media-type-toggle" id="mediaTypeToggle" style="display: none;">
+    <div class="media-type-toggle" id="mediaTypeToggle" style="display: flex;">
       <button class="media-type-btn active" id="audioBtn" onclick="switchToAudio()">
         <i class="fas fa-headphones"></i>
         صوت فقط
@@ -670,7 +670,7 @@
       series: [
         {
           id: 1,
-          title: "الجزء الأول",
+          title: "نهاية العالم - الجزء الأول",
           image: "arifi.jpg",
           color: "#FF9800",
           lessons: [
@@ -706,7 +706,7 @@
         },
         {
           id: 2,
-          title: "الجزء الثاني",
+          title: "نهاية العالم - الجزء الثاني",
           image: "arifi.jpg",
           color: "#00BCD4",
           lessons: [
@@ -742,7 +742,7 @@
         },
         {
           id: 3,
-          title: "الجزء الثالث",
+          title: "نهاية العالم - الجزء الثالث",
           image: "arifi.jpg",
           color: "#795548",
           lessons: [
@@ -1129,8 +1129,8 @@
 
     function shareApp() {
       const shareData = {
-        title: 'دروس الشيخ محمد العريفي',
-        text: 'استمع إلى دروس الشيخ محمد العريفي - صفحة اللهم لك الحمد',
+        title: 'نهاية العالم - الشيخ محمد العريفي',
+        text: 'استمع لسلسلة نهاية العالم للشيخ محمد العريفي عبر راديو قرآن',
         url: window.location.href
       };
       if (navigator.share) {
