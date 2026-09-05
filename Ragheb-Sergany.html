@@ -467,6 +467,53 @@
       text-align: center;
       border: 1px solid rgba(156,39,176,0.2);
     }
+    /* ===== قسم ساوندكلاود ===== */
+    .sc-wrap {
+      max-width: 860px;
+      margin: 30px auto 0;
+      padding: 0 15px;
+    }
+    .sc-card {
+      background: var(--card-background);
+      border-radius: 20px;
+      padding: 22px;
+      backdrop-filter: blur(15px);
+      border: 2px solid #ff5500;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      text-align: center;
+    }
+    .sc-card .sc-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.5em;
+      color: #ff7a2f;
+      margin-bottom: 6px;
+    }
+    .sc-card .sc-sub {
+      color: #ccc;
+      font-size: 0.95em;
+      margin-bottom: 14px;
+    }
+    .sc-frame {
+      width: 100%;
+      height: 460px;
+      border: 0;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .sc-actions { margin-top: 14px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .sc-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #ff5500; color: #fff; text-decoration: none;
+      padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 0.9em;
+    }
+    .sc-btn.ghost { background: transparent; color: #ff7a2f; border: 1px solid #ff5500; }
+    .sc-badge {
+      display: inline-block; background: rgba(255,85,0,0.15); color: #ff8a4c;
+      border: 1px solid #ff5500; padding: 4px 12px; border-radius: 16px;
+      font-size: 0.8em; font-weight: 700; margin: 0 4px 8px;
+    }
+    @media (max-width: 768px) { .sc-frame { height: 420px; } }
+
     /* ===== للهواتف ===== */
     @media (max-width: 768px) {
       h1 { font-size: 2em; }
@@ -549,6 +596,25 @@
       مؤقت النوم مفعل: <span id="timerCountdown">--:--</span>
     </div>
   </div>
+  <!-- ===== سلسلة قصة الخلافة الراشدة كاملة (ساوندكلاود) ===== -->
+  <div class="sc-wrap">
+    <div class="sc-card">
+      <div class="sc-title">قصة الخلافة الراشدة كاملة</div>
+      <div class="sc-sub">د. راغب السرجاني &mdash; عبر مشغّل ساوندكلاود الرسمي</div>
+      <div>
+        <span class="sc-badge"><i class="fas fa-headphones"></i> 258 حلقة</span>
+        <span class="sc-badge"><i class="fab fa-soundcloud"></i> السلسلة كاملة بما فيها الفتنة الكبرى</span>
+      </div>
+      <iframe class="sc-frame" title="قصة الخلافة الراشدة - د. راغب السرجاني"
+        src="https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F1242711937&show_artwork=true&color=%23ff5500"
+        allow="autoplay; encrypted-media"></iframe>
+      <div class="sc-actions">
+        <a class="sc-btn" href="https://soundcloud.com/ahmed-mohamed-80924068/sets/himdwb0fxold" target="_blank" rel="noopener"><i class="fab fa-soundcloud"></i> فتح على ساوندكلاود</a>
+        <a class="sc-btn ghost" href="serjani-links.txt" target="_blank" rel="noopener"><i class="fas fa-list-ul"></i> فهرس الحلقات (258)</a>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== حاوية المحطات ===== -->
   <div class="stations-container" id="stationsContainer">
     <!-- سيتم إنشاء المحتوى هنا بواسطة JavaScript -->
@@ -777,8 +843,7 @@
             { name: "009 - معركة اليمامة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/009.mp3" },
             { name: "010 - وفاة فاطمة رضي الله عنها", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/010.mp3" },
             { name: "011 - جمع القرآن", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/011.mp3" },
-            { name: "012 - معجزة الفتوح الإسلامية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/012.mp3" },
-            { name: "000 - يتبع", url: " " },
+            { name: "012 - معجزة الفتوح الإسلامية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/012.mp3" }
           ]
         }
       ]
