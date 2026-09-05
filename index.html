@@ -602,56 +602,88 @@ body.light-mode .azkar-select, body.light-mode .ruqyah-select, body.light-mode .
 .favorite-btn.active { background: #E91E63; animation: heartBeat 0.5s; }
 @keyframes heartBeat { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
 
-/* المشغل العام */
-#globalAudioPlayerContainer { 
-  display: none; 
-  margin: 20px auto; 
-  max-width: 600px; 
-  background: rgba(34, 34, 34, 0.95); 
-  border-radius: var(--border-radius); 
-  padding: 20px; 
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); 
-  transition: var(--transition); 
-  border: 2px solid var(--primary-color);
-  backdrop-filter: blur(10px);
+/* ===== المشغل العائم الحديث (شريط سفلي) ===== */
+#globalAudioPlayerContainer {
+  display: none;
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%) translateY(24px);
+  width: min(580px, calc(100vw - 20px));
+  z-index: 3000;
+  background: linear-gradient(135deg, rgba(28,32,28,0.97), rgba(16,20,16,0.97));
+  border: 1px solid rgba(76,175,80,0.55);
+  border-radius: 20px;
+  padding: 12px 14px 10px;
+  box-shadow: 0 14px 44px rgba(0,0,0,0.65), 0 0 22px rgba(76,175,80,0.15);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  opacity: 0;
+  transition: opacity .35s ease, transform .35s ease;
 }
-body.light-mode #globalAudioPlayerContainer { background: #fff; border-color: #4CAF50; }
+#globalAudioPlayerContainer.show { display: block; opacity: 1; transform: translateX(-50%) translateY(0); }
+body.light-mode #globalAudioPlayerContainer { background: linear-gradient(135deg, #ffffff, #f1f6f1); border-color: #4CAF50; }
+body.player-open { padding-bottom: 210px; }
 
-.global-player-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
-#globalPlayerStationName { color: var(--primary-color); font-weight: bold; font-size: 1.1em; font-family: 'Cairo'; }
+.gp-top { display: flex; align-items: center; gap: 12px; }
+.gp-art { position: relative; width: 54px; height: 54px; flex: 0 0 54px; border-radius: 14px; overflow: hidden; background: #000; box-shadow: 0 4px 14px rgba(0,0,0,0.45); }
+.gp-art img { width: 100%; height: 100%; object-fit: cover; }
+.is-playing .gp-art img { animation: gpSpin 7s linear infinite; }
+@keyframes gpSpin { to { transform: rotate(360deg); } }
 
-.close-player-btn { 
-  background: none; 
-  border: none; 
-  color: #aaa; 
-  cursor: pointer; 
-  font-size: 1.5em; 
-  padding: 5px 10px;
-  border-radius: 50%;
-  transition: var(--transition);
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.close-player-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+.gp-info { flex: 1; min-width: 0; text-align: right; }
+#globalPlayerStationName { color: #fff; font-weight: 700; font-size: 1em; font-family: 'Cairo'; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+body.light-mode #globalPlayerStationName { color: #222; }
+.gp-status { font-size: 0.78em; color: var(--primary-color); display: flex; align-items: center; gap: 6px; justify-content: flex-end; margin-top: 3px; font-weight: 600; }
+body.light-mode .gp-status { color: var(--primary-dark); }
 
-.global-player-controls { display: flex; align-items: center; gap: 6px; }
+.gp-icobtns { display: flex; gap: 6px; }
 .player-icon-btn {
-  background: rgba(255,255,255,0.08);
-  border: none; color: #ccc; cursor: pointer;
-  font-size: 1.05em; width: 40px; height: 40px;
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  transition: var(--transition);
+  background: rgba(255,255,255,0.08); border: none; color: #ccc; cursor: pointer;
+  font-size: 1em; width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; transition: var(--transition);
 }
 .player-icon-btn:hover { background: rgba(255,255,255,0.18); color: #fff; }
 .player-icon-btn.active { background: var(--primary-color); color: #fff; box-shadow: 0 0 12px rgba(76,175,80,0.6); }
 body.light-mode .player-icon-btn { background: #eee; color: #555; }
 body.light-mode .player-icon-btn:hover { background: #e0e0e0; color: #000; }
 
-#globalAudioPlayer { width: 100%; height: 45px; background: rgba(0, 0, 0, 0.3); border-radius: 10px; margin-bottom: 15px; }
-body.light-mode #globalAudioPlayer { background: #eee; }
+/* الإيكوالايزر المتحرك */
+.gp-eq { display: flex; align-items: center; justify-content: center; gap: 4px; height: 30px; margin: 12px 0 4px; }
+.gp-eq span {
+  display: block; width: 5px; height: 6px; border-radius: 3px;
+  background: linear-gradient(to top, #2E7D32, #81C784);
+  box-shadow: 0 0 6px rgba(129,199,132,0.5);
+}
+.is-playing .gp-eq span { animation: gpEq 1s ease-in-out infinite; }
+.gp-eq span:nth-child(1){ animation-duration: .9s; }
+.gp-eq span:nth-child(2){ animation-duration: .7s; }
+.gp-eq span:nth-child(3){ animation-duration: 1.1s; }
+.gp-eq span:nth-child(4){ animation-duration: .8s; }
+.gp-eq span:nth-child(5){ animation-duration: 1.0s; }
+.gp-eq span:nth-child(6){ animation-duration: .75s; }
+.gp-eq span:nth-child(7){ animation-duration: .95s; }
+@keyframes gpEq { 0%,100% { height: 6px; } 50% { height: 28px; } }
+
+/* أزرار التحكم */
+.gp-controls { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 6px 0 8px; }
+.gp-ctrl {
+  background: rgba(255,255,255,0.06); border: none; color: #fff;
+  width: 46px; height: 46px; border-radius: 50%; font-size: 1.05em; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: var(--transition);
+}
+.gp-ctrl:hover { background: rgba(76,175,80,0.25); transform: translateY(-2px); }
+.gp-ctrl.play {
+  width: 62px; height: 62px; font-size: 1.4em;
+  background: linear-gradient(135deg, #4CAF50, #2E7D32); color: #fff;
+  box-shadow: 0 6px 18px rgba(76,175,80,0.5);
+}
+.gp-ctrl.play:hover { box-shadow: 0 8px 26px rgba(76,175,80,0.75); }
+body.light-mode .gp-ctrl { background: #eee; color: #333; }
+body.light-mode .gp-ctrl.play { color: #fff; }
+#globalAudioPlayerContainer .volume-control { margin: 6px 0 2px; }
+
+#globalAudioPlayer { display: none; }
 
 .volume-control { display: flex; align-items: center; justify-content: center; margin: 15px 0; gap: 15px; }
 .volume-slider { width: 150px; height: 6px; background: #555; outline: none; opacity: 0.8; border-radius: 5px; transition: var(--transition); }
@@ -903,9 +935,13 @@ body.light-mode .volume-slider { background: #ddd; }
 
 <!-- المشغل العام -->
 <div id="globalAudioPlayerContainer">
-  <div class="global-player-header">
-    <div id="globalPlayerStationName">اختر محطة للتشغيل</div>
-    <div class="global-player-controls">
+  <div class="gp-top">
+    <div class="gp-art"><img id="globalPlayerArt" src="icons/icon-192.png" alt="صورة المحطة"></div>
+    <div class="gp-info">
+      <div id="globalPlayerStationName">اختر محطة للتشغيل</div>
+      <div class="gp-status"><i class="fas fa-broadcast-tower"></i><span id="gpStatusText">جاهز</span></div>
+    </div>
+    <div class="gp-icobtns">
       <button class="player-icon-btn" id="wakeLockBtn" onclick="toggleWakeLock()" aria-label="إبقاء الشاشة مضاءة أثناء الاستماع" title="إبقاء الشاشة مضاءة">
         <i class="fas fa-lightbulb"></i>
       </button>
@@ -914,12 +950,22 @@ body.light-mode .volume-slider { background: #ddd; }
       </button>
     </div>
   </div>
-  <audio id="globalAudioPlayer" controls preload="none" aria-label="مشغل الصوت"></audio>
+
+  <div class="gp-eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+  <div class="gp-controls">
+    <button class="gp-ctrl" onclick="previousStation()" aria-label="المحطة السابقة" title="السابق"><i class="fas fa-step-backward"></i></button>
+    <button class="gp-ctrl play" id="gpPlayBtn" onclick="togglePlayPause()" aria-label="تشغيل أو إيقاف مؤقت" title="تشغيل / إيقاف مؤقت"><i class="fas fa-play"></i></button>
+    <button class="gp-ctrl" onclick="nextStation()" aria-label="المحطة التالية" title="التالي"><i class="fas fa-step-forward"></i></button>
+  </div>
+
   <div class="volume-control">
     <span><i class="fas fa-volume-down"></i></span>
     <input type="range" class="volume-slider" id="globalVolumeSlider" min="0" max="100" value="50" aria-label="مستوى الصوت">
     <span><i class="fas fa-volume-up"></i></span>
   </div>
+
+  <audio id="globalAudioPlayer" preload="none" aria-label="مشغل الصوت"></audio>
 </div>
 
 <!-- الأقسام -->
@@ -1361,6 +1407,10 @@ const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const volumeSlider = document.getElementById('volumeSlider');
 const globalVolumeSlider = document.getElementById('globalVolumeSlider');
+const globalPlayerContainer = document.getElementById('globalAudioPlayerContainer');
+const gpPlayBtn = document.getElementById('gpPlayBtn');
+const gpStatusText = document.getElementById('gpStatusText');
+const gpArt = document.getElementById('globalPlayerArt');
 const favoritesSection = document.getElementById('favoritesSection');
 const htmlElement = document.documentElement;
 const loadingOverlay = document.getElementById('loadingOverlay');
@@ -1573,15 +1623,50 @@ function playableStations() {
 }
 
 // ربط مستمعات المشغّل مرة واحدة فقط
+function setPlayerStatus(text) { if (gpStatusText) gpStatusText.textContent = text; }
+
+function syncPlayButton(playing) {
+  if (!gpPlayBtn) return;
+  gpPlayBtn.innerHTML = playing ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+  gpPlayBtn.setAttribute('aria-label', playing ? 'إيقاف مؤقت' : 'تشغيل');
+}
+
+function showPlayer() {
+  globalPlayerContainer.style.display = 'block';
+  document.body.classList.add('player-open');
+  requestAnimationFrame(() => globalPlayerContainer.classList.add('show'));
+}
+
+function hidePlayer() {
+  globalPlayerContainer.classList.remove('show');
+  document.body.classList.remove('player-open');
+  setTimeout(() => { if (!globalPlayerContainer.classList.contains('show')) globalPlayerContainer.style.display = 'none'; }, 350);
+}
+
+function togglePlayPause() {
+  if (!globalPlayer.getAttribute('src')) {
+    // لا يوجد بث محمّل — شغّل المحطة الأولى القابلة للتشغيل
+    const playable = playableStations();
+    if (playable.length) { currentStationIndex = allStations.indexOf(playable[0]); playRadio(playable[0].url, playable[0].name[currentLanguage], null); }
+    return;
+  }
+  if (globalPlayer.paused) { globalPlayer.play().catch(() => handlePlayerError()); }
+  else { globalPlayer.pause(); }
+}
+
 function setupGlobalPlayerListeners() {
   globalPlayer.addEventListener('waiting', () => {
     playingIndicator.style.display = 'none';
     bufferingLoader.style.display = 'inline-block';
+    setPlayerStatus('جارٍ التحميل...');
   });
   globalPlayer.addEventListener('playing', () => {
     bufferingLoader.style.display = 'none';
     playingIndicator.style.display = 'block';
     retryCount = 0;
+    globalPlayerContainer.classList.add('is-playing');
+    syncPlayButton(true);
+    setPlayerStatus('يُبَثّ الآن');
     updateMediaSession();
   });
   globalPlayer.addEventListener('canplay', () => {
@@ -1592,14 +1677,20 @@ function setupGlobalPlayerListeners() {
   globalPlayer.addEventListener('play', () => {
     playStartTime = Date.now();
     startTimeCounter();
+    globalPlayerContainer.classList.add('is-playing');
+    syncPlayButton(true);
+    setPlayerStatus('يُبَثّ الآن');
     updateMediaSession();
     requestWakeLock();
   });
   globalPlayer.addEventListener('pause', () => {
     playingIndicator.style.display = 'none';
+    globalPlayerContainer.classList.remove('is-playing');
+    syncPlayButton(false);
+    if (globalPlayer.getAttribute('src')) setPlayerStatus('متوقف مؤقتًا');
     updateMediaSession();
   });
-  globalPlayer.addEventListener('ended', () => { releaseWakeLock(); });
+  globalPlayer.addEventListener('ended', () => { releaseWakeLock(); globalPlayerContainer.classList.remove('is-playing'); syncPlayButton(false); });
   globalPlayer.addEventListener('error', handlePlayerError);
 }
 
@@ -1618,7 +1709,6 @@ function playRadio(url, stationName, elementToActivate) {
   }
   nowPlayingSpan.textContent = stationName;
 
-  const globalPlayerContainer = document.getElementById('globalAudioPlayerContainer');
   const globalPlayerStationName = document.getElementById('globalPlayerStationName');
 
   // تتبع الحالة الحالية
@@ -1636,8 +1726,12 @@ function playRadio(url, stationName, elementToActivate) {
   globalPlayer.src = url;
   globalPlayer.volume = volumeSlider.value / 100;
   globalVolumeSlider.value = volumeSlider.value;
-  globalPlayerContainer.style.display = 'block';
   globalPlayerStationName.textContent = stationName;
+  if (gpArt) gpArt.src = findStationArtwork(stationName);
+  showPlayer();
+  globalPlayerContainer.classList.remove('is-playing');
+  syncPlayButton(false);
+  setPlayerStatus('جارٍ الاتصال...');
 
   setupMediaSessionHandlers();
   updateMediaSession();
@@ -1686,7 +1780,8 @@ function stopRadio() {
   globalPlayer.pause();
   globalPlayer.src = "";
   currentStreamUrl = null;
-  document.getElementById('globalAudioPlayerContainer').style.display = 'none';
+  hidePlayer();
+  globalPlayerContainer.classList.remove('is-playing');
   nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
   playingIndicator.style.display = 'none';
   bufferingLoader.style.display = 'none';
@@ -1699,10 +1794,11 @@ function stopRadio() {
 }
 
 function toggleGlobalPlayer() {
-  document.getElementById('globalAudioPlayerContainer').style.display = 'none';
   globalPlayer.pause();
   globalPlayer.src = "";
   currentStreamUrl = null;
+  hidePlayer();
+  globalPlayerContainer.classList.remove('is-playing');
   nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
   playingIndicator.style.display = 'none';
   bufferingLoader.style.display = 'none';
