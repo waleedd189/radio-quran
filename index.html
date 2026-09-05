@@ -629,6 +629,19 @@ body.light-mode #globalAudioPlayerContainer { background: #fff; border-color: #4
 }
 .close-player-btn:hover { background: rgba(255,255,255,0.1); color: white; }
 
+.global-player-controls { display: flex; align-items: center; gap: 6px; }
+.player-icon-btn {
+  background: rgba(255,255,255,0.08);
+  border: none; color: #ccc; cursor: pointer;
+  font-size: 1.05em; width: 40px; height: 40px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  transition: var(--transition);
+}
+.player-icon-btn:hover { background: rgba(255,255,255,0.18); color: #fff; }
+.player-icon-btn.active { background: var(--primary-color); color: #fff; box-shadow: 0 0 12px rgba(76,175,80,0.6); }
+body.light-mode .player-icon-btn { background: #eee; color: #555; }
+body.light-mode .player-icon-btn:hover { background: #e0e0e0; color: #000; }
+
 #globalAudioPlayer { width: 100%; height: 45px; background: rgba(0, 0, 0, 0.3); border-radius: 10px; margin-bottom: 15px; }
 body.light-mode #globalAudioPlayer { background: #eee; }
 
@@ -888,9 +901,14 @@ body.light-mode .volume-slider { background: #ddd; }
 <div id="globalAudioPlayerContainer">
   <div class="global-player-header">
     <div id="globalPlayerStationName">اختر محطة للتشغيل</div>
-    <button class="close-player-btn" onclick="toggleGlobalPlayer()" aria-label="إغلاق المشغل">
-      <i class="fas fa-times"></i>
-    </button>
+    <div class="global-player-controls">
+      <button class="player-icon-btn" id="wakeLockBtn" onclick="toggleWakeLock()" aria-label="إبقاء الشاشة مضاءة أثناء الاستماع" title="إبقاء الشاشة مضاءة">
+        <i class="fas fa-lightbulb"></i>
+      </button>
+      <button class="player-icon-btn" onclick="toggleGlobalPlayer()" aria-label="إغلاق المشغل" title="إغلاق المشغل">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
   </div>
   <audio id="globalAudioPlayer" controls preload="none" aria-label="مشغل الصوت"></audio>
   <div class="volume-control">
@@ -1152,6 +1170,12 @@ let currentStationIndex = -1;
 let playStartTime = null;
 let timeInterval = null;
 let sleepTimer = null;
+let wakeLock = null;
+let retryCount = 0;
+const MAX_RETRIES = 2;
+let currentStreamUrl = null;
+let currentStationName = null;
+let mediaSessionBound = false;
 let isNightMode = true;
 const whatsappNumber = "01092116092";
 
@@ -1441,65 +1465,188 @@ function initializeStations() {
 }
 
 // === وظائف الراديو ===
+// ====== تطويرات المشغّل: Media Session + Wake Lock + معالجة الأخطاء + إعادة محاولة ======
+
+// ===== إبقاء الشاشة مضاءة (Wake Lock) =====
+async function requestWakeLock() {
+  try {
+    if ('wakeLock' in navigator && (wakeLock === null || wakeLock.released)) {
+      wakeLock = await navigator.wakeLock.request('screen');
+      const btn = document.getElementById('wakeLockBtn');
+      if (btn) btn.classList.add('active');
+      wakeLock.addEventListener('release', () => {
+        const b = document.getElementById('wakeLockBtn');
+        if (b) b.classList.remove('active');
+      });
+    }
+  } catch (e) { /* غير مدعوم أو رُفض — تجاهل */ }
+}
+
+function releaseWakeLock() {
+  try {
+    if (wakeLock && !wakeLock.released) { wakeLock.release().catch(()=>{}); }
+  } catch (e) {}
+  wakeLock = null;
+  const b = document.getElementById('wakeLockBtn');
+  if (b) b.classList.remove('active');
+}
+
+async function toggleWakeLock() {
+  if (wakeLock && !wakeLock.released) {
+    releaseWakeLock();
+    showToast('🔅 تم السماح للشاشة بالإطفاء');
+  } else {
+    await requestWakeLock();
+    if (wakeLock) showToast('💡 ستبقى الشاشة مضاءة أثناء الاستماع');
+    else showToast('⚠️ هذه الميزة غير مدعومة في متصفحك');
+  }
+}
+
+// إعادة طلب القفل إذا عاد المستخدم للتبويب وكان الصوت شغّالًا
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && wakeLock && wakeLock.released && !globalPlayer.paused) {
+    requestWakeLock();
+  }
+});
+
+// ===== صورة الغلاف لشاشة القفل =====
+function findStationArtwork(name) {
+  const st = allStations.find(x => x && x.name && x.name[currentLanguage] === name);
+  const img = st && st.img;
+  return img || 'https://i.postimg.cc/c48r2QX2/tlawat-mkhtart.jpg';
+}
+
+// ===== التحكم من شاشة القفل / السماعة (Media Session) =====
+function updateMediaSession() {
+  if (!('mediaSession' in navigator)) return;
+  try {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: currentStationName || 'راديو قرآن',
+      artist: 'راديو قرآن',
+      album: 'راديو قرآن',
+      artwork: [
+        { src: findStationArtwork(currentStationName), sizes: '512x512', type: 'image/jpeg' }
+      ]
+    });
+    navigator.mediaSession.playbackState = globalPlayer.paused ? 'paused' : 'playing';
+  } catch (e) {}
+}
+
+function setupMediaSessionHandlers() {
+  if (mediaSessionBound || !('mediaSession' in navigator)) return;
+  mediaSessionBound = true;
+  try {
+    navigator.mediaSession.setActionHandler('play', () => { globalPlayer.play().catch(()=>{}); });
+    navigator.mediaSession.setActionHandler('pause', () => { globalPlayer.pause(); });
+    navigator.mediaSession.setActionHandler('previoustrack', () => { previousStation(); });
+    navigator.mediaSession.setActionHandler('nexttrack', () => { nextStation(); });
+  } catch (e) {}
+}
+
+// ===== معالجة أخطاء البث مع إعادة محاولة تلقائية =====
+function handlePlayerError() {
+  bufferingLoader.style.display = 'none';
+  playingIndicator.style.display = 'none';
+  releaseWakeLock();
+  if (retryCount < MAX_RETRIES && currentStreamUrl) {
+    retryCount++;
+    showToast(`🔄 إعادة محاولة الاتصال (${retryCount}/${MAX_RETRIES})...`);
+    setTimeout(() => {
+      if (currentStreamUrl) {
+        try { globalPlayer.src = currentStreamUrl; globalPlayer.load(); globalPlayer.play().catch(()=>{}); } catch(e){}
+      }
+    }, 1500);
+  } else {
+    showToast('⚠️ تعذر تشغيل البث. تحقق من الاتصال أو جرّب محطة أخرى.');
+    retryCount = 0;
+  }
+}
+
+// المحطات القابلة للتشغيل المباشر فقط (لأزرار السابق/التالي)
+function playableStations() {
+  return allStations.filter(st => st && st.url && /^(https?:)?\/\//.test(st.url) && !/\.html(\?|$)/.test(st.url));
+}
+
+// ربط مستمعات المشغّل مرة واحدة فقط
+function setupGlobalPlayerListeners() {
+  globalPlayer.addEventListener('waiting', () => {
+    playingIndicator.style.display = 'none';
+    bufferingLoader.style.display = 'inline-block';
+  });
+  globalPlayer.addEventListener('playing', () => {
+    bufferingLoader.style.display = 'none';
+    playingIndicator.style.display = 'block';
+    retryCount = 0;
+    updateMediaSession();
+  });
+  globalPlayer.addEventListener('canplay', () => {
+    bufferingLoader.style.display = 'none';
+    playingIndicator.style.display = 'block';
+    retryCount = 0;
+  });
+  globalPlayer.addEventListener('play', () => {
+    playStartTime = Date.now();
+    startTimeCounter();
+    updateMediaSession();
+    requestWakeLock();
+  });
+  globalPlayer.addEventListener('pause', () => {
+    playingIndicator.style.display = 'none';
+    updateMediaSession();
+  });
+  globalPlayer.addEventListener('ended', () => { releaseWakeLock(); });
+  globalPlayer.addEventListener('error', handlePlayerError);
+}
+
 function playRadio(url, stationName, elementToActivate) {
   if (!url) { showToast('⚠️ لا يوجد رابط تشغيل لهذه المحطة'); return; }
-  
-  // كشف الاتصال بالإنترنت
-  if (!navigator.onLine) {
-    showToast('⚠️ لا يوجد اتصال بالإنترنت');
-    return;
-  }
-  
-  player.pause(); 
-  player.src = ""; 
-  playingIndicator.style.display = 'none'; 
+  if (!navigator.onLine) { showToast('⚠️ لا يوجد اتصال بالإنترنت'); return; }
+
+  player.pause();
+  player.src = "";
+  playingIndicator.style.display = 'none';
   bufferingLoader.style.display = 'inline-block';
   document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
-  
-  if (elementToActivate && elementToActivate.closest('.card')) { 
-    elementToActivate.closest('.card').classList.add('active'); 
+
+  if (elementToActivate && elementToActivate.closest('.card')) {
+    elementToActivate.closest('.card').classList.add('active');
   }
   nowPlayingSpan.textContent = stationName;
 
   const globalPlayerContainer = document.getElementById('globalAudioPlayerContainer');
   const globalPlayerStationName = document.getElementById('globalPlayerStationName');
-  
+
+  // تتبع الحالة الحالية
+  currentStreamUrl = url;
+  currentStationName = stationName;
+  retryCount = 0;
+
+  // مزامنة فهرس المحطة لأزرار السابق/التالي
+  const playable = playableStations();
+  const idxInPlayable = playable.findIndex(st => (st.url || '') === url);
+  if (idxInPlayable !== -1) currentStationIndex = allStations.indexOf(playable[idxInPlayable]);
+  prevBtn.disabled = idxInPlayable <= 0;
+  nextBtn.disabled = idxInPlayable === -1 || idxInPlayable >= playable.length - 1;
+
   globalPlayer.src = url;
   globalPlayer.volume = volumeSlider.value / 100;
   globalVolumeSlider.value = volumeSlider.value;
   globalPlayerContainer.style.display = 'block';
   globalPlayerStationName.textContent = stationName;
 
-  globalPlayer.addEventListener('waiting', () => { 
-    playingIndicator.style.display = 'none'; 
-    bufferingLoader.style.display = 'inline-block'; 
-  });
-  globalPlayer.addEventListener('playing', () => { 
-    bufferingLoader.style.display = 'none'; 
-    playingIndicator.style.display = 'block'; 
-  });
-  globalPlayer.addEventListener('canplay', () => { 
-    bufferingLoader.style.display = 'none'; 
-    playingIndicator.style.display = 'block'; 
-  });
-  globalPlayer.addEventListener('play', () => { 
-    playStartTime = Date.now(); 
-    startTimeCounter(); 
-  });
-  globalPlayer.addEventListener('pause', () => { 
-    playingIndicator.style.display = 'none'; 
-  });
+  setupMediaSessionHandlers();
+  updateMediaSession();
 
   globalPlayer.play()
-    .then(() => { 
-      playStartTime = Date.now(); 
-      startTimeCounter(); 
-      showToast(`▶️ جاري تشغيل: ${stationName}`); 
+    .then(() => {
+      playStartTime = Date.now();
+      startTimeCounter();
+      updateMediaSession();
+      showToast(`▶️ جاري تشغيل: ${stationName}`);
     })
-    .catch(error => { 
-      console.error('Play error:', error); 
-      showToast('⚠️ تعذر تشغيل المحطة. الرجاء المحاولة مرة أخرى.'); 
-      bufferingLoader.style.display = 'none'; 
+    .catch(error => {
+      console.error('Play error:', error);
+      handlePlayerError();
     });
 }
 
@@ -1531,23 +1678,31 @@ function playSelectedRecitation(el) {
 }
 
 function stopRadio() {
-  globalPlayer.pause(); 
-  globalPlayer.src = ""; 
+  globalPlayer.pause();
+  globalPlayer.src = "";
+  currentStreamUrl = null;
   document.getElementById('globalAudioPlayerContainer').style.display = 'none';
-  nowPlayingSpan.textContent = translations[currentLanguage].initialStationText; 
-  playingIndicator.style.display = 'none'; 
+  nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
+  playingIndicator.style.display = 'none';
   bufferingLoader.style.display = 'none';
-  document.querySelectorAll('.card').forEach(card => card.classList.remove('active')); 
+  document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
   stopTimeCounter();
+  releaseWakeLock();
+  retryCount = 0;
+  if ('mediaSession' in navigator) { try { navigator.mediaSession.playbackState = 'paused'; } catch(e){} }
   showToast('⏹️ تم إيقاف التشغيل');
 }
 
 function toggleGlobalPlayer() {
   document.getElementById('globalAudioPlayerContainer').style.display = 'none';
-  globalPlayer.pause(); 
+  globalPlayer.pause();
   globalPlayer.src = "";
+  currentStreamUrl = null;
   nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
   playingIndicator.style.display = 'none';
+  bufferingLoader.style.display = 'none';
+  releaseWakeLock();
+  stopTimeCounter();
 }
 
 // === وظائف التحكم ===
@@ -1776,18 +1931,24 @@ function showToast(message) {
 }
 
 function previousStation() {
-  if (currentStationIndex > 0) {
-    currentStationIndex--;
-    const station = allStations[currentStationIndex];
-    playRadio(station.url || station.recordings?.[0]?.url, station.name[currentLanguage], null);
+  const playable = playableStations();
+  const cur = playable.findIndex(st => allStations.indexOf(st) === currentStationIndex);
+  const targetIdx = cur === -1 ? playable.length - 1 : cur - 1;
+  if (targetIdx >= 0) {
+    const station = playable[targetIdx];
+    currentStationIndex = allStations.indexOf(station);
+    playRadio(station.url, station.name[currentLanguage], null);
   }
 }
 
 function nextStation() {
-  if (currentStationIndex < allStations.length - 1) {
-    currentStationIndex++;
-    const station = allStations[currentStationIndex];
-    playRadio(station.url || station.recordings?.[0]?.url, station.name[currentLanguage], null);
+  const playable = playableStations();
+  const cur = playable.findIndex(st => allStations.indexOf(st) === currentStationIndex);
+  const targetIdx = cur === -1 ? 0 : cur + 1;
+  if (targetIdx < playable.length) {
+    const station = playable[targetIdx];
+    currentStationIndex = allStations.indexOf(station);
+    playRadio(station.url, station.name[currentLanguage], null);
   }
 }
 
@@ -1799,6 +1960,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 1000);
   
   setLanguage('ar');
+  setupGlobalPlayerListeners();
   
   volumeSlider.addEventListener('input', function() { 
     globalPlayer.volume = this.value / 100; 
