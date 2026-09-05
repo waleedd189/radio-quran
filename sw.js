@@ -1,7 +1,7 @@
 // Service Worker - راديو قرآن
 // يُسجَّل من ملف حقيقي (sw.js) حتى يعمل الأوفلاين بشكل موثوق على GitHub Pages.
 // ملاحظة: رقم الإصدار (v3) مرفوع لإبطال أي كاش قديم (ومنه تسجيل الـ blob السابق).
-const CACHE_NAME = 'radio-quran-v4';
+const CACHE_NAME = 'radio-quran-v5';
 
 // ملفات أساسية تُخزَّن مسبقًا عند التثبيت (أيقونات + هوية التطبيق)
 const PRECACHE_URLS = [
@@ -24,7 +24,8 @@ self.addEventListener('install', (e) => {
 
 // تحديث فوري عندما تطلب الصفحة ذلك
 self.addEventListener('message', (e) => {
-  if (e.data === 'SKIP_WAITING') { self.skipWaiting(); }
+  const data = (e.data && e.data.type) ? e.data.type : e.data;
+  if (data === 'SKIP_WAITING') { self.skipWaiting(); }
 });
 
 self.addEventListener('activate', (e) => {
