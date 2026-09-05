@@ -649,21 +649,22 @@ body.light-mode .player-icon-btn { background: #eee; color: #555; }
 body.light-mode .player-icon-btn:hover { background: #e0e0e0; color: #000; }
 
 /* الإيكوالايزر المتحرك */
-.gp-eq { display: flex; align-items: center; justify-content: center; gap: 4px; height: 30px; margin: 12px 0 4px; }
+.gp-eq { display: flex; align-items: center; justify-content: center; gap: 5px; height: 40px; margin: 14px 0 6px; }
 .gp-eq span {
-  display: block; width: 5px; height: 6px; border-radius: 3px;
-  background: linear-gradient(to top, #2E7D32, #81C784);
-  box-shadow: 0 0 6px rgba(129,199,132,0.5);
+  display: block; width: 7px; height: 8px; border-radius: 4px;
+  background: linear-gradient(to top, #2E7D32, #66BB6A, #B9F6CA);
+  box-shadow: 0 0 8px rgba(129,199,132,0.55);
+  transition: height .2s;
 }
-.is-playing .gp-eq span { animation: gpEq 1s ease-in-out infinite; }
-.gp-eq span:nth-child(1){ animation-duration: .9s; }
-.gp-eq span:nth-child(2){ animation-duration: .7s; }
-.gp-eq span:nth-child(3){ animation-duration: 1.1s; }
-.gp-eq span:nth-child(4){ animation-duration: .8s; }
-.gp-eq span:nth-child(5){ animation-duration: 1.0s; }
-.gp-eq span:nth-child(6){ animation-duration: .75s; }
-.gp-eq span:nth-child(7){ animation-duration: .95s; }
-@keyframes gpEq { 0%,100% { height: 6px; } 50% { height: 28px; } }
+.is-playing .gp-eq span { animation: gpEq .9s ease-in-out infinite; }
+.gp-eq span:nth-child(1){ animation-duration: .8s; animation-delay: 0s; }
+.gp-eq span:nth-child(2){ animation-duration: .62s; animation-delay: .1s; }
+.gp-eq span:nth-child(3){ animation-duration: 1.0s; animation-delay: .05s; }
+.gp-eq span:nth-child(4){ animation-duration: .7s; animation-delay: .15s; }
+.gp-eq span:nth-child(5){ animation-duration: .9s; animation-delay: .25s; }
+.gp-eq span:nth-child(6){ animation-duration: .66s; animation-delay: .12s; }
+.gp-eq span:nth-child(7){ animation-duration: .85s; animation-delay: .08s; }
+@keyframes gpEq { 0%,100% { height: 8px; } 50% { height: 36px; } }
 
 /* أزرار التحكم */
 .gp-controls { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 6px 0 8px; }
@@ -2131,14 +2132,53 @@ window.addEventListener('offline', () => showToast('⚠️ لا يوجد اتص�
 
 // === Service Worker للتخزين المؤقت (أوفلاين) ===
 if ('serviceWorker' in navigator) {
-  // تسجيل ملف Service Worker حقيقي (يعمل أوفلاين بشكل موثوق على GitHub Pages)
-  window.addEventListener('load', () => {
+  window.addEventListener('load', async () => {
+    // 1) إزالة أي Service Worker قديم كان مُسجَّلًا من Blob URL (تسجيل قديم معطّل)
+    try {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      for (const reg of regs) {
+        const sw = reg.active || reg.installing || reg.waiting;
+        const url = sw && sw.scriptURL ? sw.scriptURL : '';
+        if (url.startsWith('blob:') || (!/sw\.js/.test(url))) {
+          await reg.unregister();
+          console.log('🗑️ أُزيل Service Worker قديم:', url);
+        }
+      }
+    } catch (e) {}
+
+    // 2) حذف أي كاش قديم متبقّي
+    try {
+      const keys = await caches.keys();
+      for (const k of keys) {
+        if (k !== 'radio-quran-v4') await caches.delete(k);
+      }
+    } catch (e) {}
+
+    // 3) تسجيل ملف sw.js الحقيقي
     navigator.serviceWorker.register('sw.js')
-      .then(() => {
+      .then((reg) => {
         console.log('✅ الصفحة جاهزة للعمل أوفلاين');
-        setTimeout(() => showToast('📲 التطبيق جاهز للعمل بدون إنترنت'), 2000);
+        // إعادة تحميل تلقائية عند تجهيز تحديث جديد (للمرة القادمة)
+        reg.addEventListener('updatefound', () => {
+          const nw = reg.installing;
+          if (!nw) return;
+          nw.addEventListener('statechange', () => {
+            if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+              nw.postMessage('SKIP_WAITING');
+            }
+          });
+        });
+        setTimeout(() => { try { showToast('📲 التطبيق جاهز للعمل بدون إنترنت'); } catch(e){} }, 2000);
       })
       .catch(err => console.log('ServiceWorker:', err));
+
+    // إعادة تحميل فور تولّي Service Worker جديد التحكم
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
   });
 }
 </script>
