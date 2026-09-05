@@ -529,6 +529,12 @@ body.light-mode .daily-dua-box .dua-text {
   position: relative; 
 }
 .news-ticker-content { display: inline-block; white-space: nowrap; animation: ticker 40s linear infinite; color: var(--primary-color); font-weight: 600; padding: 0 100%; font-size: 1em; }
+.news-ticker-content .ticker-new {
+  display: inline-block; background: linear-gradient(135deg,#FF9800,#FFC107); color:#1a1a1a;
+  font-weight: 800; padding: 4px 14px; border-radius: 20px; margin: 0 6px;
+  box-shadow: 0 0 14px rgba(255,160,0,.7); animation: newPulse 1.6s ease-in-out infinite; white-space: nowrap;
+}
+@keyframes newPulse { 0%,100% { box-shadow: 0 0 10px rgba(255,160,0,.5);} 50% { box-shadow: 0 0 22px rgba(255,190,40,.95);} }
 @keyframes ticker { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
 /* الأزرار العائمة */
@@ -991,7 +997,8 @@ body.light-mode .volume-slider { background: #ddd; }
 <!-- الشريط المتحرك -->
 <div class="news-ticker">
   <div class="news-ticker-content">
-    📻 مرحبًا بك في موقع راديو قرآن صفحة اللهم لك الحمد | تم إضافة المصحف والأذكار من حصن المسلم مع عداد ذكي | يمكنك الآن حفظ تقدمك في القراءة والأذكار | للإبلاغ عن رابط معطل: 01092116092
+    <span class="ticker-new">✨ جديد: المصحف الشريف كاملًا للقراءة مع التفسير والتسميع الصوتي 🔊 + بحث فوري في القرآن 📖 + مشغّل جديد بإيكوالايزر متحرك 🎧</span>
+    📻 مرحبًا بك في موقع راديو قرآن صفحة اللهم لك الحمد | للإبلاغ عن رابط معطل: 01092116092
   </div>
 </div>
 
