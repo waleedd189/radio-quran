@@ -467,53 +467,6 @@
       text-align: center;
       border: 1px solid rgba(156,39,176,0.2);
     }
-    /* ===== قسم ساوندكلاود ===== */
-    .sc-wrap {
-      max-width: 860px;
-      margin: 30px auto 0;
-      padding: 0 15px;
-    }
-    .sc-card {
-      background: var(--card-background);
-      border-radius: 20px;
-      padding: 22px;
-      backdrop-filter: blur(15px);
-      border: 2px solid #ff5500;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-      text-align: center;
-    }
-    .sc-card .sc-title {
-      font-family: 'Amiri', serif;
-      font-size: 1.5em;
-      color: #ff7a2f;
-      margin-bottom: 6px;
-    }
-    .sc-card .sc-sub {
-      color: #ccc;
-      font-size: 0.95em;
-      margin-bottom: 14px;
-    }
-    .sc-frame {
-      width: 100%;
-      height: 460px;
-      border: 0;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .sc-actions { margin-top: 14px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    .sc-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: #ff5500; color: #fff; text-decoration: none;
-      padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 0.9em;
-    }
-    .sc-btn.ghost { background: transparent; color: #ff7a2f; border: 1px solid #ff5500; }
-    .sc-badge {
-      display: inline-block; background: rgba(255,85,0,0.15); color: #ff8a4c;
-      border: 1px solid #ff5500; padding: 4px 12px; border-radius: 16px;
-      font-size: 0.8em; font-weight: 700; margin: 0 4px 8px;
-    }
-    @media (max-width: 768px) { .sc-frame { height: 420px; } }
-
     /* ===== للهواتف ===== */
     @media (max-width: 768px) {
       h1 { font-size: 2em; }
@@ -596,25 +549,6 @@
       مؤقت النوم مفعل: <span id="timerCountdown">--:--</span>
     </div>
   </div>
-  <!-- ===== سلسلة قصة الخلافة الراشدة كاملة (ساوندكلاود) ===== -->
-  <div class="sc-wrap">
-    <div class="sc-card">
-      <div class="sc-title">قصة الخلافة الراشدة كاملة</div>
-      <div class="sc-sub">د. راغب السرجاني &mdash; عبر مشغّل ساوندكلاود الرسمي</div>
-      <div>
-        <span class="sc-badge"><i class="fas fa-headphones"></i> 258 حلقة</span>
-        <span class="sc-badge"><i class="fab fa-soundcloud"></i> السلسلة كاملة بما فيها الفتنة الكبرى</span>
-      </div>
-      <iframe class="sc-frame" title="قصة الخلافة الراشدة - د. راغب السرجاني"
-        src="https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F1242711937&show_artwork=true&color=%23ff5500"
-        allow="autoplay; encrypted-media"></iframe>
-      <div class="sc-actions">
-        <a class="sc-btn" href="https://soundcloud.com/ahmed-mohamed-80924068/sets/himdwb0fxold" target="_blank" rel="noopener"><i class="fab fa-soundcloud"></i> فتح على ساوندكلاود</a>
-        <a class="sc-btn ghost" href="serjani-links.txt" target="_blank" rel="noopener"><i class="fas fa-list-ul"></i> فهرس الحلقات (258)</a>
-      </div>
-    </div>
-  </div>
-
   <!-- ===== حاوية المحطات ===== -->
   <div class="stations-container" id="stationsContainer">
     <!-- سيتم إنشاء المحتوى هنا بواسطة JavaScript -->
@@ -843,7 +777,200 @@
             { name: "009 - معركة اليمامة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/009.mp3" },
             { name: "010 - وفاة فاطمة رضي الله عنها", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/010.mp3" },
             { name: "011 - جمع القرآن", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/011.mp3" },
-            { name: "012 - معجزة الفتوح الإسلامية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/012.mp3" }
+            { name: "012 - معجزة الفتوح الإسلامية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/012.mp3" },
+            { name: "013 - سر نجاح الفتوح الإسلامية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/013.mp3" },
+            { name: "014 - أخلاق الحروب في الفتوح الإسلامية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/014.mp3" },
+            { name: "015 - لماذا فتح المسلمون فارس؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/015.mp3" },
+            { name: "016 - خالد بن الوليد سيف الله المسلول", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/016.mp3" },
+            { name: "017 - الطريق إلى الحيرة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/017.mp3" },
+            { name: "018 - فتح الحيرة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/018.mp3" },
+            { name: "019 - خالد بن الوليد في مواجهة الحلفاء", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/019.mp3" },
+            { name: "020 - سر انتصارات خالد بن الوليد", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/020.mp3" },
+            { name: "021 - أخطر قرار لخالد بن الوليد", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/021.mp3" },
+            { name: "022 - بدء فتوح الشام", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/022.mp3" },
+            { name: "023 - عمرو بن العاص في الشام", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/023.mp3" },
+            { name: "024 - معجزة عبور صحراء السماوة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/024.mp3" },
+            { name: "025 - طريق خالد إلى بصرى و أجنادين", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/025.mp3" },
+            { name: "026 - العراق بعد خالد بن الوليد", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/026.mp3" },
+            { name: "027 - وفاة أبي بكر واستخلاف عمرو", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/027.mp3" },
+            { name: "028 - الخليفة الراشد عمر بن الخطاب", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/028.mp3" },
+            { name: "029 - من فضائل عمر بن الخطاب", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/029.mp3" },
+            { name: "030 - استنفار عمر بن الخطاب للمسلمين لجهاد فارس", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/030.mp3" },
+            { name: "031 - ولاية أبي عبيد بن مسعود الثقفي", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/031.mp3" },
+            { name: "032 - حملة أبي عبيد الثقفي إلى العراق", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/032.mp3" },
+            { name: "033 - الخروج من أزمة الجسر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/033.mp3" },
+            { name: "034 - وصية عمر لعتبة بن غزوان", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/034.mp3" },
+            { name: "035 - الطريق إلى القادسية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/035.mp3" },
+            { name: "036 - معركة القادسية الجزء الأول", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/036.mp3" },
+            { name: "037 - معركة القادسية الجزء الثاني", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/037.mp3" },
+            { name: "038 - خواطر من وحي معركة القادسية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/038.mp3" },
+            { name: "039 - فتح المدائن", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/039.mp3" },
+            { name: "040 - لماذا بكى عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/040.mp3" },
+            { name: "041 - المقاومة الفارسية بعد المدائن", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/041.mp3" },
+            { name: "042 - قرار وقف فتوح فارس", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/042.mp3" },
+            { name: "043 - منهج عمر رضي الله عنه في بناء المدن", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/043.mp3" },
+            { name: "044 - التزام السُنة وقوة الدولة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/044.mp3" },
+            { name: "045 - فتح تستر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/045.mp3" },
+            { name: "046 - لماذا انتصر المسلمون في تستر؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/046.mp3" },
+            { name: "047 - أخلاق المسلمين في فتح تستر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/047.mp3" },
+            { name: "048 - محكمة عمر للهرمزان", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/048.mp3" },
+            { name: "049 - عزل سعد واستشارة عمر للهرمزان", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/049.mp3" },
+            { name: "050 - الطريق إلى نهاوند", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/050.mp3" },
+            { name: "051 - مقارنة بين جيشي نهاوند", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/051.mp3" },
+            { name: "052 - نهاوند: فتح الفتوح", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/052.mp3" },
+            { name: "053 - الجزية في الشريعة الإسلامية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/053.mp3" },
+            { name: "054 - الجزية وفتوحات أخرى في فارس", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/054.mp3" },
+            { name: "055 - سقوط الإمبراطورية الفارسية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/055.mp3" },
+            { name: "056 - بداية فتوح الشام في عهد عُمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/056.mp3" },
+            { name: "057 - عزل خالد بن الوليد رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/057.mp3" },
+            { name: "058 - سر الخلاف بين عمر وخالد رضي الله عنهما", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/058.mp3" },
+            { name: "059 - المسلمون وعزل خالد بن الوليد", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/059.mp3" },
+            { name: "060 - الموقف في الشام بعد عزل خالد", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/060.mp3" },
+            { name: "061 - معركة فحل بيسان", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/061.mp3" },
+            { name: "062 - فتح دمشق", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/062.mp3" },
+            { name: "063 - الطريق إلى اليرموك", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/063.mp3" },
+            { name: "064 - موقعة اليرموك: القادة والجيوش", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/064.mp3" },
+            { name: "065 - موقعة اليرموك: الخطة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/065.mp3" },
+            { name: "066 - إسلام قائد روماني في اليرموك", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/066.mp3" },
+            { name: "067 - موقعة اليرموك.. الصدام الأول", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/067.mp3" },
+            { name: "068 - الوصف التفصيلي ليوم اليرموك", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/068.mp3" },
+            { name: "069 - بين اليرموك ومؤتة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/069.mp3" },
+            { name: "070 - استكمال فتوح الشام", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/070.mp3" },
+            { name: "071 - الطريق إلى القدس", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/071.mp3" },
+            { name: "072 - عمر بن الخطاب في الشام", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/072.mp3" },
+            { name: "073 - فتح القدس", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/073.mp3" },
+            { name: "074 - أسئلة حول فتح القدس", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/074.mp3" },
+            { name: "075 - حصار الرومان لحمص", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/075.mp3" },
+            { name: "076 - طاعون عمواس 1", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/076.mp3" },
+            { name: "077 - طاعون عمواس 2", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/077.mp3" },
+            { name: "078 - نهاية طاعون عمواس 3", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/078.mp3" },
+            { name: "079 - هل كورونا طاعون؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/079.mp3" },
+            { name: "080 - أسئلة وإجابات حول طاعون عمواس وكورونا 1", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/080.mp3" },
+            { name: "081 - أسئلة وإجابات حول طاعون عمواس وكورونا 2", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/081.mp3" },
+            { name: "082 - معجزة فتح مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/082.mp3" },
+            { name: "083 - مصر قبل الفتح الإسلامي", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/083.mp3" },
+            { name: "084 - فتح مصر بين عمر وعمرو رضي الله عنهما", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/084.mp3" },
+            { name: "085 - عمرو بن العاص فاتح مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/085.mp3" },
+            { name: "086 - كيف نكتب التاريخ؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/086.mp3" },
+            { name: "087 - كتاب ”فتوح مصر وأخبارها”", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/087.mp3" },
+            { name: "088 - رواة فتح مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/088.mp3" },
+            { name: "089 - مصادر ورأي مختلف لفتح مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/089.mp3" },
+            { name: "090 - دوافع عمرو بن العاص لفتح مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/090.mp3" },
+            { name: "091 - فتح عمرو بن العاص لسيناء", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/091.mp3" },
+            { name: "092 - فتح الفرما وبلبيس", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/092.mp3" },
+            { name: "093 - العالم وقت فتح مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/093.mp3" },
+            { name: "094 - الطريق إلى بابليون", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/094.mp3" },
+            { name: "095 - الإمارة في عين الزبير", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/095.mp3" },
+            { name: "096 - الزبير والمقداد وعبادة في عين عمر بن الخطاب", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/096.mp3" },
+            { name: "097 - السابقون السابقون", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/097.mp3" },
+            { name: "098 - كيف يكون الرجل بـ ألف", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/098.mp3" },
+            { name: "099 - شباب بـ ألف رجل", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/099.mp3" },
+            { name: "100 - حصار حصن بابليون", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/100.mp3" },
+            { name: "101 - جيش فتح مصر في عيون أعدائه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/101.mp3" },
+            { name: "102 - المفاوضات بين عبادة بن الصامت والمقوقس", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/102.mp3" },
+            { name: "103 - موقف المقوقس والرومان من المفاوضات", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/103.mp3" },
+            { name: "104 - قصة هرقل", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/104.mp3" },
+            { name: "105 - الرومان ورسالة الرسول ﷺ", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/105.mp3" },
+            { name: "106 - لغز هرقل", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/106.mp3" },
+            { name: "107 - الزبير ومعجزة فتح بابليون", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/107.mp3" },
+            { name: "108 - عهد عمرو بن العاص إلى أهل مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/108.mp3" },
+            { name: "109 - ماذا طلب المقوقس من عمرو بن العاص", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/109.mp3" },
+            { name: "110 - وفاة فاطمة رضي الله عنها", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/110.mp3" },
+            { name: "111 - جمع القرآن", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/111.mp3" },
+            { name: "112 - معجزة الفتوح الإسلامية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/112.mp3" },
+            { name: "113 - الإسكندرية وعبقرية المكان", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/113.mp3" },
+            { name: "114 - حصار الإسكندرية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/114.mp3" },
+            { name: "115 - الحل العمري لفتح الإسكندرية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/115.mp3" },
+            { name: "116 - عمر بن الخطاب وخبر فتح مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/116.mp3" },
+            { name: "117 - هل فتحت مصر عنوة أم صلحًا؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/117.mp3" },
+            { name: "118 - من أحرق مكتبة الإسكندرية؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/118.mp3" },
+            { name: "119 - تأسيس مسجد عمرو بن العاص", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/119.mp3" },
+            { name: "120 - المدينة الإسلامية.. الفسطاط نموذجًا", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/120.mp3" },
+            { name: "121 - أهل الراية في جيش مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/121.mp3" },
+            { name: "122 - قضية غرفة خارجة بن حذافة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/122.mp3" },
+            { name: "123 - بيوت الصحابة في الفسطاط", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/123.mp3" },
+            { name: "124 - طرائف في بناء الفسطاط", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/124.mp3" },
+            { name: "125 - عمرو بن العاص بين الاستقرار والرباط في مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/125.mp3" },
+            { name: "126 - فتح ليبيا والصعيد", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/126.mp3" },
+            { name: "127 - أخلاق فاتحي مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/127.mp3" },
+            { name: "128 - قصة شكوى المصري وتربية عمر لعمرو بن العاص", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/128.mp3" },
+            { name: "129 - رسالة من عمر بن الخطاب إلى نيل مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/129.mp3" },
+            { name: "130 - من أحكام عمر بن الخطاب الفريدة في مصر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/130.mp3" },
+            { name: "131 - مصر وإعانة المسلمين في عام الرمادة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/131.mp3" },
+            { name: "132 - لماذا أسرعت الشعوب بالدخول في الإسلام بعد الفتوح؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/132.mp3" },
+            { name: "133 - لماذا أسرعت الشعوب بالدخول في الإسلام بعد الفتوح؟ 2", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/133.mp3" },
+            { name: "134 - لماذا أسرعت الشعوب بالدخول في الإسلام بعد الفتوح؟ 3", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/134.mp3" },
+            { name: "135 - عمر على طريق الأنبياء", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/135.mp3" },
+            { name: "136 - موافقات عمر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/136.mp3" },
+            { name: "137 - لماذا نحب عمر رضي الله عنه؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/137.mp3" },
+            { name: "138 - إيمان عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/138.mp3" },
+            { name: "139 - قوة عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/139.mp3" },
+            { name: "140 - هيبة عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/140.mp3" },
+            { name: "141 - صراحة عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/141.mp3" },
+            { name: "142 - عمر وعدم الاكتراث لكلام الناس", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/142.mp3" },
+            { name: "143 - حزم عمرو رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/143.mp3" },
+            { name: "144 - عمر وحب رسول الله صلى الله عليه وسلم", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/144.mp3" },
+            { name: "145 - عمر واتِّباع الرسول صلى الله عليه وسلم", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/145.mp3" },
+            { name: "146 - يقين عمر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/146.mp3" },
+            { name: "147 - تواضع عمر", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/147.mp3" },
+            { name: "148 - عدل عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/148.mp3" },
+            { name: "149 - زهد عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/149.mp3" },
+            { name: "150 - إنفاق عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/150.mp3" },
+            { name: "151 - رفق عمر رصي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/151.mp3" },
+            { name: "152 - رحمة عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/152.mp3" },
+            { name: "153 - علم عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/153.mp3" },
+            { name: "154 - فقه عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/154.mp3" },
+            { name: "155 - قضاء عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/155.mp3" },
+            { name: "156 - عمر رضي الله عنه ومؤسسة القضاء", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/156.mp3" },
+            { name: "157 - أوليَّات عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/157.mp3" },
+            { name: "158 - إدارة عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/158.mp3" },
+            { name: "159 - التقسيم الإداري للدولة في عهد عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/159.mp3" },
+            { name: "160 - المرونة الإدارية لعمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/160.mp3" },
+            { name: "161 - المرونة الفقهية لعمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/161.mp3" },
+            { name: "162 - صلابة عمر رضي الله عنه في الحقِّ", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/162.mp3" },
+            { name: "163 - عمر رضي الله عنه وتأسيس الدولة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/163.mp3" },
+            { name: "164 - عمر رضي الله عنه والشورى", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/164.mp3" },
+            { name: "165 - الزكاة والجزية في عهد عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/165.mp3" },
+            { name: "166 - ثلاثة مصادر فريدة لدخل الدولة في عهد عمر رضي الله", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/166.mp3" },
+            { name: "167 - ماذا فعل عمر رضي الله عنه في الأرض المغنومة؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/167.mp3" },
+            { name: "168 - كيف وزع عمر رضي الله عنه مال العطاء؟!", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/168.mp3" },
+            { name: "169 - أول من أسس الجيش النظامي للمسلمين", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/169.mp3" },
+            { name: "170 - أول جهاز الشرطة في الإسلام", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/170.mp3" },
+            { name: "171 - حكم عمر رضي الله عنه في أربعة قتلوا واحدًا", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/171.mp3" },
+            { name: "172 - ثلاثة اجتهادات عمرية عجيبة في تطبيق الحدود", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/172.mp3" },
+            { name: "173 - عمر رضي الله عنه وروعة ستر من وقع في الفاحشة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/173.mp3" },
+            { name: "174 - طريقة عمر بن الخطاب في غلق أبواب الفتن", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/174.mp3" },
+            { name: "175 - استشهاد عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/175.mp3" },
+            { name: "176 - كيف تمت عملية انتخاب الخليفة بين عثمان بن عفان وعلى", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/176.mp3" },
+            { name: "177 - وَهْم الخديعة لعلي بن أبي طالب رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/177.mp3" },
+            { name: "178 - لماذا أبو بكر ثم عمر ثم عثمان رضي الله عنهم؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/178.mp3" },
+            { name: "179 - مَنْ وراء الهجوم على عثمان بن عفان رضي الله عنه؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/179.mp3" },
+            { name: "180 - من الشيعة؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/180.mp3" },
+            { name: "181 - رد فعل عجيب لعثمان رضي الله عنه على نبوءة نبوية", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/181.mp3" },
+            { name: "182 - عثمان بن عفان رضي الله عنه.. أمين مظلوم على الهدى", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/182.mp3" },
+            { name: "183 - لماذا سُمِّي عثمان بن عفان بذي النورين؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/183.mp3" },
+            { name: "184 - ما هو مفتاح شخصية عثمان بن عفان ؟؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/184.mp3" },
+            { name: "185 - خمسة أمور أدت إلى الفتنة الكبرى", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/185.mp3" },
+            { name: "186 - لماذا لم يقتل عثمانُ بن عفان ابنَ عمر رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/186.mp3" },
+            { name: "187 - لماذا تعمد عثمان بن عفان مخالفة عمر بن الخطاب رضي", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/187.mp3" },
+            { name: "188 - قصة نشأة مدارس الحديث في عهد عثمان بن عفان رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/188.mp3" },
+            { name: "189 - ما معنى أن القرآن أنزل على سبعة أحرف؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/189.mp3" },
+            { name: "190 - هل أصاب عثمان بن عفان رضي الله عنه بحرق 6 قراءات", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/190.mp3" },
+            { name: "191 - حقيقة الخلاف بين عثمان وابن مسعود رضي الله عنهما", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/191.mp3" },
+            { name: "192 - هل كان عثمان بن عفان رضي الله عنه ضعيفًا؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/192.mp3" },
+            { name: "193 - هل كان عثمان بن عفان يولِّي أقاربه؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/193.mp3" },
+            { name: "194 - قبيلة بني أمية في عين الرسول ﷺ", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/194.mp3" },
+            { name: "195 - هل ولَّى علي بن أبي طالب رضي الله عنه أقاربه؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/195.mp3" },
+            { name: "196 - أهلية الإمارة بين التقوى والقوة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/196.mp3" },
+            { name: "197 - هل أخطأ عثمان بن عفان بتولية أخيه الوليد بن عقبة؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/197.mp3" },
+            { name: "198 - هل تجوز ولاية مَنْ أهدر الرسول ﷺ دمه؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/198.mp3" },
+            { name: "199 - أعجب مهمة للشباب في زمن عثمان بن عفان", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/199.mp3" },
+            { name: "200 - لماذا تعمد عثمان بن عفان مخالفة عمر بن الخطاب رضي الله عنه", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/200.mp3" },
+            { name: "201 - لماذا فتح عثمان تونس رغم رفض عمر رضي الله عنهما؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/201.mp3" },
+            { name: "202 - موقعة عجيبة .. العبادلة الثلاثة في مواجهة البطريرك", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/202.mp3" },
+            { name: "203 - ما حقيقة تبديد عثمان رضي الله عنه أموال الدولة في تونس ؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/203.mp3" },
+            { name: "204 - شبهة تبديد عثمان بن عفان رضى الله عنه لغنائم الدولة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/204.mp3" },
+            { name: "205 - لماذا عزل عثمان أبا موسى الأشعري رضي الله عنهما؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/205.mp3" }
           ]
         }
       ]
