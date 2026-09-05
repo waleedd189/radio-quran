@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>دروس الشيخ محمد العريفي - نهاية العالم</title>
+<meta name="description" content="سلسلة نهاية العالم (الجزء 1 و2 و3) للشيخ محمد العريفي - 85 حلقة.">
+<meta name="theme-color" content="#4CAF50">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--primary:#4CAF50;--primary-dark:#2E7D32;--bg:#111;--card:#1e1e1e;--text:#fff;--muted:#aaa;--radius:15px;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Cairo',sans-serif;background:linear-gradient(135deg,#111,#222 50%,#333);color:var(--text);min-height:100vh;padding:18px 12px 60px;user-select:none;}
+.controls-container{display:flex;align-items:center;justify-content:space-between;max-width:760px;margin:0 auto 16px;gap:10px;}
+.back-btn,.share-btn{background:#2196F3;color:#fff;border:none;padding:9px 18px;border-radius:22px;font-family:'Cairo';font-weight:700;cursor:pointer;font-size:.9em;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.share-btn{background:var(--primary);}
+h1{text-align:center;color:var(--primary);font-size:1.7em;margin:8px 0 2px;}
+.subtitle{text-align:center;color:var(--muted);margin-bottom:6px;}
+.second-title{text-align:center;font-family:'Amiri',serif;background:linear-gradient(45deg,#FF9800,#FFC107);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.5em;font-weight:700;margin:6px 0 18px;}
+.player-wrap{max-width:760px;margin:0 auto 22px;background:var(--card);border:2px solid var(--primary);border-radius:var(--radius);padding:16px;box-shadow:0 8px 30px rgba(0,0,0,.5);}
+.now{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-weight:700;color:var(--primary);min-height:26px;justify-content:center;}
+.eq{display:flex;align-items:center;justify-content:center;gap:4px;height:26px;}
+.eq span{width:6px;height:6px;border-radius:3px;background:linear-gradient(to top,#2E7D32,#81C784);}
+.playing .eq span{animation:eq 1s ease-in-out infinite;}
+.eq span:nth-child(1){animation-duration:.8s}.eq span:nth-child(2){animation-duration:.6s}.eq span:nth-child(3){animation-duration:1s}.eq span:nth-child(4){animation-duration:.7s}.eq span:nth-child(5){animation-duration:.9s}
+@keyframes eq{0%,100%{height:6px}50%{height:24px}}
+video{width:100%;border-radius:12px;background:#000;max-height:260px;}
+.list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:8px;}
+.lesson{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid #333;border-radius:12px;padding:10px 14px;cursor:pointer;transition:.2s;text-align:right;}
+.lesson:hover{border-color:var(--primary);}
+.lesson.active{border-color:var(--primary);background:rgba(76,175,80,.12);box-shadow:inset 3px 0 0 var(--primary);}
+.play-btn{flex:0 0 auto;width:42px;height:42px;border-radius:50%;border:none;background:linear-gradient(135deg,#4CAF50,#2E7D32);color:#fff;font-size:1em;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.lesson.active .play-btn{background:#f44336;}
+.lesson-title{font-size:.98em;line-height:1.5;}
+.count{text-align:center;color:var(--muted);margin-bottom:14px;font-size:.9em;}
+</style>
+</head>
+<body>
+<div class="controls-container">
+  <button class="back-btn" onclick="goBack()">← رجوع</button>
+  <button class="share-btn" onclick="shareApp()"><i class="fas fa-share-nodes"></i> مشاركة</button>
+</div>
+<h1>راديو قرآن</h1>
+<div class="subtitle">صفحة اللهم لك الحمد</div>
+<div class="second-title">سلسلة نهاية العالم — الشيخ محمد العريفي</div>
+
+<div class="player-wrap" id="playerWrap">
+  <div class="now"><div class="eq"><span></span><span></span><span></span><span></span><span></span></div><span id="nowText">اختر حلقة للاستماع</span></div>
+  <video id="player" controls preload="none" playsinline></video>
+</div>
+
+<div class="count">عدد الحلقات: 85 حلقة (الجزء 1 + 2 + 3)</div>
+<div class="list" id="list">
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-001.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 1 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-002.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 2 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-003.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 3 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-004.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 4 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-005.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 5 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-006.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 6 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-007.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 7 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-008.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 8 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-009.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 9 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-010.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 10 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-011.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 11 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-012.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 12 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-013.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 13 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-014.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 14 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-015.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 15 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-016.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 16 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-017.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 17 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-018.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 18 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-019.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 19 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-020.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 20 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-021.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 21 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-022.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 22 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-023.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 23 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-024.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 24 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-025.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 25 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-026.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 26 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-027.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 27 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-028.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 28 — نهاية العالم (الجزء 1)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-029.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 29 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-030.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 30 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-031.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 31 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-032.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 32 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-033.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 33 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-034.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 34 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-035.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 35 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-036.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 36 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-037.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 37 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-038.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 38 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-039.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 39 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-040.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 40 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-041.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 41 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-042.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 42 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-043.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 43 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-044.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 44 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-045.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 45 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-046.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 46 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-047.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 47 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-048.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 48 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-049.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 49 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-050.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 50 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-051.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 51 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-052.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 52 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-053.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 53 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-054.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 54 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-055.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 55 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-056.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 56 — نهاية العالم (الجزء 2)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-057.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 57 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-058.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 58 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-059.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 59 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-060.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 60 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-061.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 61 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-062.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 62 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-063.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 63 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-064.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 64 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-065.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 65 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-066.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 66 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-067.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 67 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-068.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 68 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-069.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 69 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-070.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 70 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-071.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 71 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-072.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 72 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-073.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 73 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-074.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 74 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-075.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 75 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-076.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 76 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-077.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 77 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-078.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 78 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-079.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 79 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-080.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 80 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-081.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 81 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-082.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 82 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-083.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 83 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-084.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 84 — نهاية العالم (الجزء 3)</span></div>
+      <div class="lesson" data-url="https://archive.org/download/Islamic_Tape-561_uP_bY_mUSLEm/muslem.ettounsi-085.mp4"><button class="play-btn" onclick="playLesson(this)"><i class="fas fa-play"></i></button><span class="lesson-title">الحلقة 85 — نهاية العالم (الجزء 3)</span></div>
+</div>
+
+<script>
+const player=document.getElementById('player');
+const wrap=document.getElementById('playerWrap');
+const nowText=document.getElementById('nowText');
+function playLesson(btn){
+  const lesson=btn.closest('.lesson');
+  document.querySelectorAll('.lesson.active').forEach(l=>{l.classList.remove('active');l.querySelector('.play-btn i').className='fas fa-play';});
+  lesson.classList.add('active');
+  btn.querySelector('i').className='fas fa-pause';
+  wrap.classList.add('playing');
+  const url=lesson.dataset.url;
+  nowText.textContent=lesson.querySelector('.lesson-title').textContent;
+  player.src=url;
+  player.play().catch(()=>{});
+  player.scrollIntoView({behavior:'smooth',block:'center'});
+}
+player.addEventListener('ended',()=>{
+  const cur=document.querySelector('.lesson.active');
+  if(cur){const next=cur.nextElementSibling; if(next) playLesson(next.querySelector('.play-btn'));}
+});
+player.addEventListener('pause',()=>{const b=document.querySelector('.lesson.active .play-btn i'); if(b)b.className='fas fa-play';});
+function goBack(){ window.location.href='index.html'; }
+function shareApp(){
+  const data={title:'سلسلة نهاية العالم - الشيخ محمد العريفي',text:'استمع لسلسلة نهاية العالم للشيخ محمد العريفي عبر راديو قرآن',url:window.location.href};
+  if(navigator.share){navigator.share(data).catch(()=>{});} else {navigator.clipboard.writeText(window.location.href);alert('تم نسخ الرابط');}
+}
+</script>
+</body>
+</html>
