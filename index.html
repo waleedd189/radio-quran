@@ -604,19 +604,19 @@ body.light-mode .azkar-select, body.light-mode .ruqyah-select, body.light-mode .
 
 /* ===== مشغل واحد ثابت أعلى الصفحة ===== */
 #globalAudioPlayerContainer {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 3000;
-  width: 100%;
-  background: linear-gradient(135deg, rgba(24,28,24,0.98), rgba(14,18,14,0.98));
-  border-bottom: 1px solid rgba(76,175,80,0.55);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  padding: 10px 14px;
+  position: relative;
+  margin: 18px auto;
+  max-width: 620px;
+  width: calc(100% - 20px);
+  background: linear-gradient(135deg, rgba(28,32,28,0.97), rgba(16,20,16,0.97));
+  border: 1px solid rgba(76,175,80,0.55);
+  border-radius: 20px;
+  box-shadow: 0 10px 34px rgba(0,0,0,0.55), 0 0 20px rgba(76,175,80,0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 16px 16px 12px;
 }
-body.light-mode #globalAudioPlayerContainer { background: linear-gradient(135deg, #ffffff, #f1f6f1); border-bottom-color: #4CAF50; }
-body { padding-top: 178px; }
+body.light-mode #globalAudioPlayerContainer { background: linear-gradient(135deg, #ffffff, #f1f6f1); border-color: #4CAF50; }
 
 .mp-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
 .mp-row.main { justify-content: flex-start; flex-wrap: nowrap; }
@@ -687,9 +687,9 @@ body.light-mode .gp-vol-pct { color: #666; }
 .mp-sleep { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
 #globalAudioPlayer { display: none; }
 @media (max-width: 600px) {
-  body { padding-top: 235px; }
   .gp-vol-slider { width: 130px; }
   #globalPlayerStationName { font-size: .92em; }
+  .mp-row.main { gap: 9px; }
 }
 
 .volume-control { display: flex; align-items: center; justify-content: center; margin: 15px 0; gap: 15px; }
