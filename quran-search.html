@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>البحث في القرآن الكريم - راديو قرآن</title>
-<meta name="description" content="بحث فوري متقدم في نص القرآن الكريم (6236 آية) بالرسم العثماني والإملائي، مع مستكشف للسور وإحصائيات — يعمل بدون إنترنت.">
+<meta name="description" content="بحث فوري متقدم في نص القرآن الكريم (6236 آية) بالرسم الإملائي الواضح، مع مستكشف للسور وإحصائيات — يعمل بدون إنترنت.">
 <meta name="theme-color" content="#4CAF50">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Scheherazade+New:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root{--primary:#4CAF50;--primary-dark:#2E7D32;--bg:#111;--card:#1e1e1e;--card2:#262626;--text:#fff;--muted:#aaa;--radius:16px;--gold:#FFB300;}
@@ -55,8 +55,6 @@ body.light .aya-card{background:#fff;border-color:#e0e0e0;}
 .aya-ref{background:var(--primary);color:#fff;font-weight:700;font-size:.83em;padding:4px 12px;border-radius:16px;cursor:pointer;}
 .aya-juz{color:var(--muted);font-size:.78em;}
 .aya-text{font-family:'Amiri',serif;font-size:1.45em;line-height:2.05;direction:rtl;}
-.aya-text.uth,.aya-line .t.uth,.bismillah{font-family:'Amiri Quran','Amiri','Scheherazade New',serif;}
-.aya-text.uth{font-size:1.85em;line-height:2.5;}
 .aya-text mark{background:var(--gold);color:#222;border-radius:4px;padding:0 3px;}
 .context{background:rgba(76,175,80,.07);border-radius:12px;padding:10px 14px;margin-top:10px;font-family:'Amiri',serif;font-size:1.25em;line-height:1.9;direction:rtl;display:none;border-right:3px solid var(--primary);}
 .context.show{display:block;}
@@ -88,7 +86,6 @@ body.light .surah-card{background:#fff;border-color:#e0e0e0;}
 body.light .aya-line{background:#fff;border-color:#e0e0e0;}
 .aya-num{width:34px;height:34px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:.85em;}
 .aya-line .t{font-family:'Amiri',serif;font-size:1.5em;line-height:2.1;direction:rtl;flex:1;cursor:pointer;}
-.aya-line .t.uth{font-size:1.75em;line-height:2.5;}
 .aya-line .acts{display:flex;flex-direction:column;gap:4px;}
 .icon-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1em;padding:4px;}
 .icon-btn:hover{color:var(--primary);}
@@ -113,7 +110,7 @@ body.light .aya-line{background:#fff;border-color:#e0e0e0;}
 
   <div class="title">
     <h1>📖 البحث في القرآن الكريم</h1>
-    <div class="sub">6236 آية • 114 سورة — بالرسم العثماني والإملائي • يعمل بدون إنترنت</div>
+    <div class="sub">6236 آية • 114 سورة — يعمل بدون إنترنت</div>
   </div>
 
   <div class="tabs">
@@ -132,7 +129,6 @@ body.light .aya-line{background:#fff;border-color:#e0e0e0;}
       <select id="surahFilter"><option value="">كل السور</option></select>
       <select id="juzFilter"><option value="">كل الأجزاء</option></select>
       <select id="makkiFilter"><option value="">الكل</option><option value="makki">مكية</option><option value="madani">مدنية</option></select>
-      <label class="chk"><input type="checkbox" id="uthToggle"> الرسم العثماني</label>
     </div>
     <div class="toolbar">
       <button class="tbtn" onclick="runSearch()"><i class="fas fa-magnifying-glass"></i> بحث</button>
@@ -182,8 +178,7 @@ function normalize(s){
 }
 function stripDiac(s){ return (s||'').replace(/[ً-ٰٟـۣۜ۟۠ۡۢۤۥۦۭۧۨ]/g,'').replace(/\s+/g,' ').trim(); }
 function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function isUth(){return $('uthToggle').checked;}
-function textOf(a){return isUth()?a.aya_text:a.aya_text_emlaey;}
+function textOf(a){return a.aya_text_emlaey;}
 
 function arabicClass(ch){
   const map={ا:'[اأإآٱ]',ة:'[ةه]',ه:'[هة]',ى:'[ىي]',ي:'[يى]',ؤ:'[ؤو]',و:'[وؤ]',ئ:'[ئيئ]'};
@@ -196,8 +191,6 @@ function highlight(raw,term){
     const n=normalize(w); if(n.length<1)return;
     let pat='';
     for(const ch of n) pat+=arabicClass(ch);
-    // بين الحروف نقبل التشكيل (للعثماني)
-    if(isUth()){ pat=pat.split('').join('[ً-ٰٟـۣۜ۟۠ۡۢۤۥۦۭۧۨ]*'); }
     try{ html=html.replace(new RegExp('('+pat+')','g'),'<mark>$1</mark>'); }catch(e){}
   });
   return html;
@@ -271,7 +264,7 @@ function ayaCard(a,term){
       '<span class="aya-ref" onclick="openSurah('+a.sura_no+','+a.aya_no+')">'+esc(a.sura_name_ar)+' — آية '+a.aya_no+'</span>'+
       '<span class="aya-juz">الجزء '+a.jozz+' • الصفحة '+a.page+' • '+(MADANI.has(a.sura_no)?'مدنية':'مكية')+'</span>'+
     '</div>'+
-    '<div class="aya-text '+(isUth()?'uth':'')+'">'+(term?highlight(textOf(a),term):esc(textOf(a)))+'</div>'+
+    '<div class="aya-text">'+(term?highlight(textOf(a),term):esc(textOf(a)))+'</div>'+
     '<div class="context" id="ctx-'+a.id+'"></div>'+
     '<div class="card-actions">'+
       '<button class="cbtn" onclick="toggleCtx('+a.id+',this)"><i class="fas fa-book-open"></i> السياق</button>'+
@@ -357,8 +350,8 @@ function openSurah(no,highlightAya){
         '<button class="icon-btn '+(fav?'fav-active':'')+'" onclick="toggleFav('+a.id+',this)" title="حفظ"><i class="fas fa-star"></i></button>'+
         '<button class="icon-btn" onclick="copyText(this)" title="نسخ"><i class="far fa-copy"></i></button>'+
       '</div>'+
-      '<div class="t '+(isUth()?'uth':'')+'" onclick="copyAyaLine('+a.sura_no+','+a.aya_no+',this)">'+
-        (isUth()?esc(a.aya_text):esc(a.aya_text_emlaey))+
+      '<div class="t" onclick="copyAyaLine('+a.sura_no+','+a.aya_no+',this)">'+
+        esc(a.aya_text_emlaey)+
         ' <span style="font-family:Cairo;color:var(--primary);">﴿'+a.aya_no+'﴾</span></div>'+
       '</div>';
   });
@@ -390,7 +383,7 @@ function exportCSV(){
   const l=document.createElement('a');l.href=url;l.download='quran-search-results.csv';l.click();URL.revokeObjectURL(url);
 }
 function shareSearch(){
-  const params=new URLSearchParams({q:$('q').value,mode:$('mode').value,sura:$('surahFilter').value,juz:$('juzFilter').value,mak:$('makkiFilter').value,uth:isUth()?'1':'0'});
+  const params=new URLSearchParams({q:$('q').value,mode:$('mode').value,sura:$('surahFilter').value,juz:$('juzFilter').value,mak:$('makkiFilter').value});
   const url=location.origin+location.pathname+'?'+params.toString();
   if(navigator.share)navigator.share({title:'بحث في القرآن',text:'نتائج بحث: '+$('q').value,url}).catch(()=>{});
   else{navigator.clipboard.writeText(url);alert('تم نسخ رابط البحث');}
@@ -407,16 +400,16 @@ function switchTab(v){
 }
 
 /* ---------- الحفظ ---------- */
-function saveSearch(){try{localStorage.setItem(LS.search,JSON.stringify({q:$('q').value,mode:$('mode').value,sura:$('surahFilter').value,juz:$('juzFilter').value,mak:$('makkiFilter').value,uth:isUth()}));}catch(e){}}
+function saveSearch(){try{localStorage.setItem(LS.search,JSON.stringify({q:$('q').value,mode:$('mode').value,sura:$('surahFilter').value,juz:$('juzFilter').value,mak:$('makkiFilter').value}));}catch(e){}}
 function restoreSearch(){
   let p=null;
   const up=new URLSearchParams(location.search);
   if(up.get('q')!==null && up.get('q')!==''){
-    p={q:up.get('q'),mode:up.get('mode'),sura:up.get('sura'),juz:up.get('juz'),mak:up.get('mak'),uth:up.get('uth')==='1'};
+    p={q:up.get('q'),mode:up.get('mode'),sura:up.get('sura'),juz:up.get('juz'),mak:up.get('mak')};
   }
   if(!p){try{p=JSON.parse(localStorage.getItem(LS.search)||'null');}catch(e){}}
   if(!p)return;
-  $('q').value=p.q||'';$('mode').value=p.mode||'contains';$('surahFilter').value=p.sura||'';$('juzFilter').value=p.juz||'';$('makkiFilter').value=p.mak||'';$('uthToggle').checked=!!p.uth;
+  $('q').value=p.q||'';$('mode').value=p.mode||'contains';$('surahFilter').value=p.sura||'';$('juzFilter').value=p.juz||'';$('makkiFilter').value=p.mak||'';
 }
 
 function toggleMode(){
@@ -428,7 +421,6 @@ function toggleMode(){
 
 function init(){
   if(localStorage.getItem(LS.mode)==='light'){document.body.classList.add('light');$('modeBtn').innerHTML='<i class="fas fa-moon"></i>';}
-  if(localStorage.getItem(LS.script)==='uth')$('uthToggle').checked=true;
   $('loader').style.display='block';
   fetch('data/quran.json').then(r=>r.json()).then(d=>{
     DATA=d;
@@ -444,7 +436,6 @@ function init(){
     runSearch();
     $('q').addEventListener('input',runSearch);
     ['mode','surahFilter','juzFilter','makkiFilter'].forEach(id=>$(id).addEventListener('change',runSearch));
-    $('uthToggle').addEventListener('change',()=>{localStorage.setItem(LS.script,isUth()?'uth':'emlaey');runSearch();});
     $('q').focus();
   }).catch(()=>{
     $('loader').style.display='none';
