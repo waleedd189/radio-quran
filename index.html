@@ -2178,12 +2178,13 @@ if ('serviceWorker' in navigator) {
       })
       .catch(err => console.log('ServiceWorker:', err));
 
-    // إعادة تحميل فور تولّي Service Worker جديد التحكم
-    let refreshing = false;
+    // ملاحظة: لا نُعيد تحميل الصفحة قسرًا حتى لا تنقطع جلسة الاستماع.
+    // عندما يتولى Service Worker جديد التحكم، نكتفي بإشعار خفيف (يُطبَّق التحديث كاملًا عند الزيارة القادمة).
+    let notified = false;
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (refreshing) return;
-      refreshing = true;
-      window.location.reload();
+      if (notified) return;
+      notified = true;
+      try { showToast('✅ تم تحديث التطبيق — سيُطبَّق بالكامل في الزيارة القادمة'); } catch(e){}
     });
   });
 }
