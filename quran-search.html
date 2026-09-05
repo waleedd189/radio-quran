@@ -92,6 +92,35 @@ body.light .aya-line{background:#fff;border-color:#e0e0e0;}
 .icon-btn.fav-active{color:var(--gold);}
 .bismillah{text-align:center;font-family:'Amiri',serif;font-size:2em;color:var(--primary);margin:18px 0;}
 
+
+/* ===== لوحة الآية (Quranpedia) ===== */
+.qp-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;align-items:flex-end;justify-content:center;}
+.qp-overlay.show{display:flex;}
+.qp-modal{background:var(--card);width:100%;max-width:760px;max-height:88vh;overflow-y:auto;border-radius:20px 20px 0 0;padding:18px 18px 26px;direction:rtl;}
+body.light .qp-modal{background:#fff;}
+.qp-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;position:sticky;top:0;background:var(--card);padding-bottom:8px;z-index:2;}
+body.light .qp-head{background:#fff;}
+.qp-title{color:var(--primary);font-weight:700;font-size:1.05em;}
+.qp-close{background:none;border:none;color:var(--muted);font-size:1.5em;cursor:pointer;}
+.qp-aya{font-family:'Amiri',serif;font-size:1.7em;line-height:2;text-align:center;color:var(--text);margin:6px 0 14px;padding:10px;}
+.qp-tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;}
+.qp-tab{background:rgba(255,255,255,.08);border:1px solid #333;color:var(--text);padding:7px 14px;border-radius:18px;cursor:pointer;font-family:'Cairo';font-weight:700;font-size:.82em;}
+body.light .qp-tab{background:#eee;color:#333;}
+.qp-tab.active{background:var(--primary);border-color:var(--primary);color:#fff;}
+.qp-body{font-size:.95em;line-height:2;color:var(--text);}
+.qp-body .bookname{color:var(--primary);font-weight:700;margin:10px 0 4px;font-size:.9em;}
+.qp-body .seg{margin-bottom:12px;}
+.qp-body .seg p{white-space:normal;word-wrap:break-word;}
+.qp-body img{max-width:100%;}
+.qp-loading{color:var(--muted);text-align:center;padding:20px;}
+.qp-audio{width:100%;margin:8px 0;}
+.qp-note{color:var(--muted);font-size:.8em;text-align:center;margin-top:14px;}
+.qp-note a{color:var(--primary);}
+.qp-err{color:#e57373;text-align:center;padding:16px;}
+.sim-aya{cursor:pointer;padding:8px 12px;border:1px solid #333;border-radius:10px;margin:6px 0;font-family:'Amiri';font-size:1.1em;line-height:1.8;}
+.sim-aya:hover{border-color:var(--primary);}
+.sim-ref{font-family:'Cairo';font-size:.7em;color:var(--primary);display:block;}
+
 .empty{color:var(--muted);text-align:center;padding:40px 10px;}
 .loader{margin:30px auto;color:var(--primary);text-align:center;}
 .spinner{width:40px;height:40px;border:4px solid #333;border-top-color:var(--primary);border-radius:50%;margin:0 auto 10px;animation:spin 1s linear infinite;}
@@ -157,6 +186,21 @@ body.light .aya-line{background:#fff;border-color:#e0e0e0;}
     <div class="sec-title"><i class="fas fa-star"></i> الآيات المحفوظة</div>
     <div class="results" id="favResults"></div>
   </div>
+
+
+<div class="qp-overlay" id="qpOverlay" onclick="if(event.target===this)closeQP()">
+  <div class="qp-modal">
+    <div class="qp-head">
+      <span class="qp-title" id="qpTitle"></span>
+      <button class="qp-close" onclick="closeQP()">&times;</button>
+    </div>
+    <div class="qp-aya" id="qpAya"></div>
+    <div class="qp-tabs" id="qpTabs"></div>
+    <audio class="qp-audio" id="qpAudio" controls style="display:none;"></audio>
+    <div class="qp-body" id="qpBody"></div>
+    <div class="qp-note">المحتوى الموسوعي مقدَّم من <a href="https://quranpedia.net" target="_blank" rel="noopener">Quranpedia.net</a> (يتطلب اتصالًا بالإنترنت)</div>
+  </div>
+</div>
 
   <div class="footer-note">مصدر النص: مجمّع الملك فهد لطباعة المصحف الشريف — رواية حفص (KFGQPC Hafs). تقسيم مكية/مدنية وفق التصنيف الشائع.</div>
 </div>
@@ -271,6 +315,7 @@ function ayaCard(a,term){
       '<button class="cbtn '+(fav?'fav-active':'')+'" onclick="toggleFav('+a.id+',this)"><i class="fas fa-star"></i> حفظ</button>'+
       '<button class="cbtn" onclick="copyAya(this)"><i class="far fa-copy"></i> نسخ</button>'+
       '<button class="cbtn" onclick="openSurah('+a.sura_no+','+a.aya_no+')"><i class="fas fa-list-ol"></i> في السورة</button>'+
+      '<button class="cbtn" style="color:var(--gold);" onclick="openQP('+a.sura_no+','+a.aya_no+')"><i class="fas fa-circle-info"></i> موسوعة الآية</button>'+
     '</div>';
   c.dataset.text='﴿'+a.aya_text_emlaey+'﴾ ['+a.sura_name_ar+': '+a.aya_no+']';
   return c;
@@ -349,6 +394,7 @@ function openSurah(no,highlightAya){
       '<div class="acts">'+
         '<button class="icon-btn '+(fav?'fav-active':'')+'" onclick="toggleFav('+a.id+',this)" title="حفظ"><i class="fas fa-star"></i></button>'+
         '<button class="icon-btn" onclick="copyText(this)" title="نسخ"><i class="far fa-copy"></i></button>'+
+        '<button class="icon-btn" style="color:var(--gold);" onclick="openQP('+a.sura_no+','+a.aya_no+')" title="موسوعة الآية"><i class="fas fa-book-quran"></i></button>'+
       '</div>'+
       '<div class="t" onclick="copyAyaLine('+a.sura_no+','+a.aya_no+',this)">'+
         esc(a.aya_text_emlaey)+
@@ -411,6 +457,145 @@ function restoreSearch(){
   if(!p)return;
   $('q').value=p.q||'';$('mode').value=p.mode||'contains';$('surahFilter').value=p.sura||'';$('juzFilter').value=p.juz||'';$('makkiFilter').value=p.mak||'';
 }
+
+
+/* ============ Quranpedia: لوحة الآية الموسوعية ============ */
+const QP='https://api.quranpedia.net/v1';
+let qpSura=0, qpAya=0, qpServer=null, qpCache={};
+function escHtml(s){return esc(s==null?'':String(s));}
+function stripHtml(h){const d=document.createElement('div');d.innerHTML=h||'';return d.textContent||'';}
+
+function openQP(sura,aya){
+  qpSura=sura; qpAya=aya;
+  const a=DATA.find(x=>x.sura_no===sura&&x.aya_no===aya);
+  $('qpTitle').textContent=a.sura_name_ar+' — آية '+aya;
+  $('qpAya').textContent='﴿'+a.aya_text_emlaey+'﴾';
+  $('qpAudio').pause(); $('qpAudio').style.display='none'; $('qpAudio').removeAttribute('src');
+  $('qpOverlay').classList.add('show');
+  const tabs=[
+    ['tafsir','التفسير'],['asbab','أسباب النزول'],['meanings','معاني الكلمات'],
+    ['similar','آيات مشابهة'],['translation','الترجمة'],['recite','تلاوة']
+  ];
+  $('qpTabs').innerHTML=tabs.map((t,i)=>'<button class="qp-tab'+(i===0?' active':'')+'" onclick="qpGo(\''+t[0]+'\',this)">'+t[1]+'</button>').join('');
+  qpGo('tafsir');
+}
+function closeQP(){$('qpOverlay').classList.remove('show');$('qpAudio').pause();}
+function qpLoading(){$('qpBody').innerHTML='<div class="qp-loading"><div class="spinner"></div>جارٍ الجلب…</div>';}
+function qpErr(msg){$('qpBody').innerHTML='<div class="qp-err">'+(msg||'تعذّر جلب المحتوى. تأكد من الاتصال بالإنترنت.')+'</div>';}
+function qpGo(type,btn){
+  document.querySelectorAll('.qp-tab').forEach(t=>t.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  qpLoading();
+  const key=qpSura+':'+qpAya+':'+type;
+  if(qpCache[key]){ $('qpBody').innerHTML=qpCache[key]; return; }
+  const done=html=>{ qpCache[key]=html; $('qpBody').innerHTML=html; };
+  ({
+    tafsir:qpTafsir, asbab:qpAsbab, meanings:qpMeanings,
+    similar:qpSimilar, translation:qpTranslation, recite:qpRecite
+  }[type]||qpTafsir)(done);
+}
+async function qpGet(url){
+  const r=await fetch(QP+url);
+  if(!r.ok) throw new Error('http '+r.status);
+  return r.json();
+}
+function cleanHtml(h){
+  return (h||'')
+    .replace(/<script[\s\S]*?<\/script>/gi,'')
+    .replace(/<style[\s\S]*?<\/style>/gi,'')
+    .replace(/(\r\n|\r|\n){2,}/g,'<br>')
+    .replace(/\r\n|\r|\n/g,' ')
+    .trim();
+}
+
+async function qpTafsir(done){
+  try{
+    // book 1 = تيسير التفسير (متاح لمعظم الآيات)
+    const d=await qpGet('/ayah/'+qpSura+'/'+qpAya+'/book/1');
+    const parts=(d.content||[]).filter(p=>p&&p.text&&stripHtml(p.text).trim());
+    if(!parts.length) return done('<div class="qp-loading">لا يوجد تفسير متاح لهذه الآية.</div>');
+    let h='<div class="bookname">'+escHtml(d.book&&d.book.name)+' — '+escHtml(d.book&&d.book.author&&d.book.author.ar_name)+'</div>';
+    parts.forEach(p=>{ h+='<div class="seg"><p>'+cleanHtml(p.text)+'</p></div>'; });
+    done(h);
+  }catch(e){ qpErr(); }
+}
+async function qpAsbab(done){
+  try{
+    const info=await qpGet('/surah/information/'+qpSura);
+    const val=info.revelation&&info.revelation.value;
+    if(val&&stripHtml(val).trim()){
+      done('<div class="bookname">أسباب نزول السورة</div><div class="seg"><p>'+cleanHtml(val)+'</p></div>');
+    } else {
+      done('<div class="qp-loading">لا توجد بيانات أسباب نزول مسجَّلة.</div>');
+    }
+  }catch(e){ qpErr(); }
+}
+async function qpMeanings(done){
+  try{
+    const d=await qpGet('/ayah/'+qpSura+'/'+qpAya+'/meanings');
+    if(!Array.isArray(d)||!d.length){ return done('<div class="qp-loading">لا توجد معاني كلمات متاحة.</div>'); }
+    let h='';
+    d.slice(0,4).forEach(item=>{
+      const bi=item.book_info||{};
+      h+='<div class="bookname">'+escHtml(bi.name||'معاني الكلمات')+'</div><div class="seg">';
+      const words=item.words||[];
+      if(Array.isArray(words)&&words.length){
+        words.forEach(w=>{ h+='<div style="margin:4px 0;"><b style="color:var(--primary);font-family:Amiri;">'+escHtml(w.text)+'</b> : '+escHtml(w.meaning)+'</div>'; });
+      } else {
+        const txt=item.content||item.text||'';
+        h+='<p>'+cleanHtml(typeof txt==='string'?txt:JSON.stringify(txt))+'</p>';
+      }
+      h+='</div>';
+    });
+    done(h||'<div class="qp-loading">لا توجد معاني كلمات متاحة.</div>');
+  }catch(e){ qpErr(); }
+}
+async function qpSimilar(done){
+  try{
+    const d=await qpGet('/ayah/'+qpSura+'/'+qpAya+'/similar');
+    const arr=Array.isArray(d)?d:(d.items||[]);
+    if(!arr.length){ return done('<div class="qp-loading">لا توجد آيات مشابهة مسجَّلة.</div>'); }
+    let h='';
+    arr.slice(0,12).forEach(it=>{
+      const sur=it.surah||it.sura||it.surah_number;
+      const num=it.number||it.ayah||it.ayah_number;
+      const txt=it.text||it.ayah_text||'';
+      if(sur&&num){ h+='<div class="sim-aya" onclick="openQP('+sur+','+num+')">'+escHtml(txt)+'<span class="sim-ref">اضغط للفتح — آية '+sur+':'+num+'</span></div>'; }
+    });
+    done(h||'<div class="qp-loading">لا توجد آيات مشابهة مسجَّلة.</div>');
+  }catch(e){ qpErr(); }
+}
+async function qpTranslation(done){
+  try{
+    const d=await qpGet('/translation/1947/'+qpSura+'/'+qpAya);
+    const t=(d&&d.translation_text)||'';
+    done('<div class="bookname">English — Saheeh International</div><div class="seg" dir="ltr" style="text-align:left;"><p>'+escHtml(t)+'</p></div>');
+  }catch(e){ qpErr(); }
+}
+async function qpRecite(done){
+  try{
+    if(!qpServer){
+      const groups=await qpGet('/reciters');
+      // اختر أول مصحف مجود/مرتل بسيرفر آيات (verse.) لضمان الصوت لكل آية
+      let pick=null;
+      for(const g of groups){ for(const r of g){ if(r.server&&r.server.includes('verse.mp3quran.net')){ pick=r; break; } } if(pick)break; }
+      if(!pick){ for(const g of groups){ for(const r of g){ if(r.server){ pick=r; break; } } if(pick)break; } }
+      qpServer=pick?pick.server:null;
+    }
+    const pad=n=>String(n).padStart(3,'0');
+    let url=null;
+    if(qpServer && qpServer.includes('verse.')){
+      url=qpServer+pad(qpSura)+pad(qpAya)+'.mp3';
+    } else if(qpServer){
+      url=qpServer.replace(/\/$/,'')+'/'+pad(qpSura)+'.mp3'; // سورة كاملة احتياطيًا
+    }
+    if(!url) return qpErr('لا يوجد خادم تلاوة متاح.');
+    $('qpAudio').src=url; $('qpAudio').style.display='block';
+    $('qpAudio').play().catch(()=>{});
+    done('<div class="seg" style="text-align:center;color:var(--muted);">تشغيل تلاوة الآية (إبراهيم الأخضر). لو لم تعمل الآية المنفردة، استخدم زر التلاوة في صفحة السورة.</div>');
+  }catch(e){ qpErr(); }
+}
+
 
 function toggleMode(){
   document.body.classList.toggle('light');
