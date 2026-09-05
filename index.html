@@ -602,31 +602,26 @@ body.light-mode .azkar-select, body.light-mode .ruqyah-select, body.light-mode .
 .favorite-btn.active { background: #E91E63; animation: heartBeat 0.5s; }
 @keyframes heartBeat { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
 
-/* ===== المشغل العائم الحديث (شريط سفلي) ===== */
+/* ===== مشغل واحد ثابت أعلى الصفحة ===== */
 #globalAudioPlayerContainer {
-  display: none;
   position: fixed;
-  bottom: 14px;
-  left: 50%;
-  transform: translateX(-50%) translateY(24px);
-  width: min(580px, calc(100vw - 20px));
+  top: 0; left: 0; right: 0;
   z-index: 3000;
-  background: linear-gradient(135deg, rgba(28,32,28,0.97), rgba(16,20,16,0.97));
-  border: 1px solid rgba(76,175,80,0.55);
-  border-radius: 20px;
-  padding: 12px 14px 10px;
-  box-shadow: 0 14px 44px rgba(0,0,0,0.65), 0 0 22px rgba(76,175,80,0.15);
+  width: 100%;
+  background: linear-gradient(135deg, rgba(24,28,24,0.98), rgba(14,18,14,0.98));
+  border-bottom: 1px solid rgba(76,175,80,0.55);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  opacity: 0;
-  transition: opacity .35s ease, transform .35s ease;
+  padding: 10px 14px;
 }
-#globalAudioPlayerContainer.show { display: block; opacity: 1; transform: translateX(-50%) translateY(0); }
-body.light-mode #globalAudioPlayerContainer { background: linear-gradient(135deg, #ffffff, #f1f6f1); border-color: #4CAF50; }
-body.player-open { padding-bottom: 210px; }
+body.light-mode #globalAudioPlayerContainer { background: linear-gradient(135deg, #ffffff, #f1f6f1); border-bottom-color: #4CAF50; }
+body { padding-top: 178px; }
 
-.gp-top { display: flex; align-items: center; gap: 12px; }
-.gp-art { position: relative; width: 54px; height: 54px; flex: 0 0 54px; border-radius: 14px; overflow: hidden; background: #000; box-shadow: 0 4px 14px rgba(0,0,0,0.45); }
+.mp-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.mp-row.main { justify-content: flex-start; flex-wrap: nowrap; }
+
+.gp-art { position: relative; width: 52px; height: 52px; flex: 0 0 52px; border-radius: 12px; overflow: hidden; background: #000; box-shadow: 0 4px 14px rgba(0,0,0,0.45); }
 .gp-art img { width: 100%; height: 100%; object-fit: cover; }
 .is-playing .gp-art img { animation: gpSpin 7s linear infinite; }
 @keyframes gpSpin { to { transform: rotate(360deg); } }
@@ -634,10 +629,26 @@ body.player-open { padding-bottom: 210px; }
 .gp-info { flex: 1; min-width: 0; text-align: right; }
 #globalPlayerStationName { color: #fff; font-weight: 700; font-size: 1em; font-family: 'Cairo'; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 body.light-mode #globalPlayerStationName { color: #222; }
-.gp-status { font-size: 0.78em; color: var(--primary-color); display: flex; align-items: center; gap: 6px; justify-content: flex-end; margin-top: 3px; font-weight: 600; }
+.gp-status { font-size: 0.78em; color: var(--primary-color); display: flex; align-items: center; gap: 6px; justify-content: flex-end; margin-top: 2px; font-weight: 600; }
 body.light-mode .gp-status { color: var(--primary-dark); }
 
-.gp-icobtns { display: flex; gap: 6px; }
+.gp-eq { display: flex; align-items: center; justify-content: center; gap: 4px; height: 38px; flex: 0 0 auto; }
+.gp-eq span {
+  display: block; width: 6px; height: 8px; border-radius: 4px;
+  background: linear-gradient(to top, #2E7D32, #66BB6A, #B9F6CA);
+  box-shadow: 0 0 8px rgba(129,199,132,0.5);
+}
+.is-playing .gp-eq span { animation: gpEq .9s ease-in-out infinite; }
+.gp-eq span:nth-child(1){ animation-duration: .8s; animation-delay: 0s; }
+.gp-eq span:nth-child(2){ animation-duration: .62s; animation-delay: .1s; }
+.gp-eq span:nth-child(3){ animation-duration: 1.0s; animation-delay: .05s; }
+.gp-eq span:nth-child(4){ animation-duration: .7s; animation-delay: .15s; }
+.gp-eq span:nth-child(5){ animation-duration: .9s; animation-delay: .25s; }
+.gp-eq span:nth-child(6){ animation-duration: .66s; animation-delay: .12s; }
+.gp-eq span:nth-child(7){ animation-duration: .85s; animation-delay: .08s; }
+@keyframes gpEq { 0%,100% { height: 8px; } 50% { height: 34px; } }
+
+.gp-icobtns { display: flex; gap: 6px; flex: 0 0 auto; }
 .player-icon-btn {
   background: rgba(255,255,255,0.08); border: none; color: #ccc; cursor: pointer;
   font-size: 1em; width: 38px; height: 38px; border-radius: 50%;
@@ -648,50 +659,38 @@ body.light-mode .gp-status { color: var(--primary-dark); }
 body.light-mode .player-icon-btn { background: #eee; color: #555; }
 body.light-mode .player-icon-btn:hover { background: #e0e0e0; color: #000; }
 
-/* الإيكوالايزر المتحرك */
-.gp-eq { display: flex; align-items: center; justify-content: center; gap: 5px; height: 40px; margin: 14px 0 6px; }
-.gp-eq span {
-  display: block; width: 7px; height: 8px; border-radius: 4px;
-  background: linear-gradient(to top, #2E7D32, #66BB6A, #B9F6CA);
-  box-shadow: 0 0 8px rgba(129,199,132,0.55);
-  transition: height .2s;
-}
-.is-playing .gp-eq span { animation: gpEq .9s ease-in-out infinite; }
-.gp-eq span:nth-child(1){ animation-duration: .8s; animation-delay: 0s; }
-.gp-eq span:nth-child(2){ animation-duration: .62s; animation-delay: .1s; }
-.gp-eq span:nth-child(3){ animation-duration: 1.0s; animation-delay: .05s; }
-.gp-eq span:nth-child(4){ animation-duration: .7s; animation-delay: .15s; }
-.gp-eq span:nth-child(5){ animation-duration: .9s; animation-delay: .25s; }
-.gp-eq span:nth-child(6){ animation-duration: .66s; animation-delay: .12s; }
-.gp-eq span:nth-child(7){ animation-duration: .85s; animation-delay: .08s; }
-@keyframes gpEq { 0%,100% { height: 8px; } 50% { height: 36px; } }
-
-/* أزرار التحكم */
-.gp-controls { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 6px 0 8px; }
+.mp-controls { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 6px 0; }
 .gp-ctrl {
   background: rgba(255,255,255,0.06); border: none; color: #fff;
-  width: 46px; height: 46px; border-radius: 50%; font-size: 1.05em; cursor: pointer;
+  width: 44px; height: 44px; border-radius: 50%; font-size: 1.05em; cursor: pointer;
   display: flex; align-items: center; justify-content: center; transition: var(--transition);
 }
 .gp-ctrl:hover { background: rgba(76,175,80,0.25); transform: translateY(-2px); }
+.gp-ctrl:disabled { opacity: .4; cursor: not-allowed; transform: none; background: rgba(255,255,255,0.05); }
 .gp-ctrl.play {
-  width: 62px; height: 62px; font-size: 1.4em;
+  width: 58px; height: 58px; font-size: 1.35em;
   background: linear-gradient(135deg, #4CAF50, #2E7D32); color: #fff;
   box-shadow: 0 6px 18px rgba(76,175,80,0.5);
 }
 .gp-ctrl.play:hover { box-shadow: 0 8px 26px rgba(76,175,80,0.75); }
 body.light-mode .gp-ctrl { background: #eee; color: #333; }
 body.light-mode .gp-ctrl.play { color: #fff; }
-#globalAudioPlayerContainer .volume-control { margin: 6px 0 2px; }
-#globalAudioPlayerContainer .gp-volume { gap: 10px; margin: 8px 0 2px; }
-.gp-vol-slider { width: 70%; max-width: 260px; height: 8px; }
+
+.gp-volume { gap: 8px; margin: 4px 0; }
 .gp-mute-btn { background: rgba(255,255,255,0.08); border: none; color: #fff; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; font-size: 1em; display: flex; align-items: center; justify-content: center; transition: var(--transition); flex: 0 0 auto; }
 .gp-mute-btn:hover { background: rgba(76,175,80,0.25); }
 body.light-mode .gp-mute-btn { background: #eee; color: #333; }
+.gp-vol-slider { width: 180px; max-width: 42vw; height: 7px; }
 .gp-vol-pct { font-size: 0.75em; color: #bbb; min-width: 38px; text-align: center; font-weight: 700; }
 body.light-mode .gp-vol-pct { color: #666; }
 
+.mp-sleep { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
 #globalAudioPlayer { display: none; }
+@media (max-width: 600px) {
+  body { padding-top: 235px; }
+  .gp-vol-slider { width: 130px; }
+  #globalPlayerStationName { font-size: .92em; }
+}
 
 .volume-control { display: flex; align-items: center; justify-content: center; margin: 15px 0; gap: 15px; }
 .volume-slider { width: 150px; height: 6px; background: #555; outline: none; opacity: 0.8; border-radius: 5px; transition: var(--transition); }
@@ -895,43 +894,61 @@ body.light-mode .volume-slider { background: #ddd; }
   </div>
 </div>
 
-<!-- لوحة التحكم -->
-<div class="controls-panel">
-  <div class="now-playing" id="nowPlaying">
-    <div class="playing-indicator" id="playingIndicator"></div>
-    <div class="loader" id="bufferingLoader"></div>
-    <span id="stationName">اختر محطة للتشغيل</span>
+<!-- المشغل الثابت الأعلى (مشغل واحد) -->
+<div id="globalAudioPlayerContainer">
+  <div class="mp-row main">
+    <div class="gp-art"><img id="globalPlayerArt" src="icons/icon-192.png" alt="صورة المحطة"></div>
+
+    <div class="gp-eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+    <div class="gp-info">
+      <div id="globalPlayerStationName">اختر محطة للتشغيل</div>
+      <div class="gp-status">
+        <span class="playing-indicator" id="playingIndicator"></span>
+        <span class="loader" id="bufferingLoader"></span>
+        <i class="fas fa-broadcast-tower"></i>
+        <span id="gpStatusText">جاهز</span>
+        <span id="stationName" style="display:none;"></span>
+      </div>
+    </div>
+
+    <div class="gp-icobtns">
+      <button class="player-icon-btn" id="wakeLockBtn" onclick="toggleWakeLock()" aria-label="إبقاء الشاشة مضاءة أثناء الاستماع" title="إبقاء الشاشة مضاءة">
+        <i class="fas fa-lightbulb"></i>
+      </button>
+    </div>
   </div>
 
-  <div class="playlist-controls">
-    <button class="playlist-btn" onclick="previousStation()" id="prevBtn" disabled aria-label="المحطة السابقة">
-      <i class="fas fa-step-backward"></i> السابق
-    </button>
-    <button class="playlist-btn" onclick="nextStation()" id="nextBtn" disabled aria-label="المحطة التالية">
-      <i class="fas fa-step-forward"></i> التالي
-    </button>
+  <div class="mp-controls">
+    <button class="gp-ctrl" id="prevBtn" onclick="previousStation()" disabled aria-label="المحطة السابقة" title="السابق"><i class="fas fa-step-backward"></i></button>
+    <button class="gp-ctrl play" id="gpPlayBtn" onclick="togglePlayPause()" aria-label="تشغيل أو إيقاف مؤقت" title="تشغيل / إيقاف مؤقت"><i class="fas fa-play"></i></button>
+    <button class="gp-ctrl" id="nextBtn" onclick="nextStation()" disabled aria-label="المحطة التالية" title="التالي"><i class="fas fa-step-forward"></i></button>
   </div>
 
-  <div class="volume-control">
-    <span><i class="fas fa-volume-down"></i></span>
-    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50" aria-label="مستوى الصوت" oninput="onVolumeInput(this)">
-    <span><i class="fas fa-volume-up"></i></span>
+  <div class="mp-row mp-volume">
+    <div class="volume-control gp-volume">
+      <button class="gp-mute-btn" id="gpMuteBtn" onclick="toggleMute()" aria-label="كتم الصوت" title="كتم / تشغيل الصوت"><i class="fas fa-volume-up" id="gpMuteIcon"></i></button>
+      <input type="range" class="volume-slider gp-vol-slider" id="globalVolumeSlider" min="0" max="100" value="70" aria-label="مستوى الصوت" oninput="onVolumeInput(this)">
+      <span class="gp-vol-pct" id="gpVolPct">70%</span>
+    </div>
+
+    <div class="sleep-timer-container mp-sleep">
+      <select class="sleep-timer-select" id="sleepTimerSelect" aria-label="مؤقت النوم">
+        <option value="0">إيقاف المؤقت</option>
+        <option value="15">15 دقيقة</option>
+        <option value="30">30 دقيقة</option>
+        <option value="60">60 دقيقة</option>
+        <option value="90">90 دقيقة</option>
+      </select>
+      <button class="sleep-timer-btn" id="sleepTimerBtn" onclick="toggleSleepTimer()" aria-label="تفعيل مؤقت النوم">
+        <i class="fas fa-clock"></i> <span>المؤقت</span>
+      </button>
+    </div>
   </div>
 
-  <div class="sleep-timer-container">
-    <select class="sleep-timer-select" id="sleepTimerSelect" aria-label="مؤقت النوم">
-      <option value="0">إيقاف المؤقت</option>
-      <option value="15">15 دقيقة</option>
-      <option value="30">30 دقيقة</option>
-      <option value="60">60 دقيقة</option>
-      <option value="90">90 دقيقة</option>
-    </select>
-    <button class="sleep-timer-btn" id="sleepTimerBtn" onclick="toggleSleepTimer()" aria-label="تفعيل مؤقت النوم">
-      <i class="fas fa-clock"></i> تفعيل المؤقت
-    </button>
-  </div>
-  
-  <div class="time-display" id="timeDisplay"></div>
+  <div class="time-display" id="timeDisplay" style="text-align:center;margin-top:4px;"></div>
+
+  <audio id="globalAudioPlayer" preload="none" aria-label="مشغل الصوت"></audio>
 </div>
 
 <!-- الشريط المتحرك -->
@@ -939,41 +956,6 @@ body.light-mode .volume-slider { background: #ddd; }
   <div class="news-ticker-content">
     📻 مرحبًا بك في موقع راديو قرآن صفحة اللهم لك الحمد | تم إضافة المصحف والأذكار من حصن المسلم مع عداد ذكي | يمكنك الآن حفظ تقدمك في القراءة والأذكار | للإبلاغ عن رابط معطل: 01092116092
   </div>
-</div>
-
-<!-- المشغل العام -->
-<div id="globalAudioPlayerContainer">
-  <div class="gp-top">
-    <div class="gp-art"><img id="globalPlayerArt" src="icons/icon-192.png" alt="صورة المحطة"></div>
-    <div class="gp-info">
-      <div id="globalPlayerStationName">اختر محطة للتشغيل</div>
-      <div class="gp-status"><i class="fas fa-broadcast-tower"></i><span id="gpStatusText">جاهز</span></div>
-    </div>
-    <div class="gp-icobtns">
-      <button class="player-icon-btn" id="wakeLockBtn" onclick="toggleWakeLock()" aria-label="إبقاء الشاشة مضاءة أثناء الاستماع" title="إبقاء الشاشة مضاءة">
-        <i class="fas fa-lightbulb"></i>
-      </button>
-      <button class="player-icon-btn" onclick="toggleGlobalPlayer()" aria-label="إغلاق المشغل" title="إغلاق المشغل">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-  </div>
-
-  <div class="gp-eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-
-  <div class="gp-controls">
-    <button class="gp-ctrl" onclick="previousStation()" aria-label="المحطة السابقة" title="السابق"><i class="fas fa-step-backward"></i></button>
-    <button class="gp-ctrl play" id="gpPlayBtn" onclick="togglePlayPause()" aria-label="تشغيل أو إيقاف مؤقت" title="تشغيل / إيقاف مؤقت"><i class="fas fa-play"></i></button>
-    <button class="gp-ctrl" onclick="nextStation()" aria-label="المحطة التالية" title="التالي"><i class="fas fa-step-forward"></i></button>
-  </div>
-
-  <div class="volume-control gp-volume">
-    <button class="gp-mute-btn" id="gpMuteBtn" onclick="toggleMute()" aria-label="كتم الصوت" title="كتم / تشغيل الصوت"><i class="fas fa-volume-up" id="gpMuteIcon"></i></button>
-    <input type="range" class="volume-slider gp-vol-slider" id="globalVolumeSlider" min="0" max="100" value="70" aria-label="مستوى الصوت" oninput="onVolumeInput(this)">
-    <span class="gp-vol-pct" id="gpVolPct">70%</span>
-  </div>
-
-  <audio id="globalAudioPlayer" preload="none" aria-label="مشغل الصوت"></audio>
 </div>
 
 <!-- الأقسام -->
@@ -1017,7 +999,6 @@ body.light-mode .volume-slider { background: #ddd; }
   <div class="time-display" id="currentTime"></div>
 </footer>
 
-<audio id="radioPlayer" controls style="display:none;" preload="none" aria-label="مشغل الراديو"></audio>
 
 <!-- زر الواتساب -->
 <button class="whatsapp-float" onclick="reportBrokenLink()" id="whatsappBtn" aria-label="الإبلاغ عن رابط معطل">
@@ -1405,7 +1386,7 @@ const section2Container = document.getElementById('section2-stations');
 const section3Container = document.getElementById('section3-stations');
 const section4Container = document.getElementById('section4-stations');
 const favoritesContainer = document.getElementById('favorites-grid');
-const player = document.getElementById('radioPlayer');
+const player = document.getElementById('globalAudioPlayer'); // مشغل صوتي واحد
 const globalPlayer = document.getElementById('globalAudioPlayer');
 const nowPlayingSpan = document.getElementById('stationName');
 const playingIndicator = document.getElementById('playingIndicator');
@@ -1413,8 +1394,8 @@ const bufferingLoader = document.getElementById('bufferingLoader');
 const timeDisplay = document.getElementById('timeDisplay');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
-const volumeSlider = document.getElementById('volumeSlider');
 const globalVolumeSlider = document.getElementById('globalVolumeSlider');
+const volumeSlider = globalVolumeSlider; // شريط واحد في المشغل الأعلى
 const globalPlayerContainer = document.getElementById('globalAudioPlayerContainer');
 const gpPlayBtn = document.getElementById('gpPlayBtn');
 const gpStatusText = document.getElementById('gpStatusText');
@@ -1691,17 +1672,8 @@ function syncPlayButton(playing) {
   gpPlayBtn.setAttribute('aria-label', playing ? 'إيقاف مؤقت' : 'تشغيل');
 }
 
-function showPlayer() {
-  globalPlayerContainer.style.display = 'block';
-  document.body.classList.add('player-open');
-  requestAnimationFrame(() => globalPlayerContainer.classList.add('show'));
-}
-
-function hidePlayer() {
-  globalPlayerContainer.classList.remove('show');
-  document.body.classList.remove('player-open');
-  setTimeout(() => { if (!globalPlayerContainer.classList.contains('show')) globalPlayerContainer.style.display = 'none'; }, 350);
-}
+function showPlayer() { /* المشغل ثابت أعلى الصفحة دائمًا */ }
+function hidePlayer() { /* المشغل ثابت أعلى الصفحة دائمًا */ }
 
 function togglePlayPause() {
   if (!globalPlayer.getAttribute('src')) {
@@ -1852,18 +1824,7 @@ function stopRadio() {
   showToast('⏹️ تم إيقاف التشغيل');
 }
 
-function toggleGlobalPlayer() {
-  globalPlayer.pause();
-  globalPlayer.src = "";
-  currentStreamUrl = null;
-  hidePlayer();
-  globalPlayerContainer.classList.remove('is-playing');
-  nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
-  playingIndicator.style.display = 'none';
-  bufferingLoader.style.display = 'none';
-  releaseWakeLock();
-  stopTimeCounter();
-}
+function toggleGlobalPlayer() { stopRadio(); }
 
 // === وظائف التحكم ===
 function toggleSleepTimer() {
