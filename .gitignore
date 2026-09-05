@@ -1,0 +1,23 @@
+# ===== نظام التشغيل =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== المحررات =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===== السجلات والملفات المؤقتة =====
+*.log
+npm-debug.log*
+.cache/
+tmp/
+temp/
+
+# ===== الحزم (لو تم تحويل المشروع لاحقًا لمشروع npm) =====
+node_modules/
+dist/
+build/
