@@ -121,6 +121,11 @@ body.light .qp-tab{background:#eee;color:#333;}
 .sim-aya:hover{border-color:var(--primary);}
 .sim-ref{font-family:'Cairo';font-size:.7em;color:var(--primary);display:block;}
 
+.qp-select{width:100%;padding:10px 12px;border-radius:12px;border:2px solid var(--primary);background:var(--card2,rgba(255,255,255,.05));color:var(--text);font-family:Cairo;font-weight:700;font-size:.9em;margin-bottom:12px;cursor:pointer;}
+body.light .qp-select{background:#fff;color:#222;}
+.qp-tafsir-content{max-height:none;}
+
+
 .empty{color:var(--muted);text-align:center;padding:40px 10px;}
 .loader{margin:30px auto;color:var(--primary);text-align:center;}
 .spinner{width:40px;height:40px;border:4px solid #333;border-top-color:var(--primary);border-radius:50%;margin:0 auto 10px;animation:spin 1s linear infinite;}
@@ -461,6 +466,24 @@ function restoreSearch(){
 
 /* ============ Quranpedia: لوحة الآية الموسوعية ============ */
 const QP='https://api.quranpedia.net/v1';
+const TAFSIR_BOOKS=[
+  {id:32,name:'التفسير الميسر',author:'مجموعة من العلماء'},
+  {id:1,name:'تيسير التفسير',author:'إبراهيم القطان'},
+  {id:18,name:'تفسير الشعراوي',author:'محمد متولي الشعراوي'},
+  {id:160,name:'صفوة التفاسير',author:'محمد علي الصابوني'},
+  {id:70,name:'التفسير الوسيط',author:'وهبة الزحيلي'},
+  {id:306,name:'التفسير المنير',author:'وهبة الزحيلي'},
+  {id:184,name:'التحرير والتنوير',author:'ابن عاشور'},
+  {id:301,name:'روح المعاني',author:'الألوسي'},
+  {id:343,name:'فتح القدير',author:'الشوكاني'},
+  {id:319,name:'أنوار التنزيل (البيضاوي)',author:'البيضاوي'},
+  {id:340,name:'زاد المسير',author:'ابن الجوزي'},
+  {id:37,name:'إرشاد العقل السليم (أبو السعود)',author:'أبو السعود'},
+  {id:263,name:'تفسير المنار',author:'محمد رشيد رضا'},
+  {id:201,name:'أيسر التفاسير',author:'أبو بكر الجزائري'},
+  {id:10,name:'المنتخب في تفسير القرآن',author:'مجموعة من المؤلفين'}
+];
+let qpTafsirBook=parseInt(localStorage.getItem('qp_tafsir_book')||'32',10);
 let qpSura=0, qpAya=0, qpServer=null, qpCache={};
 function escHtml(s){return esc(s==null?'':String(s));}
 function stripHtml(h){const d=document.createElement('div');d.innerHTML=h||'';return d.textContent||'';}
@@ -508,16 +531,31 @@ function cleanHtml(h){
     .trim();
 }
 
+function tafsirSelector(){
+  let o='<select class="qp-select" onchange="changeTafsir(this.value)">';
+  TAFSIR_BOOKS.forEach(b=>{ o+='<option value="'+b.id+'"'+(b.id===qpTafsirBook?' selected':'')+'>'+escHtml(b.name)+' — '+escHtml(b.author)+'</option>'; });
+  o+='</select>';
+  return o;
+}
+function changeTafsir(id){
+  qpTafsirBook=parseInt(id,10);
+  try{localStorage.setItem('qp_tafsir_book',String(qpTafsirBook));}catch(e){}
+  const key=qpSura+':'+qpAya+':tafsir:'+qpTafsirBook;
+  qpLoading();
+  const cb=html=>{ qpCache[qpSura+':'+qpAya+':tafsir']=html; $('qpBody').innerHTML=html; };
+  if(qpCache[key]){ $('qpBody').innerHTML=qpCache[key]; return; }
+  qpTafsir(html=>{ qpCache[key]=html; cb(html); });
+}
 async function qpTafsir(done){
   try{
-    // book 1 = تيسير التفسير (متاح لمعظم الآيات)
-    const d=await qpGet('/ayah/'+qpSura+'/'+qpAya+'/book/1');
+    const d=await qpGet('/ayah/'+qpSura+'/'+qpAya+'/book/'+qpTafsirBook);
     const parts=(d.content||[]).filter(p=>p&&p.text&&stripHtml(p.text).trim());
-    if(!parts.length) return done('<div class="qp-loading">لا يوجد تفسير متاح لهذه الآية.</div>');
-    let h='<div class="bookname">'+escHtml(d.book&&d.book.name)+' — '+escHtml(d.book&&d.book.author&&d.book.author.ar_name)+'</div>';
-    parts.forEach(p=>{ h+='<div class="seg"><p>'+cleanHtml(p.text)+'</p></div>'; });
+    let h=tafsirSelector();
+    if(!parts.length){ done(h+'<div class="qp-loading">لا يوجد تفسير من هذا الكتاب لهذه الآية — جرّب كتابًا آخر.</div>'); return; }
+    h+='<div class="bookname">'+escHtml(d.book&&d.book.name)+' — '+escHtml(d.book&&d.book.author&&d.book.author.ar_name)+'</div>';
+    parts.forEach(p=>{ h+='<div class="seg qp-tafsir-content"><p>'+cleanHtml(p.text)+'</p></div>'; });
     done(h);
-  }catch(e){ qpErr(); }
+  }catch(e){ qpErr('تعذّر جلب التفسير من هذا الكتاب — جرّب كتابًا آخر أو تأكد من الاتصال.'); }
 }
 async function qpAsbab(done){
   try{
