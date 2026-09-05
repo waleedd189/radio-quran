@@ -8,6 +8,7 @@ const PRECACHE_URLS = [
   './',
   './index.html',
   './manifest.json',
+  './quran-search.html',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',

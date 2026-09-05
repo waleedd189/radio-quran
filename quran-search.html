@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>البحث في القرآن الكريم - راديو قرآن</title>
+<meta name="description" content="بحث فوري في نص القرآن الكريم كاملًا (6236 آية) — يعمل بدون إنترنت.">
+<meta name="theme-color" content="#4CAF50">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --primary:#4CAF50; --primary-dark:#2E7D32; --bg:#111; --card:#1e1e1e; --card2:#262626;
+  --text:#fff; --muted:#aaa; --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{
+  font-family:'Cairo',sans-serif; min-height:100vh; color:var(--text); text-align:center;
+  background:linear-gradient(135deg,#111 0%,#222 50%,#333 100%); padding:20px 12px 60px;
+}
+.light{background:linear-gradient(135deg,#f5f5f5,#e0e0e0);color:#222;}
+.top-bar{max-width:760px;margin:0 auto 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.back-btn,.mode-btn{
+  background:var(--primary);color:#fff;border:none;cursor:pointer;font-family:'Cairo';font-weight:700;
+  padding:10px 18px;border-radius:24px;font-size:.95em;display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+}
+.mode-btn{background:transparent;color:var(--primary);border:1px solid var(--primary);}
+h1{font-size:1.5em;margin:6px 0 4px;color:var(--primary);}
+.subtitle{color:var(--muted);font-size:.9em;margin-bottom:18px;}
+.search-box{max-width:760px;margin:0 auto 14px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+.search-box input{
+  flex:1;min-width:220px;padding:14px 18px;border-radius:30px;border:2px solid var(--primary);
+  background:var(--card);color:var(--text);font-family:'Amiri','Cairo';font-size:1.15em;text-align:right;outline:none;
+}
+.search-box select{
+  padding:14px 14px;border-radius:30px;border:2px solid var(--primary);background:var(--card);color:var(--text);
+  font-family:'Cairo';font-size:.95em;outline:none;max-width:180px;
+}
+.light .search-box input,.light .search-box select{background:#fff;color:#222;}
+.hint{color:var(--muted);font-size:.85em;margin-bottom:16px;}
+.stats{color:var(--primary);font-weight:700;margin:10px auto;max-width:760px;font-size:.95em;min-height:22px;}
+.results{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
+.aya-card{
+  background:var(--card);border:1px solid #333;border-radius:var(--radius);padding:16px 18px;text-align:right;
+  box-shadow:0 4px 14px rgba(0,0,0,.35); transition:.2s;
+}
+.light .aya-card{background:#fff;border-color:#e0e0e0;}
+.aya-card:hover{border-color:var(--primary);}
+.aya-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.aya-ref{background:var(--primary);color:#fff;font-weight:700;font-size:.85em;padding:4px 12px;border-radius:16px;}
+.aya-juz{color:var(--muted);font-size:.8em;}
+.aya-text{font-family:'Amiri',serif;font-size:1.5em;line-height:2.1;color:var(--text);direction:rtl;}
+.light .aya-text{color:#222;}
+.aya-text mark{background:var(--primary);color:#fff;border-radius:4px;padding:0 4px;}
+.copy-btn{
+  background:rgba(255,255,255,.08);border:none;color:var(--muted);cursor:pointer;font-size:.9em;
+  padding:6px 12px;border-radius:16px;font-family:'Cairo';margin-top:10px;
+}
+.light .copy-btn{background:#eee;color:#555;}
+.copy-btn:hover{color:var(--primary);}
+.loader{margin:30px auto;color:var(--primary);font-size:1.1em;display:none;}
+.spinner{width:42px;height:42px;border:4px solid #333;border-top-color:var(--primary);border-radius:50%;margin:0 auto 12px;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty{color:var(--muted);padding:40px 10px;}
+.footer-note{margin-top:30px;color:var(--muted);font-size:.8em;}
+</style>
+</head>
+<body>
+  <div class="top-bar">
+    <a class="back-btn" href="index.html"><i class="fas fa-arrow-right"></i> رجوع</a>
+    <button class="mode-btn" onclick="document.body.classList.toggle('light');this.querySelector('i').className=document.body.classList.contains('light')?'fas fa-moon':'fas fa-sun'"><i class="fas fa-sun"></i></button>
+  </div>
+
+  <h1>📖 البحث في القرآن الكريم</h1>
+  <div class="subtitle">نص القرآن كاملًا (114 سورة) — بحث فوري ويعمل بدون إنترنت</div>
+
+  <div class="search-box">
+    <input id="q" type="search" placeholder="اكتب كلمة أو جزءًا من آية…" autocomplete="off">
+    <select id="surahFilter">
+      <option value="">كل السور</option>
+    </select>
+  </div>
+  <div class="hint">مثال: الرحمن، الصبر، إنما الأعمال بالنيات…</div>
+
+  <div class="loader" id="loader"><div class="spinner"></div>جارٍ تحميل نص القرآن…</div>
+  <div class="stats" id="stats"></div>
+  <div class="results" id="results"></div>
+
+  <div class="footer-note">مصدر النص: مجمّع الملك فهد لطباعة المصحف الشريف — رواية حفص (KFGQPC Hafs)</div>
+
+<script>
+let DATA = null;
+let SURAS = [];
+const $ = id => document.getElementById(id);
+
+function normalize(s){
+  return (s||'')
+    .replace(/[ً-ٰٟ]/g,'')           // التشكيل
+    .replace(/[ـ]/g,'')              // التطويل
+    .replace(/[أإآٱ]/g,'ا')
+    .replace(/ى/g,'ي').replace(/ؤ/g,'و').replace(/ئ/g,'ي')
+    .replace(/ة/g,'ه')
+    .replace(/\s+/g,' ').trim();
+}
+
+function esc(s){ return s.replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function arabicClass(ch){
+  const map=[
+    ['ا','[اأإآٱ]'],
+    ['ة','[ةه]'],
+    ['ه','[هة]'],
+    ['ى','[ىي]'],
+    ['ي','[يى]'],
+    ['ؤ','[ؤو]'],
+    ['و','[وؤ]'],
+    ['ئ','[ئي]']
+  ];
+  for(const [k,v] of map){ if(k===ch) return v; }
+  return ch.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+}
+function tolerantRegex(word){
+  const n = normalize(word);
+  let pat='';
+  for(const ch of n){ pat += arabicClass(ch); }
+  return new RegExp('('+pat+')','g');
+}
+function highlightWords(text, term){
+  const words = term.trim().split(/\s+/).filter(w=>normalize(w).length>=2);
+  let html = esc(text);
+  words.forEach(w=>{
+    try{ html = html.replace(tolerantRegex(w), '<mark>$1</mark>'); }catch(e){}
+  });
+  return html;
+}
+
+function renderSurahOptions(){
+  const sel=$('surahFilter');
+  SURAS.forEach(s=>{
+    const o=document.createElement('option');
+    o.value=s.no; o.textContent = s.no+'. '+s.ar;
+    sel.appendChild(o);
+  });
+}
+
+function runSearch(){
+  const term = $('q').value.trim();
+  const sura = $('surahFilter').value;
+  const box=$('results'); box.innerHTML='';
+  if(!DATA) return;
+
+  // اختيار سورة من القائمة فقط
+  if(!term && sura){
+    const list = DATA.filter(a=>String(a.sura_no)===String(sura));
+    showAyaList(list, '');
+    $('stats').textContent = `سورة ${list[0].sura_name_ar} — ${list.length} آية`;
+    return;
+  }
+  if(term.length<2){ $('stats').textContent=''; box.innerHTML='<div class="empty">اكتب كلمة للبحث (حرفان على الأقل)</div>'; return; }
+
+  const nTerm = normalize(term);
+  const res=[];
+  for(const a of DATA){
+    if(sura && String(a.sura_no)!==String(sura)) continue;
+    if(normalize(a.aya_text_emlaey).includes(nTerm)) res.push(a);
+  }
+  showAyaList(res, term);
+  $('stats').textContent = res.length? `عدد النتائج: ${res.length} آية` : 'لا توجد نتائج مطابقة';
+}
+
+function showAyaList(list, term){
+  const box=$('results'); box.innerHTML='';
+  const limit = 300;
+  const shown = list.slice(0,limit);
+  if(!shown.length){ box.innerHTML='<div class="empty">لا توجد نتائج</div>'; return; }
+  shown.forEach(a=>{
+    const card=document.createElement('div');
+    card.className='aya-card';
+    card.innerHTML =
+      '<div class="aya-meta">'+
+        '<span class="aya-ref">'+esc(a.sura_name_ar)+' — آية '+a.aya_no+'</span>'+
+        '<span class="aya-juz">الجزء '+a.jozz+' • الصفحة '+a.page+'</span>'+
+      '</div>'+
+      '<div class="aya-text">'+(term?highlightWords(a.aya_text_emlaey, term):esc(a.aya_text_emlaey))+'</div>'+
+      '<button class="copy-btn" onclick="copyAya(this)"><i class="far fa-copy"></i> نسخ الآية</button>';
+    card.dataset.text = `﴿${a.aya_text_emlaey}﴾ [${a.sura_name_ar}: ${a.aya_no}]`;
+    box.appendChild(card);
+  });
+  if(list.length>limit){
+    const more=document.createElement('div');
+    more.className='empty';
+    more.textContent=`نتائج كثيرة — يُعرض أول ${limit} من ${list.length}. خصّص بحثك أو اختر سورة.`;
+    box.appendChild(more);
+  }
+}
+
+function copyAya(btn){
+  const txt=btn.closest('.aya-card').dataset.text;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const old=btn.innerHTML; btn.innerHTML='<i class="fas fa-check"></i> تم النسخ';
+    setTimeout(()=>btn.innerHTML=old,1500);
+  }).catch(()=>{});
+}
+
+function init(){
+  $('loader').style.display='block';
+  fetch('data/quran.json')
+    .then(r=>r.json())
+    .then(d=>{
+      DATA=d;
+      const map=new Map();
+      d.forEach(a=>{ if(!map.has(a.sura_no)) map.set(a.sura_no,{no:a.sura_no,ar:a.sura_name_ar,en:a.sura_name_en}); });
+      SURAS=[...map.values()].sort((a,b)=>a.no-b.no);
+      renderSurahOptions();
+      $('loader').style.display='none';
+      $('q').addEventListener('input', runSearch);
+      $('surahFilter').addEventListener('change', runSearch);
+      $('q').focus();
+    })
+    .catch(()=>{
+      $('loader').style.display='none';
+      $('results').innerHTML='<div class="empty">تعذر تحميل بيانات القرآن. تأكد من الاتصال أول مرة.</div>';
+    });
+}
+init();
+</script>
+</body>
+</html>
