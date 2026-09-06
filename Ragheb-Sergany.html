@@ -467,6 +467,21 @@
       text-align: center;
       border: 1px solid rgba(156,39,176,0.2);
     }
+    /* ===== قسم ساوندكلاود (الحلقات الحصرية) ===== */
+    .sc-wrap { max-width: 860px; margin: 30px auto 0; padding: 0 15px; }
+    .sc-card {
+      background: var(--card-background); border-radius: 20px; padding: 22px;
+      border: 2px dashed #ff5500; text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .sc-card .sc-title { font-family: 'Amiri', serif; font-size: 1.5em; color: #ff7a2f; margin-bottom: 6px; }
+    .sc-card .sc-sub { color: #ccc; font-size: 0.95em; margin-bottom: 8px; line-height: 1.8; }
+    .sc-frame { width: 100%; height: 420px; border: 0; border-radius: 12px; overflow: hidden; }
+    .sc-badge { display:inline-block; background:rgba(255,85,0,.15); color:#ff8a4c; border:1px solid #ff5500;
+      padding:4px 12px; border-radius:16px; font-size:.8em; font-weight:700; margin:2px 4px 12px; }
+    .sc-note { color:#aaa; font-size:.82em; margin-top:12px; line-height:1.8; }
+    @media (max-width: 768px){ .sc-frame{ height:380px; } }
+
     /* ===== للهواتف ===== */
     @media (max-width: 768px) {
       h1 { font-size: 2em; }
@@ -549,6 +564,19 @@
       مؤقت النوم مفعل: <span id="timerCountdown">--:--</span>
     </div>
   </div>
+  <!-- ===== الحلقات الحصرية على ساوندكلاود (غير متوفرة بروابط مباشرة) ===== -->
+  <div class="sc-wrap">
+    <div class="sc-card">
+      <div class="sc-title">الحلقات الحصرية على ساوندكلاود</div>
+      <div class="sc-sub">تكملة سلسلة الخلافة الراشدة + سلسلة الفتنة الكبرى (الأخيرة غير متوفرة بمصدر مباشر، فتُستمع عبر مشغّل ساوندكلاود الرسمي)</div>
+      <span class="sc-badge"><i class="fab fa-soundcloud"></i> عبر المشغّل الرسمي</span>
+      <iframe class="sc-frame" title="قصة الخلافة الراشدة كاملة - د. راغب السرجاني"
+        src="https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F1242711937&show_artwork=true&color=%23ff5500"
+        allow="autoplay; encrypted-media"></iframe>
+      <div class="sc-note">داخل المشغّل: الحلقات من <b>206</b> حتى <b>258</b> تشمل تكملة الخلافة وكامل سلسلة الفتنة الكبرى (1–39). الحلقات 1–205 متاحة في كارت السلسلة بالأسفل وتعمل في مشغّل الصفحة مباشرة.</div>
+    </div>
+  </div>
+
   <!-- ===== حاوية المحطات ===== -->
   <div class="stations-container" id="stationsContainer">
     <!-- سيتم إنشاء المحتوى هنا بواسطة JavaScript -->
