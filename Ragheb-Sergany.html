@@ -467,21 +467,6 @@
       text-align: center;
       border: 1px solid rgba(156,39,176,0.2);
     }
-    /* ===== قسم ساوندكلاود (الحلقات الحصرية) ===== */
-    .sc-wrap { max-width: 860px; margin: 30px auto 0; padding: 0 15px; }
-    .sc-card {
-      background: var(--card-background); border-radius: 20px; padding: 22px;
-      border: 2px dashed #ff5500; text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-    }
-    .sc-card .sc-title { font-family: 'Amiri', serif; font-size: 1.5em; color: #ff7a2f; margin-bottom: 6px; }
-    .sc-card .sc-sub { color: #ccc; font-size: 0.95em; margin-bottom: 8px; line-height: 1.8; }
-    .sc-frame { width: 100%; height: 420px; border: 0; border-radius: 12px; overflow: hidden; }
-    .sc-badge { display:inline-block; background:rgba(255,85,0,.15); color:#ff8a4c; border:1px solid #ff5500;
-      padding:4px 12px; border-radius:16px; font-size:.8em; font-weight:700; margin:2px 4px 12px; }
-    .sc-note { color:#aaa; font-size:.82em; margin-top:12px; line-height:1.8; }
-    @media (max-width: 768px){ .sc-frame{ height:380px; } }
-
     /* ===== للهواتف ===== */
     @media (max-width: 768px) {
       h1 { font-size: 2em; }
@@ -559,24 +544,13 @@
       <span id="currentLesson">اختر درساً للاستماع</span>
     </div>
     <audio id="audioPlayer" controls style="width: 100%; border-radius: 10px; height: 40px;"></audio>
+    <div class="yt-note" id="ytNote"><i class="fab fa-youtube"></i> تُشغَّل هذه السلسلة صوتياً من يوتيوب</div>
+    <iframe id="ytPlayer" title="مشغل يوتيوب" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     <div class="timer-status" id="timerStatus">
       <i class="fas fa-clock"></i>
       مؤقت النوم مفعل: <span id="timerCountdown">--:--</span>
     </div>
   </div>
-  <!-- ===== الحلقات الحصرية على ساوندكلاود (غير متوفرة بروابط مباشرة) ===== -->
-  <div class="sc-wrap">
-    <div class="sc-card">
-      <div class="sc-title">الحلقات الحصرية على ساوندكلاود</div>
-      <div class="sc-sub">تكملة سلسلة الخلافة الراشدة + سلسلة الفتنة الكبرى (الأخيرة غير متوفرة بمصدر مباشر، فتُستمع عبر مشغّل ساوندكلاود الرسمي)</div>
-      <span class="sc-badge"><i class="fab fa-soundcloud"></i> عبر المشغّل الرسمي</span>
-      <iframe class="sc-frame" title="قصة الخلافة الراشدة كاملة - د. راغب السرجاني"
-        src="https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F1242711937&show_artwork=true&color=%23ff5500"
-        allow="autoplay; encrypted-media"></iframe>
-      <div class="sc-note">داخل المشغّل: الحلقات من <b>206</b> حتى <b>258</b> تشمل تكملة الخلافة وكامل سلسلة الفتنة الكبرى (1–39). الحلقات 1–205 متاحة في كارت السلسلة بالأسفل وتعمل في مشغّل الصفحة مباشرة.</div>
-    </div>
-  </div>
-
   <!-- ===== حاوية المحطات ===== -->
   <div class="stations-container" id="stationsContainer">
     <!-- سيتم إنشاء المحتوى هنا بواسطة JavaScript -->
@@ -1000,7 +974,86 @@
             { name: "204 - شبهة تبديد عثمان بن عفان رضى الله عنه لغنائم الدولة", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/204.mp3" },
             { name: "205 - لماذا عزل عثمان أبا موسى الأشعري رضي الله عنهما؟", url: "https://archive.org/download/qisat-alkhilafat-alraashida_up_by_Waleed_d/205.mp3" }
           ]
+        },
+        {
+          id: 8,
+          title: "سلسلة الفتنة الكبرى",
+          image: "https://i.postimg.cc/W3LyK6w7/image.jpg",
+          color: "#E53935",
+          youtube: true,
+          lessons: [
+            { name: "01 - عودة الخلافة الراشدة", yt: "32fWxgtAhHE" },
+            { name: "02 - حقيقة عثمان بن عفان", yt: "7as9jipK1VE" },
+            { name: "03 - التمرد المسلح الأول", yt: "oahOfucvTzM" },
+            { name: "04 - ظهور المتمردين", yt: "eUGyNT7xzTY" },
+            { name: "05 - تمرد في المدينة", yt: "eK8irV0Q5QQ" },
+            { name: "06 - سر قميص عثمان الذي رفض خلعه", yt: "qDOWEgtdi5w" },
+            { name: "07 - هل ترك الصحابة عثمان وقت الحصار؟", yt: "pUPA4fOmtTI" },
+            { name: "08 - موقف علي بن أبي طالب من حصار عثمان", yt: "yjfJj5q5_wQ" },
+            { name: "09 - هذا ما حدث في آخر أيام عثمان", yt: "J9UrcqOXsmI" },
+            { name: "10 - تفاصيل مثيرة في مقتل عثمان", yt: "yMqDtZf2r9U" },
+            { name: "11 - الجريمة الأكبر في تاريخ المسلمين", yt: "HmYywjy0iGc" },
+            { name: "12 - تفاصيل مثيرة لاستخلاف علي بن أبي طالب", yt: "I0be4IW7pNQ" },
+            { name: "13 - حقيقة علي بن أبي طالب", yt: "PEVnk8T-Uvc" },
+            { name: "14 - احذر 10 أمور خطيرة قبل الحديث عن فتنة الصحابة", yt: "dHxjAepdBeo" },
+            { name: "15 - من وراء منع إقامة الحد على قتلة عثمان؟", yt: "KV0ZrbjzY88" },
+            { name: "16 - الشام تتمرد ومكة تشتعل", yt: "jmJfjQbnn1s" },
+            { name: "17 - النبي ﷺ يروي ما يحدث بين عائشة وعلي قبل حدوثه بأكثر من 25 عاما", yt: "HWGvZdgw3Ls" },
+            { name: "18 - كارثة البصرة تكشف المستور", yt: "Bf3MoDz8rX4" },
+            { name: "19 - الظلام يضرب البصرة والكوفة", yt: "pdaZ7aZOqYU" },
+            { name: "20 - هذه هي كلمة السر في الصلح العبقري", yt: "AdTn4eRHa3E" },
+            { name: "21 - 3 أسرار وراء فشل اتفاق الهدنة", yt: "NMMFiRc19EI" },
+            { name: "22 - تفاصيل جديدة في موقعة الجمل", yt: "NK6kYzUdzfM" },
+            { name: "23 - هذا ما فعلته عائشة رضي الله عنها في معركة الجمل", yt: "KZe9CqXMVJM" },
+            { name: "24 - ما سر تقريب علي بن أبي طالب للأشتر النخعي المتمرد على عثمان؟", yt: "lp_HE_erhSw" },
+            { name: "25 - بالأرقام .. قتلى الجمل غير ما تتوقع", yt: "-L0RFgqqXEg" },
+            { name: "26 - من وراء اغتيال الزبير بن العوام بعد موقعة الجمل ؟", yt: "_Fb7c_Kem5Q" },
+            { name: "27 - هل ندمت عائشة بعد موقعة الجمل ؟", yt: "2ZDRXTLrc6I" },
+            { name: "28 - موقف علي بن أبي طالب من عائشة بعد الجمل يثير الجدل", yt: "b8xNl1b52YI" },
+            { name: "29 - ظهور البغاة", yt: "-slJrOQYOdE" },
+            { name: "30 - طريقة علي بن أبي طالب في تقسيم غنائم الجمل تلفت الأنظار", yt: "Q0DP3N39E9U" },
+            { name: "31 - الاعتزال أم القتال .. السؤال المحير في الفتن", yt: "P3BdPusE1Zs" },
+            { name: "32 - موقف أسامة بن زيد في الفتنة يحتاج إلى وقفة طويلة", yt: "K80KnGRvbn8" },
+            { name: "33 - 4 أسباب تؤكد أن الحق مع علي بن أبي طالب في أحداث الفتنة", yt: "II7dT0bV6zs" },
+            { name: "34 - لغز قتلى الفتنة : هل يدخلون النار ؟", yt: "TFWJdCYyXsI" },
+            { name: "35 - تطورات مثيرة في مصر بعد موقعة الجمل", yt: "2Aw2O4N9UWs" },
+            { name: "36 - الشام تتمرد", yt: "fEQjwncygFg" },
+            { name: "37 - هل الفتنة صراع على الخلافة بين بني هاشم والأمويين ؟", yt: "ENxphfdif3E" },
+            { name: "38 - مبادرة سلام بين العراق والشام", yt: "S1kNsdAR89A" },
+            { name: "39 - صفين برواية الكذابين", yt: "dr3-G9zQoh4" },
+            { name: "40 - The True Number of Companions in the Battle of Siffin", yt: "1Veb4-TcbeU" },
+            { name: "41 - مفاوضات سلام في أرض صفين", yt: "60_2bongB7c" },
+            { name: "42 - الفئتان العظيمتان وجهًا لوجه", yt: "y0fmCGBRI6I" },
+            { name: "43 - تفاصيل مؤسفة في موقعة صفين", yt: "Bl23TOLxXCA" },
+            { name: "44 - استشهاد عمار بن ياسر يكشف الأوراق", yt: "WUtb_iYtt9g" },
+            { name: "45 - هل طلب عمرو بن العاص للتحكيم في موقعة صفين كان خدعة ؟", yt: "Q5CZpY2CdP8" },
+            { name: "46 - سر اختيار عمرو بن العاص وأبي موسى الأشعري للتحكيم في صفين", yt: "_IaLWz99wBs" },
+            { name: "47 - بالدليل الرقم الحقيقي لقتلى صفين", yt: "-lB10gwqP7Q" },
+            { name: "48 - سبب مثير لخلاف علي بن أبي طالب مع والي الكوفة بعد موقعة صفين", yt: "q4PZSaeRwtI" },
+            { name: "49 - The first appearance of the Kharijites", yt: "aYLgZmh8nNg" },
+            { name: "50 - This is the most dangerous group threatening the security of Muslims", yt: "VyIc1H0xeCY" },
+            { name: "51 - 5 صفات غريبة لخوارج العراق", yt: "QA0NNJvAaBo" },
+            { name: "52 - لا تترددوا في قتال الخوارج", yt: "ARdd3qMs0hw" },
+            { name: "53 - A Calm Dialogue with the Kharijites", yt: "nDhIbEkn-s8" },
+            { name: "54 - من العظيم القائل اللهم أرحني منهم وأرحهم مني ؟", yt: "fblXsTZqTlc" },
+            { name: "55 - Muawiya’s Ruse Before the Arbitration Session", yt: "NDa03Asi_jw" },
+            { name: "56 - The True and Fabricated Details of the Arbitration Session", yt: "qW2Nwr_qPXA" },
+            { name: "57 - لهذا السبب قاتل علي بن أبي طالب الخوارج", yt: "1b-ZuLEIz30" },
+            { name: "58 - The Prophet's ﷺ Description of the Battle of Nahrawan 30 Years Before It Happened", yt: "TXUhBLss0MU" },
+            { name: "59 - The Terrifying Truth About Dhu al-Thudayyah", yt: "BjY6h6XXa_8" },
+            { name: "60 - بدأ التنافس على مصر", yt: "SsCGZ7pM3Ps" },
+            { name: "61 - They Are More Dangerous Than the Kharijites", yt: "tuqUSbV9YI8" },
+            { name: "62 - Dramatic Details of the Assassination of Ali ibn Abi Talib", yt: "h3PU0PKFU0Q" },
+            { name: "63 - Strange Facts About the Life of Ali ibn Abi Talib's Assassin", yt: "aBmuMWXGJ-c" },
+            { name: "64 - The Secret Behind Al-Hasan ibn Ali's Nomination to the Caliphate After His Father's Death", yt: "bEdXN_FcCOQ" },
+            { name: "65 - A Precise Summary of the Caliphate of Ali ibn Abi Talib until His Death", yt: "5_rVwyTj_XU" },
+            { name: "66 - حقيقة الحسن بن علي", yt: "QqrBKWbdRuc" },
+            { name: "67 - خطة الحسن العبقرية للتأثير على معاوية", yt: "CwgYQIij4Z8" },
+            { name: "68 - ماذا فعل معاوية في مواجهة الحسن بن علي ؟", yt: "PD8zRNBBeIc" },
+            { name: "69 - رؤيتي في شروط الحسن بن علي لإتمام الصلح مع معاوية", yt: "QxtnM6HERfs" }
+          ]
         }
+
       ]
     };
 
@@ -1036,7 +1089,8 @@
           serieElement.id = `lessonsContainer${serie.id}`;
           let optionsHTML = '<option value="">اختر درساً...</option>';
           serie.lessons.forEach(lesson => {
-            optionsHTML += `<option value="${lesson.url}">${lesson.name}</option>`;
+            const val = lesson.yt ? ("yt:" + lesson.yt) : lesson.url;
+            optionsHTML += `<option value="${val}">${lesson.name}</option>`;
           });
           serieElement.innerHTML = `
             <img src="${serie.image}" alt="${serie.title}" class="station-image">
@@ -1083,36 +1137,77 @@
         const lessonsDropdown = document.getElementById(`lessonsDropdown${containerId}`);
         const lessonsContainer = document.getElementById(`lessonsContainer${containerId}`);
         const selectedOption = lessonsDropdown.options[lessonsDropdown.selectedIndex];
-        const lessonUrl = selectedOption.value;
+        const lessonVal = selectedOption.value;
         const lessonName = selectedOption.text;
-        if (!lessonUrl) {
-          this.showMessage('الرجاء اختيار درس أولاً');
+        if (!lessonVal) {
+          this.showMessage('الرجاء اختيار درساً أولاً');
           return;
         }
         this.currentLessonIndex = lessonsDropdown.selectedIndex;
         this.currentContainerId = containerId;
-        this.player.src = lessonUrl;
         this.nowPlaying.textContent = `جاري تشغيل: ${lessonName}`;
         this.bufferingLoader.style.display = 'inline-block';
         this.playingIndicator.style.display = 'none';
-        document.querySelectorAll('.lessons-container').forEach(container => {
-          container.classList.remove('active');
-        });
+        document.querySelectorAll('.lessons-container').forEach(c => c.classList.remove('active'));
         lessonsContainer.classList.add('active');
-        this.player.play().then(() => {
-          this.bufferingLoader.style.display = 'none';
-          this.playingIndicator.style.display = 'block';
-        }).catch(error => {
-          console.error('خطأ في التشغيل:', error);
-          this.nowPlaying.textContent = `خطأ في تشغيل ${lessonName}`;
-          this.bufferingLoader.style.display = 'none';
-          lessonsContainer.classList.remove('active');
-        });
+
+        if (lessonVal.indexOf('yt:') === 0) {
+          document.getElementById('ytNote').classList.add('show');
+          try { this.player.pause(); } catch(e) {}
+          this.playYoutube(lessonVal.slice(3));
+        } else {
+          document.getElementById('ytNote').classList.remove('show');
+          this.stopYoutube();
+          this.player.src = lessonVal;
+          this.player.play().then(() => {
+            this.bufferingLoader.style.display = 'none';
+            this.playingIndicator.style.display = 'block';
+          }).catch(error => {
+            console.error('خطأ في التشغيل:', error);
+            this.nowPlaying.textContent = `خطأ في تشغيل ${lessonName}`;
+            this.bufferingLoader.style.display = 'none';
+            lessonsContainer.classList.remove('active');
+          });
+        }
       },
+
+      playYoutube(vid) {
+        const self = this;
+        if (window.ytPlayer && window.ytPlayer.loadVideoById) { try { window.ytPlayer.loadVideoById(vid); } catch(e) {} return; }
+        if (!window.__ytApiLoading) {
+          window.__ytApiLoading = true;
+          const tag = document.createElement('script');
+          tag.src = 'https://www.youtube.com/iframe_api';
+          document.head.appendChild(tag);
+          window.onYouTubeIframeAPIReady = () => {
+            window.ytPlayer = new YT.Player('ytPlayer', {
+              height: '68', width: '120',
+              playerVars: { autoplay: 1, controls: 0, disablekb: 1, modestbranding: 1, rel: 0 },
+              events: {
+                onReady: () => { if (window.__ytPending) window.ytPlayer.loadVideoById(window.__ytPending); },
+                onStateChange: (e) => {
+                  if (e.data === YT.PlayerState.PLAYING) { self.bufferingLoader.style.display = 'none'; self.playingIndicator.style.display = 'block'; }
+                  else if (e.data === YT.PlayerState.BUFFERING) { self.bufferingLoader.style.display = 'inline-block'; }
+                  else if (e.data === YT.PlayerState.ENDED) { self.playingIndicator.style.display = 'none'; self.handleLessonEnd(); }
+                  else if (e.data === YT.PlayerState.PAUSED) { self.playingIndicator.style.display = 'none'; }
+                }
+              }
+            });
+          };
+        }
+        window.__ytPending = vid;
+        const t = setInterval(() => {
+          if (window.ytPlayer && window.ytPlayer.loadVideoById) { clearInterval(t); if (window.__ytPending) { window.ytPlayer.loadVideoById(window.__ytPending); window.__ytPending = null; } }
+        }, 300);
+      },
+
+      stopYoutube() { try { if (window.ytPlayer && window.ytPlayer.stopVideo) window.ytPlayer.stopVideo(); } catch(e) {} },
 
       stopLesson() {
         this.player.pause();
         this.player.src = "";
+        this.stopYoutube();
+        document.getElementById('ytNote').classList.remove('show');
         this.nowPlaying.textContent = 'اختر درساً للاستماع';
         this.playingIndicator.style.display = 'none';
         this.bufferingLoader.style.display = 'none';
