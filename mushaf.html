@@ -108,11 +108,12 @@ const juzOf=(p)=>{ const j=Math.floor((p-1)/20)+1; return j>30?30:j; };
 function ensureFont(name){
   if(!name||fontLoaded[name])return Promise.resolve();
   fontLoaded[name]=true;
-  const f=name==='QCF4_QBSML'?'QCF4_QBSML.woff2':name+'_W.woff2';
-  const css=`@font-face{font-family:'QCF';src:url('${CDN}/fonts-woff2/${f}') format('woff2');font-display:swap;}`;
-  const st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
-  // wait for document fonts
-  try{ return document.fonts.load('30px "QCF"').catch(()=>{}); }catch(e){ return Promise.resolve(); }
+  const file=(name==='QCF4_QBSML')?'QCF4_QBSML.woff2':name+'_W.woff2';
+  const st=document.createElement('style');
+  st.textContent=`@font-face{font-family:'${name}';src:url('${CDN}/fonts-woff2/${file}') format('woff2');font-display:block;}`;
+  document.head.appendChild(st);
+  try{ return document.fonts.load('32px "'+name+'"').then(()=>document.fonts.load('32px "QCF4_QBSML"')).catch(()=>{}); }
+  catch(e){ return Promise.resolve(); }
 }
 async function loadPage(n){
   if(pageCache[n])return pageCache[n];
@@ -177,7 +178,7 @@ async function show(n){
   // load data
   for(const x of set){
     const data=await loadPage(x);
-    ensureFont(data.font);
+    ensureFont(data.font); ensureFont('QCF4_QBSML');
     const el=wantEls[x];
     if(el && !el.dataset.ready){ el.replaceWith(renderReady(x,data)); }
   }
