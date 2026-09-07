@@ -125,6 +125,11 @@ async function loadPage(n){
   return data;
 }
 function surahNameFont(){ return 'QCF4_QBSML'; }
+function fontsOf(data){
+  const s=new Set([data.font,'QCF4_QBSML']);
+  (data.lines||[]).forEach(l=>(l.words||[]).forEach(w=>{ if(w.font) s.add(w.font); }));
+  return [...s];
+}
 
 function renderFolio(page){
   const fol=document.createElement('div'); fol.className='folio';
@@ -177,7 +182,7 @@ async function show(n){
   document.getElementById('tSub').textContent='صفحة '+n+' • الجزء '+juzOf(n);
   for(const x of set){
     const data=await loadPage(x);
-    ensureFont(data.font); ensureFont('QCF4_QBSML');
+    fontsOf(data).forEach(f=>ensureFont(f));
     const old=stage.querySelector('.folio[data-p="'+x+'"]');
     if(old && !old.dataset.ready){ const r=renderReady(x,data); old.replaceWith(r); position(r,x); }
   }
