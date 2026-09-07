@@ -29,9 +29,10 @@ body{
 .ttitle small{display:block;font-size:11px;color:#9fb3b0;font-weight:600;}
 
 /* page stage */
-.stage{flex:1;overflow:hidden;position:relative;display:flex;flex-direction:column;}
-.pages{flex:1;display:flex;height:100%;transition:transform .35s cubic-bezier(.22,1,.36,1);}
-.folio{flex:0 0 100%;height:100%;overflow-y:auto;padding:10px 10px 6px;display:flex;flex-direction:column;}
+.stage{flex:1;overflow:hidden;position:relative;}
+.pages{position:absolute;inset:0;}
+.folio{position:absolute;inset:0;overflow-y:auto;padding:10px 10px 6px;display:flex;flex-direction:column;
+  transition:transform .32s cubic-bezier(.22,1,.36,1); will-change:transform;}
 .paper{
   background:var(--page); border:1px solid var(--line); border-radius:14px;
   box-shadow:0 8px 26px rgba(120,100,50,.18);
@@ -39,8 +40,8 @@ body{
   background-image:linear-gradient(rgba(176,138,62,.04),rgba(176,138,62,.04));
 }
 .mlines{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;direction:rtl;}
-.mline{display:flex;align-items:center;justify-content:center;width:100%;min-height:30px;line-height:2.05;}
-.mline .mw{font-family:'QCF', 'Amiri', serif; font-size:30px; direction:rtl; cursor:default; transition:background .15s;}
+.mline{display:flex;align-items:center;justify-content:center;width:100%;min-height:28px;line-height:1.9;}
+.mline .mw{font-size:clamp(23px,7.4vw,34px); direction:rtl; cursor:default; transition:background .15s; white-space:nowrap;}
 .mline .mw:active{background:rgba(15,125,99,.10);border-radius:6px;}
 .mline.surahh{justify-content:center;}
 .mline.surahh .mw{font-size:30px;}
@@ -151,38 +152,35 @@ function renderFolio(page){
   return fol;
 }
 
+function position(el,page){
+  const d=page-cur;                    // +1 = صفحة تالية (تظهر شمالًا)
+  el.style.transform=`translateX(${(-d*100)}%)`;
+  el.style.visibility=Math.abs(d)>1?'hidden':'visible';
+  el.style.zIndex= d===0?2:1;
+}
 async function show(n){
   n=Math.max(1,Math.min(TOTAL,n));
   cur=n;
   const stage=document.getElementById('pages');
-  // visible slides: prev(n-1) current(n) next(n+1)
   const set=[n-1,n,n+1].filter(x=>x>=1&&x<=TOTAL);
-  const wantEls={};
-  // recycle/create
+  const want={};
   for(const x of set){
-    let el=stage.querySelector('[data-p="'+x+'"]');
-    if(!el){ el=document.createElement('div'); el.className='folio'; el.dataset.p=x; el.dataset.ready='';
+    let el=stage.querySelector('.folio[data-p="'+x+'"]');
+    if(!el){
+      el=document.createElement('div'); el.className='folio'; el.dataset.p=x; el.dataset.ready='';
       el.innerHTML='<div class="paper" style="align-items:center;justify-content:center;color:#9a9078"><i class="fas fa-spinner fa-spin"></i></div>';
-      stage.appendChild(el); }
-    wantEls[x]=el;
+      stage.appendChild(el);
+    }
+    want[x]=el; position(el,x);
   }
-  // remove slides not in set
-  [...stage.children].forEach(c=>{ if(!wantEls[c.dataset.p]) c.remove(); });
-  // LTR row order so that: [prev][current][next] — current starts at index 1
-  stage.style.direction='ltr';
-  const order=[n-1,n,n+1].filter(x=>x>=1&&x<=TOTAL);
-  order.forEach(x=>stage.appendChild(wantEls[x]));
-  // position current centered (it is the middle when both exist)
-  const idx=order.indexOf(n);
-  stage.style.transform=`translateX(${idx*100}%)`;
-  // load data
+  [...stage.children].forEach(c=>{ if(!want[c.dataset.p]) c.remove(); });
+  document.getElementById('tSub').textContent='صفحة '+n+' • الجزء '+juzOf(n);
   for(const x of set){
     const data=await loadPage(x);
     ensureFont(data.font); ensureFont('QCF4_QBSML');
-    const el=wantEls[x];
-    if(el && !el.dataset.ready){ el.replaceWith(renderReady(x,data)); }
+    const old=stage.querySelector('.folio[data-p="'+x+'"]');
+    if(old && !old.dataset.ready){ const r=renderReady(x,data); old.replaceWith(r); position(r,x); }
   }
-  document.getElementById('tSub').textContent='صفحة '+n+' • الجزء '+juzOf(n);
 }
 function renderReady(n,data){
   const fol=renderFolio(data); fol.dataset.p=n; fol.dataset.ready='1'; return fol;
