@@ -202,19 +202,6 @@ body::before{content:'';position:fixed;inset:0;background:rgba(29,43,43,.55);z-i
     </div>
   </section>
 
-  <!-- ===== ACHIEVEMENTS / الإنجازات ===== -->
-  <section id="screen-ach" class="screen">
-    <div class="body">
-      <div class="list-head">إنجازاتك</div>
-      <div class="ach-stat">
-        <div class="ach-box"><div class="v" id="achRead">0</div><div class="l">ذكر أتْممته</div></div>
-        <div class="ach-box"><div class="v" id="achTas">0</div><div class="l">تسبيحة</div></div>
-      </div>
-      <div class="sec-lbl">الأقسام المكمّلة</div>
-      <div id="achList" style="padding:0 0 20px"></div>
-    </div>
-  </section>
-
   <!-- ===== SETTINGS / الإعدادات ===== -->
   <section id="screen-settings" class="screen">
     <div class="body">
@@ -283,7 +270,6 @@ function switchTab(name){
   document.querySelectorAll('.app > .screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
-  if(name==='ach') renderAch();
 }
 
 /* ---------- pie wheel ---------- */
@@ -567,16 +553,6 @@ function jumpToZekr(zid){
 }
 
 /* ---------- achievements ---------- */
-function renderAch(){
-  let read=0; for(const k in progress) read+=progress[k];
-  document.getElementById('achRead').textContent=read;
-  document.getElementById('achTas').textContent=tasTotalCount;
-  let html='';
-  D.main.forEach(cid=>{const c=catById[cid];const done=progress[cid]||0;const total=(c.it||[]).length;
-    if(total) html+=`<div class="cat-card"><div class="cic"><i class="fas ${done>=total?'fa-circle-check':'fa-circle'}" style="color:${done>=total?'var(--accent)':'var(--text-faint)'}"></i></div>
-      <div><div class="cn">${c.n}</div><div class="cc">${done}/${total}</div></div></div>`;});
-  document.getElementById('achList').innerHTML=html||'<div class="empty">كمّل بعض الأذكار لتظهر إنجازاتك</div>';
-}
 
 /* ---------- settings/misc ---------- */
 function toggleSwitch(key,el){settings[key]=!settings[key];el.classList.toggle('on',settings[key]);saveSettings();}
