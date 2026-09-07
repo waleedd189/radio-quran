@@ -386,11 +386,8 @@ function renderCard(i){
   const rep=z.r||1; const st=perCard[i]=perCard[i]||{remain:rep,done:false};
   const done = st.done || i < (progress[readCatId]||0);
   if(done){st.done=true;}
-  const src=sourceOf(zid);
   el.innerHTML=`
     <div class="ztext" id="zt${i}" style="font-size:${settings.font}px">${z.t}</div>
-    ${z.f?`<div class="zfadl"><b>🌿 فضل الذكر:</b><br>${z.f}</div>`:''}
-    ${src?`<div class="divider"></div><div class="zsource" id="zs${i}">${src}</div>`:''}
     <div class="rule-white"></div>
     <div class="count-area">
       <div class="count-num ${done?'done':''}" id="cn${i}">${done?'✓':rep+' مرة'}</div>
