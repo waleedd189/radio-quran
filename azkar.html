@@ -243,9 +243,9 @@ body::before{content:'';position:fixed;inset:0;background:rgba(29,43,43,.55);z-i
     </div>
     <div class="body">
       <div class="reader-actions">
-        <button class="ra-btn" onclick="toast('النسخة الورقية')"><i class="fas fa-book"></i></button>
-        <button class="ra-btn" onclick="shareZekr()"><i class="fas fa-arrow-up-from-bracket"></i></button>
-        <button class="ra-btn" onclick="showSource()"><i class="fas fa-layer-group"></i></button>
+        <button class="ra-btn" onclick="showSource()" title="المصدر"><i class="fas fa-layer-group"></i></button>
+        <button class="ra-btn" onclick="shareZekr()" title="مشاركة"><i class="fas fa-arrow-up-from-bracket"></i></button>
+        <button class="ra-btn" onclick="showFadl()" title="فضل الذكر"><i class="fas fa-book"></i></button>
       </div>
       <div class="ra-line"></div>
       <div class="pager" id="pager">
@@ -278,7 +278,7 @@ function saveSettings(){localStorage.setItem('azkar-settings',JSON.stringify(set
 function saveProgress(){localStorage.setItem('azkar-progress',JSON.stringify(progress));}
 
 /* ---------- tabs ---------- */
-const TABS=['home','all','tasbih','ach','settings'];
+const TABS=['home','all','tasbih','settings'];
 function switchTab(name){
   document.querySelectorAll('.app > .screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
@@ -469,7 +469,12 @@ function movePage(dir){
   const pager=document.getElementById('pager'); let sx=null;
   pager.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
   pager.addEventListener('touchend',e=>{ if(sx===null)return; const dx=e.changedTouches[0].clientX-sx;
-    if(Math.abs(dx)>50){ movePage(dx<0?1:-1); } sx=null; },{passive:true});
+    // RTL: السحب لليمين ينتقل للتالي، والسحب لليسار للسابق
+    if(Math.abs(dx)>50){ movePage(dx>0?1:-1); } sx=null; },{passive:true});
+  // دعم الماوس (سطح المكتب) بنفس المنطق
+  let msx=null;
+  pager.addEventListener('mousedown',e=>{msx=e.clientX;});
+  pager.addEventListener('mouseup',e=>{ if(msx===null)return; const dx=e.clientX-msx; if(Math.abs(dx)>60)movePage(dx>0?1:-1); msx=null;});
 })();
 function changeFont(d){ settings.font=Math.min(34,Math.max(18,settings.font+(d>0?2:-2))); saveSettings();
   document.querySelectorAll('[id^="zt"]').forEach(el=>el.style.fontSize=settings.font+'px'); }
@@ -479,7 +484,8 @@ function shareZekr(){
   if(navigator.share)navigator.share({title:'أذكار المسلم',text}).catch(()=>{});
   else{navigator.clipboard&&navigator.clipboard.writeText(text);toast('تم نسخ الذكر');}
 }
-function showSource(){ const z=curZekr(); if(!z)return; const s=sourceOf(readList[readIdx]); if(s)showPop('📚 المصدر والتخريج',s); else toast('لا يوجد تخريج إضافي'); }
+function showSource(){ const z=curZekr(); if(!z)return; const s=sourceOf(readList[readIdx]); if(s)showPop('📚 المصدر والتخريج',s); else toast('لا يوجد تخريج لهذا الذكر'); }
+function showFadl(){ const z=curZekr(); if(!z)return; if(z.f)showPop('🌿 فضل الذكر', z.f); else toast('لا يوجد فضل مذكور لهذا الذكر'); }
 function showHokm(){ const z=curZekr(); if(z&&z.h){ showPop('🔖 حكم الحديث', (z.h.g?'<b>'+z.h.g+'</b><br><br>':'')+(z.h.d||'')); } }
 
 /* ---------- popups ---------- */
@@ -586,7 +592,6 @@ const TABDEFS=[
   {id:'home',icon:'fa-book',label:'الأذكار'},
   {id:'all',icon:'fa-gem',label:'الكنوز'},
   {id:'tasbih',icon:'fa-circle-dot',label:'السبحة'},
-  {id:'ach',icon:'fas fa-award',label:'الإنجازات'},
   {id:'settings',icon:'fa-sliders',label:'الإعدادات'},
 ];
 (function buildTabbar(){
