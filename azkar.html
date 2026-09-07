@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>الباقيات - أذكار المسلم | راديو قرآن</title>
+<meta name="theme-color" content="#24b28d">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --brand:#24b28d; --brand-dark:#1a9677; --brand-darker:#0f7d63; --brand-soft:#e7f8f3; --brand-soft2:#d2f1e9;
+  --gold:#c9a84c;
+  --bg:#f4f6f5; --card:#ffffff; --ink:#2b2b2b; --ink2:#526271; --ink3:#8a97a3;
+  --ring-border:#e3e8e7; --shadow:0 10px 30px rgba(15,60,50,.10);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  margin:0; font-family:'Cairo',Tahoma,sans-serif; background:var(--bg); color:var(--ink);
+  overflow:hidden; direction:rtl; overscroll-behavior:none;
+}
+.app{position:relative; height:100vh; height:100dvh; width:100%; max-width:560px; margin:0 auto;}
+
+/* ===== screen router ===== */
+.screen{position:absolute; inset:0; display:none; flex-direction:column; opacity:0; transition:opacity .25s ease;}
+.screen.active{display:flex; opacity:1;}
+
+/* ===== top bar ===== */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+  padding:12px 14px; background:var(--card); border-bottom:1px solid var(--ring-border);
+  position:relative; z-index:20; box-shadow:0 2px 10px rgba(0,0,0,.03);
+}
+.tb-title{display:flex; align-items:center; gap:8px; font-weight:800; font-size:16px; color:var(--brand-darker);}
+.tb-title i{color:var(--brand);}
+.tb-btn{
+  width:38px;height:38px;border-radius:50%;border:none;background:var(--brand-soft);color:var(--brand-dark);
+  font-size:15px; cursor:pointer; display:flex;align-items:center;justify-content:center; flex:0 0 auto;
+}
+.tb-btn:active{background:var(--brand-soft2);}
+.tb-side{display:flex;gap:8px;}
+
+.body{flex:1; overflow:hidden; position:relative;}
+
+/* ===== home / circle menu ===== */
+#screen-home .body{display:flex; flex-direction:column;}
+.hero{text-align:center; padding:18px 16px 6px;}
+.hero h1{margin:0; font-family:'Amiri',serif; font-size:30px; color:var(--brand-darker); letter-spacing:.5px;}
+.hero p{margin:4px 0 0; color:var(--ink3); font-size:12.5px;}
+
+.wheel-wrap{flex:1; position:relative; display:flex; align-items:center; justify-content:center; min-height:0;}
+.wheel{
+  position:relative; width:min(88vw,420px); height:min(88vw,420px);
+  touch-action:none; user-select:none;
+}
+.wheel-dial{position:absolute; inset:0; transition:transform .55s cubic-bezier(.22,1,.36,1); will-change:transform;}
+.wheel-ring{position:absolute; border-radius:50%; border:1.5px dashed var(--ring-border); left:50%; top:50%; transform:translate(-50%,-50%);}
+.node{
+  position:absolute; display:flex; flex-direction:column; align-items:center; gap:4px;
+  transform:translate(-50%,-50%); width:88px; text-align:center; cursor:pointer;
+}
+.node .ic{
+  width:52px;height:52px;border-radius:50%; background:var(--card); border:2px solid var(--brand-soft2);
+  display:flex;align-items:center;justify-content:center; font-size:20px; color:var(--brand-dark);
+  box-shadow:0 5px 14px rgba(15,60,50,.10); transition:transform .15s, background .2s, color .2s;
+}
+.node .lb{font-size:11px; font-weight:700; color:var(--ink2); line-height:1.25; max-width:86px;}
+.node:active .ic{transform:scale(.92);}
+.node.hot .ic{background:var(--brand); color:#fff; border-color:var(--brand);}
+.node.hot .lb{color:var(--brand-darker);}
+.wheel-center{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:104px;height:104px;border-radius:50%; border:none; cursor:pointer;
+  background:linear-gradient(145deg,var(--brand),var(--brand-darker)); color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center; gap:2px;
+  box-shadow:0 12px 28px rgba(36,178,141,.40); z-index:5;
+}
+.wheel-center i{font-size:26px;}
+.wheel-center span{font-size:12px; font-weight:800;}
+.wheel-hint{position:absolute; bottom:8px; left:0; right:0; text-align:center; color:var(--ink3); font-size:11.5px;}
+.wheel-hint i{color:var(--brand);}
+
+.home-actions{display:flex; gap:10px; padding:10px 16px calc(14px + env(safe-area-inset-bottom));}
+.ha{
+  flex:1; border:none; border-radius:14px; padding:12px 6px; cursor:pointer; font-family:inherit;
+  background:var(--card); border:1px solid var(--ring-border); color:var(--ink2); font-weight:700; font-size:12.5px;
+  display:flex; flex-direction:column; align-items:center; gap:6px; box-shadow:0 4px 12px rgba(0,0,0,.04);
+}
+.ha i{font-size:18px; color:var(--brand);}
+.ha:active{background:var(--brand-soft);}
+
+/* ===== sub categories (second level circle / chips) ===== */
+.sub-wrap{position:absolute; inset:0; overflow:auto; padding:18px 14px calc(20px + env(safe-area-inset-bottom));}
+.sub-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; padding-top:4px;}
+.sub-card{
+  background:var(--card); border:1px solid var(--ring-border); border-radius:16px; padding:14px 10px;
+  text-align:center; cursor:pointer; box-shadow:var(--shadow); position:relative;
+}
+.sub-card:active{background:var(--brand-soft);}
+.sub-card .sic{
+  width:46px;height:46px;border-radius:50%; margin:0 auto 8px; background:var(--brand-soft);
+  color:var(--brand-dark); display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.sub-card.direct .sic{background:var(--brand); color:#fff;}
+.sub-card .sn{font-size:13px; font-weight:700; color:var(--ink); line-height:1.3;}
+.sub-card .sc{font-size:11px; color:var(--ink3); margin-top:3px;}
+.sub-head{text-align:center; margin-bottom:14px;}
+.sub-head h2{margin:0; font-family:'Amiri',serif; font-size:22px; color:var(--brand-darker);}
+.sub-head p{margin:3px 0 0; font-size:12px; color:var(--ink3);}
+
+/* ===== reader ===== */
+#screen-read .body{overflow-y:auto; -webkit-overflow-scrolling:touch;}
+.read-progress{padding:10px 16px 0; text-align:center;}
+.rp-bar{height:6px; border-radius:6px; background:var(--ring-border); overflow:hidden;}
+.rp-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--brand),var(--brand-dark)); transition:width .3s;}
+.rp-txt{font-size:11.5px; color:var(--ink3); margin-top:5px;}
+.zcard{margin:14px; background:var(--card); border-radius:20px; box-shadow:var(--shadow); border:1px solid var(--ring-border); overflow:hidden;}
+.zcat{padding:10px 16px; background:var(--brand-soft); color:var(--brand-darker); font-size:12px; font-weight:700; display:flex; align-items:center; gap:7px; border-bottom:1px solid var(--brand-soft2);}
+.ztext{
+  padding:22px 20px; font-family:'Amiri',serif; font-size:23px; line-height:2.05; color:var(--ink); text-align:center;
+}
+.ztext .hl{color:var(--brand-darker); font-weight:700;}
+.ztext .ra{color:#8a6d1d; font-weight:700;}
+.ztext .rep{color:var(--brand); font-weight:800;}
+.ztext .ctx{color:var(--ink3);}
+.ztext .src{color:var(--ink3); font-size:.82em;}
+.ztext .fn{color:var(--brand); font-weight:700; cursor:pointer; font-size:.6em; vertical-align:super; margin:0 1px;}
+.ztext dfn.gh{color:#7a4fd0; font-style:normal; font-weight:700; border-bottom:2px dotted #b79bf0; cursor:pointer;}
+.zfadl{margin:0 16px 14px; background:#fffaf0; border:1px solid #f0e2bd; border-radius:12px; padding:10px 14px; font-size:13.5px; line-height:1.9; color:#7a5a12;}
+.zfadl b{color:#a9781f;}
+.zcount{
+  margin:0 16px 18px; border-radius:16px; background:linear-gradient(145deg,var(--brand),var(--brand-darker));
+  color:#fff; text-align:center; padding:18px; cursor:pointer; user-select:none;
+}
+.zcount .big{font-size:46px; font-weight:800; line-height:1; font-family:'Cairo';}
+.zcount .lab{font-size:13px; opacity:.95; margin-top:6px; font-weight:700;}
+.zcount.done{background:linear-gradient(145deg,#f0c040,#c9941f);}
+.znav{display:flex; gap:10px; padding:0 16px 18px;}
+.znav button{flex:1; border:none; border-radius:12px; padding:12px; font-family:inherit; font-weight:700; font-size:13.5px; cursor:pointer;}
+.zn-prev{background:var(--card); color:var(--ink2); border:1px solid var(--ring-border)!important;}
+.zn-next{background:var(--brand); color:#fff;}
+.zn-next:disabled{opacity:.45;}
+.zextra{display:flex; gap:10px; padding:0 16px 22px;}
+.zextra button{flex:1; background:var(--brand-soft); border:none; color:var(--brand-darker); border-radius:12px; padding:10px; font-family:inherit; font-weight:700; font-size:12.5px; cursor:pointer;}
+
+/* ===== tasbih ===== */
+#screen-tasbih .body{display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px;}
+.tas-target{display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; justify-content:center;}
+.tas-target button{border:1px solid var(--ring-border); background:var(--card); color:var(--ink2); border-radius:20px; padding:7px 16px; font-family:inherit; font-weight:700; font-size:13px; cursor:pointer;}
+.tas-target button.on{background:var(--brand); color:#fff; border-color:var(--brand);}
+.tas-circle{
+  width:min(64vw,260px); height:min(64vw,260px); border-radius:50%; border:none; cursor:pointer;
+  background:radial-gradient(circle at 35% 30%, #33c79f, var(--brand-darker));
+  color:#fff; box-shadow:0 18px 40px rgba(36,178,141,.42); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+}
+.tas-circle:active{transform:scale(.97);}
+.tas-circle .n{font-size:74px; font-weight:800; line-height:1;}
+.tas-circle .r{font-size:14px; font-weight:700; opacity:.95;}
+.tas-circle .word{font-family:'Amiri',serif; font-size:19px; margin-top:4px;}
+.tas-total{margin-top:18px; color:var(--ink2); font-size:14px; font-weight:700;}
+.tas-reset{margin-top:12px; background:var(--card); border:1px solid var(--ring-border); color:var(--ink2); border-radius:14px; padding:10px 22px; font-family:inherit; font-weight:700; cursor:pointer;}
+.tas-pick{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; justify-content:center;}
+.tas-pick button{background:var(--brand-soft); border:none; color:var(--brand-darker); border-radius:20px; padding:8px 14px; font-family:inherit; font-weight:700; font-size:12.5px; cursor:pointer;}
+
+/* ===== all / search ===== */
+#screen-all .body{overflow-y:auto; padding:14px;}
+.search-box{display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--ring-border); border-radius:14px; padding:10px 14px; margin-bottom:12px;}
+.search-box i{color:var(--brand);}
+.search-box input{flex:1; border:none; outline:none; font-family:inherit; font-size:14px; background:transparent; color:var(--ink);}
+.sec-title{font-size:13px; font-weight:800; color:var(--brand-darker); margin:14px 4px 8px; display:flex; align-items:center; gap:6px;}
+.list-card{background:var(--card); border:1px solid var(--ring-border); border-radius:14px; margin-bottom:9px; padding:13px 15px; cursor:pointer; box-shadow:0 3px 10px rgba(0,0,0,.03);}
+.list-card:active{background:var(--brand-soft);}
+.list-card .ln{font-size:14px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:9px;}
+.list-card .ln i{color:var(--brand); width:18px; text-align:center;}
+.list-card .lc{font-size:11.5px; color:var(--ink3); margin-top:3px; margin-right:27px;}
+.list-card .lc b{color:var(--brand-dark);}
+.empty{text-align:center; color:var(--ink3); padding:40px 20px; font-size:13.5px;}
+
+/* ===== settings ===== */
+#screen-settings .body{overflow-y:auto; padding:16px;}
+.set-group{background:var(--card); border:1px solid var(--ring-border); border-radius:16px; overflow:hidden; margin-bottom:14px;}
+.set-item{display:flex; align-items:center; justify-content:space-between; padding:15px 16px; border-bottom:1px solid var(--ring-border); font-size:14px; font-weight:600;}
+.set-item:last-child{border-bottom:none;}
+.set-item small{display:block; color:var(--ink3); font-weight:400; font-size:11.5px; margin-top:2px;}
+.switch{width:46px;height:26px;border-radius:20px;background:#ccd6d4; position:relative; cursor:pointer; transition:background .2s; flex:0 0 auto;}
+.switch::after{content:''; position:absolute; top:3px; right:3px; width:20px;height:20px;border-radius:50%;background:#fff; transition:transform .2s;}
+.switch.on{background:var(--brand);}
+.switch.on::after{transform:translateX(-20px);}
+.font-stepper{display:flex; align-items:center; gap:12px;}
+.font-stepper button{width:34px;height:34px;border-radius:10px;border:1px solid var(--ring-border); background:var(--brand-soft); color:var(--brand-dark); font-size:16px; cursor:pointer;}
+
+/* ===== popup (footnote / ghareeb) ===== */
+.pop-overlay{position:fixed; inset:0; background:rgba(20,40,35,.45); z-index:200; display:none; align-items:flex-end; justify-content:center; backdrop-filter:blur(2px);}
+.pop-overlay.show{display:flex;}
+.pop{background:var(--card); width:100%; max-width:560px; border-radius:22px 22px 0 0; padding:20px 20px calc(24px + env(safe-area-inset-bottom)); animation:pop .25s ease;}
+@keyframes pop{from{transform:translateY(40px); opacity:.6;} to{transform:translateY(0); opacity:1;}}
+.pop h4{margin:0 0 10px; color:var(--brand-darker); font-size:15px; display:flex; align-items:center; gap:8px;}
+.pop .ptext{font-family:'Amiri',serif; font-size:18px; line-height:1.9; color:var(--ink);}
+.pop .pclose{margin-top:16px; width:100%; border:none; background:var(--brand); color:#fff; border-radius:12px; padding:12px; font-family:inherit; font-weight:800; cursor:pointer;}
+
+.toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:#2b2b2b; color:#fff; padding:10px 20px; border-radius:20px; font-size:13px; font-weight:700; opacity:0; pointer-events:none; transition:all .3s; z-index:300;}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== HOME ===== -->
+  <section id="screen-home" class="screen active">
+    <header class="topbar">
+      <div class="tb-title"><i class="fas fa-hands-praying"></i> الباقيات</div>
+      <div class="tb-side">
+        <button class="tb-btn" onclick="window.location.href='index.html'" title="راديو القرآن"><i class="fas fa-broadcast-tower"></i></button>
+        <button class="tb-btn" onclick="go('screen-settings')" title="إعدادات"><i class="fas fa-cog"></i></button>
+      </div>
+    </header>
+    <div class="body">
+      <div class="hero">
+        <h1>الباقيات الصالحات</h1>
+        <p>أذكار المسلم من الكتاب والسنة • <span id="azCount">…</span> ذكرًا</p>
+      </div>
+      <div class="wheel-wrap">
+        <div class="wheel" id="wheel">
+          <div class="wheel-dial" id="wheelDial"></div>
+          <button class="wheel-center" onclick="openAll()">
+            <i class="fas fa-layer-group"></i><span>كل الأقسام</span>
+          </button>
+        </div>
+        <div class="wheel-hint"><i class="fas fa-arrows-spin"></i> لفّ الدائرة أو اضغط أي قسم</div>
+      </div>
+      <div class="home-actions">
+        <button class="ha" onclick="openCategory(findCat('الصباح'))"><i class="fas fa-sun"></i> أذكار الصباح</button>
+        <button class="ha" onclick="openTasbih()"><i class="fas fa-circle-dot"></i> المسبحة</button>
+        <button class="ha" onclick="openCategory(findCat('المساء'))"><i class="fas fa-moon"></i> أذكار المساء</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SUB CATEGORIES ===== -->
+  <section id="screen-sub" class="screen">
+    <header class="topbar">
+      <button class="tb-btn" onclick="go('screen-home')"><i class="fas fa-chevron-right"></i></button>
+      <div class="tb-title"><i class="fas fa-folder-tree"></i> <span id="subTitle">الأقسام</span></div>
+      <div class="tb-side" style="width:38px"></div>
+    </header>
+    <div class="body"><div class="sub-wrap"><div id="subContent"></div></div></div>
+  </section>
+
+  <!-- ===== READER ===== -->
+  <section id="screen-read" class="screen">
+    <header class="topbar">
+      <button class="tb-btn" id="readBack"><i class="fas fa-chevron-right"></i></button>
+      <div class="tb-title"><i class="fas fa-book-open"></i> <span id="readTitle">الأذكار</span></div>
+      <button class="tb-btn" onclick="changeFont(1)"><i class="fas fa-text-height"></i></button>
+    </header>
+    <div class="body">
+      <div class="read-progress">
+        <div class="rp-bar"><div class="rp-fill" id="rpFill"></div></div>
+        <div class="rp-txt" id="rpTxt"></div>
+      </div>
+      <div id="readArea"></div>
+    </div>
+  </section>
+
+  <!-- ===== TASBIH ===== -->
+  <section id="screen-tasbih" class="screen">
+    <header class="topbar">
+      <button class="tb-btn" onclick="go('screen-home')"><i class="fas fa-chevron-right"></i></button>
+      <div class="tb-title"><i class="fas fa-circle-dot"></i> المسبحة الإلكترونية</div>
+      <div class="tb-side" style="width:38px"></div>
+    </header>
+    <div class="body">
+      <div class="tas-target" id="tasTarget"></div>
+      <button class="tas-circle" id="tasCircle" onclick="tasTap()">
+        <div class="n" id="tasCount">0</div>
+        <div class="r" id="tasRound">الدورة 1</div>
+        <div class="word" id="tasWord">سُبْحَانَ الله</div>
+      </button>
+      <div class="tas-total">الإجمالي: <span id="tasTotal">0</span></div>
+      <button class="tas-reset" onclick="tasReset()"><i class="fas fa-rotate-left"></i> تصفير</button>
+      <div class="tas-pick" id="tasPick"></div>
+    </div>
+  </section>
+
+  <!-- ===== ALL / SEARCH ===== -->
+  <section id="screen-all" class="screen">
+    <header class="topbar">
+      <button class="tb-btn" onclick="go('screen-home')"><i class="fas fa-chevron-right"></i></button>
+      <div class="tb-title"><i class="fas fa-layer-group"></i> كل الأقسام</div>
+      <button class="tb-btn" onclick="focusSearch()"><i class="fas fa-magnifying-glass"></i></button>
+    </header>
+    <div class="body">
+      <div class="search-box"><i class="fas fa-magnifying-glass"></i>
+        <input id="searchInput" placeholder="ابحث في الأذكار أو الأقسام…" oninput="doSearch(this.value)">
+      </div>
+      <div id="allContent"></div>
+    </div>
+  </section>
+
+  <!-- ===== SETTINGS ===== -->
+  <section id="screen-settings" class="screen">
+    <header class="topbar">
+      <button class="tb-btn" onclick="go('screen-home')"><i class="fas fa-chevron-right"></i></button>
+      <div class="tb-title"><i class="fas fa-cog"></i> إعدادات</div>
+      <div class="tb-side" style="width:38px"></div>
+    </header>
+    <div class="body">
+      <div class="set-group">
+        <div class="set-item"><div>الاهتزاز عند العد<small>رجّة خفيفة مع كل تسبيحة</small></div><div class="switch on" id="swVib" onclick="toggleSwitch('vib',this)"></div></div>
+        <div class="set-item"><div>الصوت<small>نغمة خفيفة عند إتمام العدد</small></div><div class="switch on" id="swSound" onclick="toggleSwitch('sound',this)"></div></div>
+        <div class="set-item"><div>الانتقال التلقائي<small>بعد إتمام العدد ينتقل للذكر التالي</small></div><div class="switch on" id="swAuto" onclick="toggleSwitch('auto',this)"></div></div>
+      </div>
+      <div class="set-group">
+        <div class="set-item"><div>حجم خط الأذكار<small>تكبير وتصغير نص الذكر</small></div>
+          <div class="font-stepper"><button onclick="changeFont(-1)">−</button><button onclick="changeFont(1)">+</button></div></div>
+      </div>
+      <div class="set-group">
+        <div class="set-item" onclick="resetProgress()" style="cursor:pointer"><div>تصفير تقدم الأذكار<small>إعادة بدء كل الأذكار من جديد</small></div><i class="fas fa-rotate-left" style="color:#e26a6a"></i></div>
+      </div>
+      <p style="text-align:center;color:var(--ink3);font-size:11.5px;padding:6px 20px;line-height:1.8">
+        الأذكار مستخرجة من تطبيق «الباقيات» (أذكار المسلم) — كل الأذكار بمصادرها وتخريجاتها من الكتاب والسنة.
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<!-- popup -->
+<div class="pop-overlay" id="popOverlay" onclick="if(event.target===this)closePop()">
+  <div class="pop">
+    <h4 id="popTitle"><i class="fas fa-bookmark"></i></h4>
+    <div class="ptext" id="popText"></div>
+    <button class="pclose" onclick="closePop()">إغلاق</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="azkar-data.js"></script>
+<script>
+/* ================== state ================== */
+const D = window.AZKAR_DATA;
+const catById = {}; D.cats.forEach(c=>catById[c.id]=c);
+const settings = Object.assign({vib:true,sound:true,auto:true,font:23}, JSON.parse(localStorage.getItem('azkar-settings')||'{}'));
+const progress = JSON.parse(localStorage.getItem('azkar-progress')||'{}'); // catId -> index completed count
+function saveSettings(){ localStorage.setItem('azkar-settings', JSON.stringify(settings)); }
+function saveProgress(){ localStorage.setItem('azkar-progress', JSON.stringify(progress)); }
+
+const ICONS = ['fa-sun','fa-moon','fa-mug-saucer','fa-bed','fa-plane','fa-house','fa-utensils','fa-droplet','fa-mosque','fa-bullhorn','fa-heart-pulse','fa-skull','fa-face-smile','fa-ring','fa-kaaba','fa-hand-holding-heart','fa-book-quran','fa-scroll','fa-shield-halved','fa-child','fa-shirt','fa-bath','fa-car','fa-city','fa-gift','fa-spa','fa-star-and-crescent','fa-leaf','fa-feather','fa-hands-praying'];
+function catIcon(name,i){ return ICONS[(i||0)%ICONS.length]; }
+
+/* ================== router ================== */
+let currentReadList=null, readCtxCat=null;
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ================== home wheel ================== */
+const GOLDEN=137.508;
+function buildWheel(){
+  const dial=document.getElementById('wheelDial');
+  dial.innerHTML='';
+  const ids=D.main;
+  const rings=[{n:6,r:38},{n:9,r:66},{n:12,r:92}]; // r in % of half
+  // decorative rings
+  [38,66,92].forEach(r=>{ const ring=document.createElement('div'); ring.className='wheel-ring'; ring.style.width=ring.style.height=(r*2)+'%'; dial.appendChild(ring); });
+  let placed=0;
+  rings.forEach((ring,ri)=>{
+    for(let k=0;k<ring.n && placed<ids.length;k++,placed++){
+      const cid=ids[placed]; const c=catById[cid];
+      const ang=(k/ring.n)*360 + (ri*23);
+      const rad=(ang-90)*Math.PI/180;
+      const x=50+ring.r*Math.cos(rad);
+      const y=50+ring.r*Math.sin(rad);
+      const node=document.createElement('div');
+      node.className='node'+(ri===0?' hot':'');
+      node.style.left=x+'%'; node.style.top=y+'%';
+      node.innerHTML=`<div class="ic"><i class="fas ${catIcon(c.n,placed)}"></i></div><div class="lb">${c.n}</div>`;
+      node.onclick=()=>openCategory(cid);
+      dial.appendChild(node);
+    }
+  });
+  // rotate to start position (nice default)
+  let rot=0;
+  const wheel=document.getElementById('wheel');
+  let drag=null;
+  const setRot=(r)=>{rot=r; dial.style.transform=`rotate(${r}deg)`;};
+  wheel.addEventListener('pointerdown',e=>{ if(e.target.closest('.node')||e.target.closest('.wheel-center'))return; drag={x:e.clientX,y:e.clientY,rot}; wheel.setPointerCapture(e.pointerId);});
+  wheel.addEventListener('pointermove',e=>{ if(!drag)return; const dx=e.clientX-drag.x; setRot(drag.rot+dx*0.5);});
+  wheel.addEventListener('pointerup',()=>drag=null);
+}
+
+/* ================== category nav ================== */
+function subtreeCount(cid){ let n=catById[cid].it.length; (catById[cid].ch||[]).forEach(ch=>n+=subtreeCount(ch)); return n; }
+function openCategory(cid){
+  const c=catById[cid]; if(!c)return;
+  const hasCh = c.ch && c.ch.length;
+  // direct azkar + children => show children grid plus a "read direct" entry
+  document.getElementById('subTitle').textContent=c.n;
+  const box=document.getElementById('subContent');
+  let html='';
+  if(c.it.length){
+    html+=`<div class="sub-head"><h2>${c.n}</h2><p>${c.it.length} ذكرًا</p></div>
+      <div class="sub-grid">
+        <div class="sub-card direct" onclick="startRead(${cid})">
+          <div class="sic"><i class="fas fa-book-open"></i></div>
+          <div class="sn">ابدأ الأذكار</div><div class="sc">${c.it.length} ذكرًا</div>
+        </div>`;
+  } else {
+    html+=`<div class="sub-head"><h2>${c.n}</h2><p>${subtreeCount(cid)} ذكرًا في هذا القسم</p></div><div class="sub-grid">`;
+  }
+  (c.ch||[]).forEach((chId,i)=>{
+    const ch=catById[chId];
+    const cnt=subtreeCount(chId);
+    const leaf = !(ch.ch&&ch.ch.length);
+    html+=`<div class="sub-card ${leaf&&ch.it.length?'direct':''}" onclick="openCategory(${chId})">
+      <div class="sic"><i class="fas ${leaf&&ch.it.length?'fa-book-open':catIcon(ch.n,i+2)}"></i></div>
+      <div class="sn">${ch.n}</div><div class="sc">${cnt} ذكرًا</div>
+    </div>`;
+  });
+  html+='</div>';
+  box.innerHTML=html;
+  go('screen-sub');
+}
+function findCat(name){ const c=D.cats.find(x=>x.n===name); return c?c.id:D.main[0]; }
+
+/* ================== reader ================== */
+let readList=[], readIdx=0, readCatId=null;
+function startRead(cid){
+  const c=catById[cid];
+  readList=(c.it||[]).slice(); readCatId=cid; readIdx=Math.min(progress[cid]||0, Math.max(0,readList.length-1));
+  document.getElementById('readTitle').textContent=c.n;
+  document.getElementById('readBack').onclick=()=>{
+    if(catById[cid].ch&&catById[cid].ch.length) openCategory(cid); else goBackFromRead();
+  };
+  renderZekr();
+  go('screen-read');
+}
+function goBackFromRead(){ go('screen-home'); }
+function effectiveItems(cid){ return catById[cid].it; }
+function renderZekr(){
+  const area=document.getElementById('readArea');
+  if(!readList.length){ area.innerHTML='<div class="empty">لا توجد أذكار في هذا القسم</div>'; return; }
+  const zid=readList[readIdx];
+  const z=D.azkar[zid]; if(!z){ area.innerHTML=''; return; }
+  const rep=z.r||1; const done = readIdx < (progress[readCatId]||0);
+  const remain = rep; // count per zekr
+  area.innerHTML=`
+    <div class="zcard">
+      <div class="zcat"><i class="fas fa-bookmark"></i> ${catById[readCatId].n} • ذكر ${readIdx+1} من ${readList.length}</div>
+      <div class="ztext" id="ztext" style="font-size:${settings.font}px">${z.t}</div>
+      ${z.f?`<div class="zfadl"><b>🌿 الفضل:</b> ${z.f}</div>`:''}
+      <div class="zcount ${done?'done':''}" id="zcount" onclick="tapCount()">
+        <div class="big" id="zcNum">${done?'✓':rep}</div>
+        <div class="lab">${done?'أُكمل — اضغط للتالي':'اضغط للعدّ (متبقي '+(rep)+')'}</div>
+      </div>
+      <div class="znav">
+        <button class="zn-prev" onclick="prevZekr()" ${readIdx===0?'disabled':''}><i class="fas fa-chevron-right"></i> السابق</button>
+        <button class="zn-next" onclick="nextZekr()">التالي <i class="fas fa-chevron-left"></i></button>
+      </div>
+      <div class="zextra">
+        ${z.i?`<button onclick="showInfo()"><i class="fas fa-circle-info"></i> شرح</button>`:''}
+        <button onclick="shareZekr()"><i class="fas fa-share-nodes"></i> مشاركة</button>
+      </div>
+    </div>`;
+  const fill=Math.round(((readIdx+1)/readList.length)*100);
+  document.getElementById('rpFill').style.width=fill+'%';
+  document.getElementById('rpTxt').textContent=`${readIdx+1} / ${readList.length}`;
+  bindPopTriggers();
+  document.querySelector('#screen-read .body').scrollTop=0;
+}
+let tapRemain=0;
+function tapCount(){
+  const z=D.azkar[readList[readIdx]]; const rep=z.r||1;
+  if(tapRemain===0) tapRemain=rep;
+  tapRemain--;
+  if(settings.vib && navigator.vibrate) navigator.vibrate(15);
+  const num=document.getElementById('zcNum'); const cnt=document.getElementById('zcount'); const lab=cnt.querySelector('.lab');
+  if(tapRemain<=0){
+    cnt.classList.add('done'); num.textContent='✓'; lab.textContent='أُكمل — اضغط للتالي';
+    progress[readCatId]=Math.max(progress[readCatId]||0, readIdx+1); saveProgress();
+    if(settings.sound) beep();
+    if(settings.auto){ setTimeout(()=>nextZekr(),500); }
+  } else {
+    num.textContent=tapRemain; lab.textContent='اضغط للعدّ (متبقي '+tapRemain+')';
+  }
+}
+function nextZekr(){
+  tapRemain=0;
+  if(readIdx<readList.length-1){ readIdx++; renderZekr(); }
+  else { progress[readCatId]=readList.length; saveProgress(); toast('أكملت هذا القسم — تقبّل الله 🤲'); renderZekr(); }
+}
+function prevZekr(){ tapRemain=0; if(readIdx>0){ readIdx--; renderZekr(); } }
+function changeFont(d){ settings.font=Math.min(34,Math.max(18,settings.font+(d?2:-2))); saveSettings(); const el=document.getElementById('ztext'); if(el)el.style.fontSize=settings.font+'px'; }
+function shareZekr(){
+  const z=D.azkar[readList[readIdx]];
+  const plain=z.t.replace(/<[^>]+>/g,'');
+  const text=plain+'\n\n— من تطبيق الباقيات (أذكار المسلم) عبر راديو قرآن';
+  if(navigator.share){ navigator.share({title:'أذكار المسلم',text}).catch(()=>{}); }
+  else { navigator.clipboard&&navigator.clipboard.writeText(text); toast('تم نسخ الذكر'); }
+}
+function showInfo(){ const z=D.azkar[readList[readIdx]]; if(z.i) showPop('📖 شرح', z.i); }
+function resetProgress(){ localStorage.removeItem('azkar-progress'); for(const k in progress)delete progress[k]; toast('تم تصفير التقدم'); }
+
+/* ================== tasbih ================== */
+const TAS_WORDS=[{w:'سُبْحَانَ الله',t:33},{w:'الحَمْدُ لله',t:33},{w:'اللهُ أكبر',t:34},{w:'لَا إِلَهَ إِلَّا الله',t:100},{w:'أَسْتَغْفِرُ الله',t:100}];
+let tas={n:0,total:+localStorage.getItem('tas-total')||0,target:33,wi:0};
+function buildTasbih(){
+  const tg=document.getElementById('tasTarget'); tg.innerHTML='';
+  [33,100,1000].forEach(v=>{ const b=document.createElement('button'); b.textContent=v; if(v===tas.target)b.className='on'; b.onclick=()=>{tas.target=v;buildTasbih();}; tg.appendChild(b); });
+  const pk=document.getElementById('tasPick'); pk.innerHTML='';
+  TAS_WORDS.forEach((o,i)=>{ const b=document.createElement('button'); b.textContent=o.w; if(i===tas.wi)b.style.background='var(--brand)',b.style.color='#fff'; b.onclick=()=>{tas.wi=i;tas.n=0;buildTasbih();}; pk.appendChild(b); });
+  renderTas();
+}
+function renderTas(){
+  document.getElementById('tasCount').textContent=tas.n;
+  document.getElementById('tasRound').textContent='الدورة '+(Math.floor(tas.n/tas.target)+1);
+  document.getElementById('tasWord').textContent=TAS_WORDS[tas.wi].w;
+  document.getElementById('tasTotal').textContent=tas.total;
+}
+function tasTap(){
+  tas.n++; tas.total++; localStorage.setItem('tas-total',tas.total);
+  if(settings.vib&&navigator.vibrate)navigator.vibrate(10);
+  if(tas.n%tas.target===0){ if(settings.sound)beep(); toast('أتممت '+tas.target+' 🎉'); setTimeout(()=>{ if(tas.n>=tas.target){tas.n=0;renderTas();}},900); }
+  renderTas();
+}
+function tasReset(){ tas.n=0; tas.total=0; localStorage.setItem('tas-total',0); renderTas(); }
+function openTasbih(){ buildTasbih(); go('screen-tasbih'); }
+
+/* ================== all / search ================== */
+function openAll(){ buildAll(''); go('screen-all'); }
+function focusSearch(){ document.getElementById('searchInput').focus(); }
+function buildAll(q){
+  const box=document.getElementById('allContent'); q=(q||'').trim();
+  let html='';
+  if(!q){
+    html+='<div class="sec-title"><i class="fas fa-star"></i> الأقسام الرئيسية</div>';
+    D.main.forEach((cid,i)=>{ const c=catById[cid]; html+=catCard(c,i); });
+    html+='<div class="sec-title"><i class="fas fa-folder-tree"></i> كل التصنيفات ('+D.roots.length+')</div>';
+    D.roots.forEach((cid,i)=>{ const c=catById[cid]; if(D.main.includes(cid))return; html+=catCard(c,i); });
+  } else {
+    const qn=q.replace(/[\u064e-\u0652\u0670]/g,''); // strip tashkeel
+    const norm=s=>(s||'').replace(/[\u064e-\u0652\u0670]/g,'');
+    // matching categories
+    const matchedCats=D.cats.filter(c=>norm(c.n).includes(qn)).slice(0,30);
+    if(matchedCats.length){ html+='<div class="sec-title"><i class="fas fa-folder"></i> أقسام مطابقة ('+matchedCats.length+')</div>'; matchedCats.forEach((c,i)=>html+=catCard(c,i)); }
+    // matching azkar text
+    let hits=0;
+    html+='<div class="sec-title"><i class="fas fa-quote-right"></i> أذكار مطابقة</div>';
+    for(const zid in D.azkar){
+      const z=D.azkar[zid]; const plain=z.t.replace(/<[^>]+>/g,'');
+      if(norm(plain).includes(qn)){
+        hits++;
+        const cat=D.cats.find(c=>c.it.includes(+zid)||c.it.includes(zid));
+        const snippet=plain.slice(0,90)+'…';
+        html+=`<div class="list-card" onclick="jumpToZekr('${zid}')">
+          <div class="ln"><i class="fas fa-hands-praying"></i> ${cat?cat.n:'ذكر'}</div>
+          <div class="lc">${snippet}</div></div>`;
+        if(hits>=40)break;
+      }
+    }
+    if(!matchedCats.length && !hits) html='<div class="empty">لا توجد نتائج لـ"'+q+'"</div>';
+  }
+  box.innerHTML=html;
+}
+function catCard(c,i){
+  const leaf=!(c.ch&&c.ch.length);
+  const cnt=subtreeCount(c.id);
+  return `<div class="list-card" onclick="${leaf&&c.it.length?`startRead(${c.id})`:`openCategory(${c.id})`}">
+    <div class="ln"><i class="fas ${leaf&&c.it.length?'fa-book-open':catIcon(c.n,i)}"></i> ${c.n}</div>
+    <div class="lc"><b>${cnt}</b> ذكر</div></div>`;
+}
+function doSearch(v){ buildAll(v); }
+function jumpToZekr(zid){
+  // find a category containing it and start there then jump
+  const cat=D.cats.find(c=>c.it.includes(+zid)||c.it.includes(zid));
+  if(cat){ startRead(cat.id); readIdx=cat.it.findIndex(x=>x==zid||x==+zid); if(readIdx<0)readIdx=0; renderZekr(); }
+}
+
+/* ================== popups (footnotes / ghareeb) ================== */
+function bindPopTriggers(){
+  document.querySelectorAll('#ztext .fn').forEach(el=>el.onclick=()=>{ const id=el.getAttribute('data-n'); const t=D.notes[id]; if(t)showPop('📚 التخريج',t); else toast('لا يوجد نص'); });
+  document.querySelectorAll('#ztext dfn.gh').forEach(el=>el.onclick=()=>{ const id=el.getAttribute('data-g'); const t=D.gh[id]; if(t)showPop('🔎 المعنى',t); });
+}
+function showPop(title,html){ document.getElementById('popTitle').innerHTML=title; document.getElementById('popText').innerHTML=html; document.getElementById('popOverlay').classList.add('show'); }
+function closePop(){ document.getElementById('popOverlay').classList.remove('show'); }
+
+/* ================== settings / misc ================== */
+function toggleSwitch(key,el){ settings[key]=!settings[key]; el.classList.toggle('on',settings[key]); saveSettings(); }
+function applySwitches(){ document.getElementById('swVib').classList.toggle('on',settings.vib); document.getElementById('swSound').classList.toggle('on',settings.sound); document.getElementById('swAuto').classList.toggle('on',settings.auto); }
+let audioCtx=null;
+function beep(){ try{ audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)(); const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.connect(g);g.connect(audioCtx.destination); o.frequency.value=660; g.gain.setValueAtTime(0.12,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.25); o.start();o.stop(audioCtx.currentTime+0.25);}catch(e){} }
+let toastTimer=null;
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2200); }
+
+/* ================== init ================== */
+document.getElementById('azCount').textContent=Object.keys(D.azkar).length;
+buildWheel();
+applySwitches();
+</script>
+</body>
+</html>
