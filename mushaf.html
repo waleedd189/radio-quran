@@ -31,25 +31,25 @@ body{
 /* page stage */
 .stage{flex:1;overflow:hidden;position:relative;}
 .pages{position:absolute;inset:0;}
-.folio{position:absolute;inset:0;overflow-y:auto;padding:10px 10px 6px;display:flex;flex-direction:column;
+.folio{position:absolute;inset:0;overflow-y:auto;padding:8px 8px 6px;display:flex;flex-direction:column;
   transition:transform .32s cubic-bezier(.22,1,.36,1); will-change:transform;}
 .paper{
   background:var(--page); border:1px solid var(--line); border-radius:14px;
   box-shadow:0 8px 26px rgba(120,100,50,.18);
-  padding:14px 12px 8px; flex:1; display:flex; flex-direction:column;
+  padding:12px 14px 8px; flex:1; display:flex; flex-direction:column;
   background-image:linear-gradient(rgba(176,138,62,.04),rgba(176,138,62,.04));
 }
 .mlines{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;}
 .mline{display:flex;flex-direction:row;direction:rtl;justify-content:center;align-items:center;
-  width:100%;flex-wrap:nowrap;gap:0;min-height:28px;line-height:1.9;}
-.mw{display:inline-block;direction:ltr;unicode-bidi:isolate;font-size:clamp(22px,7.2vw,34px);
-  padding:0 1px;cursor:default;white-space:nowrap;transition:background .15s;}
+  width:100%;flex-wrap:nowrap;gap:0;min-height:24px;line-height:1.9;font-size:clamp(18px,5.4vw,30px);}
+.mw{display:inline-block;direction:ltr;unicode-bidi:isolate;font-size:inherit;
+  padding:0 .3px;cursor:default;white-space:nowrap;transition:background .15s;}
 .mw:active{background:rgba(15,125,99,.10);border-radius:6px;}
 .mw.t-end{color:var(--accent2);}
 .mw.t-head{display:block;direction:rtl;width:100%;text-align:center;color:var(--gold);
-  font-size:clamp(24px,7vw,34px);margin:4px 0 2px;}
-.mw.t-bism{display:block;direction:rtl;width:100%;text-align:center;margin:2px 0 12px;
-  font-size:clamp(26px,8vw,40px);}
+  font-size:1.25em;margin:2px 0;white-space:nowrap;}
+.mw.t-bism{display:block;direction:rtl;width:100%;text-align:center;margin:0 0 10px;
+  font-size:1.35em;white-space:nowrap;}
 .pfoot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:8px;padding-top:6px;font-size:12px;color:var(--ink2);font-weight:700;}
 .pfoot .juz{color:var(--accent2);}
 .page-num{text-align:center;margin-top:6px;font-size:12px;color:var(--ink2);font-weight:700;}
@@ -157,7 +157,23 @@ function renderFolio(page){
   h+='</div><div class="pfoot"><span class="juz">الجزء '+juzOf(page.page)+'</span><span>'+sNames+'</span></div>';
   h+='<div class="page-num">صفحة '+page.page+'</div></div>';
   fol.innerHTML=h;
+  fitFolio(fol);
   return fol;
+}
+function fitLine(line){
+  let size=parseFloat(getComputedStyle(line).fontSize)||24;
+  line.style.fontSize=size+'px';
+  for(let k=0;k<7;k++){
+    const avail=line.clientWidth-4;
+    let content=line.scrollWidth;
+    line.querySelectorAll('.t-head,.t-bism').forEach(c=>{ content=Math.max(content,c.scrollWidth); });
+    if(content<=avail||size<10) break;
+    size=Math.max(9,size*(avail/Math.max(content,1))*0.99);
+    line.style.fontSize=size.toFixed(1)+'px';
+  }
+}
+function fitFolio(fol){
+  requestAnimationFrame(()=>{ (fol.querySelectorAll('.mline')).forEach(fitLine); });
 }
 
 function position(el,page){
@@ -185,25 +201,27 @@ async function show(n){
   document.getElementById('tSub').textContent='صفحة '+n+' • الجزء '+juzOf(n);
   for(const x of set){
     const data=await loadPage(x);
-    fontsOf(data).forEach(f=>ensureFont(f));
+    await Promise.all(fontsOf(data).map(f=>ensureFont(f)));
     const old=stage.querySelector('.folio[data-p="'+x+'"]');
     if(old && !old.dataset.ready){ const r=renderReady(x,data); old.replaceWith(r); position(r,x); }
+    document.fonts.ready.then(()=>{ const el=stage.querySelector('.folio[data-p="'+x+'"]'); if(el) fitFolio(el); });
   }
 }
+window.addEventListener('resize',()=>document.querySelectorAll('.folio').forEach(fitFolio));
 function renderReady(n,data){
   const fol=renderFolio(data); fol.dataset.p=n; fol.dataset.ready='1'; return fol;
 }
 async function turn(dir){ show(cur+dir); }
 
-/* swipes */
+/* swipes — اتجاه المصحف العربي: السحب لليمين = التالي */
 (function(){
   const s=document.querySelector('.stage'); let sx=null;
   s.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
   s.addEventListener('touchend',e=>{ if(sx==null)return; const dx=e.changedTouches[0].clientX-sx;
-    if(Math.abs(dx)>55){ turn(dx<0?1:-1); } sx=null; },{passive:true});
+    if(Math.abs(dx)>55){ turn(dx>0?1:-1); } sx=null; },{passive:true});
   let msx=null;
   s.addEventListener('mousedown',e=>{msx=e.clientX;});
-  s.addEventListener('mouseup',e=>{ if(msx==null)return; const dx=e.clientX-msx; if(Math.abs(dx)>70)turn(dx<0?1:-1); msx=null;});
+  s.addEventListener('mouseup',e=>{ if(msx==null)return; const dx=e.clientX-msx; if(Math.abs(dx)>70)turn(dx>0?1:-1); msx=null;});
 })();
 
 /* surah index */
@@ -234,7 +252,7 @@ function jumpSurah(id){
   if(c) show(c.pages[0]);
 }
 function goHome(){ location.href='index.html'; }
-document.addEventListener('keydown',e=>{ if(e.key==='ArrowLeft')turn(1); if(e.key==='ArrowRight')turn(-1); });
+document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight')turn(1); if(e.key==='ArrowLeft')turn(-1); });
 
 show(1);
 </script>
