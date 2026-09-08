@@ -24,6 +24,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <!-- Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="live-tv.css">
+<script src="live-tv.js" defer></script>
 <style>
 /* الأساسيات */
 :root {
@@ -939,6 +941,32 @@ body.light-mode .volume-slider { background: #ddd; }
 
 <!-- المشغل الثابت الأعلى (مشغل واحد) -->
 <div id="globalAudioPlayerContainer">
+  <!-- لا يُحمّل أي بث فيديو حتى يختار المستخدم قناة. -->
+  <section class="live-tv-picker" aria-labelledby="liveTVHeading">
+    <div class="live-tv-heading">
+      <h2 id="liveTVHeading"><i class="fas fa-tv" aria-hidden="true"></i> <span data-live-i18n="heading">البث المباشر للحرمين</span></h2>
+      <span class="live-tv-provider" data-live-i18n="provider">عبر منصة الأولى</span>
+    </div>
+    <div class="live-tv-channels">
+      <button type="button" class="live-tv-channel" data-live-channel="quran" aria-pressed="false" aria-controls="liveTVPanel" aria-label="قناة القرآن الكريم — مكة المكرمة" onclick="LiveTV.play('quran')">
+        <img src="icons/tv-quran.png" width="44" height="48" alt="">
+        <span class="live-tv-channel-copy">
+          <strong data-live-i18n="makkah">مكة المكرمة</strong>
+          <small data-live-i18n="quran">قناة القرآن الكريم</small>
+          <span class="live-tv-tag" data-live-i18n="live">بث مباشر</span>
+        </span>
+      </button>
+      <button type="button" class="live-tv-channel" data-live-channel="sunna" aria-pressed="false" aria-controls="liveTVPanel" aria-label="قناة السنة النبوية — المدينة المنورة" onclick="LiveTV.play('sunna')">
+        <img src="icons/tv-sunna.png" width="44" height="48" alt="">
+        <span class="live-tv-channel-copy">
+          <strong data-live-i18n="madinah">المدينة المنورة</strong>
+          <small data-live-i18n="sunna">قناة السنة النبوية</small>
+          <span class="live-tv-tag" data-live-i18n="live">بث مباشر</span>
+        </span>
+      </button>
+    </div>
+  </section>
+
   <div class="mp-row main">
     <div class="gp-art"><img id="globalPlayerArt" src="icons/icon-192.png" alt="صورة المحطة"></div>
 
@@ -950,7 +978,7 @@ body.light-mode .volume-slider { background: #ddd; }
         <span class="playing-indicator" id="playingIndicator"></span>
         <span class="loader" id="bufferingLoader"></span>
         <i class="fas fa-broadcast-tower"></i>
-        <span id="gpStatusText">جاهز</span>
+        <span id="gpStatusText" role="status" aria-live="polite" aria-atomic="true">جاهز</span>
         <span id="stationName" style="display:none;"></span>
       </div>
     </div>
@@ -961,6 +989,20 @@ body.light-mode .volume-slider { background: #ddd; }
       </button>
     </div>
   </div>
+
+  <!-- iframe واحد للمشغّل الرسمي؛ يُحذف تمامًا عند إيقاف البث أو تشغيل الراديو. -->
+  <section id="liveTVPanel" hidden aria-label="مشغّل البث المباشر للحرمين">
+    <div class="live-tv-stage" id="liveTVStage" aria-busy="false"></div>
+    <div class="live-tv-tools">
+      <div class="live-tv-tools-group">
+        <button type="button" class="live-tv-tool" id="liveTVFullscreen" onclick="LiveTV.fullscreen()"><i class="fas fa-expand" aria-hidden="true"></i> <span data-live-i18n="fullscreen">ملء الشاشة</span></button>
+        <button type="button" class="live-tv-tool" id="liveTVReload" onclick="LiveTV.reload()"><i class="fas fa-rotate-right" aria-hidden="true"></i> <span data-live-i18n="reload">إعادة التحميل</span></button>
+        <button type="button" class="live-tv-tool stop" id="liveTVStop" onclick="stopRadio()"><i class="fas fa-stop" aria-hidden="true"></i> <span data-live-i18n="stop">إيقاف البث</span></button>
+      </div>
+      <a class="live-tv-source" id="liveTVSource" href="https://aloula.sba.sa/live/quran" target="_blank" rel="noopener noreferrer" data-live-i18n="source">المصدر: منصة الأولى ↗</a>
+    </div>
+    <p class="live-tv-hint" id="liveTVHint">إذا لم يبدأ البث، اضغط ▶ داخل الفيديو. البث يحتاج اتصالًا بالإنترنت.</p>
+  </section>
 
   <div class="mp-controls">
     <button class="gp-ctrl" id="prevBtn" onclick="previousStation()" disabled aria-label="المحطة السابقة" title="السابق"><i class="fas fa-step-backward"></i></button>
@@ -1255,6 +1297,8 @@ let timeInterval = null;
 let sleepTimer = null;
 let wakeLock = null;
 let retryCount = 0;
+let radioRetryTimer = null;
+let radioSessionId = 0;
 const MAX_RETRIES = 2;
 let currentStreamUrl = null;
 let currentStationName = null;
@@ -1659,7 +1703,7 @@ function findStationArtwork(name) {
 
 // ===== التحكم من شاشة القفل / السماعة (Media Session) =====
 function updateMediaSession() {
-  if (!('mediaSession' in navigator)) return;
+  if (!('mediaSession' in navigator) || isLiveTVActive()) return;
   try {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: currentStationName || 'راديو قرآن',
@@ -1677,25 +1721,34 @@ function setupMediaSessionHandlers() {
   if (mediaSessionBound || !('mediaSession' in navigator)) return;
   mediaSessionBound = true;
   try {
-    navigator.mediaSession.setActionHandler('play', () => { globalPlayer.play().catch(()=>{}); });
+    navigator.mediaSession.setActionHandler('play', () => {
+      if (currentStreamUrl && !isLiveTVActive()) globalPlayer.play().catch(()=>{});
+    });
     navigator.mediaSession.setActionHandler('pause', () => { globalPlayer.pause(); });
     navigator.mediaSession.setActionHandler('previoustrack', () => { previousStation(); });
     navigator.mediaSession.setActionHandler('nexttrack', () => { nextStation(); });
   } catch (e) {}
 }
 
-// ===== معالجة أخطاء البث مع إعادة محاولة تلقائية =====
+// ===== معالجة أخطاء البث مع إلغاء المحاولات عند تبديل المشغّل =====
+function isLiveTVActive() { return !!(window.LiveTV && window.LiveTV.isActive()); }
+
 function handlePlayerError() {
+  // أخطاء/وعود قديمة بعد إيقاف الصوت لا يجوز أن تعيد تشغيله فوق التلفزيون.
+  if (isLiveTVActive() || !currentStreamUrl || !globalPlayer.getAttribute('src')) return;
+  if (radioRetryTimer !== null) return;
   bufferingLoader.style.display = 'none';
   playingIndicator.style.display = 'none';
   releaseWakeLock();
-  if (retryCount < MAX_RETRIES && currentStreamUrl) {
+  if (retryCount < MAX_RETRIES) {
     retryCount++;
+    const session = radioSessionId;
+    const retryUrl = currentStreamUrl;
     showToast(`🔄 إعادة محاولة الاتصال (${retryCount}/${MAX_RETRIES})...`);
-    setTimeout(() => {
-      if (currentStreamUrl) {
-        try { globalPlayer.src = currentStreamUrl; globalPlayer.load(); globalPlayer.play().catch(()=>{}); } catch(e){}
-      }
+    radioRetryTimer = setTimeout(() => {
+      radioRetryTimer = null;
+      if (session !== radioSessionId || currentStreamUrl !== retryUrl || isLiveTVActive()) return;
+      try { globalPlayer.src = retryUrl; globalPlayer.load(); globalPlayer.play().catch(()=>{}); } catch(e){}
     }, 1500);
   } else {
     showToast('⚠️ تعذر تشغيل البث. تحقق من الاتصال أو جرّب محطة أخرى.');
@@ -1733,11 +1786,13 @@ function togglePlayPause() {
 
 function setupGlobalPlayerListeners() {
   globalPlayer.addEventListener('waiting', () => {
+    if (!currentStreamUrl || isLiveTVActive()) return;
     playingIndicator.style.display = 'none';
     bufferingLoader.style.display = 'inline-block';
     setPlayerStatus('جارٍ التحميل...');
   });
   globalPlayer.addEventListener('playing', () => {
+    if (!currentStreamUrl || isLiveTVActive()) return;
     bufferingLoader.style.display = 'none';
     playingIndicator.style.display = 'block';
     retryCount = 0;
@@ -1747,11 +1802,13 @@ function setupGlobalPlayerListeners() {
     updateMediaSession();
   });
   globalPlayer.addEventListener('canplay', () => {
+    if (!currentStreamUrl || isLiveTVActive()) return;
     bufferingLoader.style.display = 'none';
     playingIndicator.style.display = 'block';
     retryCount = 0;
   });
   globalPlayer.addEventListener('play', () => {
+    if (!currentStreamUrl || isLiveTVActive()) return;
     playStartTime = Date.now();
     startTimeCounter();
     globalPlayerContainer.classList.add('is-playing');
@@ -1761,13 +1818,14 @@ function setupGlobalPlayerListeners() {
     requestWakeLock();
   });
   globalPlayer.addEventListener('pause', () => {
+    if (!currentStreamUrl || isLiveTVActive()) return;
     playingIndicator.style.display = 'none';
     globalPlayerContainer.classList.remove('is-playing');
     syncPlayButton(false);
     if (globalPlayer.getAttribute('src')) setPlayerStatus('متوقف مؤقتًا');
     updateMediaSession();
   });
-  globalPlayer.addEventListener('ended', () => { releaseWakeLock(); globalPlayerContainer.classList.remove('is-playing'); syncPlayButton(false); });
+  globalPlayer.addEventListener('ended', () => { if (isLiveTVActive()) return; releaseWakeLock(); globalPlayerContainer.classList.remove('is-playing'); syncPlayButton(false); });
   globalPlayer.addEventListener('error', handlePlayerError);
 }
 
@@ -1775,8 +1833,14 @@ function playRadio(url, stationName, elementToActivate) {
   if (!url) { showToast('⚠️ لا يوجد رابط تشغيل لهذه المحطة'); return; }
   if (!navigator.onLine) { showToast('⚠️ لا يوجد اتصال بالإنترنت'); return; }
 
+  if (window.LiveTV) window.LiveTV.stop();
+  const session = ++radioSessionId;
+  clearTimeout(radioRetryTimer);
+  radioRetryTimer = null;
+  currentStreamUrl = null;
   player.pause();
-  player.src = "";
+  player.removeAttribute('src');
+  player.load();
   playingIndicator.style.display = 'none';
   bufferingLoader.style.display = 'inline-block';
   document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
@@ -1814,12 +1878,14 @@ function playRadio(url, stationName, elementToActivate) {
 
   globalPlayer.play()
     .then(() => {
+      if (session !== radioSessionId || isLiveTVActive()) return;
       playStartTime = Date.now();
       startTimeCounter();
       updateMediaSession();
       showToast(`▶️ جاري تشغيل: ${stationName}`);
     })
     .catch(error => {
+      if (session !== radioSessionId || isLiveTVActive() || error.name === 'AbortError') return;
       console.error('Play error:', error);
       handlePlayerError();
     });
@@ -1852,21 +1918,38 @@ function playSelectedRecitation(el) {
   }
 }
 
-function stopRadio() {
-  globalPlayer.pause();
-  globalPlayer.src = "";
+function stopRadio(silent = false) {
+  ++radioSessionId;
   currentStreamUrl = null;
+  currentStationName = null;
+  clearTimeout(radioRetryTimer);
+  radioRetryTimer = null;
+  if (window.LiveTV) window.LiveTV.stop();
+  globalPlayer.pause();
+  globalPlayer.removeAttribute('src');
+  globalPlayer.load();
   hidePlayer();
   globalPlayerContainer.classList.remove('is-playing');
   nowPlayingSpan.textContent = translations[currentLanguage].initialStationText;
+  document.getElementById('globalPlayerStationName').textContent = translations[currentLanguage].initialStationText;
+  if (gpArt) gpArt.src = 'icons/icon-192.png';
   playingIndicator.style.display = 'none';
   bufferingLoader.style.display = 'none';
+  syncPlayButton(false);
+  setPlayerStatus(currentLanguage === 'ar' ? 'جاهز' : 'Ready');
   document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
   stopTimeCounter();
   releaseWakeLock();
   retryCount = 0;
-  if ('mediaSession' in navigator) { try { navigator.mediaSession.playbackState = 'paused'; } catch(e){} }
-  showToast('⏹️ تم إيقاف التشغيل');
+  if ('mediaSession' in navigator) {
+    try {
+      navigator.mediaSession.playbackState = 'none';
+      navigator.mediaSession.metadata = null;
+      ['play', 'pause', 'previoustrack', 'nexttrack'].forEach(action => navigator.mediaSession.setActionHandler(action, null));
+    } catch(e){}
+  }
+  mediaSessionBound = false;
+  if (!silent) showToast('⏹️ تم إيقاف التشغيل');
 }
 
 function toggleGlobalPlayer() { stopRadio(); }
@@ -2016,6 +2099,7 @@ function setLanguage(lang) {
   document.getElementById('section3Title').textContent = translations[lang].section3Title;
   document.getElementById('section4Title').textContent = translations[lang].section4Title;
   document.getElementById('favoritesTitle').textContent = translations[lang].favoritesTitle;
+  if (window.LiveTV) window.LiveTV.setLanguage(lang);
   
   updateHijriDate();
   initializeStations();
@@ -2176,13 +2260,8 @@ if ('serviceWorker' in navigator) {
       }
     } catch (e) {}
 
-    // 2) حذف أي كاش قديم متبقّي
-    try {
-      const keys = await caches.keys();
-      for (const k of keys) {
-        if (k !== 'radio-quran-v5') await caches.delete(k);
-      }
-    } catch (e) {}
+    // 2) حذف الكاش القديم يتم في activate داخل sw.js فقط.
+    // لا نحذف هنا كاش الإصدار الحالي ولا أصول المشغّل الجديدة.
 
     // 3) تسجيل ملف sw.js الحقيقي
     navigator.serviceWorker.register('sw.js')

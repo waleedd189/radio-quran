@@ -1,0 +1,59 @@
+/* البث الرسمي للحرمين — داخل لوحة المشغّل نفسها، بلا مشغّلين متزامنين. */
+.live-tv-picker { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(132, 175, 151, .2); text-align: start; }
+.live-tv-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.live-tv-heading h2 { margin: 0; font-size: .9rem; font-weight: 700; color: #e6efdf; }
+.live-tv-heading h2 i { color: #a9c9b5; margin-inline-end: 5px; }
+.live-tv-provider { font-size: .66rem; color: #a3b5a9; white-space: nowrap; }
+.live-tv-channels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.live-tv-channel { appearance: none; display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; padding: 13px 12px; border: 1px solid #375043; border-radius: 13px; background: linear-gradient(135deg, #23332a, #19231d); color: #f5f1df; font-family: inherit; cursor: pointer; text-align: start; transition: border-color .2s, background .2s, box-shadow .2s; }
+.live-tv-channel:hover { border-color: #91bd9f; background: #2b3b30; }
+.live-tv-channel[aria-pressed="true"] { border-color: #c7ae6c; box-shadow: inset 0 0 0 1px #c7ae6c, 0 2px 15px #c7ae6c14; background: #304332; }
+.live-tv-channel:focus-visible { outline: 3px solid #9fc8ab; outline-offset: 3px; }
+.live-tv-channel img { width: 44px; height: 48px; flex: 0 0 44px; object-fit: contain; }
+.live-tv-channel-copy { display: flex; flex-direction: column; min-width: 0; gap: 2px; }
+.live-tv-channel-copy strong { font-size: .85rem; font-weight: 700; }
+.live-tv-channel-copy small { font-size: .66rem; color: #c6d1c9; line-height: 1.7; }
+.live-tv-tag { display: inline-flex; align-items: center; gap: 5px; font-size: .6rem; color: #f2bbbb; line-height: 1.7; }
+.live-tv-tag::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #eb7777; }
+#globalAudioPlayerContainer.is-tv { max-width: 900px; }
+#globalAudioPlayerContainer.is-tv .gp-eq,
+#globalAudioPlayerContainer.is-tv .mp-controls,
+#globalAudioPlayerContainer.is-tv .gp-volume,
+#globalAudioPlayerContainer.is-tv #timeDisplay { display: none; }
+#globalAudioPlayerContainer.is-tv .gp-art img { animation: none; object-fit: contain; padding: 5px; }
+#globalAudioPlayerContainer.is-tv .gp-status { justify-content: flex-start; }
+#globalAudioPlayerContainer.is-tv #globalPlayerStationName { white-space: normal; line-height: 1.7; }
+#globalAudioPlayerContainer { scroll-margin-top: 65px; }
+#liveTVPanel[hidden] { display: none !important; }
+#liveTVPanel { margin-top: 14px; }
+.live-tv-stage { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px; background: #050806; border: 1px solid rgba(155, 179, 163, .25); }
+.live-tv-stage iframe { position: absolute; inset: 0; display: block; width: 100%; height: 100%; border: 0; background: #050806; }
+.live-tv-stage:fullscreen { width: 100vw; height: 100vh; aspect-ratio: auto; border: 0; border-radius: 0; background: #000; }
+.live-tv-tools { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.live-tv-tools-group { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.live-tv-tool { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; padding: 7px 11px; border: 1px solid #3b4e40; border-radius: 9px; color: #e5ebe5; background: #263229; font-family: inherit; font-size: .73rem; cursor: pointer; text-decoration: none; }
+.live-tv-tool:hover { background: #36473a; border-color: #80977f; }
+.live-tv-tool.stop { color: #ffcbca; border-color: #6c4645; background: #3e2927; }
+.live-tv-source { color: #bacaaf; font-size: .7rem; text-decoration: underline; text-underline-offset: 3px; padding: 8px 0; }
+.live-tv-hint { margin: 11px 0 0; padding: 9px 12px; border-radius: 9px; background: rgba(133, 166, 144, .07); color: #bac9be; font-size: .71rem; line-height: 1.9; text-align: start; }
+.live-tv-hint.is-warning { background: #4a362766; color: #efd4aa; }
+body.light-mode .live-tv-heading h2 { color: #244a2e; }
+body.light-mode .live-tv-provider { color: #486953; }
+body.light-mode .live-tv-hint { color: #3c5b45; }
+body.light-mode .live-tv-hint.is-warning { color: #80521b; background: #fff0d6; }
+body.light-mode .live-tv-source { color: #315b3f; }
+@media (max-width: 480px) {
+  .live-tv-heading { gap: 5px; }
+  .live-tv-heading h2 { font-size: .8rem; }
+  .live-tv-provider { font-size: .59rem; }
+  .live-tv-channel { padding: 10px 8px; gap: 7px; }
+  .live-tv-channel img { width: 31px; height: 39px; flex-basis: 31px; }
+  .live-tv-channel-copy strong { font-size: .74rem; }
+  .live-tv-channel-copy small { font-size: .61rem; }
+  .live-tv-channels { gap: 8px; }
+  .live-tv-tool { font-size: .67rem; padding: 7px 9px; }
+  .live-tv-stage { border-radius: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .live-tv-channel { transition: none; }
+}
