@@ -12,6 +12,7 @@
   let navigation=0,saveTimer=null,noticeTimer=null,flashTimer=null;
   let fingerprint='',pendingDelete=null,started=false,active=true;
   let autoState='pending';
+  let readingPoint=null,geometryStamp='',lastScrollTop=null,layoutPending=false;
 
   function currentPage(){return typeof cur==='number'?cur:1;}
   function currentFolio(){return document.querySelector('.folio[data-p="'+currentPage()+'"]');}
@@ -75,22 +76,46 @@
       ?'تعذّر الحفظ في هذا المتصفح. اسمح بتخزين بيانات الموقع؛ قد لا يبقى الموضع بعد إغلاقه.'
       :'آخر موضع محفوظ محليًا على هذا الجهاز والمتصفح، مستقلًا عن علامات الحفظ الخمس.';
   }
-  function capture(){
-    const fol=currentFolio();
-    if(!active || restoring || readyPage!==currentPage() || !fol || fol.dataset.fitted!=='1') return null;
+  function geometry(fol){
+    return [fol.clientWidth,fol.clientHeight,typeof fs==='number'?fs:1].join(':');
+  }
+  function withCurrentMetadata(pos){
+    if(!pos) return null;
+    const data=typeof pageCache==='object'?pageCache[pos.page]:null;
+    const names=(data?.surahs||[]).map(s=>s.name_arabic).join('، ').slice(0,150);
+    return {...pos,names:names||pos.names||'',savedAt:Date.now()};
+  }
+  function captureGeometry(fol){
+    if(!fol || fol.dataset.fitted!=='1' || Number(fol.dataset.p)!==currentPage()) return null;
     const rect=fol.getBoundingClientRect();
     const lines=[...fol.querySelectorAll('.mline')];
     if(!lines.length) return null;
     const atTop=fol.scrollTop<=1;
     const anchor=atTop?lines[0]:lines.find(line=>line.getBoundingClientRect().bottom>rect.top+1)||lines[lines.length-1];
     const box=anchor.getBoundingClientRect();
-    const data=typeof pageCache==='object'?pageCache[currentPage()]:null;
-    return {
+    return withCurrentMetadata({
       v:1,page:currentPage(),line:Number(anchor.dataset.line),
       offset:atTop?0:+clamp((rect.top-box.top)/Math.max(1,box.height),-2,2).toFixed(5),
       ratio:atTop?0:+(fol.scrollTop/Math.max(1,fol.scrollHeight-fol.clientHeight)).toFixed(5),
-      atTop,names:(data?.surahs||[]).map(s=>s.name_arabic).join('، ').slice(0,150),savedAt:Date.now()
-    };
+      atTop
+    });
+  }
+  function rememberPoint(pos,fol){
+    readingPoint=pos?{...pos}:null;
+    geometryStamp=fol?geometry(fol):'';
+    lastScrollTop=fol?fol.scrollTop:null;
+  }
+  function capture(){
+    const fol=currentFolio();
+    if(!active || restoring || readyPage!==currentPage() || !fol || fol.dataset.fitted!=='1') return null;
+    // Keep the actual reading LINE, not the first visible line after a resize.
+    // When the entire page fits, the browser necessarily clamps scrollTop to 0.
+    const changedByScroll=!layoutPending && geometry(fol)===geometryStamp &&
+      fol.scrollHeight-fol.clientHeight>1 && lastScrollTop!==null && Math.abs(fol.scrollTop-lastScrollTop)>.5;
+    if(!readingPoint || readingPoint.page!==currentPage() || changedByScroll){
+      rememberPoint(captureGeometry(fol),fol);
+    }
+    return withCurrentMetadata(readingPoint);
   }
   function persistLast(pos){
     if(!pos) return false;
@@ -101,7 +126,18 @@
   }
   function flush(){
     clearTimeout(saveTimer);saveTimer=null;
-    return persistLast(capture());
+    let pos=capture();
+    // A valid new folio may have appeared just before pagehide/Home, while the
+    // two-frame restore callback is still queued. Do not lose that last page.
+    // Failed/loading pages have no data-fitted flag and never overwrite progress.
+    if(!pos && active && restoring){
+      const fol=currentFolio();
+      if(fol?.dataset.fitted==='1'){
+        pos=pendingRestore?.pos.page===currentPage()
+          ?withCurrentMetadata(pendingRestore.pos):captureGeometry(fol);
+      }
+    }
+    return persistLast(pos);
   }
   function scheduleSave(){
     clearTimeout(saveTimer);
@@ -127,6 +163,7 @@
   function beforeShow(page,options){
     const retryTarget=restoring && pendingRestore?.pos.page===page?pendingRestore:null;
     flush();navigation++;readyPage=null;restoring=true;
+    readingPoint=null;geometryStamp='';lastScrollTop=null;layoutPending=false;
     const pos=validPosition(options?.restore);
     pendingRestore=pos?.page===page?{pos,reason:options.reason||'bookmark'}:retryTarget;
     updateButton();
@@ -141,6 +178,7 @@
       const target=pendingRestore;pendingRestore=null;
       if(target){restorePosition(target.pos,fol);flashPosition(target.pos,fol);}
       readyPage=currentPage();restoring=false;
+      rememberPoint(target?withCurrentMetadata(target.pos):captureGeometry(fol),fol);
       if(document.visibilityState==='visible'){
         const ok=flush();
         if(ok && target?.reason==='initial') setAutoState('restored');
@@ -149,11 +187,21 @@
       if($('bookmarksOv').classList.contains('show')) renderBookmarks();
     }));
   }
-  function beforeLayout(){return capture();}
+  function beforeLayout(){
+    const pos=capture();
+    layoutPending=true;
+    return pos;
+  }
   function afterLayout(pos){
     if(pos && !restoring && pos.page===currentPage()){
-      restorePosition(pos,currentFolio());scheduleSave();
+      const fol=currentFolio();
+      restorePosition(pos,fol);
+      // Remember the applied scrollTop as well, so its native scroll event is
+      // not mistaken for a user choosing a different reading line.
+      rememberPoint(pos,fol);
     }
+    layoutPending=false;
+    if(pos && !restoring) scheduleSave();
   }
 
   function samePlace(a,b){return !!a && !!b && a.page===b.page && a.line===b.line;}
@@ -327,8 +375,16 @@
       if(event.shiftKey && document.activeElement===first){event.preventDefault();last?.focus();}
       else if(!event.shiftKey && document.activeElement===last){event.preventDefault();first?.focus();}
     });
+    window.addEventListener('resize',()=>{layoutPending=true;});
     $('pages').addEventListener('scroll',event=>{
-      if(event.target===currentFolio() && !restoring) scheduleSave();
+      const fol=currentFolio();
+      if(event.target!==fol || restoring || readyPage!==currentPage()) return;
+      if(layoutPending || (geometryStamp && geometry(fol)!==geometryStamp)){
+        window.relayout?.();return;
+      }
+      // User scrolls update the point immediately; writing is still debounced.
+      // flush() also detects a scroll if navigation precedes its scroll event.
+      capture();scheduleSave();
     },{capture:true,passive:true});
     document.addEventListener('visibilitychange',()=>{
       if(document.visibilityState==='hidden'){flush();releaseWakeLock();}
