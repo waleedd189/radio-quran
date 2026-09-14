@@ -1,7 +1,7 @@
 // Service Worker - راديو قرآن
 // يُسجَّل من ملف حقيقي (sw.js) حتى يعمل الأوفلاين بشكل موثوق على GitHub Pages.
 // ارفع رقم الإصدار عند تعديل صفحات الموقع أو أصوله لإبطال الكاش القديم.
-const CACHE_NAME = 'radio-quran-v37';
+const CACHE_NAME = 'radio-quran-v38';
 
 // ملفات أساسية تُخزَّن مسبقًا عند التثبيت (أيقونات + هوية التطبيق)
 const PRECACHE_URLS = [
@@ -14,6 +14,7 @@ const PRECACHE_URLS = [
   './manifest.json',
   './quran-search.html',
   './mushaf.html',
+  './data/mushaf-layout.js',
   './azkar.html',
   './Al-Arifi.html',
   './sharawy-tafsir.html',

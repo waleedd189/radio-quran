@@ -13,14 +13,14 @@
   --gold:#d8b46a; --line:#41504a; --toolbar:#1b2521;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;height:100%;}
+html,body{margin:0;height:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
 body{
   font-family:'Cairo',Tahoma,sans-serif; color:var(--ink);
   background:var(--bg); overflow:hidden; direction:rtl;
   background-image:radial-gradient(circle at 50% 0%, #2a3a34, var(--bg));
 }
 .app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:820px;margin:0 auto;
-  --base:clamp(19px,5.6vw,29px);--fs:1;}
+  min-width:0;}
 
 /* toolbar */
 .toolbar{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--toolbar);color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.25);}
@@ -29,37 +29,49 @@ body{
 .ttitle{flex:1;text-align:center;font-weight:800;font-size:15px;line-height:1.3;}
 .ttitle small{display:block;font-size:11px;color:#9fb3b0;font-weight:600;}
 
-/* page stage */
-.stage{flex:1;overflow:hidden;position:relative;}
+/* The frame always fits the viewport. Only the measured text size changes. */
+.stage{flex:1;min-height:0;min-width:0;overflow:hidden;position:relative;}
 .pages{position:absolute;inset:0;}
-.folio{position:absolute;inset:0;overflow:auto;padding:8px 10px 6px;
-  transition:transform .32s cubic-bezier(.22,1,.36,1); will-change:transform;}
-/* ورقة المصحف: لوحة تصميم ثابتة تُكبَّر/تُصغَّر كوحدة (CSS zoom) فتبقى الأسطر الرسمية ثابتة */
+.folio{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:6px;
+  scrollbar-width:thin;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;
+  transition:transform .32s cubic-bezier(.22,1,.36,1);will-change:transform;}
 .paper{
-  width:620px;max-width:100%;margin:0 auto;background:var(--page);border:1px solid var(--line);
-  border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.4);
-  padding:18px 20px 10px;position:relative;zoom:1;
+  width:100%;min-width:0;min-height:100%;margin:0 auto;background:var(--page);
+  border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.3);
+  padding:12px 7px 10px;position:relative;display:flex;flex-direction:column;
 }
-.mlines{display:block;direction:rtl;text-align:center;}
-.mline{display:block;direction:rtl;text-align:center;width:100%;white-space:nowrap;
-  line-height:2.1;font-size:34px;}
-.mw{display:inline-block;direction:ltr;unicode-bidi:isolate;font-size:inherit;
-  padding:0 .3px;cursor:default;white-space:nowrap;transition:background .15s;}
-.mw:active{background:rgba(216,180,106,.18);border-radius:6px;}
+.mlines{display:flex;flex:1;flex-direction:column;justify-content:space-around;gap:2px;
+  min-width:0;width:100%;direction:rtl;}
+.mline{display:flex;flex:0 0 auto;align-items:center;justify-content:center;
+  width:100%;min-width:0;white-space:nowrap;direction:rtl;font-size:24px;line-height:1.85;
+  padding:0 4px;}
+.mrow{display:inline-flex;flex:0 0 auto;flex-wrap:nowrap;justify-content:space-between;
+  align-items:center;direction:rtl;white-space:nowrap;column-gap:.02em;width:100%;}
+.mline.is-centered .mrow{width:max-content;justify-content:center;}
+.mw{display:inline-block;flex:0 0 auto;direction:ltr;unicode-bidi:isolate;
+  font-size:inherit;line-height:inherit;padding:0;white-space:nowrap;cursor:default;}
+.mw:active{background:rgba(216,180,106,.18);border-radius:5px;}
 .mw.t-end{color:var(--gold);}
-.mw.t-head{display:block;direction:rtl;width:100%;text-align:center;color:var(--accent);
-  font-size:1.12em;line-height:1.9;margin:2px 0 6px;white-space:nowrap;}
-.mw.t-bism{display:block;direction:rtl;width:100%;text-align:center;margin:0 0 10px;
-  font-size:1.22em;line-height:2;white-space:nowrap;}
-.pfoot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:12px;padding-top:8px;font-size:13px;color:var(--ink2);font-weight:700;}
+.mw.t-head{color:var(--accent);}
+.mline[data-kind="head"]{margin:3px 0;}
+.mline[data-kind="bism"]{margin:2px 0;}
+.folio[data-p="1"] .mlines,.folio[data-p="2"] .mlines{justify-content:center;gap:10px;}
+.folio[data-ready="1"]:not([data-fitted="1"]) .mlines{visibility:hidden;}
+.pfoot{display:flex;flex-wrap:wrap;gap:6px;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--line);margin-top:12px;padding-top:8px;font-size:12px;
+  color:var(--ink2);font-weight:700;}
 .pfoot .juz{color:var(--accent);}
-.page-num{text-align:center;margin-top:6px;font-size:12.5px;color:var(--ink2);font-weight:700;}
+.page-num{text-align:center;margin-top:5px;font-size:12px;color:var(--ink2);font-weight:700;}
+.loading-paper{justify-content:center;align-items:center;}
+.load-message{text-align:center;padding:20px;line-height:1.9;color:var(--ink2);font-size:14px;}
+#hint{flex:0 0 auto;font-size:10px;padding:3px 8px calc(3px + env(safe-area-inset-bottom));}
 
 /* overlay pickers */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(2px);}
 .ov.show{display:flex;}
-.sheet{background:#20271a;color:var(--ink);width:100%;max-width:820px;border-radius:20px 20px 0 0;padding:18px 16px calc(22px + env(safe-area-inset-bottom));max-height:78vh;display:flex;flex-direction:column;animation:up .25s ease;border-top:1px solid var(--line);}
-.sheet-sm{max-height:46vh;}
+.sheet{background:var(--toolbar);color:var(--ink);width:100%;max-width:820px;border-radius:20px 20px 0 0;padding:18px 16px calc(22px + env(safe-area-inset-bottom));max-height:78vh;display:flex;flex-direction:column;animation:up .25s ease;border-top:1px solid var(--line);}
+.sheet-sm{max-height:75vh;max-height:75dvh;overflow-y:auto;}
+.sheet-sm>*{flex-shrink:0;}
 @keyframes up{from{transform:translateY(40px);opacity:.5;}to{transform:translateY(0);opacity:1;}}
 .sheet h3{margin:0 0 14px;color:var(--gold);font-family:'Amiri';font-size:20px;display:flex;justify-content:space-between;align-items:center;}
 .sheet h3 .x{background:none;border:none;font-size:20px;color:#9aa08a;cursor:pointer;}
@@ -76,31 +88,41 @@ body{
 .tip{text-align:center;color:#9aa08a;font-size:12px;padding:6px 10px;}
 .fontctl{display:flex;align-items:center;gap:16px;margin:8px 0 16px;}
 .fbtn{flex:0 0 auto;width:52px;height:52px;border-radius:50%;border:1px solid var(--line);background:#2f3726;color:var(--gold);font-size:18px;cursor:pointer;}
-.fbtn:active{background:var(--gold);color:#141a10;}
+.fbtn:active:not(:disabled){background:var(--gold);color:#141a10;}
+.fbtn:disabled,.tb:disabled{opacity:.35;cursor:not-allowed;}
+.fpreview output{display:block;font-family:inherit;font-size:13px;color:var(--accent);margin-top:4px;}
+.range-ends{display:flex;justify-content:space-between;color:var(--ink2);font-size:11px;margin-top:10px;}
+#fsLimit{min-height:44px;margin:12px 0 0;line-height:1.8;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
 .fpreview{flex:1;text-align:center;overflow:hidden;}
-.fpreview span{font-family:'Amiri',serif;color:var(--ink);font-size:calc(24px * var(--fs,1));transition:font-size .12s;white-space:nowrap;}
+.fpreview span{font-family:'Amiri',serif;color:var(--ink);font-size:24px;transition:font-size .12s;white-space:nowrap;}
 #fsRange{width:100%;accent-color:var(--gold);height:6px;}
 .frow{text-align:center;margin-top:12px;}
 .freset{background:none;border:1px solid var(--line);color:var(--gold);border-radius:20px;padding:9px 20px;font-family:inherit;font-size:13px;cursor:pointer;}
+@media(max-width:420px){
+  .toolbar{gap:6px;padding:8px;}
+  .tb{width:36px;height:36px;font-size:15px;}
+  .ttitle{font-size:13px;min-width:0;}
+  .ttitle small{font-size:10px;}
+}
+@media(prefers-reduced-motion:reduce){.folio,.sheet{transition:none;animation:none;}}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="toolbar">
     <button class="tb" onclick="goHome()" title="الرئيسية"><i class="fas fa-home"></i></button>
-    <button class="tb" onclick="turn(-1)" title="السابق"><i class="fas fa-chevron-right"></i></button>
+    <button class="tb" id="prevPage" onclick="turn(-1)" title="السابق" aria-label="الصفحة السابقة"><i class="fas fa-chevron-right"></i></button>
     <div class="ttitle">المصحف الشريف<small id="tSub">صفحة 1</small></div>
-    <button class="tb" onclick="turn(1)" title="التالي"><i class="fas fa-chevron-left"></i></button>
-    <button class="tb" onclick="openFont()" title="حجم الخط"><i class="fas fa-text-height"></i></button>
+    <button class="tb" id="nextPage" onclick="turn(1)" title="التالي" aria-label="الصفحة التالية"><i class="fas fa-chevron-left"></i></button>
+    <button class="tb" id="fontButton" onclick="openFont()" title="حجم الخط" aria-label="حجم خط المصحف" aria-haspopup="dialog" aria-expanded="false" aria-controls="fontOv"><i class="fas fa-text-height"></i></button>
     <button class="tb" onclick="openSurahs()" title="الفهرس"><i class="fas fa-list"></i></button>
   </div>
 
   <div class="stage">
-    <div class="pages" id="pages">
-      <div class="folio"><div class="paper"><div class="tip" style="margin:auto">جارٍ تحميل المصحف…</div></div></div>
-    </div>
-    <div class="tip" id="hint">اسحب يمينًا/شمالًا للتنقل بين الصفحات • اضغط <i class="fas fa-list"></i> لاختيار السورة</div>
+    <div class="pages" id="pages" aria-label="صفحات المصحف"></div>
   </div>
+  <div class="tip" id="hint">اسحب لليمين للصفحة التالية • حجم الخط مضبوط داخل الإطار</div>
 </div>
 
 <!-- surah sheet -->
@@ -113,162 +135,361 @@ body{
 </div>
 
 <!-- font size sheet -->
-<div class="ov" id="fontOv" onclick="if(event.target===this)closeFont()">
+<div class="ov" id="fontOv" role="dialog" aria-modal="true" aria-labelledby="fontTitle" onclick="if(event.target===this)closeFont()">
   <div class="sheet sheet-sm">
-    <h3>حجم خط المصحف <button class="x" onclick="closeFont()"><i class="fas fa-xmark"></i></button></h3>
+    <h3 id="fontTitle">حجم خط المصحف <button class="x" onclick="closeFont()" aria-label="إغلاق إعدادات الحجم"><i class="fas fa-xmark"></i></button></h3>
     <div class="fontctl">
-      <button class="fbtn" onclick="setFs(fs-0.1)"><i class="fas fa-minus"></i></button>
-      <div class="fpreview"><span id="fsPreview">بِسْمِ اللَّهِ</span></div>
-      <button class="fbtn" onclick="setFs(fs+0.1)"><i class="fas fa-plus"></i></button>
+      <button class="fbtn" id="fsMinus" onclick="setFs(fs-FS_STEP)" aria-label="تصغير الخط"><i class="fas fa-minus"></i></button>
+      <div class="fpreview"><span id="fsPreview">بِسْمِ اللَّهِ</span><output id="fsValue" for="fsRange">١٠٠٪</output></div>
+      <button class="fbtn" id="fsPlus" onclick="setFs(fs+FS_STEP)" aria-label="تكبير الخط"><i class="fas fa-plus"></i></button>
     </div>
-    <input type="range" id="fsRange" min="0.8" max="2.4" step="0.05" value="1" oninput="setFs(parseFloat(this.value))">
-    <div class="frow"><button class="freset" onclick="setFs(1)">استعادة الحجم الافتراضي</button></div>
-    <div class="tip">التكبير يحافظ على شكل أسطر المصحف الرسمية كما هي؛ تتحكّم بحجم الصفحة فقط.</div>
+    <label class="sr-only" for="fsRange">حجم الخط بالنسبة لأكبر حجم يناسب عرض الصفحة</label>
+    <input type="range" id="fsRange" min="0.7" max="1" step="0.05" value="1" aria-describedby="fsLimit" oninput="setFs(this.value)">
+    <div class="range-ends"><span>أصغر</span><span>أكبر حجم مناسب للشاشة</span></div>
+    <p class="tip" id="fsLimit" role="status"></p>
+    <div class="frow"><button class="freset" onclick="setFs(1)">استعادة الحجم المناسب للشاشة</button></div>
   </div>
 </div>
 
+<script src="data/mushaf-layout.js"></script>
 <script>
 const CDN="https://cdn.jsdelivr.net/gh/MohamadHajjRabee/quran-qcf4@main";
 const TOTAL=604;
-const fontLoaded={};
-// chapter metadata (snapshot for the index; also used offline-ish)
+const fontLoaded=Object.create(null);
+const loadedFaces=Object.create(null);
+const fontUse=Object.create(null);
+let fontClock=0;
+const pageCache=Object.create(null);
+const pageRequests=Object.create(null);
 let CHAPTERS=[];
-const pageCache={};
 let cur=1;
-const juzOf=(p)=>{ const j=Math.floor((p-1)/20)+1; return j>30?30:j; };
+let viewRequest=0;
+let layoutRequest=0;
+const juzOf=p=>Math.min(30,Math.floor((p-1)/20)+1);
 
+// Await the actual QCF faces before rendering or measuring their private glyphs.
+// Cache promises, not booleans: another page may request a face still loading.
 function ensureFont(name){
-  if(!name||fontLoaded[name])return Promise.resolve();
-  fontLoaded[name]=true;
-  const file=(name==='QCF4_QBSML')?'QCF4_QBSML.woff2':name+'_W.woff2';
-  const st=document.createElement('style');
-  st.textContent=`@font-face{font-family:'${name}';src:url('${CDN}/fonts-woff2/${file}') format('woff2');font-display:block;}`;
-  document.head.appendChild(st);
-  try{ return document.fonts.load('32px "'+name+'"').then(()=>document.fonts.load('32px "QCF4_QBSML"')).catch(()=>{}); }
-  catch(e){ return Promise.resolve(); }
+  if(!name || !/^QCF4_[A-Za-z0-9_]+$/.test(name)) return Promise.reject(new Error('Invalid font'));
+  fontUse[name]=++fontClock;
+  if(fontLoaded[name]) return fontLoaded[name];
+  const file=name==='QCF4_QBSML'?'QCF4_QBSML.woff2':name+'_W.woff2';
+  const face=new FontFace(name,`url("${CDN}/fonts-woff2/${file}")`,{display:'block'});
+  fontLoaded[name]=face.load().then(loaded=>{
+    document.fonts.add(loaded);
+    loadedFaces[name]=loaded;
+    return loaded;
+  }).catch(error=>{
+    delete fontLoaded[name];
+    throw error;
+  });
+  return fontLoaded[name];
 }
 async function loadPage(n){
-  if(pageCache[n])return pageCache[n];
+  if(pageCache[n]) return pageCache[n];
+  if(pageRequests[n]) return pageRequests[n];
   const nn=String(n).padStart(3,'0');
-  const res=await fetch(`${CDN}/pages/${nn}.json`);
-  const data=await res.json();
-  pageCache[n]=data;
-  return data;
+  pageRequests[n]=(async()=>{
+    const res=await fetch(`${CDN}/pages/${nn}.json`);
+    if(!res.ok) throw new Error('Page unavailable');
+    const data=await res.json();
+    if(data.page!==n || !Array.isArray(data.lines) || !data.lines.length) throw new Error('Invalid page');
+    pageCache[n]=data;
+    return data;
+  })().finally(()=>{delete pageRequests[n];});
+  return pageRequests[n];
 }
-function surahNameFont(){ return 'QCF4_QBSML'; }
 function fontsOf(data){
-  const s=new Set([data.font,'QCF4_QBSML']);
-  (data.lines||[]).forEach(l=>(l.words||[]).forEach(w=>{ if(w.font) s.add(w.font); }));
-  return [...s];
+  const names=new Set([data.font,'QCF4_QBSML']);
+  data.lines.forEach(line=>line.words.forEach(word=>{if(word.font) names.add(word.font);}));
+  return [...names].filter(Boolean);
 }
-
-function renderFolio(page){
-  const fol=document.createElement('div'); fol.className='folio';
-  let h='<div class="paper"><div class="mlines">';
-  (page.lines||[]).forEach(line=>{
-    const words=line.words||[];
-    h+='<div class="mline">';
-    words.forEach(w=>{
-      const f=w.font||page.font;
-      let cls='mw';
-      if(w.type==='surah_header'){ cls+=' t-head'; }
-      else if(w.type==='bismillah'){ cls+=' t-bism'; }
-      else if(w.type==='end'){ cls+=' t-end'; }
-      const vk=w.verse_key?` data-vk="${w.verse_key}"`:'';
-      h+=`<span class="${cls}" style="font-family:'${f}','Amiri',serif"${vk}>${w.char}</span>`;
-    });
-    h+='</div>';
+// A long reading session must not retain all 48 large Quran font faces.
+// Current + adjacent pages need at most four faces, including headings/basmalah.
+function pruneFonts(){
+  const needed=new Set(['QCF4_QBSML','QCF4_Hafs_01']);
+  [cur-1,cur,cur+1].forEach(n=>{if(pageCache[n]) fontsOf(pageCache[n]).forEach(name=>needed.add(name));});
+  const names=Object.keys(loadedFaces).sort((a,b)=>(fontUse[a]||0)-(fontUse[b]||0));
+  let count=names.length;
+  names.forEach(name=>{
+    if(count<=4 || needed.has(name)) return;
+    document.fonts.delete(loadedFaces[name]);
+    delete loadedFaces[name];
+    delete fontLoaded[name];
+    delete fontUse[name];
+    count--;
   });
-  const sNames=(page.surahs||[]).map(s=>s.name_arabic).join('، ');
-  h+='</div><div class="pfoot"><span class="juz">الجزء '+juzOf(page.page)+'</span><span>'+sNames+'</span></div>';
-  h+='<div class="page-num">صفحة '+page.page+'</div></div>';
-  fol.innerHTML=h;
+}
+function renderFolio(page){
+  const fol=document.createElement('div');
+  fol.className='folio';
+  fol.dataset.p=page.page;
+  const paper=document.createElement('div');
+  paper.className='paper';
+  const lines=document.createElement('div');
+  lines.className='mlines';
+  const centeredMask=typeof MUSHAF_CENTERED_LINES==='undefined'?0:(MUSHAF_CENTERED_LINES[page.page]||0);
+  page.lines.forEach(line=>{
+    const words=line.words||[];
+    const el=document.createElement('div');
+    el.className='mline';
+    el.dataset.line=line.line;
+    const kind=words.some(w=>w.type==='surah_header')?'head':words.some(w=>w.type==='bismillah')?'bism':'text';
+    el.dataset.kind=kind;
+    const centered=kind!=='text' || page.page<=2 || Boolean(centeredMask & (1<<(line.line-1)));
+    el.classList.toggle('is-centered',centered);
+    const row=document.createElement('div');
+    row.className='mrow';
+    words.forEach(w=>{
+      const span=document.createElement('span');
+      span.className='mw';
+      if(w.type==='surah_header') span.classList.add('t-head');
+      else if(w.type==='bismillah') span.classList.add('t-bism');
+      else if(w.type==='end') span.classList.add('t-end');
+      span.style.fontFamily=`"${w.font||page.font}", "Amiri", serif`;
+      if(w.verse_key) span.dataset.vk=w.verse_key;
+      span.textContent=w.char; // Keep every source glyph and its order unchanged.
+      if(w.text) span.title=w.text;
+      row.appendChild(span);
+    });
+    el.appendChild(row);
+    lines.appendChild(el);
+  });
+  paper.appendChild(lines);
+  const footer=document.createElement('div');
+  footer.className='pfoot';
+  const juz=document.createElement('span');
+  juz.className='juz';
+  juz.textContent='الجزء '+juzOf(page.page);
+  const names=document.createElement('span');
+  names.textContent=(page.surahs||[]).map(s=>s.name_arabic).join('، ');
+  footer.append(juz,names);
+  const number=document.createElement('div');
+  number.className='page-num';
+  number.textContent='صفحة '+page.page;
+  paper.append(footer,number);
+  fol.appendChild(paper);
   return fol;
 }
 
-/* ===== حجم الخط بمقياس ثابت (زي التطبيق): اللوحة تُرسم بعرض ثابت وتُكبَّر كوحدة ===== */
-const DESIGN_W=620, DESIGN_INNER=DESIGN_W-44, BASE_FS=34;
-let fs=parseFloat(localStorage.getItem('mushafFs')||'1');
-
+/* Bounded text sizing. 100% = the largest size that fits this paper's real
+   inner width. The PAPER is never zoomed, stretched, or enlarged off-screen. */
+const FS_MIN=0.70, FS_MAX=1, FS_STEP=0.05;
+const MEASURE_FS=40, WORD_GAP_EM=0.02, INK_GUTTER=3;
+const measuringContext=document.createElement('canvas').getContext('2d');
+function clampFs(value){
+  value=Number(value);
+  return Math.max(FS_MIN,Math.min(FS_MAX,Number.isFinite(value)?value:FS_MAX));
+}
+let fs=FS_MAX;
+try{fs=clampFs(localStorage.getItem('mushafFs')||FS_MAX);}catch(e){}
 function applyFs(){
-  const r=document.getElementById('fsRange'); if(r)r.value=fs;
-  const p=document.getElementById('fsPreview'); if(p)p.style.fontSize=(24*fs)+'px';
+  document.getElementById('fsRange').value=fs;
+  const percent=Math.round(fs*100).toLocaleString('ar-EG')+'٪';
+  document.getElementById('fsValue').textContent=percent;
+  document.getElementById('fsRange').setAttribute('aria-valuetext',percent+' من أكبر حجم مناسب لعرض الصفحة');
+  document.getElementById('fsPreview').style.fontSize=(24*fs)+'px';
+  document.getElementById('fsMinus').disabled=fs<=FS_MIN+0.001;
+  document.getElementById('fsPlus').disabled=fs>=FS_MAX-0.001;
+  document.getElementById('fsLimit').textContent=fs>=FS_MAX-0.001
+    ?'وصلت لأكبر حجم يناسب عرض الصفحة. زر الزيادة متوقف حتى لا تخرج أي كلمة من الإطار.'
+    :'يمكنك زيادة الحجم حتى ١٠٠٪. تظل أسطر المصحف ثابتة، من غير قطع أو لفّ للكلمات.';
 }
-function setFs(v){ fs=Math.max(0.8,Math.min(2.4,Math.round(v*100)/100)); localStorage.setItem('mushafFs',fs); applyFs(); layout(); }
-function openFont(){ applyFs(); document.getElementById('fontOv').classList.add('show'); }
-function closeFont(){ document.getElementById('fontOv').classList.remove('show'); }
-
-/* يضبط حجم الخط داخل اللوحة بحيث يملا عرضها مع بقاء كل سطر سطرًا واحدًا */
-function fitPage(fol){
-  const paper=fol.querySelector('.paper'); const ml=fol.querySelector('.mlines');
-  if(!paper||!ml) return;
-  paper.style.zoom='1';
-  paper.querySelectorAll('.mline').forEach(l=>l.style.fontSize=BASE_FS+'px');
-  let widest=0;
-  ml.querySelectorAll('.mline').forEach(l=>{ widest=Math.max(widest,l.scrollWidth); });
-  let size=BASE_FS*(DESIGN_INNER/Math.max(widest,1))*0.985;
-  size=Math.max(20,Math.min(46,size));
-  paper.querySelectorAll('.mline').forEach(l=>l.style.fontSize=size.toFixed(1)+'px');
-}
-/* يكبّر اللوحة كوحدة لتناسب الشاشة × معامل التكبير المختار */
-function layout(){
-  const stage=document.querySelector('.stage'); if(!stage)return;
-  const avail=stage.clientWidth-16;
-  const zoom=Math.max(0.4,Math.min(3,(avail/DESIGN_W)*fs));
-  document.querySelectorAll('.folio').forEach(fol=>{
-    fitPage(fol);
-    const paper=fol.querySelector('.paper'); if(paper) paper.style.zoom=zoom;
-  });
-}
-function relayout(){ requestAnimationFrame(layout); }
-
-function position(el,page){
-  const d=page-cur;                    // +1 = صفحة تالية (تظهر شمالًا)
-  el.style.transform=`translateX(${(-d*100)}%)`;
-  el.style.visibility=Math.abs(d)>1?'hidden':'visible';
-  el.style.zIndex= d===0?2:1;
-}
-async function show(n){
-  n=Math.max(1,Math.min(TOTAL,n));
-  cur=n;
-  const stage=document.getElementById('pages');
-  const set=[n-1,n,n+1].filter(x=>x>=1&&x<=TOTAL);
-  const want={};
-  for(const x of set){
-    let el=stage.querySelector('.folio[data-p="'+x+'"]');
-    if(!el){
-      el=document.createElement('div'); el.className='folio'; el.dataset.p=x; el.dataset.ready='';
-      el.innerHTML='<div class="paper" style="align-items:center;justify-content:center;color:#9a9078"><i class="fas fa-spinner fa-spin"></i></div>';
-      stage.appendChild(el);
-    }
-    want[x]=el; position(el,x);
-  }
-  [...stage.children].forEach(c=>{ if(!want[c.dataset.p]) c.remove(); });
-  document.getElementById('tSub').textContent='صفحة '+n+' • الجزء '+juzOf(n);
-  for(const x of set){
-    const data=await loadPage(x);
-    await Promise.all(fontsOf(data).map(f=>ensureFont(f)));
-    const old=stage.querySelector('.folio[data-p="'+x+'"]');
-    if(old && !old.dataset.ready){ const r=renderReady(x,data); old.replaceWith(r); position(r,x); }
-  }
+function setFs(value){
+  fs=clampFs(Math.round(Number(value)*100)/100);
+  try{localStorage.setItem('mushafFs',String(fs));}catch(e){}
+  applyFs();
   relayout();
-  document.fonts.ready.then(relayout);
+}
+function openFont(){
+  applyFs();
+  document.getElementById('fontOv').classList.add('show');
+  document.getElementById('fontButton').setAttribute('aria-expanded','true');
+  document.getElementById('fsRange').focus({preventScroll:true});
+}
+function closeFont(){
+  const overlay=document.getElementById('fontOv');
+  if(!overlay.classList.contains('show')) return;
+  overlay.classList.remove('show');
+  document.getElementById('fontButton').setAttribute('aria-expanded','false');
+  document.getElementById('fontButton').focus({preventScroll:true});
+}
+
+function measureFolio(fol){
+  if(fol._lineMetrics) return fol._lineMetrics;
+  const lines=[...fol.querySelectorAll('.mline')];
+  lines.forEach(line=>{line.style.fontSize=MEASURE_FS+'px';});
+  const metrics=lines.map(line=>{
+    const words=[...line.querySelectorAll('.mw')];
+    let advance=0,inkHeight=0;
+    const glyphs=words.map(word=>{
+      const width=word.getBoundingClientRect().width;
+      advance+=width;
+      if(!measuringContext) return {width,left:0,right:width};
+      measuringContext.font=`${MEASURE_FS}px ${word.style.fontFamily}`;
+      measuringContext.direction='ltr';
+      measuringContext.textAlign='left';
+      const glyph=measuringContext.measureText(word.textContent);
+      inkHeight=Math.max(inkHeight,(glyph.actualBoundingBoxAscent||0)+(glyph.actualBoundingBoxDescent||0));
+      return {width,left:glyph.actualBoundingBoxLeft||0,
+        right:Number.isFinite(glyph.actualBoundingBoxRight)?glyph.actualBoundingBoxRight:width};
+    });
+    // Measure the OUTER ink of the complete RTL row, not the maximum overhang
+    // of an internal word (which would unnecessarily make the whole page tiny).
+    const naturalWidth=advance+Math.max(0,words.length-1)*WORD_GAP_EM*MEASURE_FS;
+    let rightEdge=naturalWidth,minInk=0,maxInk=naturalWidth;
+    glyphs.forEach(glyph=>{
+      const leftEdge=rightEdge-glyph.width;
+      minInk=Math.min(minInk,leftEdge-glyph.left);
+      maxInk=Math.max(maxInk,leftEdge+glyph.right);
+      rightEdge=leftEdge-WORD_GAP_EM*MEASURE_FS;
+    });
+    const leftInk=Math.max(0,-minInk),rightInk=Math.max(0,maxInk-naturalWidth);
+    return {
+      el:line,kind:line.dataset.kind,
+      advance:advance/MEASURE_FS+Math.max(0,words.length-1)*WORD_GAP_EM,
+      leftInk:Math.max(0,leftInk)/MEASURE_FS,
+      rightInk:Math.max(0,rightInk)/MEASURE_FS,
+      lineHeight:Math.max(1.85,inkHeight/MEASURE_FS+0.22)
+    };
+  });
+  fol._lineMetrics=metrics;
+  return metrics;
+}
+function fitPage(fol){
+  if(fol.dataset.ready!=='1') return;
+  const box=fol.querySelector('.mlines');
+  const metrics=measureFolio(fol);
+  if(!box || !metrics.length) return;
+  // A second pass also covers browsers without stable scrollbar gutters.
+  for(let pass=0;pass<2;pass++){
+    const width=box.clientWidth;
+    if(width<=0) return;
+    const usable=Math.max(1,width-INK_GUTTER*2-1);
+    const maximum=m=>usable/Math.max(0.01,m.advance+m.leftInk+m.rightInk);
+    const ordinary=metrics.filter(m=>m.kind==='text');
+    const bodyMax=Math.min(...(ordinary.length?ordinary:metrics).map(maximum));
+    metrics.forEach(m=>{
+      // Surah headings and the wide single-glyph basmalah have their own fonts.
+      const desired=m.kind==='head'?bodyMax*1.15:m.kind==='bism'?bodyMax*1.05:bodyMax;
+      const size=Math.floor(Math.min(desired,maximum(m))*fs*100)/100;
+      m.el.style.fontSize=size+'px';
+      m.el.style.lineHeight=String(m.lineHeight);
+      m.el.style.paddingLeft=(INK_GUTTER+m.leftInk*size)+'px';
+      m.el.style.paddingRight=(INK_GUTTER+m.rightInk*size)+'px';
+    });
+    if(box.clientWidth===width) break;
+  }
+  fol.dataset.fitted='1';
+}
+function layout(){
+  layoutRequest=0;
+  document.querySelectorAll('.folio[data-ready="1"]').forEach(fitPage);
+}
+function relayout(){
+  if(!layoutRequest) layoutRequest=requestAnimationFrame(layout);
 }
 window.addEventListener('resize',relayout);
-function renderReady(n,data){
-  const fol=renderFolio(data); fol.dataset.p=n; fol.dataset.ready='1'; return fol;
-}
-async function turn(dir){ show(cur+dir); }
+if('ResizeObserver' in window) new ResizeObserver(relayout).observe(document.querySelector('.stage'));
 
-/* swipes — اتجاه المصحف العربي: السحب لليمين = التالي */
+function position(el,page){
+  const distance=page-cur;
+  el.style.transform=`translateX(${-distance*100}%)`;
+  el.style.visibility=Math.abs(distance)>1?'hidden':'visible';
+  el.style.zIndex=distance===0?2:1;
+  el.setAttribute('aria-hidden',distance===0?'false':'true');
+  el.inert=distance!==0;
+}
+function loadingFolio(n){
+  const el=document.createElement('div');
+  el.className='folio';
+  el.dataset.p=n;
+  el.innerHTML='<div class="paper loading-paper"><div class="load-message" role="status"><i class="fas fa-spinner fa-spin" aria-hidden="true"></i><p>جارٍ تحميل المصحف…</p></div></div>';
+  return el;
+}
+function pageError(el,n){
+  el.replaceChildren();
+  const paper=document.createElement('div');
+  paper.className='paper loading-paper';
+  const message=document.createElement('div');
+  message.className='load-message';
+  const p=document.createElement('p');
+  p.textContent='تعذّر تحميل الصفحة أو خطها. تحقّق من الاتصال بالإنترنت.';
+  const retry=document.createElement('button');
+  retry.className='freset';
+  retry.type='button';
+  retry.textContent='إعادة المحاولة';
+  retry.onclick=()=>show(n);
+  message.append(p,retry);
+  paper.appendChild(message);
+  el.appendChild(paper);
+}
+async function show(n){
+  n=Number(n);
+  n=Number.isFinite(n)?Math.max(1,Math.min(TOTAL,Math.round(n))):1;
+  cur=n;
+  const ticket=++viewRequest;
+  const stage=document.getElementById('pages');
+  const wanted=[n,n-1,n+1].filter(x=>x>=1&&x<=TOTAL);
+  wanted.forEach(x=>{
+    let el=stage.querySelector('.folio[data-p="'+x+'"]');
+    if(!el){el=loadingFolio(x);stage.appendChild(el);}
+    position(el,x);
+  });
+  [...stage.children].forEach(el=>{if(!wanted.includes(Number(el.dataset.p))) el.remove();});
+  document.getElementById('tSub').textContent='صفحة '+n+' • الجزء '+juzOf(n);
+  document.getElementById('prevPage').disabled=n===1;
+  document.getElementById('nextPage').disabled=n===TOTAL;
+  await Promise.all(wanted.map(async x=>{
+    try{
+      const data=await loadPage(x);
+      if(ticket!==viewRequest) return;
+      await Promise.all(fontsOf(data).map(ensureFont));
+      if(ticket!==viewRequest) return;
+      const old=stage.querySelector('.folio[data-p="'+x+'"]');
+      if(old && old.dataset.ready!=='1'){
+        const fol=renderReady(x,data);
+        old.replaceWith(fol);
+        position(fol,x);
+        fitPage(fol);
+      }
+    }catch(error){
+      if(ticket!==viewRequest) return;
+      const el=stage.querySelector('.folio[data-p="'+x+'"]');
+      if(el && el.dataset.ready!=='1') pageError(el,x);
+    }finally{pruneFonts();}
+  }));
+  if(ticket===viewRequest) relayout();
+}
+function renderReady(n,data){
+  const fol=renderFolio(data);
+  fol.dataset.p=n;
+  fol.dataset.ready='1';
+  return fol;
+}
+function turn(direction){return show(cur+direction);}
+
+/* Horizontal gesture = page turn; vertical scrolling and pinch gestures do not
+   turn pages. Arabic mushaf: a swipe to the RIGHT goes to the NEXT page. */
 (function(){
-  const s=document.querySelector('.stage'); let sx=null;
-  s.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
-  s.addEventListener('touchend',e=>{ if(sx==null)return; const dx=e.changedTouches[0].clientX-sx;
-    if(Math.abs(dx)>55){ turn(dx>0?1:-1); } sx=null; },{passive:true});
-  let msx=null;
-  s.addEventListener('mousedown',e=>{msx=e.clientX;});
-  s.addEventListener('mouseup',e=>{ if(msx==null)return; const dx=e.clientX-msx; if(Math.abs(dx)>70)turn(dx>0?1:-1); msx=null;});
+  const stage=document.querySelector('.stage');
+  const pointers=new Set();
+  let start=null;
+  stage.addEventListener('pointerdown',event=>{
+    if(event.button!==0 || event.target.closest('button,a,input')) return;
+    pointers.add(event.pointerId);
+    if(pointers.size!==1){start=null;return;}
+    start={x:event.clientX,y:event.clientY,page:cur};
+    try{stage.setPointerCapture(event.pointerId);}catch(e){}
+  });
+  stage.addEventListener('pointerup',event=>{
+    pointers.delete(event.pointerId);
+    if(!start) return;
+    const dx=event.clientX-start.x,dy=event.clientY-start.y;
+    if(start.page===cur && Math.abs(dx)>55 && Math.abs(dx)>Math.abs(dy)*1.4) turn(dx>0?1:-1);
+    start=null;
+  });
+  stage.addEventListener('pointercancel',event=>{pointers.delete(event.pointerId);start=null;});
 })();
 
 /* surah index */
@@ -299,10 +520,19 @@ function jumpSurah(id){
   if(c) show(c.pages[0]);
 }
 function goHome(){ location.href='index.html'; }
-document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight')turn(1); if(e.key==='ArrowLeft')turn(-1); });
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeFont();closeSurahs();return;}
+  if(document.querySelector('.ov.show') || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+  if(e.key==='ArrowRight'){e.preventDefault();turn(1);}
+  if(e.key==='ArrowLeft'){e.preventDefault();turn(-1);}
+});
 
-applyFs();
+// Normalize legacy sizes such as 2.4 so existing users are fixed on first load.
+setFs(fs);
 show(1);
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
 </script>
 </body>
 </html>
