@@ -175,6 +175,9 @@
     // Layout/loaded glyphs must settle before the saved line/scroll offset is used.
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
       if(ticket!==navigation || !active || !fol.isConnected || Number(fol.dataset.p)!==currentPage()) return;
+      // BFCache can replay a queued callback alongside pageshow's recovery.
+      // Apply the saved target only once for this navigation.
+      if(!restoring && readyPage===currentPage()) return;
       const target=pendingRestore;pendingRestore=null;
       if(target){restorePosition(target.pos,fol);flashPosition(target.pos,fol);}
       readyPage=currentPage();restoring=false;
