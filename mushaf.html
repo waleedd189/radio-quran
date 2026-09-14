@@ -107,22 +107,32 @@ body{
 }
 @media(prefers-reduced-motion:reduce){.folio,.sheet{transition:none;animation:none;}}
 </style>
+<link rel="stylesheet" href="mushaf-reading.css">
 </head>
 <body>
 <div class="app">
   <div class="toolbar">
     <button class="tb" onclick="goHome()" title="الرئيسية"><i class="fas fa-home"></i></button>
     <button class="tb" id="prevPage" onclick="turn(-1)" title="السابق" aria-label="الصفحة السابقة"><i class="fas fa-chevron-right"></i></button>
-    <div class="ttitle">المصحف الشريف<small id="tSub">صفحة 1</small></div>
+    <div class="ttitle">المصحف الشريف<small id="tSub">جارٍ تحميل المصحف…</small></div>
     <button class="tb" id="nextPage" onclick="turn(1)" title="التالي" aria-label="الصفحة التالية"><i class="fas fa-chevron-left"></i></button>
     <button class="tb" id="fontButton" onclick="openFont()" title="حجم الخط" aria-label="حجم خط المصحف" aria-haspopup="dialog" aria-expanded="false" aria-controls="fontOv"><i class="fas fa-text-height"></i></button>
     <button class="tb" onclick="openSurahs()" title="الفهرس"><i class="fas fa-list"></i></button>
+  </div>
+  <div class="reading-tools" aria-label="الحفظ وإضاءة الشاشة">
+    <button type="button" class="reading-tool" id="bookmarkButton" disabled aria-haspopup="dialog" aria-expanded="false" aria-controls="bookmarksOv" aria-label="علامات الحفظ">
+      <i class="far fa-bookmark" id="bookmarkButtonIcon" aria-hidden="true"></i>
+      <span>علامات الحفظ</span><bdi class="bookmark-count" id="bookmarkCount" dir="ltr">٠ / ٥</bdi>
+    </button>
+    <button type="button" class="reading-tool" id="readerWakeButton" disabled data-wake-state="requesting" aria-label="إبقاء الشاشة مضيئة">
+      <i class="fas fa-lightbulb" aria-hidden="true"></i><span id="readerWakeText">إبقاء الشاشة مضيئة</span>
+    </button>
   </div>
 
   <div class="stage">
     <div class="pages" id="pages" aria-label="صفحات المصحف"></div>
   </div>
-  <div class="tip" id="hint">اسحب لليمين للصفحة التالية • حجم الخط مضبوط داخل الإطار</div>
+  <div class="tip" id="hint"><span id="readingSaveStatus" role="status" aria-live="polite">حفظ الموضع تلقائيًا</span><span class="hint-dot" aria-hidden="true">•</span><span>اسحب لليمين للصفحة التالية</span></div>
 </div>
 
 <!-- surah sheet -->
@@ -151,7 +161,21 @@ body{
   </div>
 </div>
 
+<!-- Five manual places, separate from the automatic last reading position. -->
+<div class="ov" id="bookmarksOv" role="dialog" aria-modal="true" aria-labelledby="bookmarksTitle" aria-describedby="bookmarkLimit">
+  <div class="sheet bookmarks-sheet">
+    <h3 id="bookmarksTitle"><span class="bookmarks-heading">علامات الحفظ <bdi class="bookmark-count" id="bookmarkTotal" dir="ltr">٠ / ٥</bdi></span><button type="button" class="x" id="bookmarksClose" aria-label="إغلاق علامات الحفظ"><i class="fas fa-xmark" aria-hidden="true"></i></button></h3>
+    <p class="bookmark-current" id="bookmarkCurrent"></p>
+    <button type="button" class="bookmark-save" id="saveBookmarkButton"><i class="fas fa-bookmark" aria-hidden="true"></i><span id="saveBookmarkLabel">حفظ مكاني الحالي</span></button>
+    <p class="bookmark-limit" id="bookmarkLimit" role="status"></p>
+    <ol class="bookmark-list" id="bookmarkList" aria-label="أماكن القراءة المحفوظة"></ol>
+    <p class="bookmark-local">تُحفظ العلامات وآخر موضع على هذا الجهاز والمتصفح. مسح بيانات الموقع يمسحها.</p>
+  </div>
+</div>
+<div class="mushaf-notice" id="mushafNotice" role="status" aria-live="polite" aria-atomic="true"></div>
+
 <script src="data/mushaf-layout.js"></script>
+<script src="mushaf-reading.js"></script>
 <script>
 const CDN="https://cdn.jsdelivr.net/gh/MohamadHajjRabee/quran-qcf4@main";
 const TOTAL=604;
@@ -384,7 +408,9 @@ function fitPage(fol){
 }
 function layout(){
   layoutRequest=0;
+  const anchor=window.MushafReading?.beforeLayout();
   document.querySelectorAll('.folio[data-ready="1"]').forEach(fitPage);
+  window.MushafReading?.afterLayout(anchor);
 }
 function relayout(){
   if(!layoutRequest) layoutRequest=requestAnimationFrame(layout);
@@ -424,9 +450,10 @@ function pageError(el,n){
   paper.appendChild(message);
   el.appendChild(paper);
 }
-async function show(n){
+async function show(n,options={}){
   n=Number(n);
   n=Number.isFinite(n)?Math.max(1,Math.min(TOTAL,Math.round(n))):1;
+  window.MushafReading?.beforeShow(n,options);
   cur=n;
   const ticket=++viewRequest;
   const stage=document.getElementById('pages');
@@ -452,6 +479,10 @@ async function show(n){
         old.replaceWith(fol);
         position(fol,x);
         fitPage(fol);
+      }
+      if(x===cur){
+        const selected=stage.querySelector('.folio[data-p="'+x+'"]');
+        if(selected?.dataset.fitted==='1') window.MushafReading?.onPageReady(selected);
       }
     }catch(error){
       if(ticket!==viewRequest) return;
@@ -519,9 +550,9 @@ function jumpSurah(id){
   closeSurahs();
   if(c) show(c.pages[0]);
 }
-function goHome(){ location.href='index.html'; }
+function goHome(){ window.MushafReading?.flush();window.MushafReading?.releaseWakeLock();location.href='index.html'; }
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeFont();closeSurahs();return;}
+  if(e.key==='Escape'){closeFont();closeSurahs();window.MushafReading?.closeBookmarks();return;}
   if(document.querySelector('.ov.show') || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
   if(e.key==='ArrowRight'){e.preventDefault();turn(1);}
   if(e.key==='ArrowLeft'){e.preventDefault();turn(-1);}
@@ -529,7 +560,8 @@ document.addEventListener('keydown',e=>{
 
 // Normalize legacy sizes such as 2.4 so existing users are fixed on first load.
 setFs(fs);
-show(1);
+const savedReadingPosition=window.MushafReading?.start();
+show(savedReadingPosition?.page||1,{restore:savedReadingPosition,reason:'initial'});
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 }
