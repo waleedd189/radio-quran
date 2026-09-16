@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>دروس الشيخ راغب السرجاني</title>
   <!-- الخطوط والأيقونات -->
@@ -505,6 +506,27 @@
         padding: 25px 20px;
       }
     }
+    /* Visible official video player, created only for the selected lesson. */
+    #youtubePanel[hidden],#audioPlayer[hidden]{display:none!important;}
+    .player-container{scroll-margin-top:18px;}
+    #lessonsContainer8{scroll-margin-top:175px;}
+    .youtube-panel{margin-top:12px;text-align:right;scroll-margin-top:58px;}
+    body.yt-view .controls-container{top:6px;left:50%;transform:translateX(-50%);flex-direction:row;justify-content:center;gap:6px;max-width:calc(100% - 12px);padding:5px;border-radius:12px;background:#111e;}
+    body.yt-view .control-btn{padding:6px 8px;font-size:11px;white-space:nowrap;gap:5px;}
+    body.yt-view .youtube-stage{max-height:calc(100dvh - 100px);}
+    @media(max-width:360px){body.yt-view .control-btn{padding:6px;font-size:10px;}body.yt-view .controls-container{gap:4px;}}
+    .youtube-stage{position:relative;width:100%;aspect-ratio:16/9;min-height:200px;background:#080b09;border:1px solid #53664f;border-radius:12px;overflow:hidden;}
+    .youtube-stage:empty::before{content:'جارٍ تحميل مشغّل YouTube…';position:absolute;inset:0;display:grid;place-items:center;padding:18px;text-align:center;font-size:13px;color:#bcc9b9;}
+    .youtube-stage iframe,.youtube-stage>div{position:absolute;inset:0;display:block;width:100%!important;height:100%!important;border:0;min-width:200px;min-height:200px;}
+    .youtube-tools{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:10px;}
+    .youtube-tools a{color:#a8d69b;font-size:12px;text-decoration:underline;text-underline-offset:3px;}
+    .youtube-tools button{padding:8px 12px;border:1px solid #657d59;border-radius:8px;background:#22321d;color:#e7eee1;font:600 12px 'Cairo',sans-serif;cursor:pointer;}
+    #youtubeRetry[hidden]{display:none!important;}
+    .youtube-message{margin:10px 0 0;padding:10px 12px;border-radius:8px;background:#ffffff06;color:#b7c9b2;font-size:12px;line-height:1.9;}
+    .youtube-panel[data-state="error"] .youtube-message,.youtube-panel[data-state="slow"] .youtube-message{background:#b2782720;color:#edc99a;}
+    .youtube-panel[data-state="error"] .youtube-stage:empty::before{content:'تعذّر تحميل المشغّل';}
+    .youtube-caption{font-size:11px;color:#9eb194;margin-top:7px;}
+    @media(max-width:360px){.player-container{padding:16px;}}
   </style>
 </head>
 <body>
@@ -544,8 +566,15 @@
       <span id="currentLesson">اختر درساً للاستماع</span>
     </div>
     <audio id="audioPlayer" controls style="width: 100%; border-radius: 10px; height: 40px;"></audio>
-    <div class="yt-note" id="ytNote"><i class="fab fa-youtube"></i> تُشغَّل هذه السلسلة صوتياً من يوتيوب</div>
-    <iframe id="ytPlayer" title="مشغل يوتيوب" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <section class="youtube-panel" id="youtubePanel" hidden aria-label="مشغّل دروس YouTube" data-state="idle">
+      <div class="youtube-stage" id="youtubeStage"></div>
+      <div class="youtube-tools">
+        <a id="youtubeSource" href="https://www.youtube.com/watch?v=32fWxgtAhHE" target="_blank" rel="noopener noreferrer">فتح الدرس على YouTube ↗</a>
+        <button type="button" id="youtubeRetry" hidden>إعادة المحاولة</button>
+      </div>
+      <p class="youtube-message" id="youtubeMessage" role="status" aria-live="polite"></p>
+      <p class="youtube-caption">هذه السلسلة فيديوهات من قناة الشيخ، وتُعرض بمشغّل YouTube الرسمي. قد تحتاج للضغط على ▶ داخل الفيديو.</p>
+    </section>
     <div class="timer-status" id="timerStatus">
       <i class="fas fa-clock"></i>
       مؤقت النوم مفعل: <span id="timerCountdown">--:--</span>
@@ -604,6 +633,7 @@
     </div>
   </div>
 
+  <script src="ragheb-youtube.js?v=44"></script>
   <script>
     // ===== بيانات الدروس =====
     const lessonsData = {
@@ -1070,6 +1100,8 @@
       waitMode: false,
       currentLessonIndex: -1,
       currentContainerId: null,
+      currentMode: null,
+      playbackRequest: 0,
 
       init() {
         this.player = document.getElementById('audioPlayer');
@@ -1115,13 +1147,18 @@
 
       setupEventListeners() {
         this.player.addEventListener('pause', () => {
-          this.playingIndicator.style.display = 'none';
+          if(this.currentMode==='audio') this.playingIndicator.style.display='none';
         });
-        this.player.addEventListener('play', () => {
-          this.playingIndicator.style.display = 'block';
+        this.player.addEventListener('playing', () => {
+          if(this.currentMode!=='audio' || !this.player.getAttribute('src')) return;
+          this.bufferingLoader.style.display='none';
+          this.playingIndicator.style.display='block';
+        });
+        this.player.addEventListener('waiting', () => {
+          if(this.currentMode==='audio') this.bufferingLoader.style.display='inline-block';
         });
         this.player.addEventListener('ended', () => {
-          this.handleLessonEnd();
+          if(this.currentMode==='audio') this.handleLessonEnd();
         });
         document.querySelectorAll('.lessons-dropdown').forEach(dropdown => {
           dropdown.addEventListener('change', (e) => {
@@ -1143,6 +1180,8 @@
           this.showMessage('الرجاء اختيار درساً أولاً');
           return;
         }
+        const request=++this.playbackRequest;
+        this.currentMode=lessonVal.indexOf('yt:')===0?'youtube':'audio';
         this.currentLessonIndex = lessonsDropdown.selectedIndex;
         this.currentContainerId = containerId;
         this.nowPlaying.textContent = `جاري تشغيل: ${lessonName}`;
@@ -1151,63 +1190,58 @@
         document.querySelectorAll('.lessons-container').forEach(c => c.classList.remove('active'));
         lessonsContainer.classList.add('active');
 
-        if (lessonVal.indexOf('yt:') === 0) {
-          document.getElementById('ytNote').classList.add('show');
-          try { this.player.pause(); } catch(e) {}
-          this.playYoutube(lessonVal.slice(3));
+        if (this.currentMode==='youtube') {
+          this.player.pause();this.player.removeAttribute('src');this.player.load();
+          this.player.hidden=true;
+          this.playYoutube(lessonVal.slice(3),lessonName,request);
+          document.getElementById('youtubePanel').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
         } else {
-          document.getElementById('ytNote').classList.remove('show');
-          this.stopYoutube();
-          this.player.src = lessonVal;
-          this.player.play().then(() => {
-            this.bufferingLoader.style.display = 'none';
-            this.playingIndicator.style.display = 'block';
-          }).catch(error => {
-            console.error('خطأ في التشغيل:', error);
-            this.nowPlaying.textContent = `خطأ في تشغيل ${lessonName}`;
-            this.bufferingLoader.style.display = 'none';
+          this.stopYoutube();this.player.hidden=false;
+          this.player.pause();this.player.removeAttribute('src');this.player.load();
+          this.player.src=lessonVal;
+          this.player.play().then(()=>{
+            if(request!==this.playbackRequest || this.currentMode!=='audio' || this.player.paused)return;
+            this.bufferingLoader.style.display='none';this.playingIndicator.style.display='block';
+          }).catch(error=>{
+            if(request!==this.playbackRequest || this.currentMode!=='audio' || error.name==='AbortError')return;
+            this.nowPlaying.textContent=`تعذّر تشغيل ${lessonName}`;
+            this.bufferingLoader.style.display='none';this.playingIndicator.style.display='none';
             lessonsContainer.classList.remove('active');
           });
         }
       },
 
-      playYoutube(vid) {
-        const self = this;
-        if (window.ytPlayer && window.ytPlayer.loadVideoById) { try { window.ytPlayer.loadVideoById(vid); } catch(e) {} return; }
-        if (!window.__ytApiLoading) {
-          window.__ytApiLoading = true;
-          const tag = document.createElement('script');
-          tag.src = 'https://www.youtube.com/iframe_api';
-          document.head.appendChild(tag);
-          window.onYouTubeIframeAPIReady = () => {
-            window.ytPlayer = new YT.Player('ytPlayer', {
-              height: '68', width: '120',
-              playerVars: { autoplay: 1, controls: 0, disablekb: 1, modestbranding: 1, rel: 0 },
-              events: {
-                onReady: () => { if (window.__ytPending) window.ytPlayer.loadVideoById(window.__ytPending); },
-                onStateChange: (e) => {
-                  if (e.data === YT.PlayerState.PLAYING) { self.bufferingLoader.style.display = 'none'; self.playingIndicator.style.display = 'block'; }
-                  else if (e.data === YT.PlayerState.BUFFERING) { self.bufferingLoader.style.display = 'inline-block'; }
-                  else if (e.data === YT.PlayerState.ENDED) { self.playingIndicator.style.display = 'none'; self.handleLessonEnd(); }
-                  else if (e.data === YT.PlayerState.PAUSED) { self.playingIndicator.style.display = 'none'; }
-                }
-              }
-            });
-          };
+      playYoutube(vid,lessonName,request) {
+        if(!window.RaghebVideo){
+          document.getElementById('youtubePanel').hidden=false;
+          document.getElementById('youtubeSource').href='https://www.youtube.com/watch?v='+vid;
+          document.getElementById('youtubeMessage').textContent='تعذّر تحميل أدوات المشغّل. حدّث الصفحة أو افتح الدرس على YouTube.';
+          this.bufferingLoader.style.display='none';
+          return;
         }
-        window.__ytPending = vid;
-        const t = setInterval(() => {
-          if (window.ytPlayer && window.ytPlayer.loadVideoById) { clearInterval(t); if (window.__ytPending) { window.ytPlayer.loadVideoById(window.__ytPending); window.__ytPending = null; } }
-        }, 300);
+        RaghebVideo.play({id:vid,name:lessonName},{
+          onState:state=>{
+            if(request!==this.playbackRequest || this.currentMode!=='youtube')return;
+            this.bufferingLoader.style.display=['loading','buffering'].includes(state)?'inline-block':'none';
+            this.playingIndicator.style.display=state==='playing'?'block':'none';
+            const label=state==='playing'?'يُشغَّل الآن':state==='error'?'تعذّر تشغيل':state==='paused'?'متوقف مؤقتًا':state==='loading'?'جارٍ فتح':'الدرس المحدد';
+            this.nowPlaying.textContent=label+': '+lessonName;
+          },
+          onEnded:()=>{if(request===this.playbackRequest && this.currentMode==='youtube')this.handleLessonEnd();}
+        });
       },
 
-      stopYoutube() { try { if (window.ytPlayer && window.ytPlayer.stopVideo) window.ytPlayer.stopVideo(); } catch(e) {} },
+      stopYoutube() {
+        window.RaghebVideo?.stop();
+        document.getElementById('youtubePanel').hidden=true;
+      },
 
       stopLesson() {
+        ++this.playbackRequest;this.currentMode=null;
         this.player.pause();
-        this.player.src = "";
+        this.player.removeAttribute('src');this.player.load();this.player.hidden=false;
         this.stopYoutube();
-        document.getElementById('ytNote').classList.remove('show');
+        this.currentLessonIndex=-1;this.currentContainerId=null;
         this.nowPlaying.textContent = 'اختر درساً للاستماع';
         this.playingIndicator.style.display = 'none';
         this.bufferingLoader.style.display = 'none';
@@ -1382,6 +1416,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       LessonPlayer.init();
     });
+    window.addEventListener('pagehide',()=>{if(LessonPlayer.player)LessonPlayer.stopLesson();});
   </script>
 </body>
 </html>
