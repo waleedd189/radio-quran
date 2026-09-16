@@ -506,27 +506,31 @@
         padding: 25px 20px;
       }
     }
-    /* Visible official video player, created only for the selected lesson. */
-    #youtubePanel[hidden],#audioPlayer[hidden]{display:none!important;}
+    /* Official SoundCloud audio player. */
+    #soundcloudPanel[hidden],#audioPlayer[hidden],#soundcloudRetry[hidden]{display:none!important;}
     .player-container{scroll-margin-top:18px;}
     #lessonsContainer8{scroll-margin-top:175px;}
-    .youtube-panel{margin-top:12px;text-align:right;scroll-margin-top:58px;}
-    body.yt-view .controls-container{top:6px;left:50%;transform:translateX(-50%);flex-direction:row;justify-content:center;gap:6px;max-width:calc(100% - 12px);padding:5px;border-radius:12px;background:#111e;}
-    body.yt-view .control-btn{padding:6px 8px;font-size:11px;white-space:nowrap;gap:5px;}
-    body.yt-view .youtube-stage{max-height:calc(100dvh - 100px);}
-    @media(max-width:360px){body.yt-view .control-btn{padding:6px;font-size:10px;}body.yt-view .controls-container{gap:4px;}}
-    .youtube-stage{position:relative;width:100%;aspect-ratio:16/9;min-height:200px;background:#080b09;border:1px solid #53664f;border-radius:12px;overflow:hidden;}
-    .youtube-stage:empty::before{content:'جارٍ تحميل مشغّل YouTube…';position:absolute;inset:0;display:grid;place-items:center;padding:18px;text-align:center;font-size:13px;color:#bcc9b9;}
-    .youtube-stage iframe,.youtube-stage>div{position:absolute;inset:0;display:block;width:100%!important;height:100%!important;border:0;min-width:200px;min-height:200px;}
-    .youtube-tools{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:10px;}
-    .youtube-tools a{color:#a8d69b;font-size:12px;text-decoration:underline;text-underline-offset:3px;}
-    .youtube-tools button{padding:8px 12px;border:1px solid #657d59;border-radius:8px;background:#22321d;color:#e7eee1;font:600 12px 'Cairo',sans-serif;cursor:pointer;}
-    #youtubeRetry[hidden]{display:none!important;}
-    .youtube-message{margin:10px 0 0;padding:10px 12px;border-radius:8px;background:#ffffff06;color:#b7c9b2;font-size:12px;line-height:1.9;}
-    .youtube-panel[data-state="error"] .youtube-message,.youtube-panel[data-state="slow"] .youtube-message{background:#b2782720;color:#edc99a;}
-    .youtube-panel[data-state="error"] .youtube-stage:empty::before{content:'تعذّر تحميل المشغّل';}
-    .youtube-caption{font-size:11px;color:#9eb194;margin-top:7px;}
-    @media(max-width:360px){.player-container{padding:16px;}}
+    .soundcloud-panel{margin-top:12px;scroll-margin-top:62px;text-align:right;}
+    .soundcloud-host{width:100%;min-height:166px;border-radius:12px;overflow:hidden;background:#18251d;border:1px solid #50725b;}
+    .soundcloud-host:empty::before{content:'جارٍ فتح مشغّل SoundCloud…';display:grid;place-items:center;min-height:166px;padding:18px;text-align:center;font-size:13px;color:#bed0ba;}
+    .soundcloud-host iframe{display:block;width:100%;height:166px;border:0;}
+    .soundcloud-tools{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .soundcloud-tools a{color:#a6d8b4;font-size:12px;text-decoration:underline;text-underline-offset:3px;}
+    .soundcloud-tools button{padding:8px 12px;background:#243c2d;color:#e6f1e4;border:1px solid #5f8566;border-radius:8px;font:600 12px 'Cairo',sans-serif;cursor:pointer;}
+    .soundcloud-message,.soundcloud-note{font-size:12px;line-height:1.9;color:#b6ccb4;margin-top:10px;}
+    .soundcloud-message{background:#ffffff06;padding:10px 12px;border-radius:8px;}
+    .soundcloud-panel[data-state="error"] .soundcloud-message,.soundcloud-panel[data-state="slow"] .soundcloud-message{color:#e7c296;background:#af7a2822;}
+    .soundcloud-panel[data-state="error"] .soundcloud-host:empty::before{content:'تعذّر تحميل المشغّل';}
+    .soundcloud-note{padding:0 4px;text-align:center;font-size:11px;}
+    .soundcloud-list-source{display:block;font-size:11px;color:#9fd0ae;margin:8px 0;text-decoration:underline;text-underline-offset:3px;}
+    .previous-lesson-links{width:100%;margin-top:14px;border:1px solid #ffffff20;border-radius:10px;padding:10px 12px;color:#abb4a7;text-align:right;}
+    .previous-lesson-links summary{cursor:pointer;font-size:11px;line-height:1.8;}
+    .previous-lesson-links ol{max-height:260px;overflow-y:auto;margin:12px 0 0;padding-inline-start:24px;}
+    .previous-lesson-links li{font-size:11px;line-height:1.9;margin:5px 0;}
+    .previous-lesson-links a{color:#b1ceb6;text-decoration:underline;text-underline-offset:3px;}
+    body.sc-view .controls-container{top:6px;left:50%;transform:translateX(-50%);flex-direction:row;justify-content:center;gap:6px;max-width:calc(100% - 12px);padding:5px;border-radius:12px;background:#111e;}
+    body.sc-view .control-btn{padding:6px 8px;font-size:11px;white-space:nowrap;gap:5px;}
+    @media(max-width:360px){.player-container{padding:16px;}body.sc-view .control-btn{padding:6px;font-size:10px;}body.sc-view .controls-container{gap:4px;}}
     /* Native Archive video/audio: one selected source at a time. */
     #archivePanel[hidden],#archiveVideo[hidden],#archiveRetry[hidden]{display:none!important;}
     #lessonsContainer9{scroll-margin-top:175px;}
@@ -599,14 +603,13 @@
       <p class="archive-message" id="archiveMessage" role="status" aria-live="polite"></p>
       <p class="archive-bandwidth" id="archiveBandwidthNote"></p>
     </section>
-    <section class="youtube-panel" id="youtubePanel" hidden aria-label="مشغّل دروس YouTube" data-state="idle">
-      <div class="youtube-stage" id="youtubeStage"></div>
-      <div class="youtube-tools">
-        <a id="youtubeSource" href="https://www.youtube.com/watch?v=32fWxgtAhHE" target="_blank" rel="noopener noreferrer">فتح الدرس على YouTube ↗</a>
-        <button type="button" id="youtubeRetry" hidden>إعادة المحاولة</button>
+    <section class="soundcloud-panel" id="soundcloudPanel" hidden data-state="idle" aria-label="الفتنة الكبرى — مشغّل SoundCloud الصوتي">
+      <div class="soundcloud-host" id="soundcloudHost"></div>
+      <div class="soundcloud-tools">
+        <a id="soundcloudSource" href="https://soundcloud.com/ahmed-mohamed-80924068/sets/himdwb0fxold" target="_blank" rel="noopener noreferrer">فتح التسجيل على SoundCloud ↗</a>
+        <button id="soundcloudRetry" type="button" hidden>إعادة المحاولة</button>
       </div>
-      <p class="youtube-message" id="youtubeMessage" role="status" aria-live="polite"></p>
-      <p class="youtube-caption">هذه السلسلة فيديوهات من قناة الشيخ، وتُعرض بمشغّل YouTube الرسمي. قد تحتاج للضغط على ▶ داخل الفيديو.</p>
+      <p id="soundcloudMessage" class="soundcloud-message" role="status" aria-live="polite"></p>
     </section>
     <div class="timer-status" id="timerStatus">
       <i class="fas fa-clock"></i>
@@ -666,7 +669,7 @@
     </div>
   </div>
 
-  <script src="ragheb-youtube.js?v=44"></script>
+  <script src="ragheb-soundcloud.js?v=46"></script>
   <script src="ragheb-archive-media.js?v=45"></script>
   <script>
     // ===== بيانات الدروس =====
@@ -1040,81 +1043,557 @@
           ]
         },
         {
-          id: 8,
-          title: "سلسلة الفتنة الكبرى",
-          image: "https://i.postimg.cc/W3LyK6w7/image.jpg",
-          color: "#E53935",
-          youtube: true,
-          lessons: [
-            { name: "01 - عودة الخلافة الراشدة", yt: "32fWxgtAhHE" },
-            { name: "02 - حقيقة عثمان بن عفان", yt: "7as9jipK1VE" },
-            { name: "03 - التمرد المسلح الأول", yt: "oahOfucvTzM" },
-            { name: "04 - ظهور المتمردين", yt: "eUGyNT7xzTY" },
-            { name: "05 - تمرد في المدينة", yt: "eK8irV0Q5QQ" },
-            { name: "06 - سر قميص عثمان الذي رفض خلعه", yt: "qDOWEgtdi5w" },
-            { name: "07 - هل ترك الصحابة عثمان وقت الحصار؟", yt: "pUPA4fOmtTI" },
-            { name: "08 - موقف علي بن أبي طالب من حصار عثمان", yt: "yjfJj5q5_wQ" },
-            { name: "09 - هذا ما حدث في آخر أيام عثمان", yt: "J9UrcqOXsmI" },
-            { name: "10 - تفاصيل مثيرة في مقتل عثمان", yt: "yMqDtZf2r9U" },
-            { name: "11 - الجريمة الأكبر في تاريخ المسلمين", yt: "HmYywjy0iGc" },
-            { name: "12 - تفاصيل مثيرة لاستخلاف علي بن أبي طالب", yt: "I0be4IW7pNQ" },
-            { name: "13 - حقيقة علي بن أبي طالب", yt: "PEVnk8T-Uvc" },
-            { name: "14 - احذر 10 أمور خطيرة قبل الحديث عن فتنة الصحابة", yt: "dHxjAepdBeo" },
-            { name: "15 - من وراء منع إقامة الحد على قتلة عثمان؟", yt: "KV0ZrbjzY88" },
-            { name: "16 - الشام تتمرد ومكة تشتعل", yt: "jmJfjQbnn1s" },
-            { name: "17 - النبي ﷺ يروي ما يحدث بين عائشة وعلي قبل حدوثه بأكثر من 25 عاما", yt: "HWGvZdgw3Ls" },
-            { name: "18 - كارثة البصرة تكشف المستور", yt: "Bf3MoDz8rX4" },
-            { name: "19 - الظلام يضرب البصرة والكوفة", yt: "pdaZ7aZOqYU" },
-            { name: "20 - هذه هي كلمة السر في الصلح العبقري", yt: "AdTn4eRHa3E" },
-            { name: "21 - 3 أسرار وراء فشل اتفاق الهدنة", yt: "NMMFiRc19EI" },
-            { name: "22 - تفاصيل جديدة في موقعة الجمل", yt: "NK6kYzUdzfM" },
-            { name: "23 - هذا ما فعلته عائشة رضي الله عنها في معركة الجمل", yt: "KZe9CqXMVJM" },
-            { name: "24 - ما سر تقريب علي بن أبي طالب للأشتر النخعي المتمرد على عثمان؟", yt: "lp_HE_erhSw" },
-            { name: "25 - بالأرقام .. قتلى الجمل غير ما تتوقع", yt: "-L0RFgqqXEg" },
-            { name: "26 - من وراء اغتيال الزبير بن العوام بعد موقعة الجمل ؟", yt: "_Fb7c_Kem5Q" },
-            { name: "27 - هل ندمت عائشة بعد موقعة الجمل ؟", yt: "2ZDRXTLrc6I" },
-            { name: "28 - موقف علي بن أبي طالب من عائشة بعد الجمل يثير الجدل", yt: "b8xNl1b52YI" },
-            { name: "29 - ظهور البغاة", yt: "-slJrOQYOdE" },
-            { name: "30 - طريقة علي بن أبي طالب في تقسيم غنائم الجمل تلفت الأنظار", yt: "Q0DP3N39E9U" },
-            { name: "31 - الاعتزال أم القتال .. السؤال المحير في الفتن", yt: "P3BdPusE1Zs" },
-            { name: "32 - موقف أسامة بن زيد في الفتنة يحتاج إلى وقفة طويلة", yt: "K80KnGRvbn8" },
-            { name: "33 - 4 أسباب تؤكد أن الحق مع علي بن أبي طالب في أحداث الفتنة", yt: "II7dT0bV6zs" },
-            { name: "34 - لغز قتلى الفتنة : هل يدخلون النار ؟", yt: "TFWJdCYyXsI" },
-            { name: "35 - تطورات مثيرة في مصر بعد موقعة الجمل", yt: "2Aw2O4N9UWs" },
-            { name: "36 - الشام تتمرد", yt: "fEQjwncygFg" },
-            { name: "37 - هل الفتنة صراع على الخلافة بين بني هاشم والأمويين ؟", yt: "ENxphfdif3E" },
-            { name: "38 - مبادرة سلام بين العراق والشام", yt: "S1kNsdAR89A" },
-            { name: "39 - صفين برواية الكذابين", yt: "dr3-G9zQoh4" },
-            { name: "40 - The True Number of Companions in the Battle of Siffin", yt: "1Veb4-TcbeU" },
-            { name: "41 - مفاوضات سلام في أرض صفين", yt: "60_2bongB7c" },
-            { name: "42 - الفئتان العظيمتان وجهًا لوجه", yt: "y0fmCGBRI6I" },
-            { name: "43 - تفاصيل مؤسفة في موقعة صفين", yt: "Bl23TOLxXCA" },
-            { name: "44 - استشهاد عمار بن ياسر يكشف الأوراق", yt: "WUtb_iYtt9g" },
-            { name: "45 - هل طلب عمرو بن العاص للتحكيم في موقعة صفين كان خدعة ؟", yt: "Q5CZpY2CdP8" },
-            { name: "46 - سر اختيار عمرو بن العاص وأبي موسى الأشعري للتحكيم في صفين", yt: "_IaLWz99wBs" },
-            { name: "47 - بالدليل الرقم الحقيقي لقتلى صفين", yt: "-lB10gwqP7Q" },
-            { name: "48 - سبب مثير لخلاف علي بن أبي طالب مع والي الكوفة بعد موقعة صفين", yt: "q4PZSaeRwtI" },
-            { name: "49 - The first appearance of the Kharijites", yt: "aYLgZmh8nNg" },
-            { name: "50 - This is the most dangerous group threatening the security of Muslims", yt: "VyIc1H0xeCY" },
-            { name: "51 - 5 صفات غريبة لخوارج العراق", yt: "QA0NNJvAaBo" },
-            { name: "52 - لا تترددوا في قتال الخوارج", yt: "ARdd3qMs0hw" },
-            { name: "53 - A Calm Dialogue with the Kharijites", yt: "nDhIbEkn-s8" },
-            { name: "54 - من العظيم القائل اللهم أرحني منهم وأرحهم مني ؟", yt: "fblXsTZqTlc" },
-            { name: "55 - Muawiya’s Ruse Before the Arbitration Session", yt: "NDa03Asi_jw" },
-            { name: "56 - The True and Fabricated Details of the Arbitration Session", yt: "qW2Nwr_qPXA" },
-            { name: "57 - لهذا السبب قاتل علي بن أبي طالب الخوارج", yt: "1b-ZuLEIz30" },
-            { name: "58 - The Prophet's ﷺ Description of the Battle of Nahrawan 30 Years Before It Happened", yt: "TXUhBLss0MU" },
-            { name: "59 - The Terrifying Truth About Dhu al-Thudayyah", yt: "BjY6h6XXa_8" },
-            { name: "60 - بدأ التنافس على مصر", yt: "SsCGZ7pM3Ps" },
-            { name: "61 - They Are More Dangerous Than the Kharijites", yt: "tuqUSbV9YI8" },
-            { name: "62 - Dramatic Details of the Assassination of Ali ibn Abi Talib", yt: "h3PU0PKFU0Q" },
-            { name: "63 - Strange Facts About the Life of Ali ibn Abi Talib's Assassin", yt: "aBmuMWXGJ-c" },
-            { name: "64 - The Secret Behind Al-Hasan ibn Ali's Nomination to the Caliphate After His Father's Death", yt: "bEdXN_FcCOQ" },
-            { name: "65 - A Precise Summary of the Caliphate of Ali ibn Abi Talib until His Death", yt: "5_rVwyTj_XU" },
-            { name: "66 - حقيقة الحسن بن علي", yt: "QqrBKWbdRuc" },
-            { name: "67 - خطة الحسن العبقرية للتأثير على معاوية", yt: "CwgYQIij4Z8" },
-            { name: "68 - ماذا فعل معاوية في مواجهة الحسن بن علي ؟", yt: "PD8zRNBBeIc" },
-            { name: "69 - رؤيتي في شروط الحسن بن علي لإتمام الصلح مع معاوية", yt: "QxtnM6HERfs" }
+          "id": 8,
+          "title": "سلسلة الفتنة الكبرى",
+          "image": "https://i.postimg.cc/W3LyK6w7/image.jpg",
+          "color": "#E53935",
+          "soundcloud": true,
+          "source": "https://soundcloud.com/ahmed-mohamed-80924068/sets/himdwb0fxold",
+          "lessons": [
+            {
+              "name": "01 - قصة الفتنة الكبري",
+              "scId": 2164534959,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/218-qs-lftn-lkbry-qs-lkhlf-lrshd-9",
+              "duration": 1762.871,
+              "sourceTitle": "01 - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "02  -حقيقة عثمان بن عفان رضي الله عنه - قصة الفتنة الكبري",
+              "scId": 2169335538,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/02ac-945576644",
+              "duration": 1660.912,
+              "sourceTitle": "02  -حقيقة عثمان بن عفان رضي الله عنه - قصة الفتنة الكبري- الدكتور راغب السرجاني"
+            },
+            {
+              "name": "03 - التمرد المسلح الأول - قصة الفتنة الكبري",
+              "scId": 2169336057,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/03ab-47218822",
+              "duration": 1758.819,
+              "sourceTitle": "03 - التمرد المسلح الأول - قصة الفتنة الكبري - دكتور راغب السرجاني"
+            },
+            {
+              "name": "04 - ظهور المتمردين - قصة الفتنة الكبرى",
+              "scId": 2173751220,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/27d1a1b3-f300-4a42-8a68-befce3101401",
+              "duration": 1678.919,
+              "sourceTitle": "04 - ظهور المتمردين - قصة الفتنة الكبرى - د/ راغب السرجاني"
+            },
+            {
+              "name": "05 - ثورة في المدينة المنورة - قصة الفتنة الكبري",
+              "scId": 2173747440,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/94bf5d95-50ac-413a-9e36-fe512b53e9e2",
+              "duration": 1664.759,
+              "sourceTitle": "05 - ثورة في المدينة المنورة - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "06- سر قميص عثمان الذي رفض خلعه - قصة الفتنة الكبرى",
+              "scId": 2174319591,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/dc2110f4-509b-470c-ab86-cc40dd9c7a15",
+              "duration": 1729.727,
+              "sourceTitle": "06- سر قميص عثمان الذي رفض خلعه - قصة الفتنة الكبرى"
+            },
+            {
+              "name": "07 - هل ترك الصحابة عثمان وقت الحصار؟ - قثة الفتنة الكبري",
+              "scId": 2176203873,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/e85df253-f84e-4d57-b364-afe9726d71ee",
+              "duration": 1575.359,
+              "sourceTitle": "07 - هل ترك الصحابة عثمان وقت الحصار؟ - قثة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "08 - موقف علي بن أبي طالب من حصار عثمان رضي الله عنها - قصة الفتنة الكبري",
+              "scId": 2178373152,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/07-977091607",
+              "duration": 1690.064,
+              "sourceTitle": "08 - موقف علي بن أبي طالب من حصار عثمان رضي الله عنها - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "09- الأحداث الأخيرة قبل مقتل عثمان بن عفان رضي الله عنه - قصة الفتنة الكبري",
+              "scId": 2182164635,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/0fl6vyj385tx",
+              "duration": 1713.539,
+              "sourceTitle": "09- الأحداث الأخيرة قبل مقتل عثمان بن عفان رضي الله عنه - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "10 - مقتل عثمان  رضي الله عنه -  قصة الفتنة الكبرى د. راغب السرجاني",
+              "scId": 2182244827,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/10-956387391",
+              "duration": 1785.057,
+              "sourceTitle": "10 - مقتل عثمان  رضي الله عنه -  قصة الفتنة الكبرى د. راغب السرجاني"
+            },
+            {
+              "name": "11 - الجريمة الأكبر في تاريخ المسلمين(مقتل عثمان بن عفان) - قصة الفتنة الكبرى",
+              "scId": 2186034178,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/41e899a4-6061-4456-9f7e-0f02aa5b4384",
+              "duration": 1758.815,
+              "sourceTitle": "11 - الجريمة الأكبر في تاريخ المسلمين(مقتل عثمان بن عفان) - قصة الفتنة الكبرى- د / راغب السرجاني"
+            },
+            {
+              "name": "12 - هل تمت بيعة علي بن أبي طالب بالإكراه؟ - قصة الفتنة الكبري",
+              "scId": 2183626227,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/xhwyjs3r1abo",
+              "duration": 1665.683,
+              "sourceTitle": "12 - هل تمت بيعة علي بن أبي طالب بالإكراه؟ - قصة الفتنة الكبري - د / راغب السرجاني"
+            },
+            {
+              "name": "14 - قبل دراسة أحداث الفتنة عليك أن تعلم هذه الأمور العشرة - قصة الفتنة الكبري",
+              "scId": 2189489379,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/14-125191563",
+              "duration": 1750.993,
+              "sourceTitle": "14 - قبل دراسة أحداث الفتنة عليك أن تعلم هذه الأمور العشرة - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "15 - كيف تعامل الصحابة مع قتلة عثمان - قصة الفتنة الكبري",
+              "scId": 2192948635,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/15-896547407",
+              "duration": 1565.814,
+              "sourceTitle": "15 - كيف تعامل الصحابة مع قتلة عثمان - قصة الفتنة الكبري- د/ راغب السرجاني"
+            },
+            {
+              "name": "16 - قرار صادم لعلي بن أبي طالب وعائشة تستعد للقتال - قصة الفتنة الكبري",
+              "scId": 2195000819,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/16-919336359",
+              "duration": 1758.539,
+              "sourceTitle": "16 - قرار صادم لعلي بن أبي طالب وعائشة تستعد للقتال - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "17- إعجاز نبوي في وصف أحداث الفتنة بين علي و عائشة رضي الله عنهما لما خرجا للقتال - قصة الفتنة الكبر",
+              "scId": 2199039903,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/17-908931736",
+              "duration": 1796.899,
+              "sourceTitle": "17- إعجاز نبوي في وصف أحداث الفتنة بين علي و عائشة رضي الله عنهما لما خرجا للقتال - قصة الفتنة الكبر"
+            },
+            {
+              "name": "18- معركة البصرة أولى معارك جيش عائشة في الفتنة - قصة الفتنة الكبري",
+              "scId": 2203084879,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/18-61308493",
+              "duration": 1774.701,
+              "sourceTitle": "18- معركة البصرة أولى معارك جيش عائشة في الفتنة - قصة الفتنة الكبري -د / راغب السرجاني"
+            },
+            {
+              "name": "19 - عائشة في البصرة.. ماذا فعل الصحابة- قصة الفتنة الكبري",
+              "scId": 2204304815,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/19-300285620",
+              "duration": 1721.179,
+              "sourceTitle": "19 - عائشة في البصرة.. ماذا فعل الصحابة- قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "20 - القعقاع يحسم المفاوضات الأولى مع عائشة رضي الله عنها - قصة الفتنة الكبري",
+              "scId": 2205923663,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/20-689306466",
+              "duration": 1770.057,
+              "sourceTitle": "20 - القعقاع يحسم المفاوضات الأولى مع عائشة رضي الله عنها - قصة الفتنة الكبري - د/ راغب السرجاني."
+            },
+            {
+              "name": "21-خطة المتمردين لإفشال صلح عائشة وعلي بن أبي طالب - قصة الفتنة الكبري",
+              "scId": 2208702446,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/20-14007288",
+              "duration": 1669.514,
+              "sourceTitle": "21-خطة المتمردين لإفشال صلح عائشة وعلي بن أبي طالب - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "22 - تفاصيل موقعة الجمل - قصة الفتنة الكبري",
+              "scId": 2215146755,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/22-734981081",
+              "duration": 1650.334,
+              "sourceTitle": "22 - تفاصيل موقعة الجمل - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "23- محاولات  عائشة رضي الله عنها لوقف القتال في موقعة الجمل- قصة الفتنة الكبري",
+              "scId": 2215148405,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/23-934237429",
+              "duration": 1771.752,
+              "sourceTitle": "23- محاولات  عائشة رضي الله عنها لوقف القتال في موقعة الجمل- قصة الفتنة الكبري -د/ راغب السرجاني"
+            },
+            {
+              "name": "24- لغز الأشتر النخعي و رأي عمر و عثمان و عليه و معاوية فيه - قصة الفتنة الكبري",
+              "scId": 2215150097,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/25-873847697",
+              "duration": 1655.954,
+              "sourceTitle": "24- لغز الأشتر النخعي و رأي عمر و عثمان و عليه و معاوية فيه - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "25-أعداد القتلي في معركة الجمل و نهايتها - قصة الفتنة الكبري",
+              "scId": 2217002369,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/funrpqgbnuus",
+              "duration": 1786.427,
+              "sourceTitle": "25-أعداد القتلي في معركة الجمل و نهايتها - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "26- مصير الزبير بن العوام بعد موقعة الجمل - قصة الفتنة الكبري",
+              "scId": 2219087627,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/26-392507589",
+              "duration": 1675.621,
+              "sourceTitle": "26- مصير الزبير بن العوام بعد موقعة الجمل - قصة الفتنة الكبري د/ راغب السرجاني"
+            },
+            {
+              "name": "27 -  ظهور البغاة - قصة الفتنة الكبري",
+              "scId": 2225281169,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/4fa31ee3-9998-4c3f-8b1b-903622243c89",
+              "duration": 1708.223,
+              "sourceTitle": "27 -  ظهور البغاة - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "28- كيف تعامل علي بن أبي طالب مع البغاه - قصة الفتنة الكبري",
+              "scId": 2248522004,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/goolmeva1h9c",
+              "duration": 1509.622,
+              "sourceTitle": "28- كيف تعامل علي بن أبي طالب مع البغاه - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "29- هل نقاتل مع أهل الحق أم نعتزل الفتنة     - قصة الفتنة الكبري - د راغب السرجاني",
+              "scId": 2248522940,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/29-90639871",
+              "duration": 1736.713,
+              "sourceTitle": "29- هل نقاتل مع أهل الحق أم نعتزل الفتنة     - قصة الفتنة الكبري - د راغب السرجاني"
+            },
+            {
+              "name": "30-لماذا امتنع أسامة بن زيد عن نصرة علي مع علمه أن الحق معه؟ -قصة الفتنة الكبري - د راغب السرجاني",
+              "scId": 2248523933,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/30-622843682",
+              "duration": 1679.754,
+              "sourceTitle": "30-لماذا امتنع أسامة بن زيد عن نصرة علي مع علمه أن الحق معه؟ -قصة الفتنة الكبري - د راغب السرجاني"
+            },
+            {
+              "name": "31- هل كان الحق مع علي بن أبي طالب في أحداث الفتنة - قصة الفتنة الكبري",
+              "scId": 2248524659,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/raaso6bhmqsx",
+              "duration": 1731.395,
+              "sourceTitle": "31- هل كان الحق مع علي بن أبي طالب في أحداث الفتنة - قصة الفتنة الكبري -د/ راغب السرجاني"
+            },
+            {
+              "name": "32 -هل قتلى الفتنة شهداء وهل لقاء المسلمين بالسيوف لا يدخلهم النار -قصة الفتنة الكبري راغب السرجاني",
+              "scId": 2249513966,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/lhlfsutdpich",
+              "duration": 1654.294,
+              "sourceTitle": "32 -هل قتلى الفتنة شهداء وهل لقاء المسلمين بالسيوف لا يدخلهم النار -قصة الفتنة الكبري راغب السرجاني"
+            },
+            {
+              "name": "33-ماذا حدث في ولايات الخلافة الراشدة بعد معركة الجمل  -قصة الفتنة الكبري",
+              "scId": 2249514284,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/nhwfwq4bxqqt",
+              "duration": 1644.646,
+              "sourceTitle": "33-ماذا حدث في ولايات الخلافة الراشدة بعد معركة الجمل  -قصة الفتنة الكبري ـ د/ راغب السرجاني"
+            },
+            {
+              "name": "34- ماذا حدث في ولايات الخلافة الراشدة بعد معركة الجمل  -قصة الفتنة الكبري",
+              "scId": 2249551208,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/33a9",
+              "duration": 1644.646,
+              "sourceTitle": "34- ماذا حدث في ولايات الخلافة الراشدة بعد معركة الجمل  -قصة الفتنة الكبري ـ د/ راغب السرجاني"
+            },
+            {
+              "name": "35-هل صراع علي بن أبي طالب ومعاوية كان على الخلافة ؟ - قصة الفتنة الكبري",
+              "scId": 2249575994,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/35a9",
+              "duration": 1956.791,
+              "sourceTitle": "35-هل صراع علي بن أبي طالب ومعاوية كان على الخلافة ؟ - قصة الفتنة الكبري -د/ راغب السرجاني"
+            },
+            {
+              "name": "36-علي بن أبي طالب يعرض السلام على معاوية - قصة الفتنة الكبري",
+              "scId": 2249576534,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/36-813034354",
+              "duration": 1771.589,
+              "sourceTitle": "36-علي بن أبي طالب يعرض السلام على معاوية - قصة الفتنة الكبري -د/ راغب السرجاني"
+            },
+            {
+              "name": "37-صفين بالروايات المشبوهة في الطبري - قصة الفتنة الكبري",
+              "scId": 2249577023,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/37a9",
+              "duration": 1664.731,
+              "sourceTitle": "37-صفين بالروايات المشبوهة في الطبري - قصة الفتنة الكبري - د/ راغب السرجاني"
+            },
+            {
+              "name": "38-مقارنة مثيرة بين جيشي علي بن أبي طالب ومعاوية في موقعة صفين - قصة الفتنة الكبري",
+              "scId": 2249588996,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/38a9",
+              "duration": 1898.927,
+              "sourceTitle": "38-مقارنة مثيرة بين جيشي علي بن أبي طالب ومعاوية في موقعة صفين - قصة الفتنة الكبري - د/ راغب السرجان"
+            },
+            {
+              "name": "39-الأعداد الحقيقية للصحابة في معركة صفين - قصة الفتنة الكبري",
+              "scId": 2249989913,
+              "scUrl": "https://soundcloud.com/ahmed-mohamed-80924068/lo5y3sesjx5l",
+              "duration": 1721.933,
+              "sourceTitle": "39-الأعداد الحقيقية للصحابة في معركة صفين - قصة الفتنة الكبري - د/ راغب السرجاني"
+            }
+          ],
+          "referenceLessons": [
+            {
+              "name": "01 - عودة الخلافة الراشدة",
+              "yt": "32fWxgtAhHE"
+            },
+            {
+              "name": "02 - حقيقة عثمان بن عفان",
+              "yt": "7as9jipK1VE"
+            },
+            {
+              "name": "03 - التمرد المسلح الأول",
+              "yt": "oahOfucvTzM"
+            },
+            {
+              "name": "04 - ظهور المتمردين",
+              "yt": "eUGyNT7xzTY"
+            },
+            {
+              "name": "05 - تمرد في المدينة",
+              "yt": "eK8irV0Q5QQ"
+            },
+            {
+              "name": "06 - سر قميص عثمان الذي رفض خلعه",
+              "yt": "qDOWEgtdi5w"
+            },
+            {
+              "name": "07 - هل ترك الصحابة عثمان وقت الحصار؟",
+              "yt": "pUPA4fOmtTI"
+            },
+            {
+              "name": "08 - موقف علي بن أبي طالب من حصار عثمان",
+              "yt": "yjfJj5q5_wQ"
+            },
+            {
+              "name": "09 - هذا ما حدث في آخر أيام عثمان",
+              "yt": "J9UrcqOXsmI"
+            },
+            {
+              "name": "10 - تفاصيل مثيرة في مقتل عثمان",
+              "yt": "yMqDtZf2r9U"
+            },
+            {
+              "name": "11 - الجريمة الأكبر في تاريخ المسلمين",
+              "yt": "HmYywjy0iGc"
+            },
+            {
+              "name": "12 - تفاصيل مثيرة لاستخلاف علي بن أبي طالب",
+              "yt": "I0be4IW7pNQ"
+            },
+            {
+              "name": "13 - حقيقة علي بن أبي طالب",
+              "yt": "PEVnk8T-Uvc"
+            },
+            {
+              "name": "14 - احذر 10 أمور خطيرة قبل الحديث عن فتنة الصحابة",
+              "yt": "dHxjAepdBeo"
+            },
+            {
+              "name": "15 - من وراء منع إقامة الحد على قتلة عثمان؟",
+              "yt": "KV0ZrbjzY88"
+            },
+            {
+              "name": "16 - الشام تتمرد ومكة تشتعل",
+              "yt": "jmJfjQbnn1s"
+            },
+            {
+              "name": "17 - النبي ﷺ يروي ما يحدث بين عائشة وعلي قبل حدوثه بأكثر من 25 عاما",
+              "yt": "HWGvZdgw3Ls"
+            },
+            {
+              "name": "18 - كارثة البصرة تكشف المستور",
+              "yt": "Bf3MoDz8rX4"
+            },
+            {
+              "name": "19 - الظلام يضرب البصرة والكوفة",
+              "yt": "pdaZ7aZOqYU"
+            },
+            {
+              "name": "20 - هذه هي كلمة السر في الصلح العبقري",
+              "yt": "AdTn4eRHa3E"
+            },
+            {
+              "name": "21 - 3 أسرار وراء فشل اتفاق الهدنة",
+              "yt": "NMMFiRc19EI"
+            },
+            {
+              "name": "22 - تفاصيل جديدة في موقعة الجمل",
+              "yt": "NK6kYzUdzfM"
+            },
+            {
+              "name": "23 - هذا ما فعلته عائشة رضي الله عنها في معركة الجمل",
+              "yt": "KZe9CqXMVJM"
+            },
+            {
+              "name": "24 - ما سر تقريب علي بن أبي طالب للأشتر النخعي المتمرد على عثمان؟",
+              "yt": "lp_HE_erhSw"
+            },
+            {
+              "name": "25 - بالأرقام .. قتلى الجمل غير ما تتوقع",
+              "yt": "-L0RFgqqXEg"
+            },
+            {
+              "name": "26 - من وراء اغتيال الزبير بن العوام بعد موقعة الجمل ؟",
+              "yt": "_Fb7c_Kem5Q"
+            },
+            {
+              "name": "27 - هل ندمت عائشة بعد موقعة الجمل ؟",
+              "yt": "2ZDRXTLrc6I"
+            },
+            {
+              "name": "28 - موقف علي بن أبي طالب من عائشة بعد الجمل يثير الجدل",
+              "yt": "b8xNl1b52YI"
+            },
+            {
+              "name": "29 - ظهور البغاة",
+              "yt": "-slJrOQYOdE"
+            },
+            {
+              "name": "30 - طريقة علي بن أبي طالب في تقسيم غنائم الجمل تلفت الأنظار",
+              "yt": "Q0DP3N39E9U"
+            },
+            {
+              "name": "31 - الاعتزال أم القتال .. السؤال المحير في الفتن",
+              "yt": "P3BdPusE1Zs"
+            },
+            {
+              "name": "32 - موقف أسامة بن زيد في الفتنة يحتاج إلى وقفة طويلة",
+              "yt": "K80KnGRvbn8"
+            },
+            {
+              "name": "33 - 4 أسباب تؤكد أن الحق مع علي بن أبي طالب في أحداث الفتنة",
+              "yt": "II7dT0bV6zs"
+            },
+            {
+              "name": "34 - لغز قتلى الفتنة : هل يدخلون النار ؟",
+              "yt": "TFWJdCYyXsI"
+            },
+            {
+              "name": "35 - تطورات مثيرة في مصر بعد موقعة الجمل",
+              "yt": "2Aw2O4N9UWs"
+            },
+            {
+              "name": "36 - الشام تتمرد",
+              "yt": "fEQjwncygFg"
+            },
+            {
+              "name": "37 - هل الفتنة صراع على الخلافة بين بني هاشم والأمويين ؟",
+              "yt": "ENxphfdif3E"
+            },
+            {
+              "name": "38 - مبادرة سلام بين العراق والشام",
+              "yt": "S1kNsdAR89A"
+            },
+            {
+              "name": "39 - صفين برواية الكذابين",
+              "yt": "dr3-G9zQoh4"
+            },
+            {
+              "name": "40 - The True Number of Companions in the Battle of Siffin",
+              "yt": "1Veb4-TcbeU"
+            },
+            {
+              "name": "41 - مفاوضات سلام في أرض صفين",
+              "yt": "60_2bongB7c"
+            },
+            {
+              "name": "42 - الفئتان العظيمتان وجهًا لوجه",
+              "yt": "y0fmCGBRI6I"
+            },
+            {
+              "name": "43 - تفاصيل مؤسفة في موقعة صفين",
+              "yt": "Bl23TOLxXCA"
+            },
+            {
+              "name": "44 - استشهاد عمار بن ياسر يكشف الأوراق",
+              "yt": "WUtb_iYtt9g"
+            },
+            {
+              "name": "45 - هل طلب عمرو بن العاص للتحكيم في موقعة صفين كان خدعة ؟",
+              "yt": "Q5CZpY2CdP8"
+            },
+            {
+              "name": "46 - سر اختيار عمرو بن العاص وأبي موسى الأشعري للتحكيم في صفين",
+              "yt": "_IaLWz99wBs"
+            },
+            {
+              "name": "47 - بالدليل الرقم الحقيقي لقتلى صفين",
+              "yt": "-lB10gwqP7Q"
+            },
+            {
+              "name": "48 - سبب مثير لخلاف علي بن أبي طالب مع والي الكوفة بعد موقعة صفين",
+              "yt": "q4PZSaeRwtI"
+            },
+            {
+              "name": "49 - The first appearance of the Kharijites",
+              "yt": "aYLgZmh8nNg"
+            },
+            {
+              "name": "50 - This is the most dangerous group threatening the security of Muslims",
+              "yt": "VyIc1H0xeCY"
+            },
+            {
+              "name": "51 - 5 صفات غريبة لخوارج العراق",
+              "yt": "QA0NNJvAaBo"
+            },
+            {
+              "name": "52 - لا تترددوا في قتال الخوارج",
+              "yt": "ARdd3qMs0hw"
+            },
+            {
+              "name": "53 - A Calm Dialogue with the Kharijites",
+              "yt": "nDhIbEkn-s8"
+            },
+            {
+              "name": "54 - من العظيم القائل اللهم أرحني منهم وأرحهم مني ؟",
+              "yt": "fblXsTZqTlc"
+            },
+            {
+              "name": "55 - Muawiya’s Ruse Before the Arbitration Session",
+              "yt": "NDa03Asi_jw"
+            },
+            {
+              "name": "56 - The True and Fabricated Details of the Arbitration Session",
+              "yt": "qW2Nwr_qPXA"
+            },
+            {
+              "name": "57 - لهذا السبب قاتل علي بن أبي طالب الخوارج",
+              "yt": "1b-ZuLEIz30"
+            },
+            {
+              "name": "58 - The Prophet's ﷺ Description of the Battle of Nahrawan 30 Years Before It Happened",
+              "yt": "TXUhBLss0MU"
+            },
+            {
+              "name": "59 - The Terrifying Truth About Dhu al-Thudayyah",
+              "yt": "BjY6h6XXa_8"
+            },
+            {
+              "name": "60 - بدأ التنافس على مصر",
+              "yt": "SsCGZ7pM3Ps"
+            },
+            {
+              "name": "61 - They Are More Dangerous Than the Kharijites",
+              "yt": "tuqUSbV9YI8"
+            },
+            {
+              "name": "62 - Dramatic Details of the Assassination of Ali ibn Abi Talib",
+              "yt": "h3PU0PKFU0Q"
+            },
+            {
+              "name": "63 - Strange Facts About the Life of Ali ibn Abi Talib's Assassin",
+              "yt": "aBmuMWXGJ-c"
+            },
+            {
+              "name": "64 - The Secret Behind Al-Hasan ibn Ali's Nomination to the Caliphate After His Father's Death",
+              "yt": "bEdXN_FcCOQ"
+            },
+            {
+              "name": "65 - A Precise Summary of the Caliphate of Ali ibn Abi Talib until His Death",
+              "yt": "5_rVwyTj_XU"
+            },
+            {
+              "name": "66 - حقيقة الحسن بن علي",
+              "yt": "QqrBKWbdRuc"
+            },
+            {
+              "name": "67 - خطة الحسن العبقرية للتأثير على معاوية",
+              "yt": "CwgYQIij4Z8"
+            },
+            {
+              "name": "68 - ماذا فعل معاوية في مواجهة الحسن بن علي ؟",
+              "yt": "PD8zRNBBeIc"
+            },
+            {
+              "name": "69 - رؤيتي في شروط الحسن بن علي لإتمام الصلح مع معاوية",
+              "yt": "QxtnM6HERfs"
+            }
           ]
         },
         {
@@ -1298,7 +1777,7 @@
           serieElement.id = `lessonsContainer${serie.id}`;
           let optionsHTML = '<option value="">اختر درساً...</option>';
           serie.lessons.forEach((lesson,lessonIndex) => {
-            const val=lesson.yt?('yt:'+lesson.yt):lesson.video?('av:'+serie.id+':'+lessonIndex):lesson.url;
+            const val=lesson.scId?('sc:'+lesson.scId):lesson.video?('av:'+serie.id+':'+lessonIndex):lesson.url;
             optionsHTML += `<option value="${val}">${lesson.name}</option>`;
           });
           serieElement.innerHTML = `
@@ -1318,6 +1797,22 @@
             </div>
             <div class="progress-bar"></div>
           `;
+          if(serie.soundcloud){
+            const note=document.createElement('p');note.className='soundcloud-note';
+            note.textContent='التشغيل من SoundCloud: ٣٨ تسجيلًا متاحًا في المصدر، بترقيمه الأصلي حتى ٣٩. هذه ليست النسخة الكاملة ذات ٦٩ حلقة.';
+            serieElement.querySelector('.lessons-title').after(note);
+            const source=document.createElement('a');source.className='soundcloud-list-source';source.href=serie.source;source.target='_blank';source.rel='noopener noreferrer';
+            source.textContent='القائمة الأصلية على SoundCloud ↗';source.addEventListener('click',()=>this.stopLesson());note.after(source);
+            const refs=document.createElement('details');refs.className='previous-lesson-links';
+            const summary=document.createElement('summary');summary.textContent='روابط الحلقات السابقة (٦٩) — خارج الموقع فقط، بدون تشغيل YouTube هنا';
+            const list=document.createElement('ol');
+            (serie.referenceLessons||[]).forEach(lesson=>{
+              const item=document.createElement('li'),link=document.createElement('a');
+              link.href='https://www.youtube.com/watch?v='+lesson.yt;link.target='_blank';link.rel='noopener noreferrer';
+              link.textContent=lesson.name;link.addEventListener('click',()=>this.stopLesson());item.appendChild(link);list.appendChild(item);
+            });
+            refs.append(summary,list);serieElement.appendChild(refs);
+          }
           if(serie.archiveMedia){
             const buttons=serieElement.querySelector('.lesson-buttons');
             const view=buttons.querySelector('.play-lesson-btn');
@@ -1370,7 +1865,7 @@
           return;
         }
         const request=++this.playbackRequest;
-        this.currentMode=lessonVal.indexOf('yt:')===0?'youtube':lessonVal.indexOf('av:')===0?'archive':'audio';
+        this.currentMode=lessonVal.indexOf('sc:')===0?'soundcloud':lessonVal.indexOf('av:')===0?'archive':'audio';
         this.currentLessonIndex = lessonsDropdown.selectedIndex;
         this.currentContainerId = containerId;
         this.nowPlaying.textContent = `جاري تشغيل: ${lessonName}`;
@@ -1379,20 +1874,20 @@
         document.querySelectorAll('.lessons-container').forEach(c => c.classList.remove('active'));
         lessonsContainer.classList.add('active');
 
-        if (this.currentMode==='youtube') {
+        if (this.currentMode==='soundcloud') {
           this.stopArchive();
-          this.player.pause();this.player.removeAttribute('src');this.player.load();
-          this.player.hidden=true;
-          this.playYoutube(lessonVal.slice(3),lessonName,request);
-          document.getElementById('youtubePanel').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+          this.player.pause();this.player.removeAttribute('src');this.player.load();this.player.hidden=true;
+          const serie=lessonsData.series.find(item=>item.id===containerId);
+          this.playSoundcloud(serie?.lessons[this.currentLessonIndex-1],lessonName,request);
+          document.getElementById('soundcloudPanel').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
         } else if(this.currentMode==='archive') {
-          this.stopYoutube();
+          this.stopSoundcloud();
           const serie=lessonsData.series.find(item=>item.id===containerId);
           const lesson=serie?.lessons[this.currentLessonIndex-1];
           this.playArchive(lesson,preferredMode,request);
           document.getElementById('archivePanel').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
         } else {
-          this.stopArchive();this.stopYoutube();this.player.hidden=false;
+          this.stopArchive();this.stopSoundcloud();this.player.hidden=false;
           this.player.pause();this.player.removeAttribute('src');this.player.load();
           this.player.src=lessonVal;
           this.player.play().then(()=>{
@@ -1407,23 +1902,23 @@
         }
       },
 
-      playYoutube(vid,lessonName,request) {
-        if(!window.RaghebVideo){
-          document.getElementById('youtubePanel').hidden=false;
-          document.getElementById('youtubeSource').href='https://www.youtube.com/watch?v='+vid;
-          document.getElementById('youtubeMessage').textContent='تعذّر تحميل أدوات المشغّل. حدّث الصفحة أو افتح الدرس على YouTube.';
-          this.bufferingLoader.style.display='none';
-          return;
+      playSoundcloud(lesson,lessonName,request) {
+        if(!lesson?.scId)return;
+        if(!window.RaghebSoundCloud){
+          document.getElementById('soundcloudPanel').hidden=false;
+          document.getElementById('soundcloudSource').href=lesson.scUrl;
+          document.getElementById('soundcloudMessage').textContent='تعذّر تحميل أدوات المشغّل. حدّث الصفحة أو افتح التسجيل على SoundCloud.';
+          this.bufferingLoader.style.display='none';this.nowPlaying.textContent='تعذّر فتح: '+lessonName;return;
         }
-        RaghebVideo.play({id:vid,name:lessonName},{
+        RaghebSoundCloud.play({id:lesson.scId,url:lesson.scUrl,name:lessonName},{
           onState:state=>{
-            if(request!==this.playbackRequest || this.currentMode!=='youtube')return;
-            this.bufferingLoader.style.display=['loading','buffering'].includes(state)?'inline-block':'none';
+            if(request!==this.playbackRequest || this.currentMode!=='soundcloud')return;
+            this.bufferingLoader.style.display=state==='loading'?'inline-block':'none';
             this.playingIndicator.style.display=state==='playing'?'block':'none';
-            const label=state==='playing'?'يُشغَّل الآن':state==='error'?'تعذّر تشغيل':state==='paused'?'متوقف مؤقتًا':state==='loading'?'جارٍ فتح':'الدرس المحدد';
+            const label=state==='playing'?'يُشغَّل الآن':state==='error'?'تعذّر تشغيل':state==='paused'?'متوقف مؤقتًا':state==='loading'?'جارٍ فتح':'التسجيل المحدد';
             this.nowPlaying.textContent=label+': '+lessonName;
           },
-          onEnded:()=>{if(request===this.playbackRequest && this.currentMode==='youtube')this.handleLessonEnd();}
+          onEnded:()=>{if(request===this.playbackRequest && this.currentMode==='soundcloud')this.handleLessonEnd();}
         });
       },
 
@@ -1456,9 +1951,9 @@
         document.getElementById('archivePanel').hidden=true;
       },
 
-      stopYoutube() {
-        window.RaghebVideo?.stop();
-        document.getElementById('youtubePanel').hidden=true;
+      stopSoundcloud() {
+        window.RaghebSoundCloud?.stop();
+        document.getElementById('soundcloudPanel').hidden=true;
       },
 
       stopLesson() {
@@ -1466,7 +1961,7 @@
         this.stopArchive();
         this.player.pause();
         this.player.removeAttribute('src');this.player.load();this.player.hidden=false;
-        this.stopYoutube();
+        this.stopSoundcloud();
         this.currentLessonIndex=-1;this.currentContainerId=null;
         this.nowPlaying.textContent = 'اختر درساً للاستماع';
         this.playingIndicator.style.display = 'none';
