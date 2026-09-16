@@ -402,6 +402,15 @@ body.light-mode .card h2 { color: #222; }
 .card.active .progress-bar::before { content: ""; position: absolute; height: 100%; width: 30%; background: var(--primary-color); animation: move 1.5s linear infinite; }
 @keyframes move { from { left: -30%; } to { left: 100%; } }
 
+/* كارت المكتبة الصوتية — يحافظ على مظهر الكروت ولا يُعامل كرابط بث MP3 */
+.audio-library-link{display:flex;flex-direction:column;align-items:center;width:100%;height:100%;color:inherit;text-decoration:none;}
+#ayyub-asif-card{scroll-margin-top:75px;}
+.audio-library-link img{object-position:center top;}
+.audio-library-link p{font-size:12px;color:var(--text-secondary);margin:0 0 14px;line-height:1.9;text-align:center;}
+.audio-library-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px 12px;border-radius:9px;background:linear-gradient(135deg,#2e7d32,#4caf50);color:#fff;font-size:13px;font-weight:700;margin-top:auto;}
+.audio-library-card .favorite-btn{z-index:2;min-width:0;width:36px;height:36px;padding:0;flex:none;}
+.audio-library-link:focus-visible{outline:2px solid var(--primary-color);outline-offset:5px;border-radius:10px;}
+
 /* الفوتر */
 footer { margin-top: 40px; font-size: 0.9em; color: #aaa; padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
 body.light-mode footer { color: #555; border-top-color: #ccc; }
@@ -1307,6 +1316,14 @@ let isNightMode = true;
 const whatsappNumber = "01092116092";
 
 const section1Stations = [
+  {
+    id: "ayyub-asif-card",
+    name: {ar: "الشيخ محمد أيوب عاصف", en: "Mohammad Ayyub Asif"},
+    img: "assets/ayyub-asif.webp",
+    type: "audio-library",
+    url: "mohammad-ayyub-asif.html",
+    description: {ar: "٦٧ تسجيلًا • تلاوات، أذان وأدعية", en: "67 recordings • Recitations, adhan & duas"}
+  },
   { 
     name: {ar: "تلاوات مختارة", en: "Selected Recitations"}, 
     img: "https://i.postimg.cc/c48r2QX2/tlawat-mkhtart.jpg", 
@@ -1559,6 +1576,19 @@ function createStationCard(station) {
     <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
   </button>`;
 
+  // Library cards navigate in the same tab; stop radio/TV before leaving.
+  if (station.type === 'audio-library') {
+    card.classList.add('audio-library-card');
+    card.innerHTML = `${favBtn}
+      <a class="audio-library-link" href="${station.url}" target="_self" onclick="stopRadio(true)">
+        <img src="${station.img}" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='icons/icon-192.png'">
+        <h2>${name}</h2>
+        <p>${station.description[currentLanguage]}</p>
+        <span class="audio-library-cta"><i class="fas fa-headphones" aria-hidden="true"></i> ${currentLanguage === 'ar' ? 'فتح مكتبة التلاوات' : 'Open recitation library'}</span>
+      </a>`;
+    return card;
+  }
+
   let buttons = '';
 
   if (station.type === 'selected-recitations') {
@@ -1640,6 +1670,7 @@ function initializeStations() {
   
   allStations.forEach((station, index) => {
     const card = createStationCard(station);
+    if (station.id) card.id = station.id;
     card.style.animationDelay = `${index * 0.05}s`;
     if(section1Stations.includes(station)) { section1Container.appendChild(card); } 
     else if(section2Stations.includes(station)) { section2Container.appendChild(card); } 
@@ -2029,20 +2060,28 @@ function updateFavoritesSection() {
   favoritesContainer.innerHTML = '';
   
   favorites.forEach((fav, index) => {
+    const library = allStations.find(station => station.type === 'audio-library' && station.url === fav.url);
+    if (library) {
+      const libraryCard = createStationCard(library);
+      libraryCard.style.animationDelay = `${index * 0.05}s`;
+      favoritesContainer.appendChild(libraryCard);
+      return;
+    }
+    const favName = fav.name?.[currentLanguage] || (currentLanguage === 'ar' ? fav.nameAr : fav.nameEn) || fav.nameAr || fav.nameEn || '';
     const card = document.createElement('div'); 
     card.className = 'card'; 
     card.style.animationDelay = `${index * 0.05}s`;
     const favBtn = `<button class="favorite-btn active" onclick="toggleFavorite('${fav.nameAr}','${fav.nameEn}','${fav.img}','${fav.url}')" aria-label="إزالة من المفضلة"><i class="fas fa-heart"></i></button>`;
     
     let buttons = `
-      <button onclick="playRadio('${fav.url}', '${fav.name[currentLanguage]}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button>
+      <button onclick="playRadio('${fav.url}', '${favName}', this)"><i class="fas fa-play"></i> ${translations[currentLanguage].playButton}</button>
       <button class="stop-btn" onclick="stopRadio()"><i class="fas fa-stop"></i> ${translations[currentLanguage].stopButton}</button>
     `;
 
     card.innerHTML = `
       ${favBtn}
-      <img src="${fav.img}" alt="${fav.name[currentLanguage]}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x180/222/4CAF50?text=Quran+Radio'" />
-      <h2>${fav.name[currentLanguage]}</h2>
+      <img src="${fav.img}" alt="${favName}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x180/222/4CAF50?text=Quran+Radio'" />
+      <h2>${favName}</h2>
       <div class="card-buttons">${buttons}</div>
       <div class="progress-bar"></div>
     `;

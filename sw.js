@@ -1,12 +1,17 @@
 // Service Worker - راديو قرآن
 // يُسجَّل من ملف حقيقي (sw.js) حتى يعمل الأوفلاين بشكل موثوق على GitHub Pages.
 // ارفع رقم الإصدار عند تعديل صفحات الموقع أو أصوله لإبطال الكاش القديم.
-const CACHE_NAME = 'radio-quran-v41';
+const CACHE_NAME = 'radio-quran-v42';
 
 // ملفات أساسية تُخزَّن مسبقًا عند التثبيت (أيقونات + هوية التطبيق)
 const PRECACHE_URLS = [
   './',
   './index.html',
+  './mohammad-ayyub-asif.html',
+  './recitation-library.js?v=42',
+  './recitation-library.css?v=42',
+  './data/mohammad-ayyub-asif.json?v=42',
+  './assets/ayyub-asif.webp',
   './live-tv.css',
   './live-tv.js',
   './icons/tv-quran.png',
