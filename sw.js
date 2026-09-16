@@ -1,7 +1,7 @@
 // Service Worker - راديو قرآن
 // يُسجَّل من ملف حقيقي (sw.js) حتى يعمل الأوفلاين بشكل موثوق على GitHub Pages.
 // ارفع رقم الإصدار عند تعديل صفحات الموقع أو أصوله لإبطال الكاش القديم.
-const CACHE_NAME = 'radio-quran-v44';
+const CACHE_NAME = 'radio-quran-v45';
 
 // ملفات أساسية تُخزَّن مسبقًا عند التثبيت (أيقونات + هوية التطبيق)
 const PRECACHE_URLS = [
@@ -27,6 +27,8 @@ const PRECACHE_URLS = [
   './sharawy-tafsir.html',
   './Ragheb-Sergany.html',
   './ragheb-youtube.js?v=44',
+  './ragheb-archive-media.js?v=45',
+  './assets/ragheb-aghrab.jpg',
   './arifi.jpg',
   './icons/icon-192.png',
   './icons/icon-512.png',

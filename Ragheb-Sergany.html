@@ -527,6 +527,24 @@
     .youtube-panel[data-state="error"] .youtube-stage:empty::before{content:'تعذّر تحميل المشغّل';}
     .youtube-caption{font-size:11px;color:#9eb194;margin-top:7px;}
     @media(max-width:360px){.player-container{padding:16px;}}
+    /* Native Archive video/audio: one selected source at a time. */
+    #archivePanel[hidden],#archiveVideo[hidden],#archiveRetry[hidden]{display:none!important;}
+    #lessonsContainer9{scroll-margin-top:175px;}
+    .archive-panel{margin-top:12px;scroll-margin-top:60px;text-align:right;color-scheme:dark;}
+    .archive-modes{display:flex;gap:8px;margin-bottom:12px;}
+    .archive-modes button{flex:1;padding:9px 12px;border:1px solid #486d5b;border-radius:9px;background:#ffffff05;color:#bfd6c8;font:600 12px 'Cairo',sans-serif;cursor:pointer;}
+    .archive-modes button[aria-pressed="true"]{background:#24543b;color:#eef7e9;border-color:#78af8b;}
+    #archiveVideo{display:block;width:100%;aspect-ratio:4/3;min-height:180px;max-height:calc(100dvh - 160px);background:#080d0a;border:1px solid #53664f;border-radius:12px;object-fit:contain;}
+    #archiveAudioSlot:empty{display:none;}
+    .archive-tools{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:12px;}
+    .archive-tools a{color:#a4d4b4;text-decoration:underline;text-underline-offset:3px;font-size:11px;}
+    .archive-tools button{margin-inline-start:auto;padding:7px 11px;border:1px solid #63876b;border-radius:8px;background:#24372a;color:#def0dc;font:600 11px 'Cairo',sans-serif;cursor:pointer;}
+    .archive-message{margin:10px 0 0;padding:10px 12px;border-radius:8px;background:#ffffff06;color:#bad0c0;font-size:12px;line-height:1.8;}
+    .archive-panel[data-state="error"] .archive-message,.archive-panel[data-state="slow"] .archive-message{color:#f0cca0;background:#aa72221a;}
+    .archive-bandwidth,.archive-series-note{font-size:11px;color:#a8baad;line-height:1.9;margin-top:10px;}
+    body.archive-view .controls-container{top:6px;left:50%;transform:translateX(-50%);flex-direction:row;justify-content:center;gap:6px;max-width:calc(100% - 12px);padding:5px;border-radius:12px;background:#111e;}
+    body.archive-view .control-btn{padding:6px 8px;font-size:11px;white-space:nowrap;gap:5px;}
+    @media(max-width:360px){body.archive-view .control-btn{padding:6px;font-size:10px;}body.archive-view .controls-container{gap:4px;}.archive-modes button{padding:9px 6px;font-size:11px;}}
   </style>
 </head>
 <body>
@@ -565,7 +583,22 @@
       <div class="loader" id="bufferingLoader" style="display: none;"></div>
       <span id="currentLesson">اختر درساً للاستماع</span>
     </div>
-    <audio id="audioPlayer" controls style="width: 100%; border-radius: 10px; height: 40px;"></audio>
+    <div id="audioPlayerHome"><audio id="audioPlayer" controls preload="none" style="width: 100%; border-radius: 10px; height: 40px;"></audio></div>
+    <section class="archive-panel" id="archivePanel" hidden data-state="idle" aria-label="مشغّل أغرب من الخيال">
+      <div class="archive-modes" role="group" aria-label="طريقة تشغيل الحلقة">
+        <button type="button" id="archiveModeVideo" aria-pressed="true"><i class="fas fa-video" aria-hidden="true"></i> مشاهدة الفيديو</button>
+        <button type="button" id="archiveModeAudio" aria-pressed="false"><i class="fas fa-headphones" aria-hidden="true"></i> صوت فقط</button>
+      </div>
+      <video id="archiveVideo" controls playsinline preload="none" poster="assets/ragheb-aghrab.jpg" hidden></video>
+      <div id="archiveAudioSlot"></div>
+      <div class="archive-tools">
+        <a id="archiveSourceMp4" href="https://archive.org/details/Islamic_Tape-484_uP_bY_mUSLEm" target="_blank" rel="noopener noreferrer">ملف MP4 الأصلي ↗</a>
+        <a id="archiveSourceOgv" href="https://archive.org/details/Islamic_Tape-484_uP_bY_mUSLEm" target="_blank" rel="noopener noreferrer">صيغة OGV البديلة ↗</a>
+        <button type="button" id="archiveRetry" hidden>إعادة المحاولة</button>
+      </div>
+      <p class="archive-message" id="archiveMessage" role="status" aria-live="polite"></p>
+      <p class="archive-bandwidth" id="archiveBandwidthNote"></p>
+    </section>
     <section class="youtube-panel" id="youtubePanel" hidden aria-label="مشغّل دروس YouTube" data-state="idle">
       <div class="youtube-stage" id="youtubeStage"></div>
       <div class="youtube-tools">
@@ -634,6 +667,7 @@
   </div>
 
   <script src="ragheb-youtube.js?v=44"></script>
+  <script src="ragheb-archive-media.js?v=45"></script>
   <script>
     // ===== بيانات الدروس =====
     const lessonsData = {
@@ -1082,6 +1116,148 @@
             { name: "68 - ماذا فعل معاوية في مواجهة الحسن بن علي ؟", yt: "PD8zRNBBeIc" },
             { name: "69 - رؤيتي في شروط الحسن بن علي لإتمام الصلح مع معاوية", yt: "QxtnM6HERfs" }
           ]
+        },
+        {
+          "id": 9,
+          "title": "سلسلة أغرب من الخيال",
+          "image": "assets/ragheb-aghrab.jpg",
+          "color": "#26a69a",
+          "archiveMedia": true,
+          "source": "https://archive.org/details/Islamic_Tape-484_uP_bY_mUSLEm",
+          "lessons": [
+            {
+              "name": "01 - أغرب من الخيال — الحلقة 1",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-001.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-001.ogv",
+              "duration": 1551.26
+            },
+            {
+              "name": "02 - أغرب من الخيال — الحلقة 2",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-002.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-002.ogv",
+              "duration": 1660.48
+            },
+            {
+              "name": "03 - أغرب من الخيال — الحلقة 3",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-003.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-003.ogv",
+              "duration": 1697.3
+            },
+            {
+              "name": "04 - أغرب من الخيال — الحلقة 4",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-004.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-004.ogv",
+              "duration": 1774.28
+            },
+            {
+              "name": "05 - أغرب من الخيال — الحلقة 5",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-005.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-005.ogv",
+              "duration": 1684.26
+            },
+            {
+              "name": "06 - أغرب من الخيال — الحلقة 6",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-006.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-006.ogv",
+              "duration": 1735.42
+            },
+            {
+              "name": "07 - أغرب من الخيال — الحلقة 7",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-007.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-007.ogv",
+              "duration": 1779.82
+            },
+            {
+              "name": "08 - أغرب من الخيال — الحلقة 8",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-008.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-008.ogv",
+              "duration": 1499.3
+            },
+            {
+              "name": "09 - أغرب من الخيال — الحلقة 9",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-009.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-009.ogv",
+              "duration": 1393.56
+            },
+            {
+              "name": "10 - أغرب من الخيال — الحلقة 10",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-010.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-010.ogv",
+              "duration": 1491.61
+            },
+            {
+              "name": "11 - أغرب من الخيال — الحلقة 11",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-011.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-011.ogv",
+              "duration": 1540.3
+            },
+            {
+              "name": "12 - أغرب من الخيال — الحلقة 12",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-012.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-012.ogv",
+              "duration": 1408.86
+            },
+            {
+              "name": "13 - أغرب من الخيال — الحلقة 13",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-013.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-013.ogv",
+              "duration": 1370.66
+            },
+            {
+              "name": "14 - أغرب من الخيال — الحلقة 14",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-014.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-014.ogv",
+              "duration": 1516.65
+            },
+            {
+              "name": "15 - أغرب من الخيال — الحلقة 15",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-015.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-015.ogv",
+              "duration": 1576.9
+            },
+            {
+              "name": "16 - أغرب من الخيال — الحلقة 16",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-016.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-016.ogv",
+              "duration": 1209.46
+            },
+            {
+              "name": "17 - أغرب من الخيال — الحلقة 17",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-017.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-017.ogv",
+              "duration": 1424.18
+            },
+            {
+              "name": "18 - أغرب من الخيال — الحلقة 18",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-018.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-018.ogv",
+              "duration": 1467.46
+            },
+            {
+              "name": "19 - أغرب من الخيال — الحلقة 19",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-019.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-019.ogv",
+              "duration": 1445.7
+            },
+            {
+              "name": "20 - أغرب من الخيال — الحلقة 20",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-020.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-020.ogv",
+              "duration": 1485.58
+            },
+            {
+              "name": "21 - أغرب من الخيال — الحلقة 21",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-021.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-021.ogv",
+              "duration": 1354.88
+            },
+            {
+              "name": "22 - أغرب من الخيال — الحلقة 22",
+              "video": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-022.mp4",
+              "alternateVideo": "https://archive.org/download/Islamic_Tape-484_uP_bY_mUSLEm/muslem.ettounsi-022.ogv",
+              "duration": 1474.86
+            }
+          ]
         }
 
       ]
@@ -1101,6 +1277,7 @@
       currentLessonIndex: -1,
       currentContainerId: null,
       currentMode: null,
+      archiveMode: 'video',
       playbackRequest: 0,
 
       init() {
@@ -1120,8 +1297,8 @@
           serieElement.className = 'lessons-container';
           serieElement.id = `lessonsContainer${serie.id}`;
           let optionsHTML = '<option value="">اختر درساً...</option>';
-          serie.lessons.forEach(lesson => {
-            const val = lesson.yt ? ("yt:" + lesson.yt) : lesson.url;
+          serie.lessons.forEach((lesson,lessonIndex) => {
+            const val=lesson.yt?('yt:'+lesson.yt):lesson.video?('av:'+serie.id+':'+lessonIndex):lesson.url;
             optionsHTML += `<option value="${val}">${lesson.name}</option>`;
           });
           serieElement.innerHTML = `
@@ -1141,6 +1318,18 @@
             </div>
             <div class="progress-bar"></div>
           `;
+          if(serie.archiveMedia){
+            const buttons=serieElement.querySelector('.lesson-buttons');
+            const view=buttons.querySelector('.play-lesson-btn');
+            view.innerHTML='<i class="fas fa-video" aria-hidden="true"></i> مشاهدة';
+            view.onclick=()=>this.playSelectedLesson(serie.id,'video');
+            const listen=document.createElement('button');listen.type='button';listen.className='play-lesson-btn';
+            listen.innerHTML='<i class="fas fa-headphones" aria-hidden="true"></i> استماع';
+            listen.onclick=()=>this.playSelectedLesson(serie.id,'audio');buttons.insertBefore(listen,buttons.querySelector('.stop-btn'));
+            const note=document.createElement('p');note.className='archive-series-note';
+            note.textContent='٢٢ حلقة • مشاهدة أو استماع من نفس الملف. MP4 وOGV صيغتان للحلقة وليستا حلقات إضافية.';
+            serieElement.querySelector('.lessons-title').after(note);
+          }
           container.appendChild(serieElement);
         });
       },
@@ -1170,7 +1359,7 @@
         });
       },
 
-      playSelectedLesson(containerId) {
+      playSelectedLesson(containerId,preferredMode) {
         const lessonsDropdown = document.getElementById(`lessonsDropdown${containerId}`);
         const lessonsContainer = document.getElementById(`lessonsContainer${containerId}`);
         const selectedOption = lessonsDropdown.options[lessonsDropdown.selectedIndex];
@@ -1181,7 +1370,7 @@
           return;
         }
         const request=++this.playbackRequest;
-        this.currentMode=lessonVal.indexOf('yt:')===0?'youtube':'audio';
+        this.currentMode=lessonVal.indexOf('yt:')===0?'youtube':lessonVal.indexOf('av:')===0?'archive':'audio';
         this.currentLessonIndex = lessonsDropdown.selectedIndex;
         this.currentContainerId = containerId;
         this.nowPlaying.textContent = `جاري تشغيل: ${lessonName}`;
@@ -1191,12 +1380,19 @@
         lessonsContainer.classList.add('active');
 
         if (this.currentMode==='youtube') {
+          this.stopArchive();
           this.player.pause();this.player.removeAttribute('src');this.player.load();
           this.player.hidden=true;
           this.playYoutube(lessonVal.slice(3),lessonName,request);
           document.getElementById('youtubePanel').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+        } else if(this.currentMode==='archive') {
+          this.stopYoutube();
+          const serie=lessonsData.series.find(item=>item.id===containerId);
+          const lesson=serie?.lessons[this.currentLessonIndex-1];
+          this.playArchive(lesson,preferredMode,request);
+          document.getElementById('archivePanel').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
         } else {
-          this.stopYoutube();this.player.hidden=false;
+          this.stopArchive();this.stopYoutube();this.player.hidden=false;
           this.player.pause();this.player.removeAttribute('src');this.player.load();
           this.player.src=lessonVal;
           this.player.play().then(()=>{
@@ -1231,6 +1427,35 @@
         });
       },
 
+      playArchive(lesson,preferredMode,request) {
+        if(!lesson?.video)return;
+        if(preferredMode==='audio' || preferredMode==='video')this.archiveMode=preferredMode;
+        if(!window.RaghebArchiveMedia){
+          this.player.pause();this.player.removeAttribute('src');this.player.load();this.player.hidden=true;
+          document.getElementById('archivePanel').hidden=false;
+          document.getElementById('archiveSourceMp4').href=lesson.video;
+          document.getElementById('archiveSourceOgv').href=lesson.alternateVideo;
+          document.getElementById('archiveMessage').textContent='تعذّر تحميل أدوات المشغّل. حدّث الصفحة أو افتح الملف من روابط المصدر.';
+          this.bufferingLoader.style.display='none';return;
+        }
+        RaghebArchiveMedia.play(lesson,this.archiveMode,{
+          onMode:mode=>{if(request===this.playbackRequest)this.archiveMode=mode;},
+          onState:(state,mode)=>{
+            if(request!==this.playbackRequest || this.currentMode!=='archive')return;
+            this.bufferingLoader.style.display=['loading','buffering'].includes(state)?'inline-block':'none';
+            this.playingIndicator.style.display=state==='playing'?'block':'none';
+            const label=state==='playing'?'يُشغَّل الآن':state==='error'?'تعذّر تشغيل':state==='paused'?'متوقف مؤقتًا':state==='loading'?'جارٍ تحميل':'الحلقة المحددة';
+            this.nowPlaying.textContent=label+': '+lesson.name+' — '+(mode==='audio'?'صوت فقط':'فيديو');
+          },
+          onEnded:()=>{if(request===this.playbackRequest && this.currentMode==='archive')this.handleLessonEnd();}
+        });
+      },
+
+      stopArchive() {
+        window.RaghebArchiveMedia?.stop();
+        document.getElementById('archivePanel').hidden=true;
+      },
+
       stopYoutube() {
         window.RaghebVideo?.stop();
         document.getElementById('youtubePanel').hidden=true;
@@ -1238,6 +1463,7 @@
 
       stopLesson() {
         ++this.playbackRequest;this.currentMode=null;
+        this.stopArchive();
         this.player.pause();
         this.player.removeAttribute('src');this.player.load();this.player.hidden=false;
         this.stopYoutube();
