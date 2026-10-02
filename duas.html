@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>الأدعية القرآنية والنبوية</title>
 <!-- Meta Tags للـ SEO -->
 <meta name="description" content="مجموعة من الأدعية القرآنية والنبوية وأدعية الأنبياء ودعاء ختم القرآن">
@@ -608,7 +608,7 @@ function loadFontSize() {
 
 // === الرجوع للصفحة الرئيسية ===
 function goHome() {
-  window.location.href = 'https://waleedd189.github.io/radio-quran/';
+  window.location.href = 'index.html';
 }
 
 // === جلب الأدعية من API ===
@@ -789,7 +789,7 @@ function loadNightMode() {
 
 // === مشاركة الصفحة ===
 function sharePage() {
-  const pageUrl = 'https://waleedd189.github.io/radio-quran/duas.html';
+  const pageUrl = location.href;
   const pageTitle = 'الأدعية القرآنية والنبوية';
   const pageText = 'مجموعة مختارة من أجمل الأدعية القرآنية والنبوية وأدعية الأنبياء ودعاء ختم القرآن';
   

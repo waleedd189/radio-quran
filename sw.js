@@ -1,7 +1,7 @@
 // Service Worker - راديو قرآن
 // يُسجَّل من ملف حقيقي (sw.js) حتى يعمل الأوفلاين بشكل موثوق على GitHub Pages.
 // ارفع رقم الإصدار عند تعديل صفحات الموقع أو أصوله لإبطال الكاش القديم.
-const CACHE_NAME = 'radio-quran-v46';
+const CACHE_NAME = 'radio-quran-v48';
 
 // ملفات أساسية تُخزَّن مسبقًا عند التثبيت (أيقونات + هوية التطبيق)
 const PRECACHE_URLS = [
@@ -18,11 +18,15 @@ const PRECACHE_URLS = [
   './icons/tv-sunna.png',
   './manifest.json',
   './quran-search.html',
+  // المصحف صار تطبيقًا مستقلًا في mushaf/ بعامل خدمة خاص به يخزّن أصوله ومحتواه.
+  // هنا نحتفظ بصفحة التحويل القديمة فقط حتى تعمل الروابط والاختصارات المحفوظة.
   './mushaf.html',
-  './mushaf-reading.js?v=41',
-  './mushaf-reading.css',
-  './data/mushaf-layout.js',
   './azkar.html',
+  './azkar-data.js',
+  './azkar-assets/bg.png',
+  './duas.html',
+  './ahadith-1.html',
+  './hisn_almuslim.html',
   './Al-Arifi.html',
   './sharawy-tafsir.html',
   './Ragheb-Sergany.html',
@@ -37,9 +41,13 @@ const PRECACHE_URLS = [
 ];
 
 self.addEventListener('install', (e) => {
+  // cache.addAll تفشل ككل إذا فشل عنصر واحد، فينتهي التثبيت بكاش فارغ تمامًا.
+  // نخزّن كل عنصر على حدة حتى لا يُسقِط ملفٌ واحد بقية الملفات.
   e.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(PRECACHE_URLS).catch(() => {}))
+      .then((cache) => Promise.all(
+        PRECACHE_URLS.map((url) => cache.add(url).catch(() => {}))
+      ))
       .then(() => self.skipWaiting())
   );
 });
@@ -98,7 +106,8 @@ self.addEventListener('fetch', (e) => {
           }
           return response;
         })
-        .catch(() => cached);
+        // بدون بديل صريح كانت الدالة تُرجع undefined فيتحول الطلب إلى خطأ شبكة غامض
+        .catch(() => cached || new Response('', { status: 504, statusText: 'Offline' }));
       return cached || network;
     })
   );
