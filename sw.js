@@ -1,7 +1,7 @@
 // Service Worker - راديو قرآن
 // يُسجَّل من ملف حقيقي (sw.js) حتى يعمل الأوفلاين بشكل موثوق على GitHub Pages.
 // ارفع رقم الإصدار عند تعديل صفحات الموقع أو أصوله لإبطال الكاش القديم.
-const CACHE_NAME = 'radio-quran-v47';
+const CACHE_NAME = 'radio-quran-v48';
 
 // ملفات أساسية تُخزَّن مسبقًا عند التثبيت (أيقونات + هوية التطبيق)
 const PRECACHE_URLS = [
@@ -18,10 +18,9 @@ const PRECACHE_URLS = [
   './icons/tv-sunna.png',
   './manifest.json',
   './quran-search.html',
+  // المصحف صار تطبيقًا مستقلًا في mushaf/ بعامل خدمة خاص به يخزّن أصوله ومحتواه.
+  // هنا نحتفظ بصفحة التحويل القديمة فقط حتى تعمل الروابط والاختصارات المحفوظة.
   './mushaf.html',
-  './mushaf-reading.js?v=41',
-  './mushaf-reading.css',
-  './data/mushaf-layout.js',
   './azkar.html',
   './azkar-data.js',
   './azkar-assets/bg.png',
