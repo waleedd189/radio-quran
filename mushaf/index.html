@@ -131,6 +131,28 @@ body{
 .manual-steps{margin:12px 18px 0;padding:0;color:var(--ink2);font-size:13px;line-height:2;}
 .manual-steps li{margin-bottom:2px;}
 .manual-steps i{color:var(--accent);min-width:1.3em;text-align:center;margin:0 2px;}
+
+/* خطة الختمة */
+.khat-hdash{display:inline-flex;align-items:center;gap:8px;}
+.khat-sub{text-align:center;color:var(--ink2);font-size:12.5px;line-height:1.9;margin:6px 12px;}
+.khat-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0 2px;}
+.khat-chip{border:1px solid var(--line);background:#2f3726;color:var(--ink);border-radius:20px;padding:8px 18px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;}
+.khat-chip.on{background:var(--gold);color:#141a10;border-color:var(--gold);}
+.khat-startrow{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px 16px 2px;color:var(--ink);font-size:13px;cursor:pointer;}
+.khat-startrow input{accent-color:var(--gold);width:16px;height:16px;cursor:pointer;}
+.khat-stat{text-align:center;color:var(--ink);font-size:15px;font-weight:700;margin:10px 0 4px;line-height:1.8;}
+.khat-stat small{display:block;color:var(--ink2);font-size:11.5px;font-weight:600;}
+.khat-ward{background:rgba(127,212,192,.08);border:1px solid rgba(127,212,192,.25);border-radius:14px;margin:10px 12px 2px;padding:6px 4px 8px;}
+.khat-ward b{color:var(--accent);}
+.khat-pace{font-size:12px;font-weight:700;}
+.khat-pace.ok{color:var(--accent);}
+.khat-pace.late{color:#e98b8b;}
+.khat-pace.ahead{color:var(--gold);}
+.khat-grid{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:14px 18px 4px;}
+.khat-dot{width:27px;height:27px;border-radius:8px;background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--ink2);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.khat-dot.done{background:var(--accent);color:#10201c;border-color:var(--accent);}
+.khat-dot.next{border-color:var(--gold);color:var(--gold);box-shadow:0 0 6px rgba(212,175,106,.35);}
+.khat-finish{text-align:center;font-size:30px;margin:6px 0 0;}
 </style>
 <link rel="stylesheet" href="mushaf-reading.css">
 </head>
@@ -144,6 +166,7 @@ body{
     <button class="tb" id="fontButton" onclick="openFont()" title="حجم الخط" aria-label="حجم خط المصحف" aria-haspopup="dialog" aria-expanded="false" aria-controls="fontOv"><i class="fas fa-text-height"></i></button>
     <button class="tb" onclick="openSurahs()" title="الفهرس"><i class="fas fa-list"></i></button>
     <button class="tb" id="installBtn" hidden onclick="openInstall()" title="تثبيت التطبيق" aria-label="تثبيت المصحف كتطبيق"><i class="fas fa-circle-down"></i></button>
+    <button class="tb" id="khatmaBtn" onclick="openKhatma()" title="خطة الختمة" aria-label="خطة ختم المصحف مع وردٍ يومي" aria-haspopup="dialog" aria-controls="khatmaOv"><i class="fas fa-calendar-check"></i></button>
     <button class="tb" onclick="openOffline()" title="التحميل للقراءة بدون إنترنت" aria-label="التحميل للقراءة بدون إنترنت"><i class="fas fa-cloud-arrow-down"></i></button>
   </div>
   <div class="reading-tools" aria-label="الحفظ وإضاءة الشاشة">
@@ -222,6 +245,14 @@ body{
       <button class="freset danger" id="dlClear" onclick="clearOffline()"><i class="fas fa-trash"></i> مسح المحمَّل</button>
     </div>
     <p class="tip" id="dlNote">الحجم الكامل حوالي ٥٤ ميجابايت (خطوط المصحف وصفحاته). يُفضَّل التحميل على واي‑فاي.</p>
+  </div>
+</div>
+
+<!-- خطة الختمة: ورد يومي حتى إتمام المصحف — المحتوى يُبنى ديناميكيًا (انظر renderKhatma) -->
+<div class="ov" id="khatmaOv" role="dialog" aria-modal="true" aria-labelledby="khatmaTitle" onclick="if(event.target===this)closeKhatma()">
+  <div class="sheet sheet-sm">
+    <h3 id="khatmaTitle"><span class="khat-hdash"><i class="fas fa-calendar-check" aria-hidden="true"></i> خطة الختمة</span><button class="x" onclick="closeKhatma()" aria-label="إغلاق"><i class="fas fa-xmark"></i></button></h3>
+    <div id="khatmaBody"></div>
   </div>
 </div>
 
@@ -546,7 +577,7 @@ async function show(n,options={}){
       if(el && el.dataset.ready!=='1') pageError(el,x);
     }finally{pruneFonts();}
   }));
-  if(ticket===viewRequest) relayout();
+  if(ticket===viewRequest){ relayout(); khatOnPage(); }
 }
 function renderReady(n,data){
   const fol=renderFolio(data);
@@ -847,6 +878,181 @@ async function downloadAll(){
   notify(failed?`اكتمل التحميل مع تعذّر ${failed.toLocaleString('ar-EG')} ملفًا — أعد المحاولة`:'تم تحميل المصحف كاملًا للقراءة بدون إنترنت');
 }
 
+/* ===== خطة الختمة: ورد يومي حتى إتمام المصحف =====
+   الخطة تُحفظ محليًا على الجهاز: تاريخ البداية، المدة، صفحة البداية،
+   والأوراد المنجزة. الورد «القادم» هو أول يوم غير منجز، وحالة الالتزام
+   تقارن المنجز بالأيام المنقضية من جدول الخطة. */
+const KHATMA_KEY='mushaf-khatma';
+const KHATMA_DURATIONS=[15,30,60];
+let khatDays=30; // المدة المختارة في واجهة إنشاء الخطة
+
+function khatToday(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function khatDayDiff(a,b){ // b - a بالأيام، بالتاريخ المحلي YYYY-MM-DD
+  const p=s=>{const[y,m,d]=s.split('-').map(Number);return Date.UTC(y,m-1,d);};
+  return Math.round((p(b)-p(a))/86400000);
+}
+function khatLoad(){
+  try{
+    const plan=JSON.parse(localStorage.getItem(KHATMA_KEY));
+    if(!plan||!plan.days||!plan.start) return null;
+    plan.startPage=Math.min(Math.max(plan.startPage||1,1),TOTAL);
+    plan.done=(Array.isArray(plan.done)?plan.done:[]).filter(i=>i>=0&&i<plan.days);
+    plan.hints=plan.hints||{};
+    return plan;
+  }catch(e){ return null; }
+}
+function khatSave(plan){ try{ localStorage.setItem(KHATMA_KEY,JSON.stringify(plan)); }catch(e){} }
+
+function khatInfo(plan){
+  const totalPages=TOTAL-plan.startPage+1;
+  const ppd=totalPages/plan.days;
+  const range=i=>({
+    from:plan.startPage+Math.floor(i*ppd),
+    to:i===plan.days-1?TOTAL:plan.startPage+Math.floor((i+1)*ppd)-1
+  });
+  const doneSet=new Set(plan.done);
+  const doneCount=doneSet.size;
+  let next=-1;
+  for(let i=0;i<plan.days;i++) if(!doneSet.has(i)){ next=i; break; }
+  // الورود المتتالية: أطول سلسلة منتهية فورًا قبل الورد القادم
+  let streak=0;
+  if(next>0){ for(let i=next-1;i>=0&&doneSet.has(i);i--) streak++; }
+  if(next===-1) streak=plan.days;
+  const elapsed=Math.min(Math.max(khatDayDiff(plan.start,khatToday()),0),plan.days-1);
+  const readPages=plan.done.reduce((s,i)=>{const r=range(i);return s+r.to-r.from+1;},0);
+  return {totalPages,ppd,range,doneSet,doneCount,next,streak,elapsed,readPages,percent:Math.round(doneCount/plan.days*100)};
+}
+
+/* توقّع نصي مختصر يُستخدم زر البداية وتحديث شريحة المدة */
+function khatPreviewText(days,startPage){
+  const ppd=Math.round((TOTAL-startPage+1)/days*10)/10;
+  return `خطة ${days.toLocaleString('ar-EG')} يومًا ≈ ${ppd.toLocaleString('ar-EG')} صفحة يوميًا`;
+}
+
+function renderKhatma(){
+  const body=document.getElementById('khatmaBody');
+  const plan=khatLoad();
+  if(!plan){ renderKhatmaCreate(body); return; }
+  const info=khatInfo(plan);
+  if(info.next===-1){ renderKhatmaFinished(body,plan,info); return; }
+  const r=info.range(info.next);
+  const wardPages=r.to-r.from+1;
+  const pace=info.doneCount<info.elapsed
+    ?`<p class="khat-pace late">متأخر عن الجدول بـ ${(info.elapsed-info.doneCount).toLocaleString('ar-EG')} ورد — عوّض على مهلك</p>`
+    :info.doneCount>info.elapsed
+      ?`<p class="khat-pace ahead">متقدم على الجدول — ما شاء الله، ربنا يبارك في وقتك</p>`
+      :`<p class="khat-pace ok">في الموعد — جدولك ماشي تمام</p>`;
+  const dots=Array.from({length:plan.days},(_,i)=>
+    `<span class="khat-dot${info.doneSet.has(i)?' done':''}${i===info.next?' next':''}" title="الورد ${(i+1).toLocaleString('ar-EG')}">${(i+1).toLocaleString('ar-EG')}</span>`).join('');
+  body.innerHTML=`
+    <p class="khat-stat">الورد ${(info.next+1).toLocaleString('ar-EG')} من ${plan.days.toLocaleString('ar-EG')} • ${info.percent.toLocaleString('ar-EG')}٪</p>
+    <div class="dl-bar"><span style="width:${info.percent}%"></span></div>
+    <p class="khat-sub">قرأت ${info.readPages.toLocaleString('ar-EG')} من ${info.totalPages.toLocaleString('ar-EG')} صفحة — باقي ${(info.totalPages-info.readPages).toLocaleString('ar-EG')} صفحة</p>
+    <div class="khat-ward">
+      <p class="khat-stat">وردك القادم: <b>صفحة ${r.from.toLocaleString('ar-EG')} إلى ${r.to.toLocaleString('ar-EG')}</b><small>${wardPages.toLocaleString('ar-EG')} صفحة • الجزء ${juzOf(r.from).toLocaleString('ar-EG')}${juzOf(r.to)!==juzOf(r.from)?' — '+juzOf(r.to).toLocaleString('ar-EG'):''}</small></p>
+      ${pace}
+    </div>
+    <div class="frow">
+      <button class="freset" onclick="khatGoto()"><i class="fas fa-book-open"></i> ابدأ القراءة من الورد</button>
+      <button class="freset" onclick="khatMarkDone()"><i class="fas fa-check"></i> أنهيت الورد</button>
+    </div>
+    <div class="khat-grid" aria-hidden="true">${dots}</div>
+    <p class="khat-sub">🔥 أوراد متتالية: ${info.streak.toLocaleString('ar-EG')}${info.elapsed?` • مرّ ${info.elapsed.toLocaleString('ar-EG')} يوم على الخطة`:''}</p>
+    <div class="frow"><button class="freset danger" id="khatCancelBtn" onclick="khatCancel()"><i class="fas fa-xmark"></i> إلغاء الخطة</button></div>`;
+}
+
+function renderKhatmaCreate(body){
+  const chips=KHATMA_DURATIONS.map(d=>
+    `<button class="khat-chip${d===khatDays?' on':''}" data-days="${d}" onclick="khatPick(${d})">${d.toLocaleString('ar-EG')} يومًا</button>`).join('');
+  body.innerHTML=`
+    <p class="khat-sub">قسّم المصحف على عدد أيام يناسبك وتابع وردك اليومي حتى الختمة بإذن الله. تقدّمك يُحفظ على جهازك فقط.</p>
+    <div class="khat-chips" role="group" aria-label="مدة الخطة">${chips}</div>
+    <p class="khat-sub" id="khatPreview">${khatPreviewText(khatDays,1)}</p>
+    <label class="khat-startrow"><input type="checkbox" id="khatFromCur"> ابدأ من الصفحة الحالية (${cur.toLocaleString('ar-EG')}) بدلًا من أول المصحف</label>
+    <div class="frow"><button class="freset" id="khatStartBtn" onclick="khatStart()"><i class="fas fa-calendar-check"></i> ابدأ الخطة</button></div>`;
+}
+
+function renderKhatmaFinished(body,plan,info){
+  body.innerHTML=`
+    <p class="khat-finish" aria-hidden="true">🎉</p>
+    <p class="khat-stat">تقبّل الله منك! أتممت ختم المصحف<small>${info.totalPages.toLocaleString('ar-EG')} صفحة خلال ${plan.days.toLocaleString('ar-EG')} يومًا</small></p>
+    <div class="dl-bar"><span style="width:100%"></span></div>
+    <p class="khat-sub">«أحبُّ الأعمال إلى الله أدومُها وإن قلّ» — واصل ولو بوردٍ صغير 💛</p>
+    <div class="frow">
+      <button class="freset" onclick="khatNewPlan()"><i class="fas fa-rotate-right"></i> ابدأ ختمة جديدة</button>
+      <button class="freset danger" id="khatCancelBtn" onclick="khatCancel()"><i class="fas fa-xmark"></i> إنهاء الخطة</button>
+    </div>`;
+}
+
+function khatPick(d){ khatDays=d; renderKhatma(); }
+function khatStart(){
+  const fromCur=document.getElementById('khatFromCur')?.checked;
+  const startPage=fromCur?cur:1;
+  const plan={start:khatToday(),days:khatDays,startPage,done:[],hints:{}};
+  khatSave(plan);
+  renderKhatma();
+  notify(`بدأت خطة الختمة — ${khatPreviewText(khatDays,startPage)}`);
+}
+function khatMarkDone(){
+  const plan=khatLoad(); if(!plan) return;
+  const info=khatInfo(plan); if(info.next===-1) return;
+  plan.done.push(info.next);
+  khatSave(plan);
+  const doneLast=info.next===plan.days-1;
+  renderKhatma();
+  notify(doneLast?'تقبّل الله! أتممت الختمة كاملة 🎉':`تقبّل الله! سُجّل الورد ${(info.next+1).toLocaleString('ar-EG')} من ${plan.days.toLocaleString('ar-EG')}`);
+}
+function khatGoto(){
+  const plan=khatLoad(); if(!plan) return;
+  const info=khatInfo(plan); if(info.next===-1) return;
+  closeKhatma();
+  show(info.range(info.next).from);
+}
+/* إلغاء الخطة بتأكيد بنقرتين بدل حوار confirm: أهدأ على الجوال */
+function khatCancel(){
+  const btn=document.getElementById('khatCancelBtn');
+  if(btn && btn.dataset.armed!=='1'){
+    btn.dataset.armed='1';
+    btn.innerHTML='<i class="fas fa-triangle-exclamation"></i> متأكد؟ اضغط مرة ثانية';
+    return;
+  }
+  localStorage.removeItem(KHATMA_KEY);
+  renderKhatma();
+  notify('أُلغيت خطة الختمة');
+}
+function khatNewPlan(){ localStorage.removeItem(KHATMA_KEY); khatDays=30; renderKhatma(); }
+
+function openKhatma(){
+  renderKhatma();
+  document.getElementById('khatmaOv').classList.add('show');
+}
+function closeKhatma(){ document.getElementById('khatmaOv').classList.remove('show'); }
+
+/* يُستدعى بعد كل تنقّل بين الصفحات: لو وصلت نهاية وردك القادم ولم تسجّله بعد
+   نذكّرك مرة واحدة لكل ورد؛ ولا إزعاج بعدها. */
+function khatOnPage(){
+  try{
+    const plan=khatLoad(); if(!plan) return;
+    const info=khatInfo(plan); if(info.next===-1) return;
+    const r=info.range(info.next);
+    if(cur>=r.to && !plan.hints['e'+info.next]){
+      plan.hints['e'+info.next]=1;
+      khatSave(plan);
+      notify('وصلت نهاية الورد — سجّله من خطة الختمة إن أتممته');
+    }
+  }catch(e){}
+}
+/* تحية ورد اليوم عند فتح التطبيق، مرة واحدة لكل ورد */
+function khatGreet(){
+  const plan=khatLoad(); if(!plan) return;
+  const info=khatInfo(plan); if(info.next===-1) return;
+  if(plan.hints['g'+info.next]) return;
+  plan.hints['g'+info.next]=1;
+  khatSave(plan);
+  const r=info.range(info.next);
+  notify(`وردك اليوم: من صفحة ${r.from.toLocaleString('ar-EG')} إلى ${r.to.toLocaleString('ar-EG')} — بالتوفيق`);
+}
+
 async function clearOffline(){
   if(downloading){ notify('انتظر انتهاء التحميل أولًا'); return; }
   if(!confirm('مسح المصحف المحمَّل من هذا الجهاز؟ ستحتاج الإنترنت لإعادة تحميله.')) return;
@@ -860,7 +1066,7 @@ async function clearOffline(){
 function goHome(){ window.MushafReading?.flush();window.MushafReading?.releaseWakeLock();location.href='../index.html'; }
 if(isStandalone()){ const home=document.getElementById('homeBtn'); if(home) home.hidden=true; }
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeFont();closeSurahs();closeInstall();closeOffline();window.MushafReading?.closeBookmarks();return;}
+  if(e.key==='Escape'){closeFont();closeSurahs();closeInstall();closeOffline();closeKhatma();window.MushafReading?.closeBookmarks();return;}
   if(document.querySelector('.ov.show') || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
   if(e.key==='ArrowRight'){e.preventDefault();turn(1);}
   if(e.key==='ArrowLeft'){e.preventDefault();turn(-1);}
@@ -872,7 +1078,12 @@ const savedReadingPosition=window.MushafReading?.start();
 show(savedReadingPosition?.page||1,{restore:savedReadingPosition,reason:'initial'});
 
 // اختصارات التطبيق المثبَّت (manifest shortcuts)
-if(new URLSearchParams(location.search).has('surahs')) openSurahs();
+const mushafShortcuts=new URLSearchParams(location.search);
+if(mushafShortcuts.has('surahs')) openSurahs();
+if(mushafShortcuts.has('khatma')) openKhatma();
+
+// تحية ورد اليوم بعد استقرار الصفحة (لا تشوش على التحميل الأول)
+setTimeout(khatGreet,2500);
 
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));

@@ -9,7 +9,7 @@
  * ولأن الرابط لا يتغير أبدًا فالتخزين دائم بلا إبطال: ما يُحمَّل مرة يبقى للأبد.
  */
 
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL_CACHE = `mushaf-shell-${VERSION}`;
 const QURAN_CACHE = 'mushaf-quran';   // مثبَّت على SHA فلا يحتاج ترقيم إصدار
 const VENDOR_CACHE = 'mushaf-vendor'; // خطوط الواجهة وأيقوناتها
