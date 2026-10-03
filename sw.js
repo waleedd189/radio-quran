@@ -1,7 +1,7 @@
 // Service Worker - راديو قرآن
 // يُسجَّل من ملف حقيقي (sw.js) حتى يعمل الأوفلاين بشكل موثوق على GitHub Pages.
 // ارفع رقم الإصدار عند تعديل صفحات الموقع أو أصوله لإبطال الكاش القديم.
-const CACHE_NAME = 'radio-quran-v48';
+const CACHE_NAME = 'radio-quran-v49';
 
 // ملفات أساسية تُخزَّن مسبقًا عند التثبيت (أيقونات + هوية التطبيق)
 const PRECACHE_URLS = [
@@ -23,7 +23,15 @@ const PRECACHE_URLS = [
   './mushaf.html',
   './azkar.html',
   './azkar-data.js',
+  './azkar-manifest.json',
   './azkar-assets/bg.png',
+  './azkar-assets/logo.png',
+  './azkar-assets/icon-192.png',
+  './azkar-assets/icon-512.png',
+  './azkar-assets/icon-maskable-192.png',
+  './azkar-assets/icon-maskable-512.png',
+  './azkar-assets/apple-touch-icon.png',
+  './azkar-assets/favicon-32.png',
   './duas.html',
   './ahadith-1.html',
   './hisn_almuslim.html',

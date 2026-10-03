@@ -1,0 +1,54 @@
+{
+  "name": "الباقيات — أذكار المسلم",
+  "short_name": "الباقيات",
+  "description": "أذكار الصباح والمساء وما بعد الصلاة وسائر أذكار المسلم من الكتاب والسنة بمصادرها، مع سبحة إلكترونية — تطبيق مستقل يعمل بدون إنترنت.",
+  "lang": "ar",
+  "dir": "rtl",
+  "id": "./azkar.html",
+  "start_url": "./azkar.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#1d2b2b",
+  "background_color": "#1d2b2b",
+  "categories": ["books", "education", "lifestyle"],
+  "icons": [
+    {
+      "src": "azkar-assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "azkar-assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "azkar-assets/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "azkar-assets/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "azkar-assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "السبحة",
+      "short_name": "السبحة",
+      "description": "افتح السبحة الإلكترونية مباشرة",
+      "url": "./azkar.html?tasbih=1"
+    }
+  ]
+}
