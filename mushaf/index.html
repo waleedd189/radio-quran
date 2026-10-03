@@ -128,8 +128,9 @@ body{
 .dl-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
 .freset.danger{color:#e98b8b;border-color:#5c3a3a;}
 .freset[disabled]{opacity:.5;cursor:not-allowed;}
-.ios-steps{margin:12px 18px 0;padding:0;color:var(--ink2);font-size:13px;line-height:2;}
-.ios-steps li{margin-bottom:2px;}
+.manual-steps{margin:12px 18px 0;padding:0;color:var(--ink2);font-size:13px;line-height:2;}
+.manual-steps li{margin-bottom:2px;}
+.manual-steps i{color:var(--accent);min-width:1.3em;text-align:center;margin:0 2px;}
 </style>
 <link rel="stylesheet" href="mushaf-reading.css">
 </head>
@@ -204,11 +205,8 @@ body{
     <h3 id="installTitle">تثبيت المصحف <button class="x" onclick="closeInstall()" aria-label="إغلاق"><i class="fas fa-xmark"></i></button></h3>
     <p class="tip" id="installText">ثبّت المصحف كتطبيق مستقل على شاشتك الرئيسية، بأيقونته الخاصة ومن غير شريط المتصفح.</p>
     <div class="frow"><button class="freset" id="installGo" onclick="doInstall()"><i class="fas fa-circle-down"></i> تثبيت الآن</button></div>
-    <ol class="ios-steps" id="iosSteps" hidden>
-      <li>اضغط زر المشاركة <i class="fas fa-arrow-up-from-bracket"></i> في أسفل سفاري.</li>
-      <li>اختر «إضافة إلى الشاشة الرئيسية».</li>
-      <li>اضغط «إضافة» — هيظهر المصحف كتطبيق مستقل.</li>
-    </ol>
+    <!-- تُملأ ديناميكيًا بخطوات المتصفح الحالي عند فتح النافذة (انظر INSTALL_MANUAL) -->
+    <ol class="manual-steps" id="manualSteps" hidden></ol>
   </div>
 </div>
 
@@ -616,30 +614,145 @@ const isStandalone=()=>{
   try{ if(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) return true; }catch(e){}
   return window.navigator.standalone===true;
 };
-const isIOS=()=>/iP(hone|ad|od)/.test(navigator.platform||'')||(/Mac/.test(navigator.platform||'')&&navigator.maxTouchPoints>1);
+const isIOS=()=>/iP(hone|ad|od)/i.test(navigator.userAgent||'')||/iP(hone|ad|od)/.test(navigator.platform||'')||(/Mac/.test(navigator.platform||'')&&navigator.maxTouchPoints>1);
 let installPrompt=null;
+const installBtn=document.getElementById('installBtn');
+
+/* الزرار يظهر دائمًا. beforeinstallprompt لا يُطلَق في سفاري وفايرفوكس ويتأخر
+   أحيانًا في كروم، فمش شرط لإظهاره؛ الوحيد اللي يخفيه إن التطبيق يكون
+   مثبّتًا بالفعل وشغّالًا في وضع مستقل. */
+installBtn.hidden=isStandalone();
 
 window.addEventListener('beforeinstallprompt',event=>{
   event.preventDefault();
   installPrompt=event;
-  if(!isStandalone()) document.getElementById('installBtn').hidden=false;
 });
 window.addEventListener('appinstalled',()=>{
   installPrompt=null;
-  document.getElementById('installBtn').hidden=true;
+  installBtn.hidden=true;
   closeInstall();
   notify('تم تثبيت المصحف على شاشتك الرئيسية');
 });
-// سفاري لا يدعم beforeinstallprompt، فنعرض الخطوات اليدوية بدلًا من إخفاء الميزة
-if(isIOS() && !isStandalone()) document.getElementById('installBtn').hidden=false;
+// لو اتثبّت من خارج الصفحة (أيقونة شريط العنوان مثلًا) وتحوّل العرض للوضع المستقل
+try{
+  const standaloneMedia=window.matchMedia&&window.matchMedia('(display-mode: standalone)');
+  standaloneMedia&&standaloneMedia.addEventListener('change',e=>{
+    if(e.matches){ installPrompt=null; installBtn.hidden=true; }
+  });
+}catch(e){}
+
+/* كشف المتصفح من سلسلة الوكيل لاختيار خطوات التثبيت اليدوية المناسبة له.
+   الترتيب مهم: المتصفحات المبنية على كروميوم تتضمن «Chrome» في وكيلها،
+   فتُفحص العلامات المميزة لكل متصفح أولًا. كل متصفحات آيفون تعمل بمحرك
+   سفاري وتتبع نفس خطوات المشاركة، فيكفي كشف iOS. */
+function detectBrowserKey(){
+  const ua=navigator.userAgent||'';
+  if(isIOS()) return 'safari-ios';
+  if(/SamsungBrowser\//.test(ua)) return 'samsung';
+  if(/EdgiOS\//.test(ua)) return 'safari-ios';
+  if(/EdgA\//.test(ua)) return 'chrome-android'; // خطوات إيدج على أندرويد نفس خطوات كروم
+  if(/Edg\//.test(ua)) return 'edge-desktop';
+  if(/FxiOS\//.test(ua)) return 'safari-ios';
+  if(/Firefox\//.test(ua)) return /Android/.test(ua)?'firefox-android':'firefox-desktop';
+  if(/CriOS\//.test(ua)) return 'safari-ios';
+  if(/Android/.test(ua)) return 'chrome-android';
+  if(/Safari\//.test(ua)&&!/(Chrome|Chromium)\//.test(ua)) return 'safari-macos';
+  if(/(Chrome|Chromium)\//.test(ua)) return 'chrome-desktop';
+  return 'other';
+}
+const INSTALL_MANUAL={
+  'safari-ios':{
+    label:'سفاري على آيفون/آيباد',
+    steps:[
+      'اضغط زر المشاركة <i class="fas fa-arrow-up-from-bracket" aria-hidden="true"></i> في شريط سفاري.',
+      'اختر «إضافة إلى الشاشة الرئيسية» <i class="fas fa-square-plus" aria-hidden="true"></i>.',
+      'اضغط «إضافة» — هيظهر المصحف كتطبيق مستقل.'
+    ]
+  },
+  'chrome-android':{
+    label:'كروم على أندرويد',
+    steps:[
+      'افتح قائمة المتصفح <i class="fas fa-ellipsis-vertical" aria-hidden="true"></i> أعلى الشاشة.',
+      'اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».',
+      'اضغط «تثبيت» — هيظهر المصحف على شاشتك الرئيسية.'
+    ]
+  },
+  'samsung':{
+    label:'متصفح سامسونج إنترنت',
+    steps:[
+      'افتح القائمة <i class="fas fa-bars" aria-hidden="true"></i> أسفل الشاشة.',
+      'اختر «إضافة صفحة إلى» ثم «الشاشة الرئيسية».',
+      'أو اضغط أيقونة التثبيت <i class="fas fa-plus" aria-hidden="true"></i> في شريط العنوان لو ظهرت.'
+    ]
+  },
+  'chrome-desktop':{
+    label:'كروم على الكمبيوتر',
+    steps:[
+      'اضغط أيقونة التثبيت <i class="fas fa-circle-down" aria-hidden="true"></i> في نهاية شريط العنوان (بجوار نجمة المفضلة).',
+      'أو افتح قائمة <i class="fas fa-ellipsis-vertical" aria-hidden="true"></i> واختر «تثبيت المصحف…» (في الإصدارات الحديثة: «حفظ ومشاركة» ← «تثبيت الصفحة كتطبيق»).',
+      'اضغط «تثبيت» في النافذة التي تظهر — هيشتغل المصحف في نافذة مستقلة.'
+    ]
+  },
+  'edge-desktop':{
+    label:'إيدج على الكمبيوتر',
+    steps:[
+      'اضغط أيقونة التثبيت <i class="fas fa-circle-down" aria-hidden="true"></i> في نهاية شريط العنوان.',
+      'أو افتح قائمة <i class="fas fa-ellipsis" aria-hidden="true"></i> واختر «التطبيقات» ← «تثبيت هذا الموقع كتطبيق».',
+      'اضغط «تثبيت» في النافذة التي تظهر — هيشتغل المصحف في نافذة مستقلة.'
+    ]
+  },
+  'firefox-android':{
+    label:'فايرفوكس على أندرويد',
+    steps:[
+      'افتح قائمة المتصفح <i class="fas fa-ellipsis-vertical" aria-hidden="true"></i>.',
+      'اختر «تثبيت» أو «إضافة إلى الشاشة الرئيسية».',
+      'أكّد الإضافة — هيظهر المصحف على شاشتك الرئيسية.'
+    ]
+  },
+  'firefox-desktop':{
+    label:'فايرفوكس على الكمبيوتر',
+    note:'فايرفوكس على الكمبيوتر لا يدعم تثبيت تطبيقات الويب بعد. تقدر تتابع القراءة من هنا — المصحف يعمل بدون إنترنت بعد فتحه أول مرة — أو افتح الموقع في كروم أو إيدج لتثبيته كتطبيق.'
+  },
+  'safari-macos':{
+    label:'سفاري على ماك',
+    steps:[
+      'من قائمة «ملف» في شريط القوائم اختر «إضافة إلى Dock» (أو من زر المشاركة <i class="fas fa-arrow-up-from-bracket" aria-hidden="true"></i>).',
+      'اضغط «إضافة» — هيظهر المصحف في الـ Dock كتطبيق مستقل.'
+    ]
+  },
+  other:{
+    label:'',
+    steps:[
+      'افتح قائمة متصفحك وابحث عن «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».',
+      'لو الخيار مش موجود فمتصفحك لا يدعم التثبيت — جرّب كروم أو إيدج أو سفاري.'
+    ]
+  }
+};
 
 function openInstall(){
-  const manual=!installPrompt;
-  document.getElementById('iosSteps').hidden=!manual;
-  document.getElementById('installGo').hidden=manual;
-  document.getElementById('installText').textContent=manual
-    ?'ثبّت المصحف كتطبيق مستقل على شاشتك الرئيسية بالخطوات دي:'
-    :'ثبّت المصحف كتطبيق مستقل على شاشتك الرئيسية، بأيقونته الخاصة ومن غير شريط المتصفح.';
+  const textEl=document.getElementById('installText');
+  const goBtn=document.getElementById('installGo');
+  const stepsEl=document.getElementById('manualSteps');
+  goBtn.hidden=!installPrompt;
+  if(installPrompt){
+    stepsEl.hidden=true;
+    stepsEl.innerHTML='';
+    textEl.textContent='ثبّت المصحف كتطبيق مستقل على شاشتك الرئيسية، بأيقونته الخاصة ومن غير شريط المتصفح.';
+  }else{
+    // لا يوجد حوار تثبيت جاهز: نعرض خطوات المتصفح الحالي نفسه
+    const info=INSTALL_MANUAL[detectBrowserKey()]||INSTALL_MANUAL.other;
+    if(info.note){
+      textEl.textContent=info.note;
+      stepsEl.hidden=true;
+      stepsEl.innerHTML='';
+    }else{
+      textEl.textContent=info.label
+        ?`ثبّت المصحف كتطبيق مستقل على شاشتك الرئيسية — الخطوات في ${info.label}:`
+        :'ثبّت المصحف كتطبيق مستقل على شاشتك الرئيسية بالخطوات دي:';
+      stepsEl.innerHTML=info.steps.map(step=>`<li>${step}</li>`).join('');
+      stepsEl.hidden=false;
+    }
+  }
   document.getElementById('installOv').classList.add('show');
 }
 function closeInstall(){ document.getElementById('installOv').classList.remove('show'); }

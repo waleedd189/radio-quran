@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>الباقيات - أذكار المسلم | راديو قرآن</title>
 <meta name="theme-color" content="#1d2b2b">
+
+<!-- تطبيق مستقل بذاته: مانيفست وأيقونات خاصة بالأذكار، منفصلة عن تطبيق الراديو (مثل تطبيق المصحف) -->
+<link rel="manifest" href="azkar-manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="azkar-assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="azkar-assets/icon-192.png">
+<link rel="apple-touch-icon" href="azkar-assets/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="الباقيات">
+
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -156,6 +167,12 @@ body::before{content:'';position:fixed;inset:0;background:rgba(29,43,43,.55);z-i
 .pop h4{margin:0 0 12px;color:var(--accent);font-size:16px;font-family:'Amiri',serif;}
 .pop .ptext{font-family:'Amiri',serif;font-size:18px;line-height:1.9;color:var(--text);}
 .pop .pclose{margin-top:18px;width:100%;border:none;background:var(--accent);color:#fff;border-radius:12px;padding:12px;font-family:inherit;font-weight:800;cursor:pointer;}
+
+/* نافذة التثبيت: النص التمهيدي والخطوات اليدوية الخاصة بكل متصفح */
+.install-tip{font-family:'Cairo';font-size:13.5px;line-height:1.9;color:var(--text-dim);margin:0 0 10px;}
+.install-now{margin:4px 0 10px;}
+.manual-steps{margin:4px 6px 8px;padding:0 20px 0 0;font-family:'Cairo';font-size:13.5px;line-height:2;color:var(--text-dim);}
+.manual-steps i{color:var(--accent);min-width:1.3em;text-align:center;margin:0 2px;}
 .toast{position:fixed;bottom:86px;left:50%;transform:translateX(-50%) translateY(20px);background:#142020;color:#fff;border:1px solid var(--line);padding:10px 22px;border-radius:22px;font-size:13px;font-weight:700;opacity:0;pointer-events:none;transition:all .3s;z-index:300;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
@@ -563,6 +580,146 @@ function beep(){try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAud
 let toastTimer=null;
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2000);}
 
+/* ---------- تثبيت التطبيق ---------- */
+/* نفس منطق تطبيق المصحف: زر التثبيت ظاهر دائمًا. beforeinstallprompt لا
+   يُطلَق في سفاري وفايرفوكس ويتأخر أحيانًا في كروم، فمش شرط لإظهار الزر؛
+   الوحيد اللي يخفيه إن التطبيق يكون مثبّتًا بالفعل وشغّالًا في وضع مستقل. */
+const isStandalone=()=>{
+  try{ if(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) return true; }catch(e){}
+  return window.navigator.standalone===true;
+};
+const isIOS=()=>/iP(hone|ad|od)/i.test(navigator.userAgent||'')||/iP(hone|ad|od)/.test(navigator.platform||'')||(/Mac/.test(navigator.platform||'')&&navigator.maxTouchPoints>1);
+let installPrompt=null;
+
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); installPrompt=e; });
+window.addEventListener('appinstalled',()=>{
+  installPrompt=null;
+  removeInstallTab();
+  closePop();
+  toast('تم تثبيت تطبيق «الباقيات»');
+});
+// لو اتثبّت من خارج الصفحة (أيقونة شريط العنوان مثلًا) وتحوّل العرض للوضع المستقل
+try{
+  const standaloneMedia=window.matchMedia&&window.matchMedia('(display-mode: standalone)');
+  standaloneMedia&&standaloneMedia.addEventListener('change',e=>{
+    if(e.matches){ installPrompt=null; removeInstallTab(); }
+  });
+}catch(e){}
+function removeInstallTab(){ const t=document.getElementById('installTab'); if(t) t.remove(); }
+
+/* كشف المتصفح من سلسلة الوكيل لاختيار خطوات التثبيت اليدوية المناسبة له.
+   الترتيب مهم: المتصفحات المبنية على كروميوم تتضمن «Chrome» في وكيلها،
+   فتُفحص العلامات المميزة لكل متصفح أولًا. كل متصفحات آيفون تعمل بمحرك
+   سفاري وتتبع نفس خطوات المشاركة، فيكفي كشف iOS. */
+function detectBrowserKey(){
+  const ua=navigator.userAgent||'';
+  if(isIOS()) return 'safari-ios';
+  if(/SamsungBrowser\//.test(ua)) return 'samsung';
+  if(/EdgiOS\//.test(ua)) return 'safari-ios';
+  if(/EdgA\//.test(ua)) return 'chrome-android'; // خطوات إيدج على أندرويد نفس خطوات كروم
+  if(/Edg\//.test(ua)) return 'edge-desktop';
+  if(/FxiOS\//.test(ua)) return 'safari-ios';
+  if(/Firefox\//.test(ua)) return /Android/.test(ua)?'firefox-android':'firefox-desktop';
+  if(/CriOS\//.test(ua)) return 'safari-ios';
+  if(/Android/.test(ua)) return 'chrome-android';
+  if(/Safari\//.test(ua)&&!/(Chrome|Chromium)\//.test(ua)) return 'safari-macos';
+  if(/(Chrome|Chromium)\//.test(ua)) return 'chrome-desktop';
+  return 'other';
+}
+const INSTALL_MANUAL={
+  'safari-ios':{
+    label:'سفاري على آيفون/آيباد',
+    steps:[
+      'اضغط زر المشاركة <i class="fas fa-arrow-up-from-bracket" aria-hidden="true"></i> في شريط سفاري.',
+      'اختر «إضافة إلى الشاشة الرئيسية» <i class="fas fa-square-plus" aria-hidden="true"></i>.',
+      'اضغط «إضافة» — هيظهر تطبيق «الباقيات» مستقلًا.'
+    ]
+  },
+  'chrome-android':{
+    label:'كروم على أندرويد',
+    steps:[
+      'افتح قائمة المتصفح <i class="fas fa-ellipsis-vertical" aria-hidden="true"></i> أعلى الشاشة.',
+      'اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».',
+      'اضغط «تثبيت» — هيظهر «الباقيات» على شاشتك الرئيسية.'
+    ]
+  },
+  'samsung':{
+    label:'متصفح سامسونج إنترنت',
+    steps:[
+      'افتح القائمة <i class="fas fa-bars" aria-hidden="true"></i> أسفل الشاشة.',
+      'اختر «إضافة صفحة إلى» ثم «الشاشة الرئيسية».',
+      'أو اضغط أيقونة التثبيت <i class="fas fa-plus" aria-hidden="true"></i> في شريط العنوان لو ظهرت.'
+    ]
+  },
+  'chrome-desktop':{
+    label:'كروم على الكمبيوتر',
+    steps:[
+      'اضغط أيقونة التثبيت <i class="fas fa-circle-down" aria-hidden="true"></i> في نهاية شريط العنوان (بجوار نجمة المفضلة).',
+      'أو افتح قائمة <i class="fas fa-ellipsis-vertical" aria-hidden="true"></i> واختر «تثبيت «الباقيات»…» (في الإصدارات الحديثة: «حفظ ومشاركة» ← «تثبيت الصفحة كتطبيق»).',
+      'اضغط «تثبيت» في النافذة التي تظهر — هيشتغل التطبيق في نافذة مستقلة.'
+    ]
+  },
+  'edge-desktop':{
+    label:'إيدج على الكمبيوتر',
+    steps:[
+      'اضغط أيقونة التثبيت <i class="fas fa-circle-down" aria-hidden="true"></i> في نهاية شريط العنوان.',
+      'أو افتح قائمة <i class="fas fa-ellipsis" aria-hidden="true"></i> واختر «التطبيقات» ← «تثبيت هذا الموقع كتطبيق».',
+      'اضغط «تثبيت» في النافذة التي تظهر — هيشتغل التطبيق في نافذة مستقلة.'
+    ]
+  },
+  'firefox-android':{
+    label:'فايرفوكس على أندرويد',
+    steps:[
+      'افتح قائمة المتصفح <i class="fas fa-ellipsis-vertical" aria-hidden="true"></i>.',
+      'اختر «تثبيت» أو «إضافة إلى الشاشة الرئيسية».',
+      'أكّد الإضافة — هيظهر «الباقيات» على شاشتك الرئيسية.'
+    ]
+  },
+  'firefox-desktop':{
+    label:'فايرفوكس على الكمبيوتر',
+    note:'فايرفوكس على الكمبيوتر لا يدعم تثبيت تطبيقات الويب بعد. تقدر تتابع الأذكار من هنا — التطبيق يعمل بدون إنترنت بعد فتحه أول مرة — أو افتح الموقع في كروم أو إيدج لتثبيته كتطبيق.'
+  },
+  'safari-macos':{
+    label:'سفاري على ماك',
+    steps:[
+      'من قائمة «ملف» في شريط القوائم اختر «إضافة إلى Dock» (أو من زر المشاركة <i class="fas fa-arrow-up-from-bracket" aria-hidden="true"></i>).',
+      'اضغط «إضافة» — هيظهر «الباقيات» في الـ Dock كتطبيق مستقل.'
+    ]
+  },
+  other:{
+    label:'',
+    steps:[
+      'افتح قائمة متصفحك وابحث عن «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».',
+      'لو الخيار مش موجود فمتصفحك لا يدعم التثبيت — جرّب كروم أو إيدج أو سفاري.'
+    ]
+  }
+};
+
+/* نافذة التثبيت تُعرض في نفس القالب السفلي المستخدم في التطبيق (showPop) */
+function openInstall(){
+  let body;
+  if(installPrompt){
+    body=`<p class="install-tip">ثبّت «الباقيات» كتطبيق مستقل على شاشتك الرئيسية، بأيقونته الخاصة ومن غير شريط المتصفح.</p>
+          <button class="pclose install-now" onclick="doInstall()"><i class="fas fa-circle-down" aria-hidden="true"></i> تثبيت الآن</button>`;
+  }else{
+    const info=INSTALL_MANUAL[detectBrowserKey()]||INSTALL_MANUAL.other;
+    body=info.note
+      ?`<p class="install-tip">${info.note}</p>`
+      :`<p class="install-tip">${info.label
+            ?`ثبّت «الباقيات» كتطبيق مستقل على شاشتك الرئيسية — الخطوات في ${info.label}:`
+            :'ثبّت «الباقيات» كتطبيق مستقل على شاشتك الرئيسية بالخطوات دي:'}</p>
+        <ol class="manual-steps">${info.steps.map(s=>`<li>${s}</li>`).join('')}</ol>`;
+  }
+  showPop('تثبيت «الباقيات» على الشاشة الرئيسية', body);
+}
+async function doInstall(){
+  if(!installPrompt) return;
+  installPrompt.prompt();
+  try{ await installPrompt.userChoice; }catch(e){}
+  installPrompt=null;
+  closePop();
+}
+
 /* ---------- tab bar (build) ---------- */
 const TABDEFS=[
   {id:'home',icon:'fa-book',label:'الأذكار'},
@@ -579,11 +736,29 @@ const TABDEFS=[
     b.onclick=()=>{ if(t.id==='tasbih')buildTasbih(); switchTab(t.id); };
     bar.appendChild(b);
   });
+  // تبويب «تثبيت» خامس ظاهر على كل الشاشات، يفتح نافذة التثبيت بدل تبديل
+  // الشاشة؛ لا يُضاف لو التطبيق مثبّت بالفعل ويعمل في وضع مستقل
+  if(!isStandalone()){
+    const b=document.createElement('button');
+    b.className='tab'; b.dataset.tab='install'; b.id='installTab';
+    b.innerHTML='<i class="fas fa-circle-down"></i><span>تثبيت</span>';
+    b.onclick=openInstall;
+    bar.appendChild(b);
+  }
   document.querySelector('.app').appendChild(bar);
 })();
 
 /* init */
 buildWheel(); applySwitches();
+
+/* اختصارات التطبيق المثبَّت (manifest shortcuts): فتح السبحة مباشرة */
+if(new URLSearchParams(location.search).has('tasbih')){ buildTasbih(); switchTab('tasbih'); }
+
+/* عامل خدمة الموقع نطاقه الجذر ويخزّن صفحة الأذكار وبياناتها مسبقًا،
+   وتسجيله من هنا يحقق شروط التثبيت حتى لمن يفتح صفحة الأذكار أولًا */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
 </script>
 </body>
 </html>
